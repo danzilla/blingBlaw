@@ -11,11 +11,11 @@ router.get('/', function(req, res, next) {
 
 /* POST to Add User Service */
 router.post('/', function(req, res) {
+  // Set our internal DB variable
+  var db = req.db;
+  var collection = db.get('usercollection');
 
     var userID = req.body.userID;
-    // Set our internal DB variable
-    var db = req.db;
-    var collection = db.get('usercollection');
 
     collection.remove({_id: userID}, function(err, results) {
           if (err){
@@ -34,8 +34,6 @@ router.post('/', function(req, res) {
        });
 
      });
-
-
 
 
 module.exports = router;
