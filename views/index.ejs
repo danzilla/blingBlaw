@@ -5,7 +5,8 @@
 <!-- form card login with validation feedback -->
 <div class="card">
    <div class="card-header1">
-     <h1 class="display-1 text-danger"> <%- title %> </h1>
+     <h1 class="display-1 text-danger"> <%- title %>  </h1>
+      <%- JSON.stringify(sess) %>
      <%- include('layout/nav') -%>
    </div>
 
@@ -22,7 +23,7 @@
              <input type="password" class="form-control" id="pwd" name="pwd" required="">
              <div class="invalid-feedback">Please enter a password</div>
          </div>
-         <button type="submit" class="btn btn-success btn-sm" id="btnLogin">Login</button>
+         <button type="submit" class="btn btn-success btn-sm" id="btnLogin">Log In </button>
      </form>
 
    </div>

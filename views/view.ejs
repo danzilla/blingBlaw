@@ -40,7 +40,7 @@
            <li>
              <form name="removeUser" method="post" action="/crud">
                <input type="hidden" id="userID" name="userID" value="<%= data[i]._id %>">
-               <%= data[i].username %> - <%= data[i].email %>
+               <%= data[i].userName %> - <%= data[i].userEmail %> - <%= data[i].userDate %>
                <button class="btn btn-danger btn-sm"> Remove </button>
              </form>
            </li>

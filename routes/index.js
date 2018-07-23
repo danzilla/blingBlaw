@@ -4,7 +4,27 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  res.render('index', { title: 'Express Hello - Login' });
+  if(req.session.newCount){
+    req.session.newCount++;
+    var newCount = req.session.newCount;
+    var newMsg = "Session check 1++ ";
+  } else {
+    req.session.newCount = 1;
+    var newCount = req.session.newCount;
+    var newMsg = "Session check Set to 1";
+  }
+  var sess = {
+    newCount: newCount,
+    newMsg: newMsg
+  };
+
+
+
+  res.render('index', {
+    title: 'Express Hello - Login',
+    sess: sess,
+    logM: 'Log In'
+   });
 });
 
 
@@ -17,40 +37,48 @@ router.post('/', function(req, res, next) {
   var userID = req.body.uname;
   var pwd = req.body.pwd;
 
+  if(req.session.newCount){
+    req.session.newCount++;
+    var newCount = req.session.newCount;
+    var newMsg = "Session check 1++ ";
+  } else {
+    req.session.newCount = 1;
+    var newCount = req.session.newCount;
+    var newMsg = "Session check Set to 1";
+  }
+  var sess = {
+    newCount: newCount,
+    newMsg: newMsg
+  };
 
-  collection.findOne({ username: req.body.uname }, function(err, user) {
-      console.log('User found - user: ' + userID);
+  collection.findOne({ userName: req.body.uname }, function(err, user) {
       // In case the user not found
-      if(err) { // if caught any error
-        console.log('Error - User not found or querry')
-
+      if(user !== null && user.userName !== req.body.uname) { // if caught any error
+        console.log('User not found')
         res.render('index', {
-          title: 'User not found'
+          title: 'User not found',
+          logM: 'Log In',
+          sess: sess
         });
-      } // if user and email are correct
-      if (user && user.email === req.body.pwd) {
-          console.log('User and password is correct')
-
-
-          res.render('index', {
-            title: 'User and password is correct'
-          });
-        } else { // anything else 
+      }
+      // In case the user not found
+      if(user !== null && user.userEmail == req.body.pwd) { // if caught any error
+        console.log('User and Pwd are match!')
+        res.redirect('view');
+      } else { // anything else
           console.log("Credentials wrong");
-
           res.render('index', {
-            title: 'User and password is <b>incorrect</b>'
+            title: 'Incorrect credentials',
+            logM: 'Log In',
+            sess: sess
           });
         }
    });
 
-   console.log("User not found: " + userID);
 });
 
-router  .post('/logout', function(req, res){
-  res.clearCookie('user');
-  res.clearCookie('pass');
-  req.session.destroy(function(e){ res.redirect('index');});
+router.get('/logout', function(req, res){
+  req.session.destroy(function(e){ res.redirect('/');});
 })
 
 module.exports = router;

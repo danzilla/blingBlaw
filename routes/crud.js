@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET hello page. */
+/* GET crud page. */
 router.get('/', function(req, res, next) {
 
   console.log("Remove GET");
@@ -15,25 +15,24 @@ router.post('/', function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-    var userID = req.body.userID;
-
-    collection.remove({_id: userID}, function(err, results) {
-          if (err){
-            res.send("There was a problem removing the information to the database. ID: " + userID);
-            console.log("There was a problem removing the information to the database. ID: " + userID);
-          }
-          else {
-            console.log("Information Removed from the database. ID: " + userID);
-            collection.find({},{}, function(e, results){
-              res.render('view', {
-                title: 'Information Removed from the database',
-                data: results
-              });
-            })
-          }
-       });
-
-     });
+  var removeUser = {
+    _id: req.body.userID
+  };
+  collection.remove(removeUser, function(err, results) {
+      if (err){
+        res.send("problem removing the info ID: " + removeUser._id);
+        console.log("problem removing the info ID: " + removeUser._id);
+      } else {
+        console.log("Information Removed from the database. ID: " + removeUser._id);
+        collection.find({},{}, function(e, results){
+          res.render('view', {
+            title: 'Information Removed from the database',
+            data: results
+          });
+        })
+      }
+   });
+ });
 
 
 module.exports = router;

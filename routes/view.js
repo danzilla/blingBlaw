@@ -1,6 +1,7 @@
 var express = require('express');
-var router = express.Router();
+var moment = require('moment');
 
+var router = express.Router();
 
 
 /* GET hello page. */
@@ -12,11 +13,11 @@ router.get('/', function(req, res, next) {
   collection.find({},{}, function(e, results){
     res.render('view', {
       title: 'Hey! We made it',
-      data: results
+      data: results,
+      logM: 'Log Out'
     });
   });
 });
-
 
 /* POST to Add User Service */
 router.post('/', function(req, res) {
@@ -24,30 +25,28 @@ router.post('/', function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-    // Get our form values. These rely on the "name" attributes
-    var dataInsert = {
-      userName : req.body.username,
-      userEmail : req.body.useremail
+  var newData = {
+    userName : req.body.username,
+    userEmail : req.body.useremail,
+    userDate : moment().format('MMMM Do YYYY, h:mm:ss a')
+  };
+  // Get our form values. These rely on the "name" attributes
+  // Submit to the DB
+  collection.insert(newData, function (err, results) {
+    if (err) { // If it failed, return error
+      res.send("There was a problem adding the information to the database.");
     }
-    var searchA = "";
-
-    // Submit to the DB
-    collection.insert({ dataInsert }, function (err, results) {
-      if (err) {
-          // If it failed, return error
-          res.send("There was a problem adding the information to the database.");
-      }
-      else {
-        collection.find({ }, function(e, results){
-          res.render('view', {
-            title: 'Hey! We Add new one!',
-            data: results
-          });
+    else { // Hey! We Add new one!
+      collection.find({ }, function(e, results){
+        res.render('view', {
+          title: 'Hey! We Add new one!',
+          data: results,
+          logM: 'Log Out'
         });
-      }
-    });
+      });
+    }
+  });
 });
-
 
 
 
