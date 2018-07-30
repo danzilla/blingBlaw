@@ -1,47 +1,53 @@
-// Express
 var express = require('express');
-var app = express();
-
-// CURD db connection - router // Improve
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var MongoStore = require('connect-mongo')(session);
+var path = require('path');
+var logger = require('morgan');
 var mongo = require("mongo");
 var monk = require("monk");
-var db = monk("localhost:27017/express-hello")
+
+var app = express();
+
+app.locals.pretty = true;
+app.use(logger('dev'));
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/app/public/')));
+app.set('views', path.join(__dirname, '/app/server/views'));
+app.set('view engine', 'ejs');
+
+// DB and Session
+var dbUrl = "localhost:27017/danustanBling";
+var dbname = "";
+
+app.use(cookieParser());
+
+app.use(session({
+	secret: 'dannustan-BlingBlaw',
+	proxy: true,
+	resave: true,
+	saveUninitialized: true,
+	store: new MongoStore({ url: "mongodb://localhost:27017/danustanBling" })
+	})
+);
+
+var db = monk("localhost:27017/danustanBling")
 app.use(function(req,res,next){
     req.db = db;
     next();
 });
-console.log("DB Connection good! Express-hello");  //Improve
-
-var path = require('path');
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-var logger = require('morgan');
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-app.use(session({
-	secret: 'session-secret',
-	proxy: true,
-	resave: true,
-	saveUninitialized: true,
-	store: new MongoStore({ url: "mongodb://localhost:27017/express-hello" })
-	})
-);
-console.log("Session good!"); //Improve
 
 // routes
-var indexRouter = require('./routes/index');
-var viewRouter = require('./routes/view');
-var crudRouter = require('./routes/crud');
-var authRouter = require('./routes/modules/auth');
+var indexRouter = require('./app/server/index');
+var viewRouter = require('./app/server/view');
+var crudRouter = require('./app/server/crud');
 app.use('/', indexRouter);
 app.use('/view', viewRouter);
 app.use('/crud', crudRouter);
-app.use('/auth', authRouter);
 
 var createError = require('http-errors');
 // catch 404 and forward to error handler
