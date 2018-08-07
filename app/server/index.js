@@ -4,18 +4,20 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/', function(req, res, next) {
-
   if(req.session.user == undefined){
     var msg = "Session is empty";
+    sessionName = "Session is Empty";
     console.log(msg);
   } else {
     var msg = "Session is active, user: " + req.session.user;
+    sessionName = req.session.user;
     console.log(msg);
   }
 
   res.render('index', {
     title: 'Login',
-    logM: msg
+    logM: msg,
+    sessionName: sessionName
    });
 });
 
@@ -37,7 +39,7 @@ router.post('/', function(req, res, next) {
         logM: 'Log In'
       });
     }
-    // In case the user not found
+    // In case the user and pass not matched
     if(user !== null && user.userEmail == req.body.pwd) { // if caught any error
       console.log('User and Pwd are match!');
       req.session.user = user.userName; // session set for the user

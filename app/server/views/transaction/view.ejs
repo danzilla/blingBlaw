@@ -1,0 +1,50 @@
+<%- include('../layout/header') -%>
+<%- include('../layout/navDos') -%>
+
+<h1 class="display-1">
+  <p class="text-center"> <%- title %> </p>
+</h1>
+
+
+<div class="container">
+  <p class="text-center"> <%- transactionInfo %> </p>
+  <form method="post" action="/transaction">
+
+    <div class="input-group input-group-lg">
+
+      <input type="text"
+        class="form-control"
+        placeholder="ID" name="id">
+        <input type="text"
+          class="form-control"
+          placeholder="Date" name="Date">
+          <input type="text"
+            class="form-control"
+            placeholder="Desc" name="Desc">
+            <input type="text"
+              class="form-control"
+              placeholder="Withdraw" name="Withdraw">
+              <input type="text"
+                class="form-control"
+                placeholder="Deposite" name="Deposite">
+                <input type="text"
+                  class="form-control"
+                  placeholder="Balance" name="Balance">
+                  <input type="text"
+                    class="form-control"
+                    placeholder="Category" name="Category">
+      <input type="submit" class="form-control"
+        value="Submit" required>
+    </div>
+
+  </form>
+</div>
+
+
+
+
+
+
+
+
+<%- include('../layout/footer') -%>

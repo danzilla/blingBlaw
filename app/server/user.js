@@ -6,6 +6,16 @@ var router = express.Router();
 // User - root
 // GET - USER - user root page
 router.get('/', function(req, res, next) {
+  if(req.session.user == undefined){
+    var msg = "Session is empty";
+    sessionName = "Session is Empty";
+    console.log(msg);
+  } else {
+    var msg = "Session is active, user: " + req.session.user;
+    sessionName = req.session.user;
+    console.log(msg);
+  }
+
   // Set our internal DB variable
   var db = req.db;
   var collection = db.get('usercollection');
@@ -13,7 +23,8 @@ router.get('/', function(req, res, next) {
   collection.find({},{}, function(e, results){
     res.render('user/view', {
       title: 'User mangement',
-      data: results
+      data: results,
+      sessionName: sessionName
     });
   });
 });
@@ -46,12 +57,12 @@ router.post('/', function(req, res) {
 });
 
 // Remove user
-/* GET to remove user/remove Service */
+// GET to remove user/remove Service
 router.get('/remove', function(req, res) {
   res.redirect('/user');
  });
 
-/* POST to remove user/remove Service */
+// POST to remove user/remove Service
 router.post('/remove', function(req, res) {
   // Set our internal DB variable
   var db = req.db;

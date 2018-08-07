@@ -44,8 +44,10 @@ app.use(function(req,res,next){
 // routes
 var indexRouter = require('./app/server/index');
 var userRouter = require('./app/server/user');
+var transactionRouter = require('./app/server/transaction');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/transaction', transactionRouter);
 
 var createError = require('http-errors');
 // catch 404 and forward to error handler
