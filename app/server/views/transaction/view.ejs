@@ -1,47 +1,32 @@
 <%- include('../layout/header') -%>
 <%- include('../layout/navDos') -%>
 
-<h1 class="display-1">
-  <p class="text-center"> <%- title %> </p>
-</h1>
-
-
 <div class="container">
-  <p class="text-center"> <%- transactionInfo %> </p>
-  <form method="post" action="/transaction">
 
-    <div class="input-group input-group-lg">
+  <h1 class="display-4 text-center">upload</h1>
+  <p class="text-center"> <%- pageInfo.title %> </p>
 
-      <input type="text"
-        class="form-control"
-        placeholder="ID" name="id">
-        <input type="text"
-          class="form-control"
-          placeholder="Date" name="Date">
-          <input type="text"
-            class="form-control"
-            placeholder="Desc" name="Desc">
-            <input type="text"
-              class="form-control"
-              placeholder="Withdraw" name="Withdraw">
-              <input type="text"
-                class="form-control"
-                placeholder="Deposite" name="Deposite">
-                <input type="text"
-                  class="form-control"
-                  placeholder="Balance" name="Balance">
-                  <input type="text"
-                    class="form-control"
-                    placeholder="Category" name="Category">
-      <input type="submit" class="form-control"
-        value="Submit" required>
-    </div>
+  <div class="input-group-append">
+    <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
+    <a class="btn btn-outline-info" href="/transaction">Back</a>
+  </div>
 
-  </form>
+  <hr>
 </div>
 
+<div class="container">
 
 
+  <% for(var i=0; i < transaction.length; i++) { %>
+    <%- JSON.stringify(transaction[i].transactionInfo) %>
+  <% } %>
+
+
+
+
+
+
+</div>
 
 
 

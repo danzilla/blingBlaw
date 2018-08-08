@@ -1,6 +1,6 @@
   <!-- Nav bar -->
   <nav class="navbar navbar-dark bg-dark">
-    <% if(sessionName){ %>
+    <% if(pageInfo.sessionName){ %>
     <button class="navbar-toggler"
             type="button"
             data-toggle="collapse" data-target="#navBarDropdown"
@@ -12,7 +12,7 @@
        <button class="btn btn-outline-danger"
               type="button"
               data-toggle="modal" data-target="#navBarUser">
-           <%- sessionName %>
+           <%- pageInfo.sessionName %>
       </button>
       <a class="btn btn-outline-primary" href="/logout">
         <i class="fas fa-sign-in-alt"></i>
@@ -65,12 +65,12 @@
 
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title"><%- title %> </h4>
+            <h4 class="modal-title"><%- pageInfo.title %> </h4>
           </div>
           <!-- Modal body -->
           <div class="modal-body text-center">
             <i class="fas fa-fire text-danger display-1 "></i>
-            <code class="display-3"><%- sessionName %></code>
+            <code class="display-3"><%- pageInfo.sessionName %></code>
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">

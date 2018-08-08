@@ -1,0 +1,147 @@
+<%- include('../layout/header') -%>
+<%- include('../layout/navDos') -%>
+
+
+  <% if (pageInfo.request == 'get') { %>
+  <div class="container">
+    <p class="text-center display-3"> <%- pageInfo.title %>
+      <small class="text-center"> <%- pageInfo.page %> </small>
+     </p>
+    <hr>
+  </div>
+
+  <form action="/transaction/upload" method="post">
+  <div class="container">
+    <div class="row">
+
+    <div class="col-md-6 card-1 p-2">
+      <div class="col p-1">
+        <div class="form-group">
+          <label for="statementName">name</label>
+          <input type="text" class="form-control"
+          name="statementName" id="statementName" required>
+        </div>
+        <div class="form-group">
+          <label for="statementType">type</label>
+          <select class="custom-select"
+            name="statementType" id="statementType" aria-label="Example select with button addon">
+            <option selected>Choose...</option>
+            <option value="1">Credit Card</option>
+            <option value="2">Debit</option>
+            <option value="3">Saving</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="statementDate" class="col-2 col-form-label">date</label>
+          <input class="form-control" type="date" value="2011-08-19"
+            name="statementDate" id="statementDate">
+        </div>
+      </div>
+      <hr>
+      <div class="col">
+        <div class="form-group">
+         <label for="statementDesc">Comments</label>
+         <textarea class="form-control" rows="3"
+          name="statementDesc" id="statementDesc"></textarea>
+       </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="col card-1 p-5">
+        <div class="form-group">
+          <label for="statementFile">Statement file <small>.csv</small></label>
+          <div class="custom-file" id="statementFile">
+            <input type="file"
+            class="custom-file-input"
+            name="statementFileInput" id="statementFileInput" aria-describedby="fileHelp" required>
+            <label class="custom-file-label" for="statementFileInput">
+               Select file...
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div class="text-center">
+          <button class="btn btn-outline-primary">
+            Preview
+          </button>
+          <a class="btn btn-outline-info" href="/transaction">Back</a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+  </form>
+  <% } else { %>
+
+  <div class="container text-center">
+    <div class="col">
+      <p class="text-center display-3"> <%- pageInfo.title %>
+        <small class="text-center"> <%- pageInfo.page %> </small>
+      </p>
+    </div>
+    <div class="col">
+      <a class="display-4">
+        <%= statementInfo.statementName %>
+      </a>
+      <a class="display-4">
+        <%= statementInfo.statementType %>
+      </a>
+      <a class="display-4">
+        <%= statementInfo.statementFileInput %>
+      </a>
+    </div>
+    <div class="col">
+      <form action="/transaction/upload" method="post">
+      <div class="btn-group btn-group-lg" role="group">
+        <input type="hidden" value="self" name="submitMode"/>
+        <button role="button"
+          type="submit"
+          class="btn btn-outline-danger">
+          Submit
+        </button>
+        <a class="btn btn-outline-secondary"
+          href="/transaction/upload">
+          back
+        </a>
+      </div>
+    </form>
+    </div>
+
+    <hr>
+
+  </div>
+
+  <div class="container">
+    <table class="table card-1">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Desc</th>
+          <th scope="col">Withdraw</th>
+          <th scope="col">Deposite</th>
+          <th scope="col">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for(var i=0; i < transactionInfo.length; i++) { %>
+        <tr>
+          <td id="transId"><%- transactionInfo[i].transId %></td>
+          <td id="transDate"><%- transactionInfo[i].transDate %></td>
+          <td id="transDesc"><%- transactionInfo[i].transDesc %></td>
+          <td id="transWithdraw"><%- transactionInfo[i].transWithdraw %></td>
+          <td id="transDeposite"><%- transactionInfo[i].transDeposite %></td>
+          <td id="transBalance"><%- transactionInfo[i].transBalance %></td>
+        </tr>
+      <% } %>
+    </tbody>
+    </table>
+  </div>
+  <% } %>
+
+
+<%- include('../layout/footer') -%>
