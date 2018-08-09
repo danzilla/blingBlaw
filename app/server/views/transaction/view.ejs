@@ -2,30 +2,56 @@
 <%- include('../layout/navDos') -%>
 
 <div class="container">
-
-  <h1 class="display-4 text-center">upload</h1>
-  <p class="text-center"> <%- pageInfo.title %> </p>
-
-  <div class="input-group-append">
-    <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
-    <a class="btn btn-outline-info" href="/transaction">Back</a>
+  <div class="col">
+    <p class="display-1 text-center">
+      <%- pageInfo.title %>
+      <small class="display-4"> <%- pageInfo.page %></small>
+    </p>
   </div>
 
+
+
+
+  <div class="col">
+    <div class="input-group input-group-lg">
+      <input type="text" class="form-control">
+      <div class="input-group-prepend">
+        <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
+        <a class="btn btn-outline-info" href="/transaction">Back</a>
+
+        <div class="dropdown input-group-append">
+
+          <button class="btn btn-outline-danger dropdown-toggle btn-lg"
+            type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="input-group-append">
+      <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
+      <a class="btn btn-outline-info" href="/transaction">Back</a>
+    </div>
+  </div>
   <hr>
 </div>
 
-<div class="container">
-
-
+<div class="container word-wrap ">
   <% for(var i=0; i < transaction.length; i++) { %>
-    <%- JSON.stringify(transaction[i].transactionInfo) %>
+    <p class="text-danger">
+      <%- JSON.stringify(transaction[i]) %>
+    </P>
   <% } %>
-
-
-
-
-
-
 </div>
 
 

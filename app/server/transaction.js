@@ -5,6 +5,10 @@ var fs = require('fs');
 
 var router = express.Router();
 
+// statement
+//  - statementInfo
+//  - transactionInfo
+//  - dateAdded
 
 /* GET login page */
 router.get('/', function(req, res, next) {
@@ -18,27 +22,20 @@ router.get('/', function(req, res, next) {
     console.log(msg);
   }
 
-  var db = req.db;
-  var collection = db.get('statementCollection');
-  // statement
-  //  - statementInfo
-  //  - transactionInfo
-  //  - dateAdded
-
-
   var pageInfo = {
-    title: 'upload',
-    page: "page POST",
-    request: "post",
+    title: 'Transaction',
+    page: "Dashboard",
+    request: "get",
     sessionName: sessionName
   }
-  collection.find({ }, function(e, results){
+  var db = req.db;
+  var collection = db.get('statementCollection');
+  collection.find({ }, function(e, transactionResult){
     res.render('transaction/view', { // user/view
-      transaction: results,
-      pageInfo: pageInfo
+      pageInfo: pageInfo,
+      transaction: transactionResult
     });
   });
-
 });
 
 /* GET upload page */
