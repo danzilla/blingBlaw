@@ -1,99 +1,73 @@
 <%- include('../layout/header') -%>
 <%- include('../layout/navDos') -%>
 
+<div class="container">
+  <p class="text-center display-2">
+    <%- pageInfo.title %>
+    <small class="text-center text-info display-4">
+      <%- pageInfo.page %>
+    </small>
+   </p>
 
-<div class="container card-1 mt-4">
-
-  <p class="text-center"> <%- title %> </p>
- 
-  <div class="input-group container">
-    <input type="text" class="form-control"
-      placeholder="Search" aria-describedby="button-addon4" disabled>
-
-    <div class="input-group-append" id="button-addon4">
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <a class="btn btn-outline-danger active"
-            href="/user">
-          View
-        </a>
-        <button class="btn btn-outline-primary collapsed"
-                type="button"
-                data-toggle="collapse" data-target="#collapseThree"
-                aria-expanded="false" aria-controls="collapseThree">
-          <i class="fas fa-plus"></i>
-        </button>
-        <%- include('../layout/nav') -%>
-      </div>
+  <div class="col">
+    <div class="">
+      <form class="input-group input-group-lg" name="adduser" method="post" action="/user">
+        <input type="text" name="username" placeholder="user" class="form-control" required>
+        <input type="text" name="useremail" placeholder="password" class="form-control" required>
+        <div class="input-group-prepend">
+          <button type="submit" class="btn btn-outline-primary">Add</button>
+          <%- include('../layout/nav') -%>
+        </div>
+      </form>
+    </div>
+    <div class="m-2">
+      <code class="text-center">
+        <h5>Raw data </h5>
+        <p><%- JSON.stringify(data) -%></p>
+      </code>
     </div>
   </div>
 
-  <div class="accordion" id="accordionSearch">
-    <div class="mt-4">
+  <hr>
+</div>
 
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionSearch">
 
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">_id</th>
-              <th scope="col">User</th>
-              <th scope="col">Pwd</th>
-              <th scope="col">Date</th>
-              <th scope="col">Modify</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if (data) { %>
-              <% for(var i=0; i < data.length; i++) { %>
-                <tr>
-                  <form name="removeUser" method="post" action="/user/remove">
-                    <th scope="row">
-                      <%= data[i]._id %>
-                    </th>
-                    <td>
-                      <%= data[i].userName %>
-                    </td>
-                    <td>
-                      <%= data[i].userEmail %>
-                    </td>
-                    <td>
-                      <%= data[i].userDate %>
-                    </td>
-                    <input type="hidden" name="userID" value="<%= data[i]._id %>">
-                    <td> <button class="btn btn-danger btn-sm"> Remove </button></td>
-                  </form>
-                </tr>
-                <% } %>
-              <% } %>
-          </tbody>
-        </table>
-
-      </div>
-
-      <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSearch">
-
-        <div class="container">
-          <form class="input-group mb-1" name="adduser" method="post" action="/user">
-            <input type="text" name="username" placeholder="user" class="form-control">
-            <input type="text" name="useremail" placeholder="password" class="form-control">
-            <div class="input-group-prepend">
-              <button type="submit" class="btn btn-danger btn-sm">Submit</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="container">
-          <code>
-            <h5 class="display-5">Raw data </h5>
-            <%- JSON.stringify(data) -%>
-          </code>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
+<div class="container">
+  <table class="table card-1">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">_id</th>
+        <th scope="col">User</th>
+        <th scope="col">Pwd</th>
+        <th scope="col">Date</th>
+        <th scope="col">Modify</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (data) { %>
+        <% for(var i=0; i < data.length; i++) { %>
+          <tr>
+            <form name="removeUser" method="post" action="/user/remove">
+              <th scope="row">
+                <%= data[i]._id %>
+              </th>
+              <td>
+                <%= data[i].userName %>
+              </td>
+              <td>
+                <%= data[i].userEmail %>
+              </td>
+              <td>
+                <%= data[i].userDate %>
+              </td>
+              <input type="hidden" name="userID" value="<%= data[i]._id %>">
+              <td> <button class="btn btn-danger btn-sm"> Remove </button></td>
+            </form>
+          </tr>
+          <% } %>
+        <% } %>
+    </tbody>
+  </table>
 </div>
 
 

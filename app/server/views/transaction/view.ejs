@@ -2,59 +2,58 @@
 <%- include('../layout/navDos') -%>
 
 <div class="container">
-  <div class="col">
-    <p class="display-1 text-center">
-      <%- pageInfo.title %>
-      <small class="display-4"> <%- pageInfo.page %></small>
-    </p>
-  </div>
-
-
-
+  <p class="text-center display-2">
+    <%- pageInfo.title %>
+    <small class="text-center text-info display-4">
+      <%- pageInfo.page %>
+    </small>
+   </p>
 
   <div class="col">
     <div class="input-group input-group-lg">
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" placeholder="Search">
       <div class="input-group-prepend">
-        <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
-        <a class="btn btn-outline-info" href="/transaction">Back</a>
-
-        <div class="dropdown input-group-append">
-
-          <button class="btn btn-outline-danger dropdown-toggle btn-lg"
-            type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-
+        <a class="btn btn-outline-primary" href="/transaction">
+          Search
+        </a>
+        <a class="btn btn-outline-success" href="/transaction/upload">
+          <i class="fas fa-upload"></i>
+        </a>
+        <%- include('../layout/nav') -%>
       </div>
     </div>
   </div>
 
-  <div class="col">
-    <div class="input-group-append">
-      <a class="btn btn-outline-primary" href="/transaction/upload">Upload</a>
-      <a class="btn btn-outline-info" href="/transaction">Back</a>
-    </div>
-  </div>
   <hr>
 </div>
 
-<div class="container word-wrap ">
-  <% for(var i=0; i < transaction.length; i++) { %>
-    <p class="text-danger">
-      <%- JSON.stringify(transaction[i]) %>
-    </P>
-  <% } %>
+<div class="container word-wrap">
+  <div class="list-group ">
+    <% for(var i=0; i < transaction.length; i++) { %>
+    <a class="list-group-item m-h-t m-1 card-1">
+
+      <form name="removeUser" method="post" action="/transaction/remove">
+       <input type="hidden" name="statementID" value="<%= transaction[i]._id %>">
+       <td> <button class="btn btn-outline-danger"> Remove </button></td>
+     </form>
+
+      <h5 class="list-group-item-heading">
+        _id <code><%- JSON.stringify(transaction[i]._id) %></code>
+      </h5>
+      <h5 class="list-group-item-text">
+        uploadDate <code><%- JSON.stringify(transaction[i].uploadDate) %></code>
+      </h5>
+      <h5 class="list-group-item-text">
+        statementInfo <code><%- JSON.stringify(transaction[i].statementInfo) %></code>
+      </h5>
+      <h5 class="list-group-item-text">
+        transactionInfo <code><%- JSON.stringify(transaction[i]) %></code>
+      </h5>
+
+    </a>
+    <% } %>
+  </div>
 </div>
-
-
 
 
 

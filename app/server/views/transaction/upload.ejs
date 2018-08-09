@@ -1,11 +1,13 @@
 <%- include('../layout/header') -%>
 <%- include('../layout/navDos') -%>
 
-
   <% if (pageInfo.request == 'get') { %>
   <div class="container">
-    <p class="text-center display-3"> <%- pageInfo.title %>
-      <small class="text-center"> <%- pageInfo.page %> </small>
+    <p class="text-center display-2">
+      <%- pageInfo.title %>
+      <small class="text-center text-info display-4">
+        <%- pageInfo.page %>
+      </small>
      </p>
     <hr>
   </div>
@@ -64,10 +66,13 @@
 
       <div class="p-4">
         <div class="text-center">
-          <button class="btn btn-outline-primary">
-            Preview
-          </button>
-          <a class="btn btn-outline-info" href="/transaction">Back</a>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-outline-primary">
+              upload
+            </button>
+            <a class="btn btn-outline-info" type="button"
+              href="/transaction">Transaction</a>
+          </div>
         </div>
       </div>
     </div>
@@ -78,41 +83,19 @@
   <% } else { %>
 
   <div class="container text-center">
-    <div class="col">
-      <p class="text-center display-3"> <%- pageInfo.title %>
-        <small class="text-center"> <%- pageInfo.page %> </small>
-      </p>
-    </div>
-    <div class="col">
-      <a class="display-4">
-        <%= statementInfo.statementName %>
+    <p class="text-center display-2">
+      <%- pageInfo.title %>
+      <small class="text-center text-info display-4">
+        <%- pageInfo.page %>
+      </small>
+      <a class="btn btn-lg btn-outline-primary" href="/transaction" role="button">
+        <i class="fas fa-angle-double-left"></i>
       </a>
-      <a class="display-4">
-        <%= statementInfo.statementType %>
-      </a>
-      <a class="display-4">
-        <%= statementInfo.statementFileInput %>
-      </a>
-    </div>
-    <div class="col">
-      <form action="/transaction/upload" method="post">
-      <div class="btn-group btn-group-lg" role="group">
-        <input type="hidden" value="self" name="submitMode"/>
-        <button role="button"
-          type="submit"
-          class="btn btn-outline-danger">
-          Submit
-        </button>
-        <a class="btn btn-outline-secondary"
-          href="/transaction/upload">
-          back
-        </a>
-      </div>
-    </form>
-    </div>
-
+     </p>
+     <a><strong>Statement: </strong><code><%= statementInfo.statementName %></code></a>
+     <a><strong>Account Type: </strong><code> <%= statementInfo.statementType %></code></a>
+     <a><strong>Uploaded file: </strong><code> <%= statementInfo.statementFileInput %></code></a>
     <hr>
-
   </div>
 
   <div class="container">

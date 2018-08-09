@@ -12,10 +12,16 @@ p, a {
     line-height: 1.7em;
 }
 
+.m-h-t {
+  max-height: 350px;
+  min-height: 350px;
+  overflow: auto;
+}
+
 .word-wrap {
    word-wrap: break-word;
 }
-.noOverflow{
+.overflowAuto {
   overflow: auto;
 }
 
