@@ -195,10 +195,10 @@ router.post('/remove', function(req, res) {
           request: "post",
           sessionName: sessionName
         }
-        collection.find({},{}, function(e, results){
+        collection.find({},{}, function(e, transactionResults){
           res.render('transaction/view', {
             pageInfo: pageInfo,
-            transaction: results
+            transaction: transactionResults
           });
         })
       }
