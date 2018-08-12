@@ -1,99 +1,85 @@
 <%- include('../layout/header') -%>
-<%- include('../layout/navDos') -%>
+  <%- include('../layout/navDos') -%>
 
-<div class="container">
-  <p class="text-center display-2">
-    <%- pageInfo.title %>
-    <small class="text-center text-info display-4">
-      <%- pageInfo.page %>
-    </small>
-   </p>
+    <div class="container">
+      <p class="text-center display-2">
+        <%- pageInfo.title %>
+        <small class="text-center text-info display-4">
+          <%- pageInfo.page %>
+        </small>
+      </p>
 
-  <hr>
-</div>
-
-<div class="container">
-  <div class="col">
-
-  <form name="addcat" method="post" action="/category">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">Add category</span>
+      <div class="col">
+        <form class="input-group input-group-lg" name="addcat" method="post" action="/category">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Add category</span>
+          </div>
+          <input type="text" placeholder="category name" class="form-control" name="catName" required>
+          <select class="form-control form-control-lg custom-select"
+            name="catParent">
+            <option value="root">category (new)</option>
+            <% for(var i=0; i < categoryInfo.length; i++) { %>
+            <option value="<%= categoryInfo[i]._id %>">
+              <%= categoryInfo[i].catName %>
+            </option>
+            <% } %>
+          </select>
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-primary">Add</button>
+            <%- include('../layout/nav') -%>
+          </div>
+        </form>
       </div>
-      <input type="text" placeholder="category name" class="form-control" name="catName" required>
 
-      <select class="custom-select" name="catParent">
-        <option>categories</option>
-        <% for(var i=0; i < categoryInfo.length; i++) { %>
-          <option>
-            <%= categoryInfo[i].catParent %>
-          </option>
-        <% } %>
-      </select>
-
-      <div class="input-group-append">
-        <button type="submit" class="btn btn-outline-primary">Add</button>
-        <%- include('../layout/nav') -%>
-      </div>
+      <hr>
     </div>
-  </form>
 
-  </div>
-</div>
+    <div class="container">
+      <table class="table table-bordered m-2">
+        <thead>
+          <tr>
+            <th rowspan="">#</th>
+            <th rowspan="" class="">Category</th>
+            <th colspan="">Child category</th>
+            <th colspan="">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
 
-<div class="container">
-  <code class="text-center">
-    <h5>Raw data </h5>
-    <p><%- JSON.stringify(categoryInfo) -%></p>
-  </code>
+      <% var catLen = categoryInfo.length; %>
+      <% for(var i=0; i < catLen; i++) { %>
+        <tr>
+          <td><%= i %></td>
+          <td><%= categoryInfo[i].catName %></td>
+          <td>
+            <% if(categoryInfo[i].subCat) { %>
+              <% var subCatLen = categoryInfo[i].subCat.length; %>
+              <% for (var j=0; j < subCatLen; j++){ %>
+                <span class="badge badge-warning"><%= categoryInfo[i].subCat[j].catName %></span>
+              <% }; %>
+            <% } else { %>
+              <% // No child obj %>
+              <% console.log("no child : " + categoryInfo[i].catName); %>
+              <% console.log("no child : " + categoryInfo[i]._id); %>
+            <% } %>
+          </td>
+          <td>
+            <form name="removeCat" method="post" action="/category/remove">
+              <input type="hidden" name="catID" value="<%= categoryInfo[i]._id %>">
+              <button class="btn btn-outline-danger"> Remove </button>
+            </form>
+          </td>
+        </tr>
+      <% }; %>
 
-<code class="m-1">
-  <% for(var i=0; i < categoryInfo.length; i++) { %>
-  <p>
-    Cat Parent: <small class="text-primary"><%= categoryInfo[i].catParent %></small>
-    Cat Name: <small class="text-info"><%= categoryInfo[i].catName %></small>
-  </p>
-  <% } %>
-</code>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th rowspan="">#</th>
-        <th rowspan="" class="">Parent category</th>
-        <th colspan="">Child category</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(var i=0; i < categoryInfo.length; i++) { %>
-      <tr>
-        <td><%= i %></td>
-        <td><%= categoryInfo[i].catParent %></td>
-        <td rowspan=""><%= categoryInfo[i].catName %></td>
-      </tr>
-      <% } %>
-    </tbody>
-  </table>
-</div>
-
-
-
-
-
-
-
-
-
-
+        </tbody>
+      </table>
+      <code class="text-center">
+        <h5 class="display-3">Raw data </h5>
+        <p><%- JSON.stringify(categoryInfo) -%></p>
+      </code>
+    </div>
 
 
 
-
-
-
-
-
-
-
-
-
-<%- include('../layout/footer') -%>
+    <%- include('../layout/footer') -%>
