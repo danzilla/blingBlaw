@@ -1,7 +1,7 @@
 <%- include('../layout/header') -%>
 <%- include('../layout/navDos') -%>
 
-<div class="container">
+<div class="container word-wrap">
   <p class="text-center display-2">
     <%- pageInfo.title %>
     <small class="text-center text-info display-4">
@@ -27,31 +27,15 @@
   <hr>
 </div>
 
-<div class="container word-wrap">
-  <div class="list-group ">
-    <% for(var i=0; i < transaction.length; i++) { %>
-    <a class="list-group-item m-h-t m-1 card-1">
+<div class="col word-wrap">
+  <div class="row">
+    <div class="col-md-8 m-h-t card-1">
+      Results
+      <%- include('list') -%>
+    </div>
+    <div class="col-md-4 m-h-t card-1">
 
-      <form name="removeUser" method="post" action="/transaction/remove">
-       <input type="hidden" name="statementID" value="<%= transaction[i]._id %>">
-       <td> <button class="btn btn-outline-danger"> Remove </button></td>
-     </form>
-
-      <h5 class="list-group-item-heading">
-        _id <code><%- JSON.stringify(transaction[i]._id) %></code>
-      </h5>
-      <h5 class="list-group-item-text">
-        uploadDate <code><%- JSON.stringify(transaction[i].uploadDate) %></code>
-      </h5>
-      <h5 class="list-group-item-text">
-        statementInfo <code><%- JSON.stringify(transaction[i].statementInfo) %></code>
-      </h5>
-      <h5 class="list-group-item-text">
-        transactionInfo <code><%- JSON.stringify(transaction[i]) %></code>
-      </h5>
-
-    </a>
-    <% } %>
+    </div>
   </div>
 </div>
 
