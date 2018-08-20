@@ -9,92 +9,79 @@
       <%- pageInfo.page %>
     </small>
   </p>
-
-  <!-- Header Nav -->
+  <!-- Add category -->
   <div class="col">
-    <form class="input-group input-group-lg" name="addcat" method="post" action="/category">
-      <div class="input-group-prepend">
-        <span class="input-group-text">Add category</span>
-      </div>
-      <input name="catName" type="text" placeholder="category name" class="form-control" required>
-      <select class="form-control form-control-lg custom-select"
-        name="catParentName">
-        <option value="root">category (new)</option>
-        <% for(var i=0; i < categoryInfo.length; i++) { %>
-        <option value="<%= categoryInfo[i]._id %>">
-          <%= categoryInfo[i].catName %>
-        </option>
-        <% } %>
-      </select>
-      <div class="input-group-append">
-        <button type="submit" class="btn btn-outline-primary">Add</button>
-        <%- include('../layout/nav') -%>
-      </div>
-    </form>
+    <%- include('add') -%>
   </div>
 
   <hr>
 </div>
 
 <!-- Table -->
+<!-- Category details -->
 <div class="container">
   <table class="table table-bordered m-2">
     <thead>
       <tr>
-        <th rowspan="">#</th>
-        <th rowspan="" class="">Category</th>
-        <th colspan="">Child category</th>
+        <th colspan="">Category</th>
+        <th colspan="">Sub category</th>
         <th colspan="">Edit</th>
       </tr>
     </thead>
-      <tbody>
-        <% var catLen = categoryInfo.length; %>
-        <% for(var i=0; i < catLen; i++) { %>
+    <tbody>
+      <% var catLen = categoryInfo.length; %>
+      <% for(var i=0; i < catLen; i++) { %>
         <tr>
-          <td><%= i %></td>
-          <td><%= categoryInfo[i].catName %></td>
-          <div class="form-inline">
-            <div class="form-group">
-            <td>
-              <% if(categoryInfo[i].subCat) { %>
-                <% var subCatLen = categoryInfo[i].subCat.length; %>
-                <% for (var j=0; j < subCatLen; j++){ %>
-                  <form name="subCatForm" method="post" action="/category/remove"
+          <% if (categoryInfo[i].catParent == "root" ) { %>
+
+            <td><%= categoryInfo[i].catName %></td>
+            <td class="text-info">
+              <% for (var j=0; j < catLen; j++) { %>
+                <% if (categoryInfo[i]._id == categoryInfo[j].catParent ) { %>
+                  <form name="removeCatSub" method="post" action="/category/remove"
                     class="d-inline">
                     <div class="badge badge-warning">
-                      <%= categoryInfo[i].subCat[j].catName %>
-                      <a href="#"class="badge badge-warning badge-pill"
-                      onclick='document.forms["subCatForm"].submit(); return false;'>
+                      <%= categoryInfo[j].catName %>
+                      <input type="hidden" name="removeCatSubID" value="<%= categoryInfo[j]._id %>">
+                      <a class="badge badge-warning badge-pill btn"
+                          onclick='document.forms["removeCatSub"].submit(); return false;'>
                         <i class="text-danger fas fa-times"></i>
                       </a>
-                      <input type="hidden" name="removeCatParentID" value="<%= categoryInfo[i]._id %>">
-                      <input type="hidden" name="removeCatSubName" value="<%= categoryInfo[i].subCat[j].catName %>">
-                      <input type="hidden" name="removeCatSubDate" value="<%= categoryInfo[i].subCat[j].catAddDate %>">
                     </div>
                   </form>
                 <% } %>
-              <% } else { %>
-                <% // No child obj %>
-                <% console.log("no child : " + categoryInfo[i].catName); %>
-                <% console.log("no child : " + categoryInfo[i]._id); %>
               <% } %>
             </td>
-            </div>
-          </div>
-          <td>
-            <form name="removeCat" method="post" action="/category/remove">
-              <input type="hidden" name="removeCatID" value="<%= categoryInfo[i]._id %>">
-              <button class="btn btn-outline-danger"> Remove </button>
-            </form>
-          </td>
+            <td>
+              <form name="removeCat" method="post" action="/category/remove">
+                <input type="hidden" name="removeCatID" value="<%= categoryInfo[i]._id %>">
+                <button class="btn btn-outline-danger"> Remove </button>
+              </form>
+            </td>
+          <% } else { %>
+            <!-- Only display Parent category -->
+            <% if (false) { %>
+              <td>[<%= i %>] <%= categoryInfo[i]._id %></td>
+              <td>[<%= i %>] <%= categoryInfo[i].catName %></td>
+              <td>[<%= i %>] <%= categoryInfo[i].catParent %></td>
+              <td class="text-dangere"> Child Object </td>
+              <td>
+                <form name="removeCat" method="post" action="/category/remove">
+                  <input type="hidden" name="removeCatID" value="<%= categoryInfo[i]._id %>">
+                  <button class="btn btn-outline-danger"> Remove </button>
+                </form>
+              </td>
+            <% } %>
+
+          <% } %>
         </tr>
-        <% } %>
-      </tbody>
+      <% } %>
+    </tbody>
   </table>
+
   <code class="text-center">
     <h5 class="display-3">Raw data </h5>
     <p><%- JSON.stringify(categoryInfo) -%></p>
   </code>
 </div>
-
 <%- include('../layout/footer') -%>
