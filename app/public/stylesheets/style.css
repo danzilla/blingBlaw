@@ -1,72 +1,32 @@
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #fafafa;
-    width: 100%;
-    height: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
 }
-p, a {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-}
-
-.m-h-t {
-  max-height: 350px;
-  min-height: 350px;
+.overNo-scroll {
   overflow: auto;
+  word-wrap: break-word;
+}
+.overNo {
+  overflow: hidden;
 }
 
-.word-wrap {
-   word-wrap: break-word;
+
+.topNav {
+  background-color: #212121;
 }
-.overflowAuto {
-  overflow: auto;
+.sideNavRight {
+  background-color: #d5dee0;
+  border-left: 1px solid #a9bbc0;
+  -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
 }
-
-.jumbotron.vertical-center {
-  margin-bottom: 0; /* Remove the default bottom margin of .jumbotron */
+.sideNavLeft {
+  color: #fff;
+  background-color: #2e2e2e;
+  border-right: 1px solid #17222c;
 }
-
-.vertical-center {
-  min-height: 100%;  /* Fallback for vh unit */
-  min-height: 100vh; /* You might also want to use
-                        'height' property instead.
-
-                        Note that for percentage values of
-                        'height' or 'min-height' properties,
-                        the 'height' of the parent element
-                        should be specified explicitly.
-
-                        In this case the parent of '.vertical-center'
-                        is the <body> element */
-
-  /* Make it a flex container */
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  /* Align the bootstrap's container vertically */
-    -webkit-box-align : center;
-  -webkit-align-items : center;
-       -moz-box-align : center;
-       -ms-flex-align : center;
-          align-items : center;
-
-  /* In legacy web browsers such as Firefox 9
-     we need to specify the width of the flex container */
-  width: 100%;
-
-  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
-     hence the bootstrap's container won't be aligned to the center anymore.
-
-     Therefore, we should use the following declarations to get it centered again */
-         -webkit-box-pack : center;
-            -moz-box-pack : center;
-            -ms-flex-pack : center;
-  -webkit-justify-content : center;
-          justify-content : center;
+.content {
+  background-color: #ECF0F1;
 }

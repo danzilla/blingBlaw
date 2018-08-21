@@ -1,44 +1,56 @@
 <%- include('../layout/header') -%>
-<%- include('../layout/navDos') -%>
 
-<div class="container word-wrap">
-  <p class="text-center display-2">
-    <%- pageInfo.title %>
-    <small class="text-center text-info display-4">
-      <%- pageInfo.page %>
-    </small>
-   </p>
+<div class="h-100">
+  <!-- Navbar TOP -->
+  <%- include('../layout/navDos') -%>
+  <div class="content row h-100">
 
-  <div class="col">
-    <div class="input-group input-group-lg">
-      <input type="text" class="form-control" placeholder="Search">
-      <div class="input-group-prepend">
-        <a class="btn btn-outline-primary" href="/transaction">
-          Search
-        </a>
-        <a class="btn btn-outline-success" href="/transaction/upload">
-          <i class="fas fa-upload"></i>
-        </a>
-        <%- include('../layout/nav') -%>
+    <!-- Navbar Left side -->
+    <div class="col-md-2 sideNavLeft overNo ">
+      <div class="container-fluid">
+        <h1> <%- pageInfo.title %> </h1>
+        <hr>
+        <!-- Add category -->
+        <div class="col">
+          <a class="btn btn-outline-success btn-block" href="/transaction/upload">
+            New statment  <i class="fas fa-upload"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <hr>
-</div>
+    <!-- Content data -->
+    <div class="col-md-8 overNo h-100">
+      <div class="container-fluid h-100">
 
-<div class="col word-wrap">
-  <div class="row">
-    <div class="col-md-8 m-h-t card-1">
-      Results
-      <%- include('list') -%>
+        <h1 class="text-center display-4">
+          <%- pageInfo.title %>
+          <small class="text-center text-info display-4">
+            <%- pageInfo.page %>
+          </small>
+        </h1>
+        <hr>
+
+        <div class="overNo-scroll h-75">
+          <%- include('list') -%>
+        </div>
+
+      </div>
     </div>
-    <div class="col-md-4 m-h-t card-1">
 
+    <!-- Navbar Right side -->
+    <div class="col-md-2 sideNavRight overNo">
+      <div class="container-fluid">
+        <h4 class="display-4">Raw data </h4>
+        <hr>
+        <code class="text-center">
+          <p><%- JSON.stringify(transaction) -%></p>
+        </code>
+      </div>
     </div>
+
   </div>
 </div>
-
 
 
 <%- include('../layout/footer') -%>

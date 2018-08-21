@@ -1,14 +1,11 @@
 
-<form class="input-group input-group-lg" name="addcat" method="post" action="/category">
-
-  <div class="input-group-prepend">
-    <span class="input-group-text">Add category</span>
-  </div>
+<form class="" name="addcat" method="post" action="/category">
 
   <input name="catName"
     type="text" placeholder="category name"
-    class="form-control" required>
-  <select class="form-control form-control-lg custom-select"
+    class="form-control form-control-lg" required>
+
+  <select class="form-control form-control-lg custom-select mt-3 mb-3"
     name="catParent">
     <option value="root">category (new)</option>
     <% for(var i=0; i < categoryInfo.length; i++) { %>
@@ -20,9 +17,6 @@
     <% } %>
   </select>
 
-  <div class="input-group-append">
-    <button type="submit" class="btn btn-outline-primary">Add</button>
-    <%- include('../layout/nav') -%>
-  </div>
+  <button type="submit" class="btn btn-outline-primary btn-block">Add</button>
 
 </form>

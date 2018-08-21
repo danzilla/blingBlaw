@@ -1,76 +1,85 @@
 <%- include('../layout/header') -%>
-<%- include('../layout/navDos') -%>
 
-<div class="container">
-  <p class="text-center display-2">
-    <%- pageInfo.title %>
-    <small class="text-center text-info display-4">
-      <%- pageInfo.page %>
-    </small>
-   </p>
+<div class="h-100">
+  <!-- Navbar TOP -->
+  <%- include('../layout/navDos') -%>
+  <div class="content row h-100">
 
-  <div class="col">
-    <div class="">
-      <form class="input-group input-group-lg" name="adduser" method="post" action="/user">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Add user</span>
-        </div>
-        <input type="text" name="username" placeholder="user" class="form-control" required>
-        <input type="text" name="useremail" placeholder="password" class="form-control" required>
-        <div class="input-group-prepend">
-          <button type="submit" class="btn btn-outline-primary">Add</button>
-          <%- include('../layout/nav') -%>
-        </div>
-      </form>
+    <!-- Navbar Left side -->
+    <div class="col-md-2 sideNavLeft overNo ">
+      <div class="container-fluid">
+        <h1> <%- pageInfo.title %> </h1>
+        <hr>
+        <!-- Add category -->
+        <%- include('add') -%>
+      </div>
     </div>
-    <div class="m-2">
-      <code class="text-center">
-        <h5>Raw data </h5>
-        <p><%- JSON.stringify(data) -%></p>
-      </code>
+
+    <!-- Content data -->
+    <div class="col-md-8 overNo h-100">
+      <div class="container-fluid h-100">
+
+        <h1 class="text-center display-4">
+          <%- pageInfo.title %>
+          <small class="text-center text-info display-4">
+            <%- pageInfo.page %>
+          </small>
+        </h1>
+        <hr>
+
+        <div class="overNo-scroll h-75">
+          <table class="table card-1">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">_id</th>
+                <th scope="col">User</th>
+                <th scope="col">Pwd</th>
+                <th scope="col">Date</th>
+                <th scope="col">Modify</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (data) { %>
+                <% for(var i=0; i < data.length; i++) { %>
+                  <tr>
+                    <form name="removeUser" method="post" action="/user/remove">
+                      <th scope="row">
+                        <%= data[i]._id %>
+                      </th>
+                      <td>
+                        <%= data[i].userName %>
+                      </td>
+                      <td>
+                        <%= data[i].userEmail %>
+                      </td>
+                      <td>
+                        <%= data[i].userDate %>
+                      </td>
+                      <input type="hidden" name="userID" value="<%= data[i]._id %>">
+                      <td> <button class="btn btn-danger btn-sm"> Remove </button></td>
+                    </form>
+                  </tr>
+                  <% } %>
+                <% } %>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
+
+    <!-- Navbar Right side -->
+    <div class="col-md-2 sideNavRight overNo">
+      <div class="container-fluid">
+        <h4 class="display-4">Raw data </h4>
+        <hr>
+        <code class="text-center">
+          <p><%- JSON.stringify(data) -%></p>
+        </code>
+      </div>
+    </div>
+
   </div>
-
-  <hr>
-</div>
-
-
-<div class="container">
-  <table class="table card-1">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">_id</th>
-        <th scope="col">User</th>
-        <th scope="col">Pwd</th>
-        <th scope="col">Date</th>
-        <th scope="col">Modify</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (data) { %>
-        <% for(var i=0; i < data.length; i++) { %>
-          <tr>
-            <form name="removeUser" method="post" action="/user/remove">
-              <th scope="row">
-                <%= data[i]._id %>
-              </th>
-              <td>
-                <%= data[i].userName %>
-              </td>
-              <td>
-                <%= data[i].userEmail %>
-              </td>
-              <td>
-                <%= data[i].userDate %>
-              </td>
-              <input type="hidden" name="userID" value="<%= data[i]._id %>">
-              <td> <button class="btn btn-danger btn-sm"> Remove </button></td>
-            </form>
-          </tr>
-          <% } %>
-        <% } %>
-    </tbody>
-  </table>
 </div>
 
 
