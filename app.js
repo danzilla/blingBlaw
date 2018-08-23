@@ -44,11 +44,11 @@ app.use(function(req,res,next){
 // routes
 var indexRouter = require('./app/server/index');
 var userRouter = require('./app/server/user');
-var transactionRouter = require('./app/server/transaction');
+var statementRouter = require('./app/server/statement');
 var categoryRouter = require('./app/server/category');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/transaction', transactionRouter);
+app.use('/statement', statementRouter);
 app.use('/category', categoryRouter);
 
 var createError = require('http-errors');

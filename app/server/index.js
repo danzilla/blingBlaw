@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
     console.log(msg);
   }
 
-  res.render('index', {
+  res.render('auth/index', {
     title: 'Login',
     logM: msg,
     sessionName: sessionName
@@ -34,20 +34,20 @@ router.post('/', function(req, res, next) {
     // In case the user not found
     if(user !== null && user.userName !== req.body.uname) { // if caught any error
       console.log('User not found')
-      res.render('index', {
+      res.render('auth/index', {
         title: 'User not found',
         logM: 'Log In'
       });
     }
     // In case the user and pass not matched
-    if(user !== null && user.userEmail == req.body.pwd) { // if caught any error
+    if(user !== null && user.userPwd == req.body.pwd) { // if caught any error
       console.log('User and Pwd are match!');
       req.session.user = user.userName; // session set for the user
       console.log("login and Session good! set - user - " + req.session.user);
       res.redirect('user');
     } else { // anything else
         console.log("Credentials wrong");
-        res.render('index', {
+        res.render('auth/index', {
           title: 'Incorrect credentials',
           logM: 'Log In'
         });

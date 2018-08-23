@@ -3,14 +3,10 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
-.overNo-scroll {
-  overflow: auto;
-  word-wrap: break-word;
-}
-.overNo {
-  overflow: hidden;
-}
 
+.borderNav {
+  border-bottom: 1px solid #17222c;
+}
 
 .topNav {
   background-color: #212121;
@@ -18,9 +14,6 @@ body {
 .sideNavRight {
   background-color: #d5dee0;
   border-left: 1px solid #a9bbc0;
-  -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
-  box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.75);
 }
 .sideNavLeft {
   color: #fff;
@@ -29,4 +22,18 @@ body {
 }
 .content {
   background-color: #ECF0F1;
+}
+
+.word-break {
+  word-wrap: break-word;
+}
+.overFlow-no{
+  overflow: hidden;
+}
+.overFlow-yes{
+  overflow: auto;
+}
+
+.border-1{
+  border: red 1px solid;
 }

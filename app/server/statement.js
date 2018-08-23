@@ -23,17 +23,17 @@ router.get('/', function(req, res, next) {
   }
 
   var pageInfo = {
-    title: 'Transaction',
+    title: 'Statements',
     page: "Dashboard",
     request: "get",
     sessionName: sessionName
   }
   var db = req.db;
   var collection = db.get('statementCollection');
-  collection.find({ }, function(e, transactionResult){
-    res.render('transaction/view', { // user/view
+  collection.find({ }, function(e, statementResult){
+    res.render('statement/index', { // statement/index
       pageInfo: pageInfo,
-      transaction: transactionResult
+      statement: statementResult
     });
   });
 });
@@ -51,12 +51,12 @@ router.get('/upload', function(req, res, next) {
   }
 
   var pageInfo = {
-    title: 'Transaction',
+    title: 'Statements',
     page: "upload new",
     request: "get",
     sessionName: sessionName
   }
-  res.render('transaction/upload', {
+  res.render('statement/upload', {
     pageInfo: pageInfo,
    });
 });
@@ -126,18 +126,18 @@ router.post('/upload', function(req, res, next) {
       console.log("Problem adding the info to the database.");
     }
     else { // Hey! We Added new one!
-      console.log("\nTransaction been added!");
-      console.log("Date info: " + results.statementInfo);
-      console.log("Statement info: " + results.statementInfo);
-      console.log("Transaction info: " + results.transactionInfo);
+      console.log("\nStatement been added!");
+      console.log("Date info: " + results.statementInfo.statementDate);
+      console.log("Statement info: " + results.statementInfo.statementName);
+      console.log("Transaction info: " + uploadInfo.transactionInfo);
 
       var pageInfo = {
-        title: 'Transaction',
+        title: 'Statements',
         page: "upload Sucess!",
         request: "post",
         sessionName: sessionName
       }
-      res.render('transaction/upload', {
+      res.render('statement/upload', {
         transactionInfo: transactionInfo,
         statementInfo: statementInfo,
         pageInfo: pageInfo
@@ -161,7 +161,7 @@ router.get('/remove', function(req, res) {
     console.log(msg);
   }
 
-  res.redirect('/transaction');
+  res.redirect('/statement');
  });
 
 // POST to remove user/remove Service
@@ -190,15 +190,15 @@ router.post('/remove', function(req, res) {
         console.log("Info been Removed! ID: " + removeStatement._id);
 
         var pageInfo = {
-          title: "Transaction",
+          title: "Statements",
           page: "removed!",
           request: "post",
           sessionName: sessionName
         }
-        collection.find({},{}, function(e, transactionResults){
-          res.render('transaction/view', {
+        collection.find({},{}, function(e, statementResults){
+          res.render('statement/index', {
             pageInfo: pageInfo,
-            transaction: transactionResults
+            statement: statementResults
           });
         })
       }

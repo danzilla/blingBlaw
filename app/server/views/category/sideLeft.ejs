@@ -1,0 +1,25 @@
+
+<!-- Right Nav container -->
+<div class="overFlow-no h-100 bg-dark">
+
+  <div class="col">
+    <h4 class="display-4 text-secondary"> <%- pageInfo.title %> </h4>
+    <hr>
+  </div>
+
+  <div class="row h-100 overFlow-yes">
+
+    <div class="col-md-3 bg-dark card-1 ">
+      <%- include('../layout/nav') -%>
+    </div>
+    <div class="col-md-9 h-75 overFlow-yes">
+      <!-- Add category -->
+      <code class="text-center word-break">
+        <p>
+          <%- JSON.stringify(categoryInfo) -%>
+        </p>
+      </code>
+    </div>
+
+  </div>
+</div>

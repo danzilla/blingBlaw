@@ -24,7 +24,8 @@ exports.addDataCat = function (newData) {
 
   collection.insert(newData, function(err, results) {
     if (err) {console.log("\nNew Cat insert failed data: " + newData + "\nErr : " + err);}
-    else {console.log("\nNew Cat inserted data: " + newData + "\nResults : " + results);}
+    else {
+      console.log("\nNew Cat inserted data: " + newData + "\nResults : " + results);}
   });
 };
 

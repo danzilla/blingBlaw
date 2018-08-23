@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
     sessionName: sessionName
   }
   collection.find({},{}, function(e, results){
-    res.render('user/view', {
+    res.render('user/index', {
       pageInfo: pageInfo,
       data: results
     });
@@ -51,7 +51,7 @@ router.post('/', function(req, res) {
   var collection = db.get('usercollection');
   var newData = {
     userName : req.body.username,
-    userEmail : req.body.useremail,
+    userPwd : req.body.pwd,
     userDate : moment().format('MMMM Do YYYY, h:mm:ss a')
   };
   collection.insert(newData, function (err, results) {
@@ -66,7 +66,7 @@ router.post('/', function(req, res) {
         sessionName: sessionName
       }
       collection.find({ }, function(e, results){
-        res.render('user/view', { // user/view
+        res.render('user/index', { // user/index
           pageInfo: pageInfo,
           data: results
         });
@@ -124,7 +124,7 @@ router.post('/remove', function(req, res) {
           sessionName: sessionName
         }
         collection.find({},{}, function(e, results){
-          res.render('user/view', {
+          res.render('user/index', {
             pageInfo: pageInfo,
             data: results
           });

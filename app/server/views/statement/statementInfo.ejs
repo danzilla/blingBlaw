@@ -1,0 +1,70 @@
+<div class="container">
+  <h4 class="display-5"> uncategorize </h4>
+
+
+  <select class="form-control form-control-lg custom-select mt-3 mb-3"
+    name="catParent">
+    <option value="root">Statements (info)</option>
+    <% for(var k=0; k < statement.length; k++) { %>
+    <option value="<%= statement[k]._id %>">
+      <%= statement[k].statementInfo.statementName %>
+    </option>
+    <% } %>
+  </select>
+
+
+  <% for(var i=0; i < statement.length; i++) { %>
+
+    <form name="removeUser" method="post" action="/statement/remove">
+     <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
+     <td> <button class="btn btn-outline-danger"> Remove </button></td>
+   </form>
+
+    <p>
+      _id <code><%- JSON.stringify(statement[i]._id) %></code>
+    </p>
+    <p>
+      uploadDate <code><%- JSON.stringify(statement[i].uploadDate) %></code>
+    </p>
+    <p>
+      statementInfo <code><%- JSON.stringify(statement[i].statementInfo) %></code>
+    </p>
+    <p>
+      transactionInfo <code><%- JSON.stringify(statement[i].transactionInfo) %></code>
+    </p>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th> transDate</th>
+            <th> transDesc</th>
+            <th> transWithdraw</th>
+            <th> transDeposite</th>
+            <th> transBalance</th>
+            <th> Edit </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var lenSub = statement[i].transactionInfo %>
+          <% for(var j=0; j < lenSub.length; j++) { %>
+            <tr>
+              <td><%= statement[i].transactionInfo[j].transDate %></td>
+              <td><%= statement[i].transactionInfo[j].transDesc %></td>
+              <td><%= statement[i].transactionInfo[j].transWithdraw %></td>
+              <td><%= statement[i].transactionInfo[j].transDeposite %></td>
+              <td><%= statement[i].transactionInfo[j].transBalance %></td>
+              <td>
+                <form name="removeUser" method="post" action="/statement/remove">
+                 <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
+                 <td> <button class="btn btn-outline-danger"> Remove </button></td>
+               </form>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+
+
+  <% } %>
+</div>

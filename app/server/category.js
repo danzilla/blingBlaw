@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
       request: "get",
       sessionName: sessionName
     }
-    res.render('category/view', {
+    res.render('category/index', {
       pageInfo: pageInfo,
       categoryInfo: results
     });
@@ -68,7 +68,7 @@ router.post('/', function(req, res) {
       catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     crudCat.addDataCat(newData);
-    // Page render info category/view
+    // Page render info category/index
     var pageInfo = {
       title: 'Category',
       page: "added!",
@@ -76,7 +76,7 @@ router.post('/', function(req, res) {
       sessionName: sessionName
     }
     collection.find({}, function(e, results) {
-      res.render('category/view', { // category/view
+      res.render('category/index', { // category/index
         pageInfo: pageInfo,
         categoryInfo: results
       });
@@ -88,7 +88,7 @@ router.post('/', function(req, res) {
       catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     crudCat.addDataCat(newData);
-    // Page render info category/view
+    // Page render info category/index
     var pageInfo = {
       title: 'Category',
       page: "sub category added!",
@@ -96,7 +96,7 @@ router.post('/', function(req, res) {
       sessionName: sessionName
     }
     collection.find({}, function(e, results) {
-      res.render('category/view', { // category/view
+      res.render('category/index', { // category/index
         pageInfo: pageInfo,
         categoryInfo: results
       });
@@ -155,7 +155,7 @@ router.post('/remove', function(req, res) {
     sessionName: sessionName
   }
   collection.find({}, function(e, results) {
-    res.render('category/view', { // category/view
+    res.render('category/index', { // category/index
       pageInfo: pageInfo,
       categoryInfo: results
     });
