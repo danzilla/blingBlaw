@@ -8,6 +8,12 @@
     <% for(var k=0; k < statement.length; k++) { %>
     <option value="<%= statement[k]._id %>">
       <%= statement[k].statementInfo.statementName %>
+      -
+      <%= statement[k].statementInfo.statementDate %>
+      -
+      <%= statement[k].statementInfo.statementType %>
+      --
+      <%= statement[k]._id %>
     </option>
     <% } %>
   </select>

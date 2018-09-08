@@ -1,24 +1,17 @@
   <!-- Right Nav container -->
-  <div class="overFlow-no h-100 bg-dark">
+  <div class="overFlow-no h-100 w-100 bg-dark">
 
     <div class="col">
       <h4 class="display-4 text-secondary"> <%- pageInfo.title %> </h4>
       <hr>
     </div>
 
-    <div class="row h-100 overFlow-yes">
-
-      <div class="col-md-3 bg-dark card-1 ">
-        <%- include('../layout/nav') -%>
-      </div>
-      <div class="col-md-9 h-75 overFlow-yes">
-        <!-- Add category -->
-        <div class="col ">
-          <a class="btn btn-outline-success btn-block" href="/statement/upload">
-            New statment  <i class="fas fa-upload"></i>
-          </a>
-        </div>
-      </div>
-
+    <div class="container h-75 overFlow-yes card-1 bg-dark">
+      <code class="word-break">
+        <p>
+          <%- JSON.stringify(statement) -%>
+        </p>
+      </code>
     </div>
+
   </div>

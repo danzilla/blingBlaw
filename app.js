@@ -46,10 +46,12 @@ var indexRouter = require('./app/server/index');
 var userRouter = require('./app/server/user');
 var statementRouter = require('./app/server/statement');
 var categoryRouter = require('./app/server/category');
+var searchRouter = require('./app/server/search');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/statement', statementRouter);
 app.use('/category', categoryRouter);
+app.use('/search', searchRouter);
 
 var createError = require('http-errors');
 // catch 404 and forward to error handler

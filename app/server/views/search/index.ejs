@@ -7,7 +7,6 @@
   </div>
 </div>
 
-
 <div class="col h-100">
   <div class="row h-100">
 
@@ -23,12 +22,15 @@
       <div class="container-fluid h-100">
 
         <!-- Content container -->
-        <div class="overFlow-no h-100">
+        <div class="overFlow-yes h-100">
           <div class="container-fluid mt-3">
-            <%- include('catAdd') -%>
+            <div class="col">
+              <h1 class="display-5 text-info"><%- pageInfo.page %></h1>
+            </div>
           </div>
-          <div class="overFlow-yes h-75 card-1 bg-light">
-            <%- include('categoryInfo') -%>
+
+          <div class="overFlow-yes h-75">
+            <%- include('searchInfo') -%>
           </div>
         </div>
 

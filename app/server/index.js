@@ -4,21 +4,24 @@ var router = express.Router();
 
 /* GET login page */
 router.get('/', function(req, res, next) {
+
   if(req.session.user == undefined){
+
     var msg = "Session is empty";
     sessionName = "Session is Empty";
     console.log(msg);
+    res.render('auth/index', {
+      title: 'Login',
+      logM: msg,
+      sessionName: sessionName
+     });
   } else {
+
     var msg = "Session is active, user: " + req.session.user;
     sessionName = req.session.user;
     console.log(msg);
+    res.redirect('statement');
   }
-
-  res.render('auth/index', {
-    title: 'Login',
-    logM: msg,
-    sessionName: sessionName
-   });
 });
 
 /* POST home page. */
