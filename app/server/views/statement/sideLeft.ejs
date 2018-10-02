@@ -6,12 +6,35 @@
       <hr>
     </div>
 
-    <div class="container h-75 overFlow-yes card-1 bg-dark">
-      <code class="word-break">
-        <p>
-          <%- JSON.stringify(statement) -%>
-        </p>
-      </code>
+    <div class="container h-75 overFlow-yes bg-dark">
+
+
+      <div class="col">
+        <h4 class="display-5 text-secondary text-center"><em>Options</em> </h4>
+        <hr class="text-secondary">
+      </div>
+      <div class="col">
+
+        <select class="form-control form-control-lg custom-select p-2 my-1"
+          name="catParent">
+          <option value="root">Statements (viewing all)</option>
+          <% for(var k=0; k < statement.length; k++) { %>
+          <option value="<%= statement[k]._id %>">
+            <%= statement[k].statementInfo.statementName %>
+            -
+            <%= statement[k].statementInfo.statementDate %>
+            -
+            <%= statement[k].statementInfo.statementType %>
+            --
+            <%= statement[k]._id %>
+          </option>
+          <% } %>
+        </select>
+
+        <button type="button" class="btn btn-primary btn-lg btn-block">Uncategorize transactions</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block">Summary</button>
+      </div>
+
     </div>
 
   </div>

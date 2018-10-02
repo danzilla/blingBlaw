@@ -1,76 +1,115 @@
-<div class="container">
-  <h4 class="display-5"> uncategorize </h4>
 
-
-  <select class="form-control form-control-lg custom-select mt-3 mb-3"
-    name="catParent">
-    <option value="root">Statements (info)</option>
-    <% for(var k=0; k < statement.length; k++) { %>
-    <option value="<%= statement[k]._id %>">
-      <%= statement[k].statementInfo.statementName %>
-      -
-      <%= statement[k].statementInfo.statementDate %>
-      -
-      <%= statement[k].statementInfo.statementType %>
-      --
-      <%= statement[k]._id %>
-    </option>
+<select class="selectpicker custom-select" data-live-search="true">
+  <option value="0" selected disabled>Uncategorized</option>
+  <% var catLen = categoryInfo.length; %>
+  <% for(var i=0; i < catLen; i++) { %>
+    <% if (categoryInfo[i].catParent == "root" ) { %>
+      <optgroup label="<%= categoryInfo[i].catName %>">
+      <% for (var j=0; j < catLen; j++) { %>
+        <% if (categoryInfo[i]._id == categoryInfo[j].catParent ) { %>
+          <option value="<%= categoryInfo[j].catName %>" data-tokens="<%= categoryInfo[j].catName %>"><%= categoryInfo[j].catName %></option>
+        <% } %>
+      <% } %>
+      </optgroup>
     <% } %>
-  </select>
-
-
-  <% for(var i=0; i < statement.length; i++) { %>
-
-    <form name="removeUser" method="post" action="/statement/remove">
-     <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
-     <td> <button class="btn btn-outline-danger"> Remove </button></td>
-   </form>
-
-    <p>
-      _id <code><%- JSON.stringify(statement[i]._id) %></code>
-    </p>
-    <p>
-      uploadDate <code><%- JSON.stringify(statement[i].uploadDate) %></code>
-    </p>
-    <p>
-      statementInfo <code><%- JSON.stringify(statement[i].statementInfo) %></code>
-    </p>
-    <p>
-      transactionInfo <code><%- JSON.stringify(statement[i].transactionInfo) %></code>
-    </p>
-
-    <table class="table">
-        <thead>
-          <tr>
-            <th> transDate</th>
-            <th> transDesc</th>
-            <th> transWithdraw</th>
-            <th> transDeposite</th>
-            <th> transBalance</th>
-            <th> Edit </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% var lenSub = statement[i].transactionInfo %>
-          <% for(var j=0; j < lenSub.length; j++) { %>
-            <tr>
-              <td><%= statement[i].transactionInfo[j].transDate %></td>
-              <td><%= statement[i].transactionInfo[j].transDesc %></td>
-              <td><%= statement[i].transactionInfo[j].transWithdraw %></td>
-              <td><%= statement[i].transactionInfo[j].transDeposite %></td>
-              <td><%= statement[i].transactionInfo[j].transBalance %></td>
-              <td>
-                <form name="removeUser" method="post" action="/statement/remove">
-                 <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
-                 <td> <button class="btn btn-outline-danger"> Remove </button></td>
-               </form>
-              </td>
-            </tr>
-          <% } %>
-        </tbody>
-      </table>
-
-
-
   <% } %>
-</div>
+</select>
+
+
+<% for(var i=0; i < statement.length; i++) { %>
+   <nav class="nav py-2">
+     <a class="nav-link btn btn-link">
+      <code> Raw Data <em>(hover):</em></code>
+     </a>
+     <a class="nav-link btn btn-link" href=""
+       data-toggle="tooltip"
+       title="<%= JSON.stringify(statement[i]._id) %>">
+       _id
+     </a>
+     <a class="nav-link btn btn-link" href=""
+       data-toggle="tooltip"
+       title="<%= JSON.stringify(statement[i].uploadDate) %>">
+       uploadDate
+     </a>
+     <a class="nav-link btn btn-link" href=""
+       data-toggle="tooltip"
+       title="<%= JSON.stringify(statement[i].statementInfo) %>">
+       statementInfo
+     </a>
+     <a class="nav-link btn btn-link" href=""
+       data-toggle="tooltip"
+       title="<%= JSON.stringify(statement[i].transactionInfo) %>">
+       transactionInfo
+     </a>
+     <form class="" name="removeUser" method="post" action="/statement/remove">
+      <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
+      <button class="btn btn-outline-danger nav-link card-1" disabled> Remove </button>
+    </form>
+   </nav>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr class="">
+        <th scope="col" class="text-center"><i class="fas fa-info"></i></th>
+        <th scope="col">Date</th>
+        <th scope="col">Description</th>
+        <th scope="col">Type</th>
+        <th scope="col" class="text-center">Transaction</th>
+        <th scope="col" class="text-center">Catergory</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% var lenSub = statement[i].transactionInfo %>
+      <% for(var j=0; j < lenSub.length; j++) { %>
+        <tr class="card-2">
+          <td class="align-middle">
+            <a class="nav-link btn btn-link" href=""
+              data-toggle="tooltip"
+              title="<%= JSON.stringify(statement[i].transactionInfo[j]) %>">
+              <i class="fas fa-info"></i>
+            </a>
+          </td>
+          <td class="align-middle"><%= statement[i].transactionInfo[j].transDate %></td>
+          <td class="align-middle"><%= statement[i].transactionInfo[j].transDesc %></td>
+          <td class="align-middle">
+            <% if(statement[i].transactionInfo[j].transWithdraw) { %>
+                Withdrawal
+            <% } %>
+            <% if(statement[i].transactionInfo[j].transDeposite) { %>
+                Deposite
+            <% } %>
+          </td>
+          <td class="text-center align-middle">
+            <% if(statement[i].transactionInfo[j].transWithdraw) { %>
+                $ <%= statement[i].transactionInfo[j].transWithdraw %>
+            <% } %>
+            <% if(statement[i].transactionInfo[j].transDeposite) { %>
+                $ <%= statement[i].transactionInfo[j].transDeposite %>
+            <% } %>
+          </td>
+          <td class="text-center align-middle">
+
+            <div class="input-group">
+              <select class="custom-select" id="inputGroupSelect04">
+                <option selected>Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <div class="input-group-append">
+
+
+                <button class="btn btn-outline-success" type="button">
+                  <i class="fas fa-check"></i>
+                </button>
+
+
+              </div>
+            </div>
+
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+<% } %>

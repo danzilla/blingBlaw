@@ -11,7 +11,10 @@ var router = express.Router();
 //  - dateAdded
 
 /* GET login page */
+var collectionOne = [];
+var collectionTwo = [];
 router.get('/', function(req, res, next) {
+
   if(req.session.user == undefined){
     var msg = "Session is empty";
     sessionName = "Session is Empty";
@@ -22,18 +25,83 @@ router.get('/', function(req, res, next) {
     console.log(msg);
   }
 
-  var pageInfo = {
-    title: 'Statements',
-    page: "Dashboard",
-    request: "get",
-    sessionName: sessionName
-  }
   var db = req.db;
   var collection = db.get('statementCollection');
+  var collectionCat = db.get('categorycollection');
+
+  var categoryInfo = [{
+    catParent: "testParent",
+    catChild: "testChild"
+  }];
+
+
+
+
+  collection.find({ }, function(e, statementResult){ console.log("\nstatementResult: " + statementResult); });
+  collectionCat.find({ }, function(e, collectionCatResult){ console.log("\ncollectionCatResult: " + collectionCatResult); });
+
+
+  //console.log("\n All : " + collectionCatResult + statementResult);
+
+
+  
+
+
+
+/*
+
+
+  collectionCat.find({}, {}, function(e, categoryResults) {
+    if (e) { console.log("err: " + err); }
+    else {
+
+
+      var catLen = categoryResults.length;
+      for(var i=0; i < catLen; i++) {
+
+        if (categoryResults[i].catParent == "root" ) {
+
+          console.log(categoryResults[i].catName);
+
+          for (var j=0; j < catLen; j++) {
+            if (categoryResults[i]._id == categoryResults[j].catParent ) {
+
+              console.log(categoryResults[i].catName);
+
+            }
+          }
+
+        }
+      }
+      console.log("pageInfo-categoryInfo: " + JSON.stringify(categoryInfo));
+    }
+   });
+
+
+*/
+
+
+
+
+
+
+   console.log("pageInfo: " + JSON.stringify(pageInfo));
+   console.log("pageInfo-categoryInfo: " + JSON.stringify(categoryInfo));
+
+
+   var pageInfo = {
+     title: 'Statements',
+     page: "Dashboard",
+     request: "get",
+     sessionName: sessionName,
+     categoryInfo: categoryInfo
+   };
+
   collection.find({ }, function(e, statementResult){
     res.render('statement/index', { // statement/index
       pageInfo: pageInfo,
-      statement: statementResult
+      statement: statementResult,
+      categoryInfo: pageInfo.categoryInfo
     });
   });
 });
