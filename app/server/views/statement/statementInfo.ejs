@@ -1,60 +1,60 @@
 
-<select class="selectpicker custom-select" data-live-search="true">
-  <option value="0" selected disabled>Uncategorized</option>
-  <% var catLen = categoryInfo.length; %>
-  <% for(var i=0; i < catLen; i++) { %>
-    <% if (categoryInfo[i].catParent == "root" ) { %>
-      <optgroup label="<%= categoryInfo[i].catName %>">
-      <% for (var j=0; j < catLen; j++) { %>
-        <% if (categoryInfo[i]._id == categoryInfo[j].catParent ) { %>
-          <option value="<%= categoryInfo[j].catName %>" data-tokens="<%= categoryInfo[j].catName %>"><%= categoryInfo[j].catName %></option>
-        <% } %>
-      <% } %>
-      </optgroup>
-    <% } %>
-  <% } %>
-</select>
-
-
 <% for(var i=0; i < statement.length; i++) { %>
-   <nav class="nav py-2">
-     <a class="nav-link btn btn-link">
-      <code> Raw Data <em>(hover):</em></code>
-     </a>
-     <a class="nav-link btn btn-link" href=""
-       data-toggle="tooltip"
-       title="<%= JSON.stringify(statement[i]._id) %>">
-       _id
-     </a>
-     <a class="nav-link btn btn-link" href=""
-       data-toggle="tooltip"
-       title="<%= JSON.stringify(statement[i].uploadDate) %>">
-       uploadDate
-     </a>
-     <a class="nav-link btn btn-link" href=""
-       data-toggle="tooltip"
-       title="<%= JSON.stringify(statement[i].statementInfo) %>">
-       statementInfo
-     </a>
-     <a class="nav-link btn btn-link" href=""
-       data-toggle="tooltip"
-       title="<%= JSON.stringify(statement[i].transactionInfo) %>">
-       transactionInfo
-     </a>
-     <a class="nav-link btn btn-link" href=""
-       data-toggle="tooltip"
-       title="<%= JSON.stringify(categoryInfo) %>">
-       categoryInfo
-     </a>
-     <form class="" name="removeUser" method="post" action="/statement/remove">
-      <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
-      <button class="btn btn-outline-danger nav-link card-1" disabled> Remove </button>
-    </form>
-   </nav>
+<div class="alert alert-dark" role="alert">
 
-  <table class="table">
+  <div class="row ">
+    <div class="col-7">
+      <h5 class="alert-heading">statement <em>info</em>
+        <code>
+          <%= statement[i].statementInfo.statementName %>
+          <small>created <em>on</em></small>
+          <%= statement[i].statementInfo.statementDate %>
+          <small>statement <em>type</em></small>
+          <%= statement[i].statementInfo.statementType %>
+        </code>
+      </h4>
+    </div>
+    <div class="col">
+      <div class="row justify-content-center">
+        <div class="btn-toolbar align-center" role="toolbar">
+
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-sm btn-info"
+              data-toggle="tooltip" data-placement="bottom"
+              title="<%= JSON.stringify(statement[i]) %>" ><i class="fas fa-info"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary"
+              data-toggle="tooltip" data-placement="bottom"
+              title="<%= JSON.stringify(statement[i]._id) %>" >_id
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary"
+              data-toggle="tooltip" data-placement="bottom"
+              title="<%= JSON.stringify(statement[i].statementInfo) %>" >statementInfo
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary"
+              data-toggle="tooltip" data-placement="bottom"
+              title="<%= JSON.stringify(statement[i].transactionInfo) %>" >transactionInfo
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary"
+              data-toggle="tooltip" data-placement="bottom"
+              title="<%= JSON.stringify(categoryInfo) %>" >categoryInfo
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" form="removeStatement" disabled>
+              <i class="fas fa-times"></i>
+            </button>
+            <form  id="removeStatement" name="removeStatement" method="post" action="/statement/remove">
+             <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <table class="table card-1 bg-light">
     <thead class="thead-dark">
-      <tr class="">
+      <tr class="card-1-no">
         <th scope="col" class="text-center"><i class="fas fa-info"></i></th>
         <th scope="col">Date</th>
         <th scope="col">Description</th>
@@ -64,61 +64,79 @@
       </tr>
     </thead>
     <tbody>
-      <% var lenSub = statement[i].transactionInfo %>
-      <% for(var j=0; j < lenSub.length; j++) { %>
-        <tr class="card-2">
-          <td class="align-middle">
-            <a class="nav-link btn btn-link" href=""
-              data-toggle="tooltip"
-              title="<%= JSON.stringify(statement[i].transactionInfo[j].transId) %>">
-              <i class="fas fa-info"></i>
-            </a>
-          </td>
-          <td class="align-middle"><%= statement[i].transactionInfo[j].transDate %></td>
-          <td class="align-middle"><%= statement[i].transactionInfo[j].transDesc %></td>
-          <td class="align-middle">
-            <% if(statement[i].transactionInfo[j].transWithdraw) { %>
-              <span class="badge badge-info font-weight-bold font-italic">withdrawal</span>
-            <% } %>
-            <% if(statement[i].transactionInfo[j].transDeposite) { %>
-              <span class="badge badge-primary font-weight-bold font-italic">deposite</span>
-            <% } %>
-          </td>
-          <td class="text-center align-middle">
-            <% if(statement[i].transactionInfo[j].transWithdraw) { %>
-                $ <%= statement[i].transactionInfo[j].transWithdraw %>
-            <% } %>
-            <% if(statement[i].transactionInfo[j].transDeposite) { %>
-                $ <%= statement[i].transactionInfo[j].transDeposite %>
-            <% } %>
-          </td>
-          <td class="text-center align-middle">
-            <div class="input-group">
-              <select class="custom-select" id="inputGroupSelect04">
-                <option selected>Choose...</option>
-                <% for(var z=0; z < categoryInfo.length; z++) { %>
-                  <% if (categoryInfo[z].catParent == "root" ) { %>
-                    <optgroup label="<%= categoryInfo[z].catName %>">
-                    <% for (var y=0; y < categoryInfo.length; y++) { %>
-                      <% if (categoryInfo[z]._id == categoryInfo[y].catParent ) { %>
-                        <option value="<%= categoryInfo[y]._id %>">
-                          <%= categoryInfo[y].catName %>
-                        </option>
-                      <% } %>
+    <% var lenSub = statement[i].transactionInfo %>
+    <% for(var j=0; j < lenSub.length; j++) { %>
+      <tr class="card-2 ">
+      <form action="/statement/update" id="formTrans">
+        <!-- transactionInfo -->
+        <td class="align-middle" data-toggle="collapse" data-target=".order-<%= statement[i].transactionInfo[j].transId %>">
+          <button class="btn btn-link" type="button" data-toggle="collapse"
+            data-target="#asd-<%= statement[i].transactionInfo[j].transId %>" aria-expanded="false"
+            aria-controls="asd-<%= statement[i].transactionInfo[j].transId %>">
+            <i class="fas fa-plus"></i>
+          </button>
+        </td>
+        <!-- transDate -->
+        <td class="align-middle"><%= statement[i].transactionInfo[j].transDate %></td>
+        <!-- transDesc -->
+        <td class="align-middle"><%= statement[i].transactionInfo[j].transDesc %></td>
+        <!-- Withdraw or Deposite - label -->
+        <td class="align-middle">
+          <% if(statement[i].transactionInfo[j].transWithdraw) { %>
+            <span class="badge badge-info font-italic">withdrawal</span>
+          <% } %>
+          <% if(statement[i].transactionInfo[j].transDeposite) { %>
+            <span class="badge badge-primary font-italic">deposite</span>
+          <% } %>
+        </td>
+        <!-- Withdraw or Deposite - $ -->
+        <td class="text-center align-middle">
+          <% if(statement[i].transactionInfo[j].transWithdraw) { %>
+              $ <%= statement[i].transactionInfo[j].transWithdraw %>
+          <% } %>
+          <% if(statement[i].transactionInfo[j].transDeposite) { %>
+              $ <%= statement[i].transactionInfo[j].transDeposite %>
+          <% } %>
+        </td>
+        <!-- select options Catergory -->
+        <td class="text-center align-middle">
+          <div class="input-group">
+            <select class="custom-select">
+              <option selected disabled>Choose...</option>
+              <% for(var z=0; z < categoryInfo.length; z++) { %>
+                <% if (categoryInfo[z].catParent == "root" ) { %>
+                  <optgroup label="<%= categoryInfo[z].catName %>">
+                  <% for (var y=0; y < categoryInfo.length; y++) { %>
+                    <% if (categoryInfo[z]._id == categoryInfo[y].catParent ) { %>
+                      <option value="<%= categoryInfo[y]._id %>">
+                        <%= categoryInfo[y].catName %>
+                      </option>
                     <% } %>
-                    </optgroup>
                   <% } %>
+                  </optgroup>
                 <% } %>
-              </select>
-              <div class="input-group-append">
-                <button class="btn btn-outline-success" type="submit" form="" >
-                  <i class="fas fa-check"></i>
-                </button>
-              </div>
+              <% } %>
+            </select>
+            <div class="input-group-append">
+              <button class="btn btn-outline-success" type="submit" form="formTrans">
+                <i class="fas fa-check"></i>
+              </button>
             </div>
-          </td>
-        </tr>
-      <% } %>
+          </div>
+        </td>
+      </form>
+      </tr>
+      <tr class="collapse order-<%= statement[i].transactionInfo[j].transId %>">
+        <td colspan="6" class="">
+          <div class="card-1-no alert alert-success container p-3 text-center">
+            <%= JSON.stringify(statement[i].transactionInfo[j]) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
     </tbody>
   </table>
+
+</div>
+
 <% } %>

@@ -2,10 +2,12 @@
   <form class="w-100" name="search" method="post" action="/search">
     <div class="input-group h-100">
       <div class="input-group-prepend card-1">
+
         <button class="btn btn-outline-primary dropdown-toggle"
           type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="stroke-fuchsia fas fa-2x fa-rocket fa-flip-horizontal mr-0 ml-0"></i>
+          <i class="stroke-fuchsia fas fa-2x fa-rocket fa-flip-horizontal mr-0 ml-0 text-danger"></i>
         </button>
+
         <div class="dropdown-menu px-0 py-0 card-1">
           <a href="/user" class="dropdown-item card-1 py-3">
             <li class="d-flex justify-content-between align-items-center">
@@ -28,9 +30,10 @@
             </li>
           </a>
         </div>
+
       </div>
       <input type="text" class="form-control form-control-lg card-1 bg-dark btn-outline-info text-light text-center card-1"
-        placeholder="Search for something clever ~ " name="search" >
+        placeholder="search for something clever" name="search" >
       <div class="input-group-append card-1">
         <button type="submit" class="btn btn-outline-primary btn-block text-light">
           <i class="fas fa-2x fa-search"></i>
