@@ -49,10 +49,12 @@ router.post('/', function(req, res) {
 
   // Set our internal DB variable
   var db = req.db;
-  var collection = db.get('categorycollection');
+  var collection = db.get('statementCollection');
   var searchQ = req.body.search;
 
-  collection.find({$text: {$search: searchQ}}, function (err, results) {
+  var Queryy = "{$text: {$search: searchQ}}";
+
+  collection.find({$text: {$search:"pay"}}, function (err, results) {
     if (err) {
         res.send("There was a issue with find \n err: " + err);
         console.log(err);
@@ -62,7 +64,8 @@ router.post('/', function(req, res) {
         title: 'SEARCHs',
         page: "Query!",
         request: "post",
-        sessionName: sessionName
+        sessionName: sessionName,
+        query: searchQ
       }
       res.render('search/index', { //  search/index
         pageInfo: pageInfo,
@@ -76,6 +79,10 @@ router.post('/', function(req, res) {
   });
 
 });
+
+
+
+
 
 
 module.exports = router;

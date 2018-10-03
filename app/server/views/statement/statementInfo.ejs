@@ -41,6 +41,11 @@
        title="<%= JSON.stringify(statement[i].transactionInfo) %>">
        transactionInfo
      </a>
+     <a class="nav-link btn btn-link" href=""
+       data-toggle="tooltip"
+       title="<%= JSON.stringify(categoryInfo) %>">
+       categoryInfo
+     </a>
      <form class="" name="removeUser" method="post" action="/statement/remove">
       <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
       <button class="btn btn-outline-danger nav-link card-1" disabled> Remove </button>
@@ -65,7 +70,7 @@
           <td class="align-middle">
             <a class="nav-link btn btn-link" href=""
               data-toggle="tooltip"
-              title="<%= JSON.stringify(statement[i].transactionInfo[j]) %>">
+              title="<%= JSON.stringify(statement[i].transactionInfo[j].transId) %>">
               <i class="fas fa-info"></i>
             </a>
           </td>
@@ -73,10 +78,10 @@
           <td class="align-middle"><%= statement[i].transactionInfo[j].transDesc %></td>
           <td class="align-middle">
             <% if(statement[i].transactionInfo[j].transWithdraw) { %>
-                Withdrawal
+              <span class="badge badge-info font-weight-bold font-italic">withdrawal</span>
             <% } %>
             <% if(statement[i].transactionInfo[j].transDeposite) { %>
-                Deposite
+              <span class="badge badge-primary font-weight-bold font-italic">deposite</span>
             <% } %>
           </td>
           <td class="text-center align-middle">
@@ -88,25 +93,29 @@
             <% } %>
           </td>
           <td class="text-center align-middle">
-
             <div class="input-group">
               <select class="custom-select" id="inputGroupSelect04">
                 <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <% for(var z=0; z < categoryInfo.length; z++) { %>
+                  <% if (categoryInfo[z].catParent == "root" ) { %>
+                    <optgroup label="<%= categoryInfo[z].catName %>">
+                    <% for (var y=0; y < categoryInfo.length; y++) { %>
+                      <% if (categoryInfo[z]._id == categoryInfo[y].catParent ) { %>
+                        <option value="<%= categoryInfo[y]._id %>">
+                          <%= categoryInfo[y].catName %>
+                        </option>
+                      <% } %>
+                    <% } %>
+                    </optgroup>
+                  <% } %>
+                <% } %>
               </select>
               <div class="input-group-append">
-
-
-                <button class="btn btn-outline-success" type="button">
+                <button class="btn btn-outline-success" type="submit" form="" >
                   <i class="fas fa-check"></i>
                 </button>
-
-
               </div>
             </div>
-
           </td>
         </tr>
       <% } %>

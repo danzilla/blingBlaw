@@ -10,9 +10,7 @@ var router = express.Router();
 //  - transactionInfo
 //  - dateAdded
 
-/* GET login page */
-var collectionOne = [];
-var collectionTwo = [];
+/* GET statement page */
 router.get('/', function(req, res, next) {
 
   if(req.session.user == undefined){
@@ -29,82 +27,32 @@ router.get('/', function(req, res, next) {
   var collection = db.get('statementCollection');
   var collectionCat = db.get('categorycollection');
 
-  var categoryInfo = [{
-    catParent: "testParent",
-    catChild: "testChild"
-  }];
+  //collection.find({ }, function(e, statementResult){ console.log("\nstatementResult: " + JSON.stringify(statementResult)); });
+  //collectionCat.find({ }, function(e, collectionCatResult){ console.log("\ncollectionCatResult: " + JSON.stringify(collectionCatResult)); });
 
+  collectionCat.find({ }, function(err, collectionCatResult) {
+    collection.find({ }, function(e, statementResult){
 
+     var pageInfo = {
+       title: 'Statements',
+       page: "Dashboard",
+       request: "get",
+       sessionName: sessionName,
+       categoryInfo: collectionCatResult
+     };
 
+     res.render('statement/index', { // statement/index
+       pageInfo: pageInfo,
+       statement: statementResult,
+       categoryInfo: pageInfo.categoryInfo
+     });
+    });
 
-  collection.find({ }, function(e, statementResult){ console.log("\nstatementResult: " + statementResult); });
-  collectionCat.find({ }, function(e, collectionCatResult){ console.log("\ncollectionCatResult: " + collectionCatResult); });
-
-
-  //console.log("\n All : " + collectionCatResult + statementResult);
-
-
-  
-
-
-
-/*
-
-
-  collectionCat.find({}, {}, function(e, categoryResults) {
-    if (e) { console.log("err: " + err); }
-    else {
-
-
-      var catLen = categoryResults.length;
-      for(var i=0; i < catLen; i++) {
-
-        if (categoryResults[i].catParent == "root" ) {
-
-          console.log(categoryResults[i].catName);
-
-          for (var j=0; j < catLen; j++) {
-            if (categoryResults[i]._id == categoryResults[j].catParent ) {
-
-              console.log(categoryResults[i].catName);
-
-            }
-          }
-
-        }
-      }
-      console.log("pageInfo-categoryInfo: " + JSON.stringify(categoryInfo));
-    }
    });
 
-
-*/
-
-
-
-
-
-
-   console.log("pageInfo: " + JSON.stringify(pageInfo));
-   console.log("pageInfo-categoryInfo: " + JSON.stringify(categoryInfo));
-
-
-   var pageInfo = {
-     title: 'Statements',
-     page: "Dashboard",
-     request: "get",
-     sessionName: sessionName,
-     categoryInfo: categoryInfo
-   };
-
-  collection.find({ }, function(e, statementResult){
-    res.render('statement/index', { // statement/index
-      pageInfo: pageInfo,
-      statement: statementResult,
-      categoryInfo: pageInfo.categoryInfo
-    });
-  });
 });
+
+
 
 /* GET upload page */
 router.get('/upload', function(req, res, next) {
@@ -216,21 +164,27 @@ router.post('/upload', function(req, res, next) {
 
 
 
+
+
+
 // Remove user
 // GET to remove user/remove Service
 router.get('/remove', function(req, res) {
-  if(req.session.user == undefined){
-    var msg = "Session is empty";
-    sessionName = "Session is Empty";
-    console.log(msg);
-  } else {
-    var msg = "Session is active, user: " + req.session.user;
-    sessionName = req.session.user;
-    console.log(msg);
-  }
+  if (req.session.user == undefined) {
+      var msg = "Session is empty";
+      sessionName = "Session is Empty";
+      console.log(msg);
+    } else {
+      var msg = "Session is active, user: " + req.session.user;
+      sessionName = req.session.user;
+      console.log(msg);
+    }
 
   res.redirect('/statement');
- });
+});
+
+
+
 
 // POST to remove user/remove Service
 router.post('/remove', function(req, res) {
