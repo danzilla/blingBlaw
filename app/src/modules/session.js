@@ -6,6 +6,7 @@ exports.myDateTime1 = function (yolo) {
 };
 
 
+
 // Testing Module out
 exports.session = function (user) {
   if (req.session.user == undefined) {
@@ -13,6 +14,8 @@ exports.session = function (user) {
     sessionName = "Session is Empty";
     console.log(msg);
   } else {
+
+
     var msg = "Session is active, user: " + req.session.user;
     sessionName = req.session.user;
     console.log(msg);

@@ -1,6 +1,6 @@
 var express = require('express');
-var session = require('express-session');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 var path = require('path');
@@ -11,21 +11,20 @@ var monk = require("monk");
 var app = express();
 
 app.locals.pretty = true;
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/app/public/')));
-app.set('views', path.join(__dirname, '/app/server/views'));
+app.set('views', path.join(__dirname, '/app/src/views'));
 app.set('view engine', 'ejs');
 
 // DB and Session
 var dbUrl = "localhost:27017/danustanBling";
-var dbname = "";
 
 app.use(cookieParser());
-
 app.use(session({
 	secret: 'dannustan-BlingBlaw',
 	proxy: true,
@@ -36,22 +35,16 @@ app.use(session({
 );
 
 var db = monk("localhost:27017/danustanBling")
-app.use(function(req,res,next){
-    req.db = db;
-    next();
+app.use(function(req,res,next) {
+  req.db = db;
+  next();
 });
 
 // routes
-var indexRouter = require('./app/server/index');
-var userRouter = require('./app/server/user');
-var statementRouter = require('./app/server/statement');
-var categoryRouter = require('./app/server/category');
-var searchRouter = require('./app/server/search');
+var indexRouter = require('./app/src/index');
+var userRouter = require('./app/src/user');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/statement', statementRouter);
-app.use('/category', categoryRouter);
-app.use('/search', searchRouter);
 
 var createError = require('http-errors');
 // catch 404 and forward to error handler
@@ -68,7 +61,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 
 module.exports = app;

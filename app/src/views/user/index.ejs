@@ -1,12 +1,11 @@
-<%- include('../layout/header') -%>
+<%- include('../../layout/header') -%>
 
 <!-- Navbar TOP -->
 <div class="row">
   <div class="col">
-    <%- include('../layout/navBar') -%>
+    <%- include('../../layout/navBar') -%>
   </div>
 </div>
-
 
 <div class="col h-100">
   <div class="row h-100">
@@ -23,12 +22,13 @@
       <div class="container-fluid h-100">
 
         <!-- Content container -->
-        <div class="overFlow-no h-100">
+        <div class="overFlow-yes h-100">
           <div class="container-fluid mt-3">
-            <%- include('catAdd') -%>
+            <%- include('userAdd') -%>
           </div>
-          <div class="overFlow-yes h-75 card-1 bg-light">
-            <%- include('categoryInfo') -%>
+
+          <div class="overFlow-yes h-75">
+            <%- include('userInfo') -%>
           </div>
         </div>
 
@@ -45,4 +45,4 @@
   </div>
 </div>
 
-<%- include('../layout/footer') -%>
+<%- include('../../layout/footer') -%>
