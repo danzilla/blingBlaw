@@ -55,6 +55,74 @@ router.get('/', function(req, res, next) {
 
 
 /* GET upload page */
+router.get('/transaction/update', function(req, res, next) {
+  if(req.session.user == undefined){
+    var msg = "Session is empty";
+    sessionName = "Session is Empty";
+    console.log(msg);
+  } else {
+    var msg = "Session is active, user: " + req.session.user;
+    sessionName = req.session.user;
+    console.log(msg);
+  }
+
+  console.log("\nHi from Trans update Service - GET\n");
+  res.redirect('/statement');
+});
+
+/* GET upload page */
+router.post('/transaction/update', function(req, res, next) {
+  if(req.session.user == undefined){
+    var msg = "Session is empty";
+    sessionName = "Session is Empty";
+    console.log(msg);
+  } else {
+    var msg = "Session is active, user: " + req.session.user;
+    sessionName = req.session.user;
+    console.log(msg);
+  }
+
+
+  var transUpdate = {
+    statementID : req.body.statementID,
+    transId : req.body.transId
+  };
+
+  var db = req.db;
+  var collection = db.get('statementCollection');
+  //collection.find({ }, function(e, statementResult){ console.log("\nstatementResult: " + JSON.stringify(statementResult)); });
+
+  collection.update(
+   {
+     _id: req.body.statementID,
+     transactionInfo: {transId: req.body.transId}
+    },
+   {
+     transactionInfo: { "category": "asaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+   }, function(e, results){
+     if(e){ console.log("\nSomething with update error: " + e);}
+     else{
+       console.log("Update is good: " + (results));
+     }
+   });
+
+   collection.findAndModify({
+    query: { _id: req.body.statementID },
+    sort: { rating: 1 },
+    update: { $inc: { score: 1 } },
+    upsert: true
+  })
+
+  console.log("\nTrans update \n statementID: " + transUpdate.statementID + "\n transId: " + transUpdate.transId + "\n");
+  console.log("\nHi from Trans update Service\n");
+  res.redirect('/statement');
+});
+
+
+
+
+
+/* GET upload page */
 router.get('/upload', function(req, res, next) {
   if(req.session.user == undefined){
     var msg = "Session is empty";
@@ -180,6 +248,7 @@ router.get('/remove', function(req, res) {
       console.log(msg);
     }
 
+  console.log("\n GET REMOVE \n");
   res.redirect('/statement');
 });
 

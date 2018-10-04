@@ -1,7 +1,10 @@
 
 <% for(var i=0; i < statement.length; i++) { %>
-<div class="alert alert-dark" role="alert">
 
+  <%= JSON.stringify(statement[i]) %>
+
+
+<div class="alert alert-dark" role="alert">
   <div class="row ">
     <div class="col-7">
       <h5 class="alert-heading">statement <em>info</em>
@@ -67,7 +70,10 @@
     <% var lenSub = statement[i].transactionInfo %>
     <% for(var j=0; j < lenSub.length; j++) { %>
       <tr class="card-2 ">
-      <form action="/statement/update" id="formTrans">
+      <form action="/statement/transaction/update" method="post"
+        id="formTrans-<%= statement[i].transactionInfo[j].transId %>">
+        <input type="hidden" name="statementID" value="<%= statement[i]._id %>">
+        <input type="hidden" name="transId" value="<%= statement[i].transactionInfo[j].transId %>">
         <!-- transactionInfo -->
         <td class="align-middle" data-toggle="collapse" data-target=".order-<%= statement[i].transactionInfo[j].transId %>">
           <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -118,7 +124,7 @@
               <% } %>
             </select>
             <div class="input-group-append">
-              <button class="btn btn-outline-success" type="submit" form="formTrans">
+              <button class="btn btn-outline-success" type="submit" form="formTrans-<%= statement[i].transactionInfo[j].transId %>">
                 <i class="fas fa-check"></i>
               </button>
             </div>
