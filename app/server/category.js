@@ -12,6 +12,8 @@ var monk = require("monk");
 var db = monk("localhost:27017/danustanBling");
 var collection = db.get('categorycollection');
 
+
+
 // Category - root
 // GET - category - Category root page
 router.get('/', function(req, res, next) {
@@ -42,6 +44,7 @@ router.get('/', function(req, res, next) {
   });
 
 });
+
 // Category - root
 // POST - category - Insert new Category
 router.post('/', function(req, res) {
@@ -55,11 +58,7 @@ router.post('/', function(req, res) {
     sessionName = req.session.user;
     console.log(msg);
   }
-  // categorycollection
-  //  _id
-  //  catName
-  //  catParent
-  //  catAddDate
+
   if (req.body.catParent === "root"){ // root category
     // Insert data into category
     var newData = {
@@ -116,7 +115,6 @@ router.get('/remove', function(req, res, next) {
     sessionName = req.session.user;
     console.log(msg);
   }
-
   res.redirect('/category');
 });
 
@@ -132,9 +130,6 @@ router.post('/remove', function(req, res) {
     console.log(msg);
   }
 
-  var removeCat = {
-    _id: "Testing"
-  }
 
   // Remove Category Parent
   if (req.body.removeCatID) {
@@ -146,8 +141,10 @@ router.post('/remove', function(req, res) {
     var removeCat = {
       _id: req.body.removeCatSubID
     }
-  } crudCat.remDataCat(removeCat);
+  }
+  crudCat.remDataCat(removeCat);
   console.log("Cat been removed ID:" + removeCat._id);
+
   var pageInfo = {
     title: 'Category',
     page: "removed!",

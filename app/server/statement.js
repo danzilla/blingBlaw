@@ -92,13 +92,13 @@ router.post('/transaction/update', function(req, res, next) {
   var collection = db.get('statementCollection');
   //collection.find({ }, function(e, statementResult){ console.log("\nstatementResult: " + JSON.stringify(statementResult)); });
 
+  /*
   collection.update(
    {
-     _id: req.body.statementID,
-     transactionInfo: {transId: req.body.transId}
+     _id: req.body.statementID
     },
    {
-     transactionInfo: { "category": "asaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+     transactionInfo: { "category": "asaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
    }, function(e, results){
      if(e){ console.log("\nSomething with update error: " + e);}
      else{
@@ -106,15 +106,24 @@ router.post('/transaction/update', function(req, res, next) {
      }
    });
 
-   collection.findAndModify({
-    query: { _id: req.body.statementID },
-    sort: { rating: 1 },
-    update: { $inc: { score: 1 } },
-    upsert: true
-  })
+   */
+
+ console.log("\ncatSelect: " + req.body.catSelect);
+
+  var myquery = { _id: req.body.statementID };
+  var newvalues = { $set: {statementInfoTest: {name: "Mickey", address: "Canyon 123"} } };
+  db.collection("statementCollection").updateOne(myquery, newvalues, function(err, res) {
+    if (err) {throw err; console.log("Error updaing: " + err);}
+    console.log("1 document updated: " + JSON.stringify(res));
+    db.close();
+  });
+
 
   console.log("\nTrans update \n statementID: " + transUpdate.statementID + "\n transId: " + transUpdate.transId + "\n");
   console.log("\nHi from Trans update Service\n");
+
+
+
   res.redirect('/statement');
 });
 

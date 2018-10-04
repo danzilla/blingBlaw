@@ -1,9 +1,6 @@
 
 <% for(var i=0; i < statement.length; i++) { %>
 
-  <%= JSON.stringify(statement[i]) %>
-
-
 <div class="alert alert-dark" role="alert">
   <div class="row ">
     <div class="col-7">
@@ -53,6 +50,7 @@
       </div>
     </div>
   </div>
+
   <hr>
 
   <table class="table card-1 bg-light">
@@ -107,7 +105,7 @@
         <!-- select options Catergory -->
         <td class="text-center align-middle">
           <div class="input-group">
-            <select class="custom-select">
+            <select class="custom-select" name="catSelect">
               <option selected disabled>Choose...</option>
               <% for(var z=0; z < categoryInfo.length; z++) { %>
                 <% if (categoryInfo[z].catParent == "root" ) { %>
@@ -124,7 +122,8 @@
               <% } %>
             </select>
             <div class="input-group-append">
-              <button class="btn btn-outline-success" type="submit" form="formTrans-<%= statement[i].transactionInfo[j].transId %>">
+              <button class="btn btn-outline-success" type="submit"
+                form="formTrans-<%= statement[i].transactionInfo[j].transId %>">
                 <i class="fas fa-check"></i>
               </button>
             </div>
