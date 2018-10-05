@@ -30,9 +30,9 @@ router.get('/', function(req, res, next) {
     console.log("\nUser Dashboard");
     console.log("Active session: " + req.session.user + "\n");
   }
-  // Set our internal DB variable
-  var db = req.db;
-  var collection = db.get('usercollection');
+  // request DB conections
+  const db = req.db;
+  const collection = db.get('usercollection');
   // get all users find()
   collection.find({},{}, function(e, results){
     res.render('user/index', {
@@ -58,10 +58,10 @@ router.post('/add', function(req, res, next) {
     }
   else { // else - session good - redirect to user
     // request DB conections
-    var db = req.db;
-    var collection = db.get('usercollection');
+    const db = req.db;
+    const collection = db.get('usercollection');
     // set newData to insert
-    var newData = {
+    const newData = {
       userName : req.body.username,
       userPwd : req.body.pwd,
       userDate : moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -104,15 +104,22 @@ router.post('/update', function(req, res, next) {
     }
   else { // else - session good - redirect to user
     // request DB conections
-    var db = req.db;
-    var collection = db.get('usercollection');
-    var removeUser = { _id: req.body.userID };
-    collection.remove(removeUser, function(err, results) {
-      if(err) {
-        res.send("Error - removing: " + err);
-      } else {
+    const db = req.db;
+    const collection = db.get('usercollection');
+    // set validation Data
+    let valData = { _id: req.body.userId }
+    let newData = { // set new data for updae
+      userName: req.body.userNme,
+      userPwd: req.body.userPw,
+      userDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+    }
+    collection.update(valData, { $set: newData}, function(err, results){
+      if(err) { // if err throw err
+        res.send("Error - updating: " + err);
+      } else { //else
+        // Uplod good, move to /user
         res.redirect('/user');
-        console.log("\nUser removed: " + results);
+        console.log("\nUser updated: " + JSON.stringify(results));
         console.log("Active session: " + req.session.user + "\n");
       }
     });
@@ -144,9 +151,9 @@ router.post('/remove', function(req, res, next) {
     }
   else { // else - session good - redirect to user
     // request DB conections
-    var db = req.db;
-    var collection = db.get('usercollection');
-    var removeUser = { _id: req.body.userID };
+    const db = req.db;
+    const collection = db.get('usercollection');
+    let removeUser = { _id: req.body.userId };
     collection.remove(removeUser, function(err, results) {
       if(err) {
         res.send("Error - removing: " + err);
