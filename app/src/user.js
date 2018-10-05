@@ -27,7 +27,6 @@ router.get('/', function(req, res, next) {
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
   } else { //else
-
     console.log("\nUser Dashboard");
     console.log("Active session: " + req.session.user + "\n");
   }
@@ -41,7 +40,6 @@ router.get('/', function(req, res, next) {
       data: results
     });
   });
-
 });
 
 //
