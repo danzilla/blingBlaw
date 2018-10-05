@@ -1,18 +1,14 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var MongoStore = require('connect-mongo')(session);
-var path = require('path');
-var logger = require('morgan');
-var mongo = require("mongo");
-var monk = require("monk");
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
 
-var app = express();
+const app = express();
 
+// Dev - logs 
+const logger = require('morgan');
+app.use(logger('dev'));
 app.locals.pretty = true;
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,9 +17,10 @@ app.use(express.static(path.join(__dirname, '/app/public/')));
 app.set('views', path.join(__dirname, '/app/src/views'));
 app.set('view engine', 'ejs');
 
-// DB and Session
-var dbUrl = "localhost:27017/danustanBling";
-
+// Session config
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session);
 app.use(cookieParser());
 app.use(session({
 	secret: 'dannustan-BlingBlaw',
@@ -34,19 +31,22 @@ app.use(session({
 	})
 );
 
-var db = monk("localhost:27017/danustanBling")
+// Database config | monk
+const mongo = require("mongo");
+const monk = require("monk");
+const db = monk("localhost:27017/danustanBling")
 app.use(function(req,res,next) {
   req.db = db;
   next();
 });
 
 // routes
-var indexRouter = require('./app/src/index');
-var userRouter = require('./app/src/user');
+const indexRouter = require('./app/src/index');
+const userRouter = require('./app/src/user');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
-var createError = require('http-errors');
+const createError = require('http-errors');
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

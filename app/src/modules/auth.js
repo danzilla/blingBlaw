@@ -2,17 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 
-// Testing Module out
-exports.crudInfo = function (request) {
-  let mesg = "hi from auth";
-  return mesg;
-};
-
-
-// Testing Module out
-exports.sessionCheck = function (user) {
-    var crudInfo = user;
-    return crudInfo;
+// Testing Module - hi
+exports.hi = function () {
+  let msg = `\n Hi~ BlingBlaw - Budget App \n`;
+  return msg;
 };
 
 
