@@ -9,6 +9,7 @@ const router = express.Router();
 const crudAuth = require('./modules/auth');
 crudAuth.hi();
 
+// Home page
 /* GET login page */
 router.get('/', function(req, res, next) {
   console.log("\n ~ Hi ~ \n");
@@ -32,14 +33,15 @@ router.get('/', function(req, res, next) {
     }
 });
 
-/* POST login page. */
+// Auth
+// POST login page.
 router.post('/', function(req, res, next) {
   // pageInfo detailes
   let pageInfo = {
     title: "Login",
     page: "Auth-page",
     request: "post",
-    sessionName: req.session.user,
+    sessionName: req.session.user, //get stored session
     logM: 'Login'
   }
   // request DB conections
@@ -60,7 +62,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
-// ALL logout page
+// Logout page
 // redirect to / home login page
 router.all('/logout', function(req, res){
   req.session.destroy( function(e, f) {

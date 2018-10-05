@@ -1,6 +1,6 @@
 /* No Var - let and const
  * try ES6
- * NodeJS + Monk + Session = keep it minimal
+ * NodeJS + Monk + Session = keep it simple
 */
 const express = require('express');
 const router = express.Router();
@@ -9,7 +9,6 @@ const moment = require('moment'); // moment for Time and Date
 // auth module
 const crudUser = require('./modules/crudUser');
 console.log(crudUser.hi());
-
 
 // User - Dashboard
 // GET - user page
@@ -45,6 +44,10 @@ router.get('/', function(req, res, next) {
 
 });
 
+//
+//
+// CRUD - Add Update Remove - Users
+//
 
 // Add users
 // post to add user/add
@@ -53,7 +56,7 @@ router.post('/add', function(req, res, next) {
   if (!req.session.user) {
     // if session empty // redirect login page
     res.redirect('/');
-    console.log("\nsession incorrect - going Home\n");
+    console.log("\nsession incorrect - going home\n");
     }
   else { // else - session good - redirect to user
     // request DB conections
