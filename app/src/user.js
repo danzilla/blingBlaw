@@ -8,38 +8,42 @@ const moment = require('moment'); // moment for Time and Date
 
 // auth module
 const crudUser = require('./modules/crudUser');
-console.log(crudUser.hi());
+console.log(crudUser.hi()); // test hi
+
+// pageInfo detailes
+let pageInfo = {
+  title: 'Users',
+  page: "Dashboard",
+  request: "",
+  sessionName: ""
+}
 
 // User - Dashboard
 // GET - user page
 router.get('/', function(req, res, next) {
-  // pageInfo detailes
-  var pageInfo = {
-    title: 'Users',
-    page: "Dashboard",
-    request: "get",
-    sessionName: req.session.user,
-    msg: ""
-  }
+  // get session info
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "get";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+
   // if session user is empty
   if(!req.session.user){
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
   } else { //else
-    console.log("\nUser Dashboard");
-    console.log("Active session: " + req.session.user + "\n");
-  }
-  // request DB conections
-  const db = req.db;
-  const collection = db.get('usercollection');
-  // get all users find()
-  collection.find({},{}, function(e, results){
-    res.render('user/index', {
-      pageInfo: pageInfo,
-      data: results
+    console.log("Active session: " + req.session.user);
+    // request DB conections
+    const db = req.db;
+    const collection = db.get('usercollection');
+    // get all users find()
+    collection.find({},{}, function(e, results){
+      res.render('user/index', {
+        pageInfo: pageInfo,
+        data: results
+      });
     });
-  });
+  }
 });
 
 //
@@ -50,6 +54,11 @@ router.get('/', function(req, res, next) {
 // Add users
 // post to add user/add
 router.post('/add', function(req, res, next) {
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page
@@ -72,8 +81,8 @@ router.post('/add', function(req, res, next) {
         res.send("\nError - insert data: " + err);
       } else { // else add user and redirect to User Dashboard
         res.redirect('/user');
-        console.log("\nUser added: " + results);
-        console.log("Active session: " + req.session.user + "\n");
+        console.log("User added: " + results);
+        console.log("Active session: " + req.session.user);
       }
     });
   }
@@ -88,7 +97,7 @@ router.all('/add', function(req, res, next) {
   } else { // else - session good - redirect to user
    // Session active - redirect to /user page
    res.redirect('/user');
-   console.log("Active session: " + req.session.user + "\n");
+   console.log("Active session: " + req.session.user);
   }
 });
 
@@ -96,6 +105,11 @@ router.all('/add', function(req, res, next) {
 // Update users
 // post to update user/Update
 router.post('/update', function(req, res, next) {
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page
@@ -109,8 +123,8 @@ router.post('/update', function(req, res, next) {
     // set validation Data
     let valData = { _id: req.body.userId }
     let newData = { // set new data for updae
-      userName: req.body.userNme,
-      userPwd: req.body.userPw,
+      userName: req.body.userName,
+      userPwd: req.body.userPwd,
       userDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     collection.update(valData, { $set: newData}, function(err, results){
@@ -119,8 +133,8 @@ router.post('/update', function(req, res, next) {
       } else { //else
         // Uplod good, move to /user
         res.redirect('/user');
-        console.log("\nUser updated: " + JSON.stringify(results));
-        console.log("Active session: " + req.session.user + "\n");
+        console.log("User updated: " + JSON.stringify(results));
+        console.log("Active session: " + req.session.user);
       }
     });
   }
@@ -135,7 +149,7 @@ router.all('/update', function(req, res, next) {
   } else { // else - session good - redirect to user
    // Session active - redirect to /user page
    res.redirect('/user');
-   console.log("Active session: " + req.session.user + "\n");
+   console.log("Active session: " + req.session.user);
   }
 });
 
@@ -143,6 +157,11 @@ router.all('/update', function(req, res, next) {
 // Remove user
 // POST to remove user/remove
 router.post('/remove', function(req, res, next) {
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page
@@ -159,8 +178,8 @@ router.post('/remove', function(req, res, next) {
         res.send("Error - removing: " + err);
       } else {
         res.redirect('/user');
-        console.log("\nUser removed: " + results);
-        console.log("Active session: " + req.session.user + "\n");
+        console.log("User removed: " + results);
+        console.log("Active session: " + req.session.user);
       }
     });
   }
@@ -175,7 +194,7 @@ router.all('/remove', function(req, res, next) {
   } else { // else - session good - redirect to user
    // Session active - redirect to /user page
    res.redirect('/user');
-   console.log("Active session: " + req.session.user + "\n");
+   console.log("Active session: " + req.session.user);
   }
 });
 
