@@ -1,0 +1,180 @@
+[33mcommit 4d3ba28096bb4ae67dcae8553efe3d567f1ce273[m
+Merge: 00e7b97 0688944
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Fri Oct 5 00:02:57 2018 -0400
+
+    Merge branch 'app-v2' of https://github.com/danzilla/blingBlaw into HEAD
+
+[33mcommit 00e7b97c928d6af70a413c94f99e8452886954cb[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Thu Oct 4 23:24:47 2018 -0400
+
+    make template out of it- CRUD
+
+[33mcommit 0688944cd4304963864e175db035ca9c890c002d[m
+Author: Danzilla <doomx.123@gmail.com>
+Date:   Thu Oct 4 22:02:02 2018 -0400
+
+    removed space
+
+[33mcommit 3feaeb95fcb530e592084d5dab71c956e90410fb[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Thu Oct 4 21:56:47 2018 -0400
+
+    coming nicely~ Index - Done
+
+[33mcommit 32d4af55a235b1272ee4a114a0353dbe10cdce0a[m
+Author: Danustan Alphonza <dan.alphonza@gmail.com>
+Date:   Thu Oct 4 16:20:22 2018 -0400
+
+    Reworking on the app - Removed ALOT
+
+[33mcommit d6e33d70f1d0c5590be4dc1ec00b95e19e65b276[m
+Author: Danustan Alphonza <dan.alphonza@gmail.com>
+Date:   Thu Oct 4 12:22:02 2018 -0400
+
+    MongoDB vs Mongoose - DB need to be rebuild - New Branch~
+
+[33mcommit 24e1d89374adf362d5d31544aeba68dfe113d8e7[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Wed Oct 3 20:07:56 2018 -0400
+
+    Statment - update issue
+
+[33mcommit 49c0a868fc5daf9794be1121ae14eeb8540f5cfa[m
+Author: Danustan Alphonza <dan.alphonza@gmail.com>
+Date:   Wed Oct 3 16:00:02 2018 -0400
+
+    statment coming good~, need to work on UPDATE
+
+[33mcommit f1fc67427a85e9f8f8161b6b89b5b1916752e391[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Tue Oct 2 21:50:14 2018 -0400
+
+    git commit
+
+[33mcommit b75c065837f271cd5c950fbaf1455abf6bc831f0[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Tue Oct 2 18:49:35 2018 -0400
+
+    Been awhile - Checkout
+
+[33mcommit 4df0dabebc99451e9b2aac6a1f746133a3bc1be4[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sat Sep 8 17:56:31 2018 -0400
+
+    Aye! search pages added
+
+[33mcommit 43d1317655ee6ea51a3aa6100607557592f38bb8[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Fri Aug 24 08:48:06 2018 -0400
+
+    template seems good - ready for archive
+
+[33mcommit 4240230d8caca38d59ec96398d25d883005cd4fc[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Wed Aug 22 23:44:25 2018 -0400
+
+    Moving to transaction, UI pretty good
+
+[33mcommit a7e8889322e30c5140e5ad15e4ec369f20e17a6b[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Tue Aug 21 14:34:37 2018 -0400
+
+    Lots change, New UI and Cat is ok, Need to focus on Transation/Statement
+
+[33mcommit 34ea95151bd469366691db5625915f570082c133[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Mon Aug 20 15:20:27 2018 -0400
+
+    Added cat and changed CAT DB structure
+
+[33mcommit d2cd1f958a9c57213a9db4a36ed6081862fed6b1[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sat Aug 18 18:54:25 2018 -0400
+
+    Cat is done! Time for Statements #blaw
+
+[33mcommit 596215252ea8d48009522b07f3f58e7c1a3ed77f[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sat Aug 18 15:07:05 2018 -0400
+
+    New folder structure and Budjet #bling#Blaw
+
+[33mcommit 3c989706cf51a9acab550ecfa41efc20caa5c124[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sun Aug 12 14:34:54 2018 -0400
+
+    Category is good! passing data through node and loop through ejs
+
+[33mcommit a8aa17762ca8c883a76d0296187202573f29e988[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sat Aug 11 14:33:50 2018 -0400
+
+    Working on Category, how to render the json where parent than child obj
+
+[33mcommit 1ab2b6aa89daedf1cf69c81bd44c18f57ec6fd14[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Fri Aug 10 10:12:10 2018 -0400
+
+    Working on category. - Transaction vs Statement
+
+[33mcommit abc05cfa247de1997be5974b840d01b8d5d05a96[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Thu Aug 9 14:51:14 2018 -0400
+
+    Cleaned and Fixed templates
+
+[33mcommit 6db77dfaddee4cd80979e2ab79a9d3d102a19a0b[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Thu Aug 9 09:25:22 2018 -0400
+
+    Not so much commit, roll back and Update the file name
+
+[33mcommit ca90b3f131b2f34ac2f872a64f479231ce0f185c[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Wed Aug 8 12:28:23 2018 -0400
+
+    Updated with file upload and add to database
+
+[33mcommit 49ba017163be4d857f108d15cbdc5fc02d26fca0[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Tue Aug 7 10:23:09 2018 -0400
+
+    Did lot - Nav should be good
+
+[33mcommit 40a3a73e080ec32c564760a56bbd2c5c589a8b9a[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Fri Aug 3 10:41:57 2018 -0400
+
+    Commit ver 4. User - backend is done
+
+[33mcommit 0be13dd3f9817fca19753bf9913e43a69c37b6e6[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Mon Jul 30 13:51:19 2018 -0400
+
+    Re-modify the format
+
+[33mcommit 37a84c74d5e7cfa37704d45ee416052d57e44bcd[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Mon Jul 23 12:53:38 2018 -0400
+
+    Updated with icon~
+
+[33mcommit e6b982453d915ce9a3c9621bb64459daa50f5032[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Sun Jul 22 22:09:35 2018 -0400
+
+    Crud with session and CURD semi working
+
+[33mcommit 065f3ba82c89b7ea8799c95a96aa7a8ffa0655c2[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Thu Jul 19 20:28:34 2018 -0400
+
+    Lots... I should do better with version controlling
+
+[33mcommit a6f3bc674bbb4482551e7bfb60ea7b60d355de91[m
+Author: Danzilla <Dan.alphonza@gmail.com>
+Date:   Wed Jul 18 14:07:26 2018 -0400
+
+    CRUD - Express, mongo, nodejs
