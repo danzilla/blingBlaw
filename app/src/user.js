@@ -10,6 +10,10 @@ const moment = require('moment'); // moment for Time and Date
 const crudUser = require('./modules/crudUser');
 console.log(crudUser.hi()); // test hi
 
+// get - /user
+// post - curd
+// all - /
+
 // pageInfo detailes
 let pageInfo = {
   title: 'Users',
@@ -17,7 +21,6 @@ let pageInfo = {
   request: "",
   sessionName: ""
 }
-
 // User - Dashboard
 // GET - user page
 router.get('/', function(req, res, next) {
@@ -47,7 +50,7 @@ router.get('/', function(req, res, next) {
 });
 
 //
-//
+// POST
 // CRUD - Add Update Remove - Users
 //
 
@@ -87,20 +90,6 @@ router.post('/add', function(req, res, next) {
     });
   }
 });
-// ALL add user page
-router.all('/add', function(req, res, next) {
-  // if session is undefined - get - login page
-  if (!req.session.user) {
-   // if session empty // redirect login page
-   res.redirect('/');
-   console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
-   console.log("Active session: " + req.session.user);
-  }
-});
-
 
 // Update users
 // post to update user/Update
@@ -139,20 +128,6 @@ router.post('/update', function(req, res, next) {
     });
   }
 });
-// ALL update user page
-router.all('/update', function(req, res, next) {
-  // if session is undefined - get - login page
-  if (!req.session.user) {
-   // if session empty // redirect login page
-   res.redirect('/');
-   console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
-   console.log("Active session: " + req.session.user);
-  }
-});
-
 
 // Remove user
 // POST to remove user/remove
@@ -182,6 +157,35 @@ router.post('/remove', function(req, res, next) {
         console.log("Active session: " + req.session.user);
       }
     });
+  }
+});
+
+
+
+// ALL add user page
+router.all('/add', function(req, res, next) {
+  // if session is undefined - get - login page
+  if (!req.session.user) {
+   // if session empty // redirect login page
+   res.redirect('/');
+   console.log("\nsession incorrect - going Home\n");
+  } else { // else - session good - redirect to user
+   // Session active - redirect to /user page
+   res.redirect('/user');
+   console.log("Active session: " + req.session.user);
+  }
+});
+// ALL update user page
+router.all('/update', function(req, res, next) {
+  // if session is undefined - get - login page
+  if (!req.session.user) {
+   // if session empty // redirect login page
+   res.redirect('/');
+   console.log("\nsession incorrect - going Home\n");
+  } else { // else - session good - redirect to user
+   // Session active - redirect to /user page
+   res.redirect('/user');
+   console.log("Active session: " + req.session.user);
   }
 });
 // ALL remove page
