@@ -1,0 +1,30 @@
+<!-- user Add Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title display-5 text-info"><%- pageInfo.page %></h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form class="row" name="adduser" method="post" action="/user/add">
+
+          <div class="container">
+            <input type="text" class="form-control form-control-lg card-1 py-2 my-2" placeholder="username" name="username" required>
+            <input type="text" class="form-control form-control-lg card-1 py-2 my-2" placeholder="password" name="pwd" required>
+
+            <hr>
+            <div class="input-group-append card-1">
+              <button type="submit" class="btn btn-outline-primary btn-block">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

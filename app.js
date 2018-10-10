@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 
-// Dev - logs 
+// Dev - logs
 const logger = require('morgan');
 app.use(logger('dev'));
 app.locals.pretty = true;

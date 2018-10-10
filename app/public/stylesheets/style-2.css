@@ -1,0 +1,39 @@
+body {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.borderNav {
+  border-bottom: 1px solid #17222c;
+}
+
+.topNav {
+  background-color: #212121;
+}
+.sideNavRight {
+  background-color: #d5dee0;
+  border-left: 1px solid #a9bbc0;
+}
+.sideNavLeft {
+  color: #fff;
+  background-color: #2e2e2e;
+  border-right: 1px solid #17222c;
+}
+.content {
+  background-color: #ECF0F1;
+}
+
+.word-break {
+  word-wrap: break-word;
+}
+.overFlow-no{
+  overflow: hidden;
+}
+.overFlow-yes{
+  overflow: auto;
+}
+
+.border-1{
+  border: red 1px solid;
+}
