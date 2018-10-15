@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-  $("#sidebar").mCustomScrollbar({
+  $("#1sidebar").mCustomScrollbar({
     theme: "minimal",
     mouseWheelPixels: 120 //change this to a value, that fits your needs
   });

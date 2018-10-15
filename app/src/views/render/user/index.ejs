@@ -4,10 +4,8 @@
 <body>
 
 <div class="wrapper h-100 ">
-  <%- include('../../layout/searchBar') -%>
-
   <!-- Sidebar  -->
-  <%- include('../components/slideMenus') -%>
+  <%- include('../../components/slideMenus') -%>
   <!-- Page Content  -->
   <div id="content" class="h-100 p-4">
     <!-- content wrapper -->
@@ -17,9 +15,7 @@
         <!-- first bar -->
         <div class="col-1 col-md-1 col-lg-2 ">
           <div class="row align-items-center h-100 float-right">
-            <div class="">
-              <%- include('../components/sideNav') -%>
-            </div>
+            <%- include('../../layout/sideNav') -%>
           </div>
         </div>
         <!-- second bar -->
@@ -45,7 +41,7 @@
                   <div class="row align-items-center h-100">
                     <div class="container m-0 p-0 alert">
                       <div class="container pt-4 bg-white alert card-1">
-                        <%- include('userinfo/summary') -%>
+                        <%- include('userInfo/summary') -%>
                       </div>
                     </div>
                   </div>
