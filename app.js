@@ -43,8 +43,10 @@ app.use(function(req,res,next) {
 // routes
 const indexRouter = require('./app/src/index');
 const userRouter = require('./app/src/user');
+const categoryRouter = require('./app/src/category');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/category', categoryRouter);
 
 const createError = require('http-errors');
 // catch 404 and forward to error handler
