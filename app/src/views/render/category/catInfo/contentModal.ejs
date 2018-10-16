@@ -1,5 +1,5 @@
 <!-- page Info -->
-<div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="pageInfo" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class=" btn-danger py-2" data-dismiss="modal"> </div>
@@ -31,7 +31,7 @@
         <h1 class="modal-title display-4 text-info"><%- pageInfo.title %></h1>
       </div>
       <div class="modal-body">
-        <form class="row" name="adduser" method="post" action="/user/add">
+        <form class="row" name="adduser" method="post" action="/category/add">
           <div class="container">
             <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="username" name="username" required>
             <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="password" name="pwd" required>

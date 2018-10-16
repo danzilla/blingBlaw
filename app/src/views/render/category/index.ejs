@@ -7,7 +7,7 @@
 <!-- Sidebar  -->
 <%- include('../../components/slideMenus') -%>
 <!-- Modal  -->
-<%- include('userInfo/contentModal') -%>
+<%- include('catInfo/contentModal') -%>
 
   <!-- Page Content  -->
   <div id="content" class="h-100 p-4">
@@ -27,13 +27,11 @@
             <!-- second - first - content -->
             <div class="col-11 col-md-11 col-lg-8 h-100 ">
               <div class="container-fluid h-100 scrollYes m-0 p-0 card-1 bg-white alert">
-                <div class="container pt-4">
-                  <%- include('userInfo/contentHead') -%>
-                  <%- include('userInfo/contentNav') -%>
-                </div>
-                <hr>
-                <div class="alert">
-                  <%- include('userInfo/contentBody') -%>
+                <div class="container alert pt-4">
+                  <%- include('catInfo/contentHead') -%>
+                  <%- include('catInfo/contentNav') -%>
+                  <hr>
+                  <%- include('catInfo/contentBody') -%>
                 </div>
               </div>
             </div>
@@ -44,7 +42,7 @@
                   <div class="row align-items-center h-100">
                     <div class="container m-0 p-0 alert">
                       <div class="container pt-4 bg-white alert card-1">
-                        <%- include('userInfo/summary') -%>
+                        <%- include('catInfo/summary') -%>
                       </div>
                     </div>
                   </div>

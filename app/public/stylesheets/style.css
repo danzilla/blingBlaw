@@ -19,7 +19,11 @@ body {
     z-index: 1900;
 }
 .z-back {
-    z-index: 1200;
+    z-index: 1000;
+}
+
+.word-break {
+  word-wrap: break-word;
 }
 
 .bgColor-pink { background-color: #E040FB; }

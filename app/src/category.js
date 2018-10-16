@@ -1,5 +1,5 @@
 /* No Var - let and const
- * try ES6
+ * try ES6 + async
  * NodeJS + Monk + Session = keep it simple
 */
 const express = require('express');
@@ -15,7 +15,7 @@ console.log(crudUser.hi()); // test hi
 // all - /
 
 // DB collection = Category collection
-const collectionName = "usercollection";
+const collectionName = "categorycollection";
 // pageInfo detailes
 let pageInfo = {
   title: 'Category',
