@@ -14,18 +14,18 @@ console.log(crudUser.hi()); // test hi
 // post - curd
 // all - /
 
-// DB collection = User collection
+// DB collection = Category collection
 const collectionName = "usercollection";
 // pageInfo detailes
 let pageInfo = {
-  title: 'Users',
+  title: 'Category',
   page: "Dashboard",
   request: "",
   sessionName: ""
 }
 
-// User - Dashboard
-// GET - user page
+// Category - Dashboard
+// GET - category page
 router.get('/', function(req, res, next) {
   // get session info
   pageInfo.sessionName = req.session.user;
@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
     const collection = db.get(collectionName);
     // get all users find()
     collection.find({},{}, function(e, results){
-      res.render('user/index', {
+      res.render('category/index', {
         pageInfo: pageInfo,
         data: results
       });
@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
 
 //
 // POST
-// CRUD - Add Update Remove - Users
+// CRUD - Add Update Remove - Category
 //
 
 // Add users
@@ -71,7 +71,7 @@ router.post('/add', function(req, res, next) {
     res.redirect('/');
     console.log("\nsession incorrect - going home\n");
     }
-  else { // else - session good - redirect to user
+  else { // else - session good - redirect to category list
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
@@ -85,9 +85,9 @@ router.post('/add', function(req, res, next) {
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
         res.send("\nError - insert data: " + err);
-      } else { // else add user and redirect to User Dashboard
-        res.redirect('/user');
-        console.log("User added: " + results);
+      } else { // else add user and redirect to Category Dashboard
+        res.redirect('/category');
+        console.log("Category added: " + results);
         console.log("Active session: " + req.session.user);
       }
     });
@@ -124,8 +124,8 @@ router.post('/update', function(req, res, next) {
         res.send("Error - updating: " + err);
       } else { //else
         // Uplod good, move to /user
-        res.redirect('/user');
-        console.log("User updated: " + JSON.stringify(results));
+        res.redirect('/category');
+        console.log("Category updated: " + JSON.stringify(results));
         console.log("Active session: " + req.session.user);
       }
     });
@@ -155,8 +155,8 @@ router.post('/remove', function(req, res, next) {
       if(err) {
         res.send("Error - removing: " + err);
       } else {
-        res.redirect('/user');
-        console.log("User removed: " + results);
+        res.redirect('/category');
+        console.log("Category removed: " + results);
         console.log("Active session: " + req.session.user);
       }
     });
@@ -165,7 +165,7 @@ router.post('/remove', function(req, res, next) {
 
 
 
-// ALL add user page
+// ALL add category page
 router.all('/add', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
@@ -173,12 +173,12 @@ router.all('/add', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /category page
+   res.redirect('/category');
    console.log("Active session: " + req.session.user);
   }
 });
-// ALL update user page
+// ALL update category page
 router.all('/update', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
@@ -186,8 +186,8 @@ router.all('/update', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /category page
+   res.redirect('/category');
    console.log("Active session: " + req.session.user);
   }
 });
@@ -199,8 +199,8 @@ router.all('/remove', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /category page
+   res.redirect('/category');
    console.log("Active session: " + req.session.user);
   }
 });

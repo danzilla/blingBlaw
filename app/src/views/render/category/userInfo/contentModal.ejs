@@ -1,0 +1,48 @@
+<!-- page Info -->
+<div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+      <div class="modal-header">
+        <h1 class="modal-title display-4 text-info">Page info</h1>
+      </div>
+
+      <div class="modal-body container">
+        <p>pageInfo:
+          <code><%- JSON.stringify(pageInfo) %></code>
+        </p>
+        <p>data:
+          <code><%- JSON.stringify(data) %></code>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- user Add Modal -->
+<div class="modal fade" id="userAddD" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+      <div class="modal-header">
+        <h1 class="modal-title display-4 text-info"><%- pageInfo.title %></h1>
+      </div>
+      <div class="modal-body">
+        <form class="row" name="adduser" method="post" action="/user/add">
+          <div class="container">
+            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="username" name="username" required>
+            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="password" name="pwd" required>
+            <hr>
+            <div class="text-center">
+              <button type="submit" class="btn btn-outline-primary ">add user <i class="fas fa-user-check text-success"> </i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

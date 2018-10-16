@@ -10,7 +10,7 @@
 
       <button class="btn card-1 dropdown-toggle bg-light"
         type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="stroke-fuchsia fas fa-2x fa-rocket fa-flip-horizontal mr-0 ml-0 text-danger"></i>
+        <i class="stroke-fuchsia fas fa-1x fa-rocket fa-flip-horizontal mr-0 ml-0 text-danger"></i>
       </button>
 
       <div class="dropdown-menu px-0 py-0 card-1">
@@ -45,13 +45,13 @@
       <li class="nav-item">
         <div class="btn-group" role="group">
 
-          <a class="btn card-1" id="sidebarCollapse" data-toggle="modal" data-target="#exampleModalCenter">
-            <span style="font-size: 1.7rem;" class="text-primary">
+          <a class="btn card-1" data-toggle="modal" data-target="#userAddD">
+            <span class="text-primary">
               <i class="fas fa-user-plus"></i>
             </span>
           </a>
-          <a class="btn card-1 active" id="sidebarCollapse">
-            <span style="font-size: 1.7rem;" class="text-info">
+          <a class="btn card-1" data-toggle="modal" data-target="#userInfo">
+            <span class="text-info">
               <i class="fas fa-info"></i>
             </span>
           </a>
@@ -61,5 +61,3 @@
     </ul>
   </div>
 </nav>
-
-<%- include('userAdd') -%>
