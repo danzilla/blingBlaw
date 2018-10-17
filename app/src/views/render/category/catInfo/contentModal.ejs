@@ -22,7 +22,7 @@
 
 
 <!-- user Add Modal -->
-<div class="modal fade" id="userAddD" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="catAddD" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 
@@ -31,16 +31,28 @@
         <h1 class="modal-title display-4 text-info"><%- pageInfo.title %></h1>
       </div>
       <div class="modal-body">
+
         <form class="row" name="adduser" method="post" action="/category/add">
-          <div class="container">
-            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="username" name="username" required>
-            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="password" name="pwd" required>
+          <div class="container py-4">
+            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="category name" name="catName" required>
+            <select class="form-control form-control-lg custom-select my-2 py-0" name="catParent">
+              <option value="root">category (new)</option>
+                <% for(var i=0; i < data.length; i++) { %>
+                <% if (data[i].catParent == "root") { %>
+              <option value="<%= data[i]._id %>">
+                <%= data[i].catName %>
+              </option>
+                <% } %>
+              <% } %>
+            </select>
             <hr>
             <div class="text-center">
-              <button type="submit" class="btn btn-outline-primary ">add user <i class="fas fa-user-check text-success"> </i></button>
+              <button type="submit" class="btn btn-outline-primary ">add user </button>
             </div>
           </div>
         </form>
+
+
       </div>
 
     </div>

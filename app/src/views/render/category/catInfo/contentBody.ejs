@@ -1,3 +1,47 @@
-<p class="word-break">
-  <%= JSON.stringify(data) %>
-</p>
+<table class="table table-bordered">
+  <thead>
+    <tr class="bg-dark text-light">
+      <th colspan="">Category</th>
+      <th colspan="">Sub category</th>
+      <th colspan="">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% var catLen = data.length; %>
+    <% for(var i=0; i < catLen; i++) { %>
+      <% if (data[i].catParent == "root" ) { %>
+      <tr>
+        <td><%= data[i].catName %></td>
+        <td>
+        <% for (var j=0; j < catLen; j++) { %>
+          <% if (data[i]._id == data[j].catParent ) { %>
+            <div class="badge badge-warning">
+              <%= data[j].catName %>
+              <form name="subRM<%= data[j]._id %>" method="post" action="/category/remove" class="d-inline">
+                <input type="hidden" name="removeCat" value="<%= data[j]._id %>">
+                <button type="submit" class="badge badge-warning badge-pill btn">
+                  <i class="text-danger fas fa-times"></i></button>
+              </form>
+            </div>
+          <% } %>
+        <% } %>
+        </td>
+        <td>
+          <div class="input-group-append">
+            <form name="catRM<%= data[i]._id %>" method="post" action="/category/remove">
+              <input type="hidden" name="removeCat" value="<%= data[i]._id %>">
+
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button data-toggle="modal" data-target="#modal<%= data[i]._id %>"
+                  class="btn btn-primary"><i class="fas fa-user-edit"></i></button>
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-user-times"></i></button>
+              </div>
+            </form>
+          </div>
+        </td>
+      <% } %>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

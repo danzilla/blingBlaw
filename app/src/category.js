@@ -75,12 +75,13 @@ router.post('/add', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
+
     // set newData to insert
-    const newData = {
-      userName : req.body.username,
-      userPwd : req.body.pwd,
-      userDate : moment().format('MMMM Do YYYY, h:mm:ss a')
-    };
+    let newData = { // set New data for parent Category
+      catName: req.body.catName,
+      catParent: req.body.catParent,
+      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+    }
     // insert newData
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
@@ -94,7 +95,7 @@ router.post('/add', function(req, res, next) {
   }
 });
 
-// Update users
+// Update category
 // post to update user/Update
 router.post('/update', function(req, res, next) {
   // get session info and set pageInfo
@@ -123,7 +124,7 @@ router.post('/update', function(req, res, next) {
       if(err) { // if err throw err
         res.send("Error - updating: " + err);
       } else { //else
-        // Uplod good, move to /user
+        // Uplod good, move to /category
         res.redirect('/category');
         console.log("Category updated: " + JSON.stringify(results));
         console.log("Active session: " + req.session.user);
@@ -132,8 +133,8 @@ router.post('/update', function(req, res, next) {
   }
 });
 
-// Remove user
-// POST to remove user/remove
+// Remove Category
+// POST to remove category/remove
 router.post('/remove', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -150,8 +151,8 @@ router.post('/remove', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
-    let removeUser = { _id: req.body.userId };
-    collection.remove(removeUser, function(err, results) {
+    let removeData = { _id: req.body.removeCat };
+    collection.remove(removeData, function(err, results) {
       if(err) {
         res.send("Error - removing: " + err);
       } else {
