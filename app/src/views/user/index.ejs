@@ -1,0 +1,48 @@
+<%- include('../../layout/header') -%>
+
+<!-- Navbar TOP -->
+<div class="row">
+  <div class="col">
+    <%- include('../../layout/navBar') -%>
+  </div>
+</div>
+
+<div class="col h-100">
+  <div class="row h-100">
+
+    <!-- Navbar Left side -->
+    <div class="col-md-2 sideNavLeft h-100">
+      <div class="row h-100">
+        <%- include('sideLeft') -%>
+      </div>
+    </div>
+
+    <!-- Content data -->
+    <div class="col-md-8 h-100">
+      <div class="container-fluid h-100">
+
+        <!-- Content container -->
+        <div class="overFlow-yes h-100">
+          <div class="container-fluid mt-3">
+            <%- include('userAdd') -%>
+          </div>
+
+          <div class="overFlow-yes h-75">
+            <%- include('userInfo') -%>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Navbar Right side -->
+    <div class="col-md-2 sideNavRight h-100">
+      <div class="row h-100">
+        <%- include('sideRight') -%>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../../layout/footer') -%>

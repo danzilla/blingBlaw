@@ -1,31 +1,27 @@
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var MongoStore = require('connect-mongo')(session);
-var path = require('path');
-var logger = require('morgan');
-var mongo = require("mongo");
-var monk = require("monk");
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
 
-var app = express();
+const app = express();
 
-app.locals.pretty = true;
+// Dev - logs 
+const logger = require('morgan');
 app.use(logger('dev'));
+app.locals.pretty = true;
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/app/public/')));
-app.set('views', path.join(__dirname, '/app/server/views'));
+app.set('views', path.join(__dirname, '/app/src/views'));
 app.set('view engine', 'ejs');
 
-// DB and Session
-var dbUrl = "localhost:27017/danustanBling";
-var dbname = "";
-
+// Session config
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session);
 app.use(cookieParser());
-
 app.use(session({
 	secret: 'dannustan-BlingBlaw',
 	proxy: true,
@@ -35,25 +31,22 @@ app.use(session({
 	})
 );
 
-var db = monk("localhost:27017/danustanBling")
-app.use(function(req,res,next){
-    req.db = db;
-    next();
+// Database config | monk
+const mongo = require("mongo");
+const monk = require("monk");
+const db = monk("localhost:27017/danustanBling")
+app.use(function(req,res,next) {
+  req.db = db;
+  next();
 });
 
 // routes
-var indexRouter = require('./app/server/index');
-var userRouter = require('./app/server/user');
-var statementRouter = require('./app/server/statement');
-var categoryRouter = require('./app/server/category');
-var searchRouter = require('./app/server/search');
+const indexRouter = require('./app/src/index');
+const userRouter = require('./app/src/user');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/statement', statementRouter);
-app.use('/category', categoryRouter);
-app.use('/search', searchRouter);
 
-var createError = require('http-errors');
+const createError = require('http-errors');
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -68,7 +61,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 
 module.exports = app;
