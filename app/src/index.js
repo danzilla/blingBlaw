@@ -9,41 +9,45 @@ const router = express.Router();
 const crudAuth = require('./modules/auth');
 crudAuth.hi();
 
+// DB collection = Category collection
+const collectionName = "categorycollection";
+// pageInfo detailes
+let pageInfo = {
+  app: "Bling Blaw ~",
+  title: 'Login',
+  page: "Auth-page",
+  request: "",
+  sessionName: "",
+  logM: 'Login'
+}
+
 // Home page
 /* GET login page */
 router.get('/', function(req, res, next) {
-  console.log("\n ~ Hi ~ \n");
-
-  // pageInfo detailes
-  let pageInfo = {
-    title: "Login",
-    page: "Auth-page",
-    request: "get",
-    sessionName: "nada",
-    logM: 'Login'
-  }
+  console.log("\n ~ Hi ~");
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "get";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // if session is undefined - get - login page
   if (!req.session.user) {
     // render - login page
-    res.render('auth/index', {pageInfo});
+    res.render('auth/index', {pageInfo: pageInfo});
     } else { // else - session good - redirect to user
       // Session active - redirect to /user page
+      pageInfo.sessionName = req.session.user;
       res.redirect('/user');
-      console.log("Active session: " + req.session.user);
+      console.log("Auto login - Active session: " + req.session.user);
     }
 });
 
 // Auth
 // POST login page.
 router.post('/', function(req, res, next) {
-  // pageInfo detailes
-  let pageInfo = {
-    title: "Login",
-    page: "Auth-page",
-    request: "post",
-    sessionName: req.session.user, //get stored session
-    logM: 'Login'
-  }
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // request DB conections
   const db = req.db;
   const connDB = db.get('usercollection'); //collection - user
@@ -68,7 +72,7 @@ router.all('/logout', function(req, res){
   req.session.destroy( function(e, f) {
     if(e) {console.log("error log out: " + e)};
     // logout Bye~
-    console.log("\n Bye~ \n");
+    console.log("\n ~ Bye ~ \n");
     res.redirect('/');
   });
 });

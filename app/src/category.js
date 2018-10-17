@@ -10,7 +10,7 @@ const moment = require('moment'); // moment for Time and Date
 const crudUser = require('./modules/crudUser');
 console.log(crudUser.hi()); // test hi
 
-// get - /user
+// get - /category
 // post - curd
 // all - /
 
@@ -18,6 +18,7 @@ console.log(crudUser.hi()); // test hi
 const collectionName = "categorycollection";
 // pageInfo detailes
 let pageInfo = {
+  app: "Bling Blaw ~",
   title: 'Category',
   page: "Dashboard",
   request: "",
@@ -57,8 +58,8 @@ router.get('/', function(req, res, next) {
 // CRUD - Add Update Remove - Category
 //
 
-// Add users
-// post to add user/add
+// Add category
+// post to add category/add
 router.post('/add', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -86,7 +87,7 @@ router.post('/add', function(req, res, next) {
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
         res.send("\nError - insert data: " + err);
-      } else { // else add user and redirect to Category Dashboard
+      } else { // else add category and redirect to Category Dashboard
         res.redirect('/category');
         console.log("Category added: " + results);
         console.log("Active session: " + req.session.user);
@@ -96,7 +97,7 @@ router.post('/add', function(req, res, next) {
 });
 
 // Update category
-// post to update user/Update
+// post to update category/Update
 router.post('/update', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -166,6 +167,9 @@ router.post('/remove', function(req, res, next) {
 
 
 
+
+
+// ALL ROUTE
 // ALL add category page
 router.all('/add', function(req, res, next) {
   // if session is undefined - get - login page

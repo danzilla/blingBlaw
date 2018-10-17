@@ -18,6 +18,7 @@ console.log(crudUser.hi()); // test hi
 const collectionName = "usercollection";
 // pageInfo detailes
 let pageInfo = {
+  app: "Bling Blaw ~",
   title: 'Users',
   page: "Dashboard",
   request: "",
