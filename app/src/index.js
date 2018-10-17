@@ -13,7 +13,6 @@ crudAuth.hi();
 const collectionName = "categorycollection";
 // pageInfo detailes
 let pageInfo = {
-  app: "Bling Blaw ~",
   title: 'Login',
   page: "Auth-page",
   request: "",

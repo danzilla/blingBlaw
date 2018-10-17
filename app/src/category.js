@@ -18,7 +18,6 @@ console.log(crudUser.hi()); // test hi
 const collectionName = "categorycollection";
 // pageInfo detailes
 let pageInfo = {
-  app: "Bling Blaw ~",
   title: 'Category',
   page: "Dashboard",
   request: "",
@@ -76,7 +75,6 @@ router.post('/add', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
-
     // set newData to insert
     let newData = { // set New data for parent Category
       catName: req.body.catName,
@@ -115,11 +113,11 @@ router.post('/update', function(req, res, next) {
     const db = req.db;
     const collection = db.get(collectionName);
     // set validation Data
-    let valData = { _id: req.body.userId }
+    let valData = { _id: req.body.updateCatId }
     let newData = { // set new data for updae
-      userName: req.body.userName,
-      userPwd: req.body.userPwd,
-      userDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+      catName: req.body.updateCatName,
+      catParent: req.body.updateCatParent,
+      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     collection.update(valData, { $set: newData}, function(err, results){
       if(err) { // if err throw err
