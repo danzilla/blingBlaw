@@ -6,10 +6,6 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
 
-// auth module
-const crudUser = require('./modules/crudUser');
-console.log(crudUser.hi()); // test hi
-
 // get - /category
 // post - curd
 // all - /

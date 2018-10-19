@@ -4,7 +4,7 @@ var router = express.Router();
 
 // Testing Module - hi
 exports.hi = function () {
-  let msg = `\n Hi~ BlingBlaw - Budget App \n`;
+  let msg = `Hi~ BlingBlaw - Budget App -auth`;
   return msg;
 };
 

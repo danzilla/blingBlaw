@@ -7,7 +7,12 @@ const router = express.Router();
 
 // auth module
 const crudAuth = require('./modules/auth');
-crudAuth.hi();
+console.log(crudAuth.hi());
+const crudUser = require('./modules/crudUser');
+console.log(crudUser.hi()); // test hi
+const sessionLOL = require('./modules/session');
+console.log(sessionLOL.hi());
+
 
 // DB collection = Category collection
 const collectionName = "categorycollection";
@@ -24,6 +29,7 @@ let pageInfo = {
 /* GET login page */
 router.get('/', function(req, res, next) {
   console.log("\n ~ Hi ~");
+
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "get";

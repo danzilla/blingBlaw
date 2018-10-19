@@ -44,9 +44,11 @@ app.use(function(req,res,next) {
 const indexRouter = require('./app/src/index');
 const userRouter = require('./app/src/user');
 const categoryRouter = require('./app/src/category');
+const statementRouter = require('./app/src/statement');
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/category', categoryRouter);
+app.use('/statement', statementRouter);
 
 const createError = require('http-errors');
 // catch 404 and forward to error handler

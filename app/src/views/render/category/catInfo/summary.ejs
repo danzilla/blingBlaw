@@ -1,3 +1,36 @@
 <h3 class="text-center display-5">summary <small> statement</small></h3>
 <hr>
-<%- include('chart') -%>
+<!-- pie chart canvas element -->
+<canvas id="countries" class="container"></canvas>
+<!-- bar chart canvas element -->
+<script>
+    // pie chart data
+    var pieData = [
+        {
+            value: 20,
+            color:"#878BB6"
+        },
+        {
+            value : 40,
+            color : "#4ACAB4"
+        },
+        {
+            value : 10,
+            color : "#FF8153"
+        },
+        {
+            value : 30,
+            color : "#FFEA88"
+        }
+    ];
+    // pie chart options
+    var pieOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var countries= document.getElementById("countries").getContext("2d");
+    // draw pie chart
+    new Chart(countries).Pie(pieData, pieOptions);
+
+</script>

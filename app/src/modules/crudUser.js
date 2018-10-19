@@ -9,6 +9,6 @@ var collection = db.get('usercollection');
 
 // Testing Module - hi
 exports.hi = function () {
-  let msg = "\nHi~ BlingBlaw - Budget App";
+  let msg = "Hi~ BlingBlaw - Budget App -crudUser";
   return msg;
 };

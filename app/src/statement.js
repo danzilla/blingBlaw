@@ -1,27 +1,27 @@
 /* No Var - let and const
- * try ES6
+ * try ES6 + async
  * NodeJS + Monk + Session = keep it simple
 */
 const express = require('express');
 const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
 
-// get - /user
+// get - /statement
 // post - curd
 // all - /
 
-// DB collection = User collection
-const collectionName = "usercollection";
+// DB collection = Statement collection
+const collectionName = "statementcollection";
 // pageInfo detailes
 let pageInfo = {
-  title: 'Users',
+  title: 'Statement',
   page: "Dashboard",
   request: "",
   sessionName: ""
 }
 
-// User - Dashboard
-// GET - user page
+// Statement - Dashboard
+// GET - statement page
 router.get('/', function(req, res, next) {
   // get session info
   pageInfo.sessionName = req.session.user;
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
     const collection = db.get(collectionName);
     // get all users find()
     collection.find({},{}, function(e, results){
-      res.render('user/index', {
+      res.render('statement/index', {
         pageInfo: pageInfo,
         data: results
       });
@@ -50,11 +50,11 @@ router.get('/', function(req, res, next) {
 
 //
 // POST
-// CRUD - Add Update Remove - Users
+// CRUD - Add Update Remove - Statement
 //
 
-// Add users
-// post to add user/add
+// Add statement
+// post to add statement/add
 router.post('/add', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -67,31 +67,31 @@ router.post('/add', function(req, res, next) {
     res.redirect('/');
     console.log("\nsession incorrect - going home\n");
     }
-  else { // else - session good - redirect to user
+  else { // else - session good - redirect to statement list
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
     // set newData to insert
-    const newData = {
-      userName : req.body.username,
-      userPwd : req.body.pwd,
-      userDate : moment().format('MMMM Do YYYY, h:mm:ss a')
-    };
+    let newData = { // set New data for parent Statement
+      catName: req.body.catName,
+      catParent: req.body.catParent,
+      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+    }
     // insert newData
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
         res.send("\nError - insert data: " + err);
-      } else { // else add user and redirect to User Dashboard
-        res.redirect('/user');
-        console.log("User added: " + results);
+      } else { // else add statement and redirect to Statement Dashboard
+        res.redirect('/statement');
+        console.log("Statement added: " + results);
         console.log("Active session: " + req.session.user);
       }
     });
   }
 });
 
-// Update users
-// post to update user/Update
+// Update statement
+// post to update statement/Update
 router.post('/update', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -109,27 +109,27 @@ router.post('/update', function(req, res, next) {
     const db = req.db;
     const collection = db.get(collectionName);
     // set validation Data
-    let valData = { _id: req.body.userId }
+    let valData = { _id: req.body.updateCatId }
     let newData = { // set new data for updae
-      userName: req.body.userName,
-      userPwd: req.body.userPwd,
-      userDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+      catName: req.body.updateCatName,
+      catParent: req.body.updateCatParent,
+      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     collection.update(valData, { $set: newData}, function(err, results){
       if(err) { // if err throw err
         res.send("Error - updating: " + err);
       } else { //else
-        // Uplod good, move to /user
-        res.redirect('/user');
-        console.log("User updated: " + JSON.stringify(results));
+        // Uplod good, move to /statement
+        res.redirect('/statement');
+        console.log("Statement updated: " + JSON.stringify(results));
         console.log("Active session: " + req.session.user);
       }
     });
   }
 });
 
-// Remove user
-// POST to remove user/remove
+// Remove Statement
+// POST to remove statement/remove
 router.post('/remove', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
@@ -146,13 +146,13 @@ router.post('/remove', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
-    let removeUser = { _id: req.body.userId };
-    collection.remove(removeUser, function(err, results) {
+    let removeData = { _id: req.body.removeCat };
+    collection.remove(removeData, function(err, results) {
       if(err) {
         res.send("Error - removing: " + err);
       } else {
-        res.redirect('/user');
-        console.log("User removed: " + results);
+        res.redirect('/statement');
+        console.log("Statement removed: " + results);
         console.log("Active session: " + req.session.user);
       }
     });
@@ -161,7 +161,10 @@ router.post('/remove', function(req, res, next) {
 
 
 
-// ALL add user page
+
+
+// ALL ROUTE
+// ALL add statement page
 router.all('/add', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
@@ -169,12 +172,12 @@ router.all('/add', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /statement page
+   res.redirect('/statement');
    console.log("Active session: " + req.session.user);
   }
 });
-// ALL update user page
+// ALL update statement page
 router.all('/update', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
@@ -182,8 +185,8 @@ router.all('/update', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /statement page
+   res.redirect('/statement');
    console.log("Active session: " + req.session.user);
   }
 });
@@ -195,8 +198,8 @@ router.all('/remove', function(req, res, next) {
    res.redirect('/');
    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /user page
-   res.redirect('/user');
+   // Session active - redirect to /statement page
+   res.redirect('/statement');
    console.log("Active session: " + req.session.user);
   }
 });
