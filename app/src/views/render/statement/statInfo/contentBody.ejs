@@ -1,1 +1,110 @@
-<%= JSON.stringify(data) %>
+
+<% for(var i=0; i < data.length; i++) { %>
+  <table class="table table-borderless">
+    <thead class="thead-dark border-bottom border-danger">
+      <th colspan="1" class="text-center"><code><i class="fab fa-gripfire"></i></code></th>
+      <th colspan="2" class="text-center">Title:   <code><%- data[i].statementInfo.statementName %></code></th>
+      <th colspan="2" class="text-center">Type:   <code><%- data[i].statementInfo.statementType %></code></th>
+      <th colspan="2" scope="col" class="text-center">Date:   <code><%- data[i].statementInfo.statementDate %></code></th>
+    </thead>
+    <thead class="thead-dark">
+      <tr class="bg-dark text-light">
+        <th scope="col" class="text-center">#</th>
+        <th scope="col" class="text-center">Date</th>
+        <th scope="col" class="text-center">Description</th>
+        <th scope="col" class="text-center">Type</th>
+        <th scope="col" class="text-center">Transaction</th>
+        <th scope="col" class="text-center">Catergory</th>
+        <th scope="col" class="text-center"><i class="fas fa-cogs"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var j=0; j < data[i].transactionInfo.length; j++) { %>
+        <tr class="card-1 ">
+          <th scope="col" class="text-center align-middle">
+            <%- data[i].transactionInfo[j].transId %>
+          </th>
+          <td class="align-middle">
+            <%- data[i].transactionInfo[j].transDate %>
+          </td>
+          <td class="align-middle">
+            <%- data[i].transactionInfo[j].transDesc %>
+          </td>
+          <!-- Withdraw or Deposite - label -->
+          <td class="text-center align-middle">
+            <% if(data[i].transactionInfo[j].transWithdraw) { %>
+              <span class="badge badge-info font-italic">withdrawal</span>
+            <% } %>
+            <% if(data[i].transactionInfo[j].transDeposite) { %>
+              <span class="badge badge-primary font-italic">deposite</span>
+            <% } %>
+          </td>
+          <!-- Withdraw or Deposite - $ -->
+          <td class="text-center align-middle">
+            <% if(data[i].transactionInfo[j].transWithdraw) { %>
+                $ <%= data[i].transactionInfo[j].transWithdraw %>
+            <% } %>
+            <% if(data[i].transactionInfo[j].transDeposite) { %>
+                $ <%= data[i].transactionInfo[j].transDeposite %>
+            <% } %>
+          </td>
+          <td class="text-center align-middle">
+            <span class="badge badge-success">Success</span>
+            <span class="badge badge-danger">Danger</span>
+            <span class="badge badge-warning">Warning</span>
+            <span class="badge badge-info">Info</span>
+          </td>
+          <td class="text-center align-middle">
+            <button data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
+              class="btn btn-outline-warning">Attention</button>
+          </td>
+        </tr>
+
+        <!-- Modal for update user -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalTrans<%= data[i].transactionInfo[j].transId %>" tabindex="-1" role="dialog"aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content card-1">
+              <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+              <div class="modal-header">
+                <h4><%= pageInfo.title %><small>update </small></h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <%- data[i].transactionInfo[j].transId %></span>
+                    <span class="input-group-text">
+                      <%- data[i].transactionInfo[j].transDate %></span>
+                    <% if(data[i].transactionInfo[j].transWithdraw) { %>
+                      <span class="input-group-text alert-primary">withdrawal</span>
+                      <span class="input-group-text alert-primary">$ <%= data[i].transactionInfo[j].transWithdraw %></span>
+                    <% } %>
+                    <% if(data[i].transactionInfo[j].transDeposite) { %>
+                      <span class="input-group-text alert-success">deposite</span>
+                      <span class="input-group-text alert-success">$ <%= data[i].transactionInfo[j].transDeposite %></span>
+                    <% } %>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><%- data[i].transactionInfo[j].transDesc %></span>
+                  </div>
+                  <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </tbody>
+  </table>
+<% } %>

@@ -5,39 +5,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <!-- Brand -->
-  <div class="input-group navbar-brand">
-    <div class="input-group-prepend">
-
-      <button class="btn card-1 dropdown-toggle bg-light"
-        type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="stroke-fuchsia fas fa-1x fa-rocket fa-flip-horizontal mr-0 ml-0 text-danger"></i>
-      </button>
-
-      <div class="dropdown-menu px-0 py-0 card-1">
-        <a href="/user" class="dropdown-item card-1 py-3">
-          <li class="d-flex justify-content-between align-items-center">
-            User <i class="text-warning fas fa-user-ninja"></i>
-          </li>
-        </a>
-        <a href="/statement" class="dropdown-item card-1 py-3">
-          <li class="d-flex justify-content-between align-items-center">
-            Statement <i class="text-danger fas fa-dollar-sign"></i>
-          </li>
-        </a>
-        <a href="/category" class="dropdown-item card-1 py-3">
-          <li class="d-flex justify-content-between align-items-center">
-            Category <i class="text-success fas fa-tags"></i>
-          </li>
-        </a>
-        <a href="/logout" class="dropdown-item card-1 py-3">
-          <li class="d-flex justify-content-between align-items-center">
-            logout <i class="text-info fas fa-sign-out-alt"></i>
-          </li>
-        </a>
-      </div>
-
-    </div>
-  </div>
+  <%- include('../../../components/dropNav') -%>
 
   <!-- Links -->
   <div class="collapse navbar-collapse justify-content-end" id="nav-content">

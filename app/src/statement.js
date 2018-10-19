@@ -11,7 +11,7 @@ const moment = require('moment'); // moment for Time and Date
 // all - /
 
 // DB collection = Statement collection
-const collectionName = "statementcollection";
+const collectionName = "statementCollection";
 // pageInfo detailes
 let pageInfo = {
   title: 'Statement',
