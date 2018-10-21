@@ -7,8 +7,22 @@
   <!-- Brand -->
   <%- include('../../../components/dropNav') -%>
 
+  <div class="container">
+    <div class="input-group input-group-lg">
+      <select class="custom-select form-control" id="inputGroupSelect04" aria-label="Example select with button addon">
+        <% for(var i=0; i < data.length; i++) { %>
+          <option value="<%- data[i]._id %>"><%- data[i].statementInfo.statementName %></option>
+        <% } %>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">go</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Links -->
   <div class="collapse navbar-collapse justify-content-end" id="nav-content">
+
     <ul class="navbar-nav">
       <li class="nav-item">
         <div class="btn-group" role="group">

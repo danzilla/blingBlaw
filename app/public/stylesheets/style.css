@@ -26,6 +26,13 @@ body {
   word-wrap: break-word;
 }
 
+.font-10 { font-size: 100%;}
+.font-20 { font-size: 200%;}
+.font-30 { font-size: 300%;}
+.font-40 { font-size: 400%;}
+.font-50 { font-size: 500%;}
+.font-60 { font-size: 600%;}
+
 .bgColor-pink { background-color: #E040FB; }
 .bgColor-Dpink { background-color: #C2185B; }
 .bgColor-blue { background-color: #448AFF; }

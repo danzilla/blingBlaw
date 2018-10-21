@@ -1,17 +1,20 @@
 <!-- page Info -->
 <div class="modal fade" id="pageInfo" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+      <div class="btn btn-danger btn-block p-2" data-dismiss="modal"> </div>
       <div class="modal-header">
         <h1 class="modal-title display-4 text-info">Page info</h1>
       </div>
 
       <div class="modal-body container">
-        <p>pageInfo:
+        <p class="alert alert-danger">pageInfo:
           <code><%- JSON.stringify(pageInfo) %></code>
         </p>
-        <p>data:
+        <p class="alert alert-info">dataCat:
+          <code><%- JSON.stringify(dataCat) %></code>
+        </p>
+        <p class="alert alert-primary">dataSta:
           <code><%- JSON.stringify(data) %></code>
         </p>
       </div>
@@ -20,19 +23,18 @@
   </div>
 </div>
 
-
 <!-- user Add Modal -->
 <div class="modal fade" id="catAddD" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content ">
 
-      <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+      <div class="btn btn-danger btn-block p-2" data-dismiss="modal"> </div>
       <div class="modal-header">
         <h1 class="modal-title display-4 text-info"><%- pageInfo.title %></h1>
       </div>
       <div class="modal-body p-4">
 
-        <form action="/statement/upload" method="post">
+        <form action="/statement/review" method="post" enctype="multipart/form-data">
           <div class="container">
             <div class="row">
 
@@ -86,6 +88,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </form>

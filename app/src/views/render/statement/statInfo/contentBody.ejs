@@ -60,47 +60,56 @@
           </td>
         </tr>
 
+
         <!-- Modal for update user -->
         <!-- Modal -->
         <div class="modal fade" id="modalTrans<%= data[i].transactionInfo[j].transId %>" tabindex="-1" role="dialog"aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content card-1">
               <div class=" btn-danger py-2" data-dismiss="modal"> </div>
+
               <div class="modal-header">
-                <h4><%= pageInfo.title %><small>update </small></h4>
+                <h4><%= pageInfo.title %><small> update </small></h4>
               </div>
               <div class="modal-body">
+                <h5 class="mb-3 text-center">
+                  <a class="btn disabled "> <%- data[i].transactionInfo[j].transId %></a>
+                  <% if(data[i].transactionInfo[j].transWithdraw) { %>
+                    <span><strong><em>withdrawal</em></strong> <span class="border-bottom border-warning alert-warning p-1 font-20">$ <%= data[i].transactionInfo[j].transWithdraw %></span></span>
+                  <% } %>
+                  <% if(data[i].transactionInfo[j].transDeposite) { %>
+                    <span><strong><em>deposite</em></strong> <span class="border-bottom border-primary alert-primary">$ <%= data[i].transactionInfo[j].transDeposite %></span></span>
+                  <% } %>
+                  <small>on</small>
+                  <%- data[i].transactionInfo[j].transDate %>
+                </h5>
+                <h5 class="mb-3 text-center">
+                  <strong>Transaction: </strong><small><%- data[i].transactionInfo[j].transDesc %></small>
+                </h5>
 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <%- data[i].transactionInfo[j].transId %></span>
-                    <span class="input-group-text">
-                      <%- data[i].transactionInfo[j].transDate %></span>
-                    <% if(data[i].transactionInfo[j].transWithdraw) { %>
-                      <span class="input-group-text alert-primary">withdrawal</span>
-                      <span class="input-group-text alert-primary">$ <%= data[i].transactionInfo[j].transWithdraw %></span>
-                    <% } %>
-                    <% if(data[i].transactionInfo[j].transDeposite) { %>
-                      <span class="input-group-text alert-success">deposite</span>
-                      <span class="input-group-text alert-success">$ <%= data[i].transactionInfo[j].transDeposite %></span>
-                    <% } %>
+                    <span class="input-group-text">Catergory</span>
                   </div>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><%- data[i].transactionInfo[j].transDesc %></span>
-                  </div>
-                  <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <select class="custom-select">
+                    <option >choose one</option>
+                    <% for(var z=0; z < dataCat.length; z++) { %>
+                      <% if (dataCat[z].catParent == "root" ) { %>
+                        <optgroup label="<%= dataCat[z].catName %>">
+                          <% for (var k=0; k < dataCat.length; k++) { %>
+                            <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
+                              <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
+                            <% } %>
+                          <% } %>
+                        </optgroup>
+                      <% } %>
+                    <% } %>
                   </select>
                 </div>
-
               </div>
-              <div class="modal-footer"></div>
+              <div class="modal-footer">
+                <button class="btn btn-outline-success">Apply </button>
+              </div>
             </div>
           </div>
         </div>
