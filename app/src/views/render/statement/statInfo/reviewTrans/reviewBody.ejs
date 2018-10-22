@@ -18,15 +18,22 @@
   </thead>
   <tbody>
     <form id="statementUpload" action="/statement/upload" method="post">
+      <input name="uploadInfo" type="hidden" value='<%- JSON.stringify(uploadInfo.statementInfo) %>' />
     <% for(var j=0; j < uploadInfo.transactionInfo.length; j++) { %>
       <tr class="card-1 ">
         <th scope="col" class="text-center align-middle">
+          <input value="<%- uploadInfo.transactionInfo[j].transId %>"
+            type="hidden"  name="modulesTransId[]" />
           <%- uploadInfo.transactionInfo[j].transId %>
         </th>
         <td class="align-middle">
+          <input value="<%- uploadInfo.transactionInfo[j].transDate %>"
+            type="hidden" name="modulesTransDate[]" />
           <%- uploadInfo.transactionInfo[j].transDate %>
         </td>
         <td class="align-middle">
+          <input value="<%- uploadInfo.transactionInfo[j].transDesc %>"
+            type="hidden" name="modulesTransDesc[]" />
           <%- uploadInfo.transactionInfo[j].transDesc %>
         </td>
         <!-- Withdraw or Deposite - label -->
@@ -40,6 +47,10 @@
         </td>
         <!-- Withdraw or Deposite - $ -->
         <td class="text-center align-middle">
+          <input value="<%- uploadInfo.transactionInfo[j].transWithdraw %>"
+            type="hidden" name="modulesTransWithdraw[]" />
+          <input value="<%- uploadInfo.transactionInfo[j].transDeposite %>"
+            type="hidden" name="modulesTransDeposite[]" />
           <% if(uploadInfo.transactionInfo[j].transWithdraw) { %>
               $ <%= uploadInfo.transactionInfo[j].transWithdraw %>
           <% } %>
@@ -48,8 +59,8 @@
           <% } %>
         </td>
         <td class="text-center align-middle">
-          <select class="custom-select">
-            <option >choose one</option>
+          <select name="modulesCatName[]" class="custom-select">
+            <option value="nada">choose one</option>
             <% for(var z=0; z < dataCat.length; z++) { %>
               <% if (dataCat[z].catParent == "root" ) { %>
                 <optgroup label="<%= dataCat[z].catName %>">
@@ -65,6 +76,6 @@
         </td>
       </tr>
     <% } %>
-  </form>
+    </form>
   </tbody>
 </table>

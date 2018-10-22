@@ -2,7 +2,6 @@
 <hr>
 
 <div class="alert alert-danger text-center word-break p-4 card-1">
-
   <h4 class="card-title">
     <%- uploadInfo.statementInfo.statementName %>
     <small>
@@ -14,11 +13,12 @@
     <b>-</b>
     <%- uploadInfo.statementInfo.statementFileInfo.originalname %>
   </h6>
-
   <button type="button" class="btn btn-secondary">Not now</button>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-success active"><i class="fas fa-check"></i></button>
-    <button form="statementUpload" type="button" class="btn btn-success">Apply changes</button>
+    <button type="button" class="btn btn-success active">
+      <i class="fas fa-check"></i></button>
+    <button form="statementUpload" class="btn btn-success card-1">
+      Add to statement</button>
   </div>
 </div>
 

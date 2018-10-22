@@ -117,6 +117,7 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
         transBalance: csvTransactionInfo[i][4]
       }
     };
+
     // inserting to upload object
     uploadInfo.transactionInfo = transactionInfo;
     // request DB conections
@@ -134,10 +135,51 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
   }
 })
 
-
 // Post up upload - /statement/upload/
 router.post('/upload', function (req, res, next) {
 
+  console.log("\nreq.body: " + req.body);
+  console.log("\nreq.body.uploadInfo: " + req.body.uploadInfo);
+  console.log("\nreq.body.modules-transId: " + req.body.modulesTransId);
+  console.log("\nreq.body.modules-modulesTransDate: " + req.body.modulesTransDate);
+  console.log("\nreq.body.modules-modulesTransDesc: " + req.body.modulesTransDesc);
+  console.log("\nreq.body.modules-modulesTransWithdraw: " + req.body.modulesTransWithdraw);
+  console.log("\nreq.body.modules-modulesTransDeposite: " + req.body.modulesTransDeposite);
+  console.log("\nreq.body.modules-modulesCatName: " + req.body.modulesCatName);
+
+  const uploadData = {
+    statementInfo: {
+      statementName: req.body.statementName,
+      statementType: req.body.statementType,
+      statementDate: req.body.statementDate,
+      statementDesc: req.body.statementDesc,
+      statementuploadDate: req.body.statementuploadDate,
+      statementFileInfo: {
+        fieldname: req.body.uploadInfo.fieldname,
+        originalname: req.body.uploadInfo.originalname,
+        encoding: req.body.uploadInfo.encoding,
+        mimetype: req.body.uploadInfo.mimetype,
+        destination: req.body.uploadInfo.destination,
+        filename: req.body.uploadInfo.filename,
+        path: req.body.uploadInfo.path,
+        size: req.body.uploadInfo.size,
+      }
+    },
+    transactionInfo: {
+      transId: req.body.modulesTransId,
+      transDate: "",
+      transDesc: "",
+      transWithdraw: "",
+      transDeposite: "",
+      transBalance: "",
+      transCat: "",
+      transComment: ""
+    }
+  }
+
+
+
+console.log("Upload Data: " + JSON.stringify(uploadData));
 res.send({"hi":"ok", "req.body": req.body})
 /*
   collection.insert(uploadInfo, function (err, results) {
@@ -152,7 +194,6 @@ res.send({"hi":"ok", "req.body": req.body})
        });
      }
   });
-
 */
 })
 
