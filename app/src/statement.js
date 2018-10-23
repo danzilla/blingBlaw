@@ -95,6 +95,8 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
       statementFileInfo : req.file,
       statementuploadDate : moment().format('MMMM Do YYYY, h:mm:ss a'),
     };
+    // set statementInfo
+    req.session.statementInfo = statementInfo;
     // inserting to upload object
     uploadInfo.statementInfo = statementInfo;
   // getting CSV to JSON
@@ -117,7 +119,6 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
         transBalance: csvTransactionInfo[i][4]
       }
     };
-
     // inserting to upload object
     uploadInfo.transactionInfo = transactionInfo;
     // request DB conections
@@ -137,96 +138,56 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
 
 // Post up upload - /statement/upload/
 router.post('/upload', function (req, res, next) {
-
-  console.log("\nreq.body: " + req.body);
-  console.log("\nreq.body.uploadInfo: " + req.body.uploadInfo);
-  console.log("\nreq.body.modules-transId: " + req.body.modulesTransId);
-  console.log("\nreq.body.modules-modulesTransDate: " + req.body.modulesTransDate);
-  console.log("\nreq.body.modules-modulesTransDesc: " + req.body.modulesTransDesc);
-  console.log("\nreq.body.modules-modulesTransWithdraw: " + req.body.modulesTransWithdraw);
-  console.log("\nreq.body.modules-modulesTransDeposite: " + req.body.modulesTransDeposite);
-  console.log("\nreq.body.modules-modulesCatName: " + req.body.modulesCatName);
-
-  const uploadData = {
-    statementInfo: {
-      statementName: req.body.statementName,
-      statementType: req.body.statementType,
-      statementDate: req.body.statementDate,
-      statementDesc: req.body.statementDesc,
-      statementuploadDate: req.body.statementuploadDate,
-      statementFileInfo: {
-        fieldname: req.body.uploadInfo.fieldname,
-        originalname: req.body.uploadInfo.originalname,
-        encoding: req.body.uploadInfo.encoding,
-        mimetype: req.body.uploadInfo.mimetype,
-        destination: req.body.uploadInfo.destination,
-        filename: req.body.uploadInfo.filename,
-        path: req.body.uploadInfo.path,
-        size: req.body.uploadInfo.size,
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  pageInfo.page = "upload & Data - dev";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+  // if session is undefined - get - login page
+  if (!req.session.user) {
+    // if session empty // redirect login page
+    res.redirect('/');
+    console.log("\nsession incorrect - going Home\n");
+    }
+  else { // else - session good - procced
+    // Upload object - setting up for Statement and transaction
+    const uploadInfo = {
+      uploadUser: req.session.user,
+      uploadDate: moment().format('MMMM DD YYYY, h:mm:ss a'),
+      statementInfo: req.session.statementInfo,
+      transactionInfo: []
+    }
+    let dataID = req.body.modulesTransId;
+    for (let i in dataID) {
+      uploadInfo.transactionInfo[i] = {
+        transId: req.body.modulesTransId[i],
+        transDate: req.body.modulesTransDate[i],
+        transDesc: req.body.modulesTransDesc[i],
+        transWithdraw: req.body.modulesTransWithdraw[i],
+        transDeposite:  req.body.modulesTransDeposite[i],
+        transBalance: req.body.modulesTransBalance[i],
+        transCat: req.body.modulesCatName[i],
+        transComment: req.body.modulesTransComment[i]
       }
-    },
-    transactionInfo: {
-      transId: req.body.modulesTransId,
-      transDate: "",
-      transDesc: "",
-      transWithdraw: "",
-      transDeposite: "",
-      transBalance: "",
-      transCat: "",
-      transComment: ""
-    }
+    };
+    // request DB conections
+    const db = req.db;
+    const collectionSta = db.get(staCollectionName);
+    collectionSta.insert(uploadInfo, function (err, results) {
+      if (err) { // If it failed, return error
+        req.flash('info', 'errr', 'err', err);
+        res.redirect('/statement');
+        console.log("\nUpload issue\n");
+      }
+      else { // Hey! We Added new one!
+        req.flash('info', 'Uploaded');
+        res.redirect('/statement');
+        console.log("Upload good!");
+       }
+    });
+
   }
-
-
-
-console.log("Upload Data: " + JSON.stringify(uploadData));
-res.send({"hi":"ok", "req.body": req.body})
-/*
-  collection.insert(uploadInfo, function (err, results) {
-    if (err) { // If it failed, return error
-      res.send({err:err});
-    }
-    else {
-      res.render('statement/upload', {
-        transactionInfo: transactionInfo,
-        statementInfo: statementInfo,
-        pageInfo: pageInfo
-       });
-     }
-  });
-*/
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

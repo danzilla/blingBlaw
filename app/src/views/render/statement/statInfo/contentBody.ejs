@@ -1,32 +1,29 @@
-
 <% for(var i=0; i < data.length; i++) { %>
   <table class="table table-borderless">
     <thead class="thead-dark border-bottom border-danger">
       <th colspan="1" class="text-center"><code><i class="fab fa-gripfire"></i></code></th>
-      <th colspan="2" class="text-center">Title:   <code><%- data[i].statementInfo.statementName %></code></th>
-      <th colspan="2" class="text-center">Type:   <code><%- data[i].statementInfo.statementType %></code></th>
-      <th colspan="2" scope="col" class="text-center">Date:   <code><%- data[i].statementInfo.statementDate %></code></th>
+      <th colspan="1" class="text-center">Title:   <code><%- data[i].statementInfo.statementName %></code></th>
+      <th colspan="1" class="text-center">Type:   <code><%- data[i].statementInfo.statementType %></code></th>
+      <th colspan="1" scope="col" class="text-center">Date:   <code><%- data[i].statementInfo.statementDate %></code></th>
+      <th colspan="1" scope="col" class="text-center text-danger card-1">
+        <i class="fas fa-wrench"></i>
+      </th>
     </thead>
     <thead class="thead-dark">
       <tr class="bg-dark text-light">
-        <th scope="col" class="text-center">#</th>
         <th scope="col" class="text-center">Date</th>
         <th scope="col" class="text-center">Description</th>
         <th scope="col" class="text-center">Type</th>
         <th scope="col" class="text-center">Transaction</th>
         <th scope="col" class="text-center">Catergory</th>
-        <th scope="col" class="text-center"><i class="fas fa-cogs"></i></th>
       </tr>
     </thead>
     <tbody>
       <% for(var j=0; j < data[i].transactionInfo.length; j++) { %>
         <tr class="card-1 ">
           <th scope="col" class="text-center align-middle">
-            <%- data[i].transactionInfo[j].transId %>
-          </th>
-          <td class="align-middle">
             <%- data[i].transactionInfo[j].transDate %>
-          </td>
+          </th>
           <td class="align-middle">
             <%- data[i].transactionInfo[j].transDesc %>
           </td>
@@ -49,16 +46,19 @@
             <% } %>
           </td>
           <td class="text-center align-middle">
-            <span class="badge badge-success">Success</span>
-            <span class="badge badge-danger">Danger</span>
-            <span class="badge badge-warning">Warning</span>
-            <span class="badge badge-info">Info</span>
-          </td>
-          <td class="text-center align-middle">
+          <% for(var y=0; y < dataCat.length; y++) { %>
+            <% if (data[i].transactionInfo[j].transCat == dataCat[y]._id) { %>
+              <span class="badge badge-warning"><%= dataCat[y].catName %></span>
+            <% } %>
+          <% } %>
+          <% if (data[i].transactionInfo[j].transCat == "nada") { %>
             <button data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
               class="btn btn-outline-warning">Attention</button>
+          <% } %>
           </td>
         </tr>
+
+
 
 
         <!-- Modal for update user -->
