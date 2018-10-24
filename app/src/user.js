@@ -19,6 +19,11 @@ let pageInfo = {
   request: "",
   sessionName: ""
 }
+let flashData = {
+  page: pageInfo.page,
+  pageMesage: "",
+  info: ""
+}
 
 // User - Dashboard
 // GET - user page
@@ -27,7 +32,6 @@ router.get('/', function(req, res, next) {
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "get";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session user is empty
   if(!req.session.user){
     // if session empty // redirect login page

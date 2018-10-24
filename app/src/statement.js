@@ -30,8 +30,6 @@ let pageInfo = {
 // Statement - Dashboard
 // GET - statement page
 router.get('/', function(req, res, next) {
-  // get session info
-  pageInfo.sessionName = req.session.user;
   pageInfo.request = "get";
   pageInfo.page = "Dashboard";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
@@ -41,7 +39,10 @@ router.get('/', function(req, res, next) {
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
   } else { //else
-    console.log("Active session: " + req.session.user);
+    // get session info
+    pageInfo.sessionName = req.session.user;
+    console.log("Active session: " + pageInfo.sessionName);
+
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
@@ -69,8 +70,7 @@ router.get('/', function(req, res, next) {
 
 // Post up upload - /statement/upload/
 router.post('/review', uploadFolder.single('statementFileInput'), function (req, res, next) {
-  // get session info and set pageInfo
-  pageInfo.sessionName = req.session.user;
+  // set pageInfo
   pageInfo.request = "post";
   pageInfo.page = "upload & review ";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
@@ -81,6 +81,9 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
     console.log("\nsession incorrect - going Home\n");
     }
   else { // else - session good - procced
+    // get session info
+    pageInfo.sessionName = req.session.user;
+    console.log("Active session: " + pageInfo.sessionName);
   // Upload object - setting up for Statement and transaction
     let uploadInfo = {
       statementInfo : "",
@@ -221,16 +224,43 @@ router.post('/update', function(req, res, next) {
       catParent: req.body.updateCatParent,
       catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
+
+    const uploadInfo = {
+      updateUser: req.session.user,
+      updateDate: moment().format('MMMM DD YYYY, h:mm:ss a'),
+      updateVal: "",
+      transactionInfo: []
+    }
+    uploadInfo.transactionInfo = {
+      transId: req.body.modulesTransId,
+      transDate: req.body.modulesTransDate,
+      transDesc: req.body.modulesTransDesc,
+      transWithdraw: req.body.modulesTransWithdraw,
+      transDeposite:  req.body.modulesTransDeposite,
+      transBalance: req.body.modulesTransBalance,
+      transCat: req.body.modulesCatName,
+      transComment: req.body.modulesTransComment
+    }
+    /*
+      find - search
+    */
+
+    res.render('statement/statInfo/reviewTrans/template', {
+      pageInfo: pageInfo,
+      uploadInfo: newData
+    });
+
+    /*
     collectionSta.update(valData, { $set: newData}, function(err, results){
       if(err) { // if err throw err
         res.send("Error - updating: " + err);
       } else { //else
         // Uplod good, move to /statement
         res.redirect('/statement');
-        console.log("Statement updated: " + JSON.stringify(results));
-        console.log("Active session: " + req.session.user);
+
       }
     });
+    */
   }
 });
 

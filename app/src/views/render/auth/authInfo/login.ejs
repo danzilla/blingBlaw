@@ -11,5 +11,11 @@
     <input class="form-control mt-2 text-center" name="pwd" type="password" aria-label="pwd" placeholder="password" required>
     <hr>
     <button class="btn btn-outline-primary" type="submit"><%- pageInfo.logM %></button>
+    <div class="alert alert-primary alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%- JSON.stringify(messages) %></strong>
+    </div>
   </form>
+
+
 </div>
