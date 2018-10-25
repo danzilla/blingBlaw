@@ -60,7 +60,6 @@
 
 
 
-
         <!-- Modal for update user -->
         <!-- Modal -->
         <div class="modal fade" id="modalTrans<%= data[i].transactionInfo[j].transId %>" tabindex="-1" role="dialog"aria-hidden="true">
@@ -68,15 +67,13 @@
             <div class="modal-content card-1">
               <div class=" btn-danger py-2" data-dismiss="modal"> </div>
 
-              <form id="transUpdate<%= data[i].transactionInfo[j].transId %>" action="/statement/update" method="post">
-                <%= JSON.stringify(data[i].transactionInfo[j]) %>
-              </form>
               <div class="modal-header">
                 <h4><%= pageInfo.title %><small> update </small></h4>
               </div>
               <div class="modal-body">
                 <h5 class="mb-3 text-center">
-                  <a class="btn disabled "> <%- data[i].transactionInfo[j].transId %></a>
+                  <a class="btn disabled bold"> <%- j %></a>
+                  <a class="btn disabled "><%- data[i].transactionInfo[j].transId %></a>
                   <% if(data[i].transactionInfo[j].transWithdraw) { %>
                     <span><strong><em>withdrawal</em></strong> <span class="border-bottom border-warning alert-warning p-1 font-20">$ <%= data[i].transactionInfo[j].transWithdraw %></span></span>
                   <% } %>
@@ -90,30 +87,45 @@
                   <strong>Transaction: </strong><small><%- data[i].transactionInfo[j].transDesc %></small>
                 </h5>
 
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Catergory</span>
-                  </div>
-                  <select class="custom-select">
-                    <option >choose one</option>
-                    <% for(var z=0; z < dataCat.length; z++) { %>
-                      <% if (dataCat[z].catParent == "root" ) { %>
-                        <optgroup label="<%= dataCat[z].catName %>">
-                          <% for (var k=0; k < dataCat.length; k++) { %>
-                            <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
-                              <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
+
+
+                <form id="transUpdate<%= data[i].transactionInfo[j].transId %>" action="/statement/update" method="post" class="container-fluid">
+                  <%= JSON.stringify(data[i].transactionInfo[j]) %>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Catergory</span>
+                    </div>transtransIDtrans
+                    <input type="hidden" name="transtrans" value="<%= j %>" />
+                    <input type="hidden" name="transStaId" value="<%= data[i]._id %>" />
+                    <input type="hidden" name="transTransId" value="<%= data[i].transactionInfo[j].transId %>" />
+                    <input type="hidden" name="transTransDate" value="<%= data[i].transactionInfo[j].transDate %>" />
+                    <input type="hidden" name="transTransDesc" value="<%= data[i].transactionInfo[j].transDesc %>" />
+                    <input type="hidden" name="transTransWithdraw" value="<%= data[i].transactionInfo[j].transWithdraw %>" />
+                    <input type="hidden" name="transTransDeposite" value="<%= data[i].transactionInfo[j].transDeposite %>" />
+                    <input type="hidden" name="transTransBalance" value="<%= data[i].transactionInfo[j].transBalance %>" />
+                    <input type="hidden" name="transTransComment" value="<%= data[i].transactionInfo[j].transComment %>" />
+                    <select name="transTransCat" class="custom-select">
+                      <option >choose one</option>
+                      <% for(var z=0; z < dataCat.length; z++) { %>
+                        <% if (dataCat[z].catParent == "root" ) { %>
+                          <optgroup label="<%= dataCat[z].catName %>">
+                            <% for (var k=0; k < dataCat.length; k++) { %>
+                              <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
+                                <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
+                              <% } %>
                             <% } %>
-                          <% } %>
-                        </optgroup>
+                          </optgroup>
+                        <% } %>
                       <% } %>
-                    <% } %>
-                  </select>
-                </div>
+                    </select>
+                  </div>
+                </form>
               </div>
               <div class="modal-footer">
                 <button form="transUpdate<%= data[i].transactionInfo[j].transId %>"
                   class="btn btn-outline-success">Apply </button>
               </div>
+
             </div>
           </div>
         </div>

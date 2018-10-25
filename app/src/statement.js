@@ -7,7 +7,7 @@ const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
 const csvjson = require('csvjson'); //csv to json
 const fs = require('fs'); // fs filesystem
-
+const ObjectId = require('mongodb').ObjectID;
 const multer  = require('multer'); //mlter for file upload
 const uploadFolder = multer({ dest: 'app/uploads/' }); // upload location app/uploads/
 
@@ -153,6 +153,7 @@ router.post('/upload', function (req, res, next) {
     console.log("\nsession incorrect - going Home\n");
     }
   else { // else - session good - procced
+    console.log("Logged in: " + req.session.user);
     // Upload object - setting up for Statement and transaction
     const uploadInfo = {
       uploadUser: req.session.user,
@@ -163,7 +164,7 @@ router.post('/upload', function (req, res, next) {
     let dataID = req.body.modulesTransId;
     for (let i in dataID) {
       uploadInfo.transactionInfo[i] = {
-        transId: req.body.modulesTransId[i],
+        transId: ObjectId(),
         transDate: req.body.modulesTransDate[i],
         transDesc: req.body.modulesTransDesc[i],
         transWithdraw: req.body.modulesTransWithdraw[i],
@@ -208,59 +209,56 @@ router.post('/update', function(req, res, next) {
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
 
   // if session is undefined - get - login page
-  if (!req.session.user) {
+  if (false) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
-    }
+  }
   else { // else - session good - procced
+    console.log("Logged in: " + req.session.user);
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
-    // set validation Data
-    let valData = { _id: req.body.updateCatId }
-    let newData = { // set new data for updae
-      catName: req.body.updateCatName,
-      catParent: req.body.updateCatParent,
-      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
-    }
 
     const uploadInfo = {
-      updateUser: req.session.user,
-      updateDate: moment().format('MMMM DD YYYY, h:mm:ss a'),
       updateVal: "",
-      transactionInfo: []
+      updateTransactionInfo: ""
     }
-    uploadInfo.transactionInfo = {
-      transId: req.body.modulesTransId,
-      transDate: req.body.modulesTransDate,
-      transDesc: req.body.modulesTransDesc,
-      transWithdraw: req.body.modulesTransWithdraw,
-      transDeposite:  req.body.modulesTransDeposite,
-      transBalance: req.body.modulesTransBalance,
-      transCat: req.body.modulesCatName,
-      transComment: req.body.modulesTransComment
+    uploadInfo.updateTransactionInfo = {
+      transTrans: req.body.transtrans,
+      transId: req.body.transTransId,
+      transDate: req.body.transTransDate,
+      transDesc: req.body.transTransDesc,
+      transWithdraw: req.body.transTransWithdraw,
+      transDeposite:  req.body.transTransDeposite,
+      transBalance: req.body.transTransBalance,
+      transCat: req.body.transTransCat,
+      transComment: req.body.transTransComment,
+      updateUser: req.session.user,
+      updateDate: moment().format('MMMM DD YYYY, h:mm:ss a')
     }
-    /*
-      find - search
-    */
+    // validatite with _id = statement ID
+    uploadInfo.updateVal = { _id: req.body.transId }
+    let catQuery = "transactionInfo."+req.body.transtrans+".transcat";
+    let newData = {transCat: req.body.transTransCat}
 
-    res.render('statement/statInfo/reviewTrans/template', {
-      pageInfo: pageInfo,
-      uploadInfo: newData
-    });
-
-    /*
-    collectionSta.update(valData, { $set: newData}, function(err, results){
+    console.log("catQuery : "+ catQuery);
+    console.log("newData : "+ JSON.stringify(newData));
+    collectionSta.update(uploadInfo.updateVal, { $set: newData}, function(err, results){
       if(err) { // if err throw err
         res.send("Error - updating: " + err);
       } else { //else
         // Uplod good, move to /statement
-        res.redirect('/statement');
+        //res.redirect('/statement');
 
+        console.log(results);
+        res.render('statement/statInfo/reviewTrans/template', {
+          pageInfo: pageInfo,
+          uploadInfo: uploadInfo,
+          bodyI: req.body
+        });
       }
     });
-    */
   }
 });
 
@@ -315,6 +313,7 @@ router.all('/add', function(req, res, next) {
    console.log("Active session: " + req.session.user);
   }
 });
+/*
 // ALL update statement page
 router.all('/update', function(req, res, next) {
   // if session is undefined - get - login page
@@ -327,7 +326,7 @@ router.all('/update', function(req, res, next) {
    res.redirect('/statement');
    console.log("Active session: " + req.session.user);
   }
-});
+});*/
 // ALL remove page
 router.all('/remove', function(req, res, next) {
   // if session is undefined - get - login page
