@@ -27,8 +27,7 @@ app.use(session({
 	proxy: true,
 	resave: true,
 	saveUninitialized: true,
-	store: new MongoStore({ url: "mongodb://localhost:27017/danustanBling" }),
-	cookie: { maxAge: 60000 }
+	store: new MongoStore({ url: "mongodb://localhost:27017/danustanBling" })
 	})
 );
 const flash = require('express-flash');

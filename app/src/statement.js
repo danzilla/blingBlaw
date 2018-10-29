@@ -7,7 +7,10 @@ const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
 const csvjson = require('csvjson'); //csv to json
 const fs = require('fs'); // fs filesystem
+
+// ObjectID - require
 const ObjectId = require('mongodb').ObjectID;
+
 const multer  = require('multer'); //mlter for file upload
 const uploadFolder = multer({ dest: 'app/uploads/' }); // upload location app/uploads/
 
@@ -42,7 +45,6 @@ router.get('/', function(req, res, next) {
     // get session info
     pageInfo.sessionName = req.session.user;
     console.log("Active session: " + pageInfo.sessionName);
-
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
@@ -87,7 +89,7 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
   // Upload object - setting up for Statement and transaction
     let uploadInfo = {
       statementInfo : "",
-      transactionInfo : ""
+      transactionInfo : []
     };
   // Statement array from GET upload
     let statementInfo = {
@@ -110,20 +112,18 @@ router.post('/review', uploadFolder.single('statementFileInput'), function (req,
       quote     : '"' // optional
     };
     // transactionInfo = New array to store json formated transaction
-    let transactionInfo = [];
     let csvTransactionInfo = csvjson.toArray(csvData, options);
     for (let i in csvTransactionInfo) {
-      transactionInfo[i] = {
+      // inserting to upload object
+      uploadInfo.transactionInfo.push({
         transId: moment(statementInfo.statementDate).format('DDMMMYYYY')+i,
         transDate: csvTransactionInfo[i][0],
         transDesc: csvTransactionInfo[i][1],
         transWithdraw: csvTransactionInfo[i][2],
         transDeposite: csvTransactionInfo[i][3],
         transBalance: csvTransactionInfo[i][4]
-      }
+      });
     };
-    // inserting to upload object
-    uploadInfo.transactionInfo = transactionInfo;
     // request DB conections
     const db = req.db;
     const collectionCat = db.get(catCollectionName);
@@ -189,14 +189,8 @@ router.post('/upload', function (req, res, next) {
         console.log("Upload good!");
        }
     });
-
   }
 })
-
-
-
-
-
 
 
 // Update transaction
@@ -207,9 +201,8 @@ router.post('/update', function(req, res, next) {
   pageInfo.request = "post";
   pageInfo.page = "update";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session is undefined - get - login page
-  if (false) {
+  if (!req.session.user) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
@@ -219,58 +212,38 @@ router.post('/update', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
-
-    const uploadInfo = {
-      updateVal: "",
-      updateTransactionInfo: ""
-    }
-    uploadInfo.updateTransactionInfo = {
-      transTrans: req.body.transtrans,
-      transId: req.body.transTransId,
-      transDate: req.body.transTransDate,
-      transDesc: req.body.transTransDesc,
-      transWithdraw: req.body.transTransWithdraw,
-      transDeposite:  req.body.transTransDeposite,
-      transBalance: req.body.transTransBalance,
-      transCat: req.body.transTransCat,
-      transComment: req.body.transTransComment,
-      updateUser: req.session.user,
-      updateDate: moment().format('MMMM DD YYYY, h:mm:ss a')
-    }
-    // validatite with _id = statement ID
-    uploadInfo.updateVal = { _id: req.body.transId }
-    let catQuery = "transactionInfo."+req.body.transtrans+".transcat";
-    let newData = {transCat: req.body.transTransCat}
-
-    console.log("catQuery : "+ catQuery);
-    console.log("newData : "+ JSON.stringify(newData));
-    collectionSta.update(uploadInfo.updateVal, { $set: newData}, function(err, results){
-      if(err) { // if err throw err
-        res.send("Error - updating: " + err);
-      } else { //else
-        // Uplod good, move to /statement
-        //res.redirect('/statement');
-
-        console.log(results);
-        res.render('statement/statInfo/reviewTrans/template', {
-          pageInfo: pageInfo,
-          uploadInfo: uploadInfo,
-          bodyI: req.body
-        });
+    collectionSta.update({
+      "_id": req.body.transStaId,
+      "transactionInfo": {
+        "$elemMatch": {
+          "transDate": req.body.transTransDate,
+          "transDesc": req.body.transTransDesc        }
       }
-    });
+    }, {
+      "$set": {
+        "transactionInfo.$.transCat": req.body.transTransCat,
+        "transactionInfo.$.transComment": req.body.transTransComment,
+      }
+    }, function(err, results) {
+      if (err) {
+        res.send("Error - updating: " + err);
+      } else {
+        console.log(results);
+        req.flash('info', results);
+        res.redirect('/statement');
+      }
+    })
   }
 });
 
 // Remove Statement
 // POST to remove statement/remove
-router.post('/remove', function(req, res, next) {
+router.post('/remove/statement', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "post";
   pageInfo.page = "Remove";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page
@@ -281,11 +254,12 @@ router.post('/remove', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
-    let removeData = { _id: req.body.removeCat };
+    let removeData = { _id: req.body.statementId };
     collectionSta.remove(removeData, function(err, results) {
       if(err) {
         res.send("Error - removing: " + err);
       } else {
+        req.flash('info', 'Statement removed');
         res.redirect('/statement');
         console.log("Statement removed: " + results);
         console.log("Active session: " + req.session.user);
@@ -293,10 +267,6 @@ router.post('/remove', function(req, res, next) {
     });
   }
 });
-
-
-
-
 
 
 // ALL ROUTE
@@ -313,7 +283,6 @@ router.all('/add', function(req, res, next) {
    console.log("Active session: " + req.session.user);
   }
 });
-/*
 // ALL update statement page
 router.all('/update', function(req, res, next) {
   // if session is undefined - get - login page
@@ -326,7 +295,7 @@ router.all('/update', function(req, res, next) {
    res.redirect('/statement');
    console.log("Active session: " + req.session.user);
   }
-});*/
+});
 // ALL remove page
 router.all('/remove', function(req, res, next) {
   // if session is undefined - get - login page

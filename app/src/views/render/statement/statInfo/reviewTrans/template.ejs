@@ -16,16 +16,25 @@
   <body>
 
 
-    <%- JSON.stringify(messages) %>
+<%- JSON.stringify(messages) %>
 
 <div class="container">
+  <code class="alert alert-success" role="alert">
+    <%- JSON.stringify(uploadInfo.results) %>
+  </code>
+
   <code class="alert alert-info" role="alert">
     <%- JSON.stringify(uploadInfo) %>
   </code>
   <code class="alert alert-info" role="alert">
     <%- JSON.stringify(bodyI) %>
   </code>
+  <code class="alert alert-danger" role="alert">
+    <%- JSON.stringify(uploadInfo.updateTransactionInfo) %>
+  </code>
 </div>
+
+
 
 
     <!-- Optional JavaScript -->
