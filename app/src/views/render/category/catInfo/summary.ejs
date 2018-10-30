@@ -1,36 +1,64 @@
 <h3 class="text-center display-5">summary <small> statement</small></h3>
 <hr>
+
+<div class="container h-100">
+  <script>
+    let subCatA = {catT: "1", catInfo: "asda"};
+    let parCatA = {catT: 0, catInfo: ""};
+  </script>
+
+  cat parent and how many child inside
+
+  <% let subCatTotal = 0; %>
+  <% for(var i=0; i < data.length; i++) { %>
+    <% if (data[i].catParent == "root" ) { %>
+
+      <%= data[i].catName %>
+      <%= subCatTotal++ %>
+
+      <% let subParTotal = 0; %>
+      <% for (var j=0; j < data.length; j++) { %>
+        <% if (data[i]._id == data[j].catParent ) { %>
+          <%= data[j].catName %><%= j %>
+          <%= subParTotal++ %>
+        <% } %>
+      <% } %>
+      <%= subParTotal %>
+    <% } %>
+  <% } %>
+  <%= subCatTotal %>
+
+</div>
+
 <!-- pie chart canvas element -->
 <canvas id="countries" class="container"></canvas>
 <!-- bar chart canvas element -->
 <script>
-    // pie chart data
-    var pieData = [
-        {
-            value: 20,
-            color:"#878BB6"
-        },
-        {
-            value : 40,
-            color : "#4ACAB4"
-        },
-        {
-            value : 10,
-            color : "#FF8153"
-        },
-        {
-            value : 30,
-            color : "#FFEA88"
-        }
-    ];
-    // pie chart options
-    var pieOptions = {
-         segmentShowStroke : false,
-         animateScale : true
+  // pie chart data
+  var pieData = [{
+      value: 20,
+      color: "#878BB6"
+    },
+    {
+      value: 40,
+      color: "#4ACAB4"
+    },
+    {
+      value: 10,
+      color: "#FF8153"
+    },
+    {
+      value: 30,
+      color: "#FFEA88"
     }
-    // get pie chart canvas
-    var countries= document.getElementById("countries").getContext("2d");
-    // draw pie chart
-    new Chart(countries).Pie(pieData, pieOptions);
-
+  ];
+  // pie chart options
+  var pieOptions = {
+    segmentShowStroke: false,
+    animateScale: true
+  }
+  // get pie chart canvas
+  var countries = document.getElementById("countries").getContext("2d");
+  // draw pie chart
+  new Chart(countries).Pie(pieData, pieOptions);
 </script>
