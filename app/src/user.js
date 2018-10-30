@@ -17,7 +17,8 @@ let pageInfo = {
   title: 'Users',
   page: "Dashboard",
   request: "",
-  sessionName: ""
+  sessionName: "",
+  active: ""
 }
 let flashData = {
   page: pageInfo.page,
@@ -33,6 +34,7 @@ router.get('/', function(req, res, next) {
   // get session info
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "get";
+  pageInfo.active = "active";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // if session user is empty
   if(!req.session.user){
@@ -184,6 +186,12 @@ router.post('/remove', function(req, res, next) {
     });
   }
 });
+
+
+
+
+
+
 
 
 

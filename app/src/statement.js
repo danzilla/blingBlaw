@@ -28,7 +28,8 @@ let pageInfo = {
   title: 'Statement',
   page: "",
   request: "",
-  sessionName: ""
+  sessionName: "",
+  active: ""
 }
 let flashData = {
   page: pageInfo.page,
@@ -42,6 +43,7 @@ let flashData = {
 router.get('/', function(req, res, next) {
   pageInfo.request = "get";
   pageInfo.page = "Dashboard";
+  pageInfo.active = "active";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // if session user is empty
   if (!req.session.user) {
@@ -288,6 +290,10 @@ router.post('/remove/statement', function(req, res, next) {
     });
   }
 });
+
+
+
+
 
 
 // ALL ROUTE

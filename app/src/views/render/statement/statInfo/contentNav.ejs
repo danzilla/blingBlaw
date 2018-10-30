@@ -8,7 +8,7 @@
   <%- include('../../../components/dropNav') -%>
   <div class="container">
     <div class="input-group input-group-lg">
-      <select class="custom-select form-control" id="inputGroupSelect04" aria-label="Example select with button addon">
+      <select class="custom-select form-control">
         <% for(var i=0; i < data.length; i++) { %>
           <option value="<%- data[i]._id %>"><%- data[i].statementInfo.statementName %></option>
         <% } %>

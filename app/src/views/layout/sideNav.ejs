@@ -1,36 +1,39 @@
+
+
 <div class="btn-group-vertical">
 
-    <a class="dropdown-item card-1 py-3" id="sidebarCollapse">
-      <i class="fas fa-fire fa-2x"></i>
+  <ul class="list-group list-group-flush">
+
+    <a id="sidebarCollapse" class="list-group-item list-group-item-action card-1 d-flex align-items-center">
+      <i class="twa twa-lg twa-fire twa-2x mr-3"></i>
+      search
+    </a>
+    <a href="/statement" class="list-group-item list-group-item-action card-1 d-flex align-items-center
+      <% if (pageInfo.title == "Statement") { %> <%- pageInfo.active %> <% } %>">
+      <i class="twa twa-lg twa-money-with-wings twa-2x mr-3"></i>
+      statements
+    </a>
+    <a href="/investment" class="list-group-item list-group-item-action card-1 d-flex align-items-center
+      <% if (pageInfo.title == "Saving") { %> <%- pageInfo.active %> <% } %>">
+      <i class="fas fa-2x fa-piggy-bank mr-3 text-neon"></i>
+      saving
+    </a>
+    <a href="/category" class="list-group-item list-group-item-action card-1 d-flex align-items-center
+      <% if (pageInfo.title == "Category") { %> <%- pageInfo.active %> <% } %>">
+      <i class="twa twa-lg twa-peach twa-2x mr-3"></i>
+      category
+    </a>
+    <a href="/user" class="list-group-item list-group-item-action card-1 d-flex align-items-center
+      <% if (pageInfo.title == "Users") { %> <%- pageInfo.active %> <% } %>">
+      <i class="twa twa-lg twa-innocent twa-2x mr-3"></i>
+      users
+    </a>
+    <a href="/user" class="list-group-item list-group-item-action card-1 d-flex align-items-center">
+      <i class="fas fa-sign-out-alt fa-2x mr-3 text-danger"></i>
     </a>
 
-    <a href="/user" class="dropdown-item card-1 py-3">
-      <i class="fas fa-user-ninja fa-2x"></i>
-    </a>
-    <a href="/statement" class="dropdown-item card-1 py-3">
-      <i class="fas fa-dollar-sign fa-2x"></i>
-    </a>
-    <a href="/category" class="dropdown-item card-1 py-3">
-      <i class="fas fa-tags fa-2x"></i>
-    </a>
-    <a href="/logout" class="dropdown-item card-1 py-3">
-      <i class="fas fa-sign-out-alt fa-2x"></i>
-    </a>
-  <div class="btn-group bg-dark">
-    <button type="button" class="btn text-danger card-1"
-      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="fa-2x fas fa-cogs"></i>
-      <i class="fa-1x fas fa-caret-down"></i></button>
+  </ul>
 
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">app settings</a>
-      <a class="dropdown-item" href="#">user settings</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="/logout">logout</a>
-    </div>
-  </div>
-
-  <hr>
 
   <%- include('../components/dropNav') -%>
 </div>
