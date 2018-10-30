@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head> <%- include('../../../../layout/head') -%> </head>
+<head> <%- include('../../layout/head') -%> </head>
 <body>
 
 <div class="wrapper h-100 ">
 <!-- Sidebar  -->
-<%- include('../../../../components/slideMenus') -%>
+<%- include('../../components/slideMenus') -%>
 <!-- Modal  -->
-<%- include('../contentModal') -%>
-
-  <!-- Page Content  -->
+<%- include('investInfo/contentModal') -%>
+<!-- Page Content  -->
   <div id="content" class="h-100 p-4">
+
     <!-- content wrapper -->
     <div class="container-fluid h-100 ">
       <div class="row h-100 ">
@@ -18,7 +18,7 @@
         <!-- first bar -->
         <div class="col-1 col-md-1 col-lg-2 ">
           <div class="row align-items-center h-100 float-right">
-            <%- include('../../../../layout/sideNav') -%>
+            <%- include('../../layout/sideNav') -%>
           </div>
         </div>
         <!-- second bar -->
@@ -28,9 +28,10 @@
             <div class="col-11 col-md-11 col-lg-8 h-100 ">
               <div class="container-fluid h-100 scrollYes m-0 p-0 card-1 bg-white alert">
                 <div class="container alert pt-4">
-                  <%- include('../../../../layout/contentHead') -%>
+                  <%- include('../../layout/contentHead') -%>
+                  <%- include('investInfo/contentNav') -%>
                   <hr>
-                  <%- include('reviewBody') -%>
+                  <%- include('investInfo/contentBody') -%>
                 </div>
               </div>
             </div>
@@ -41,7 +42,7 @@
                   <div class="row align-items-center h-100">
                     <div class="container m-0 p-0 alert">
                       <div class="container pt-4 bg-white alert card-1">
-                        <%- include('reviewSummary') -%>
+                        <%- include('investInfo/summary') -%>
                       </div>
                     </div>
                   </div>
@@ -57,6 +58,8 @@
 
   </div>
 </div>
-<%- include('../../../../layout/foot') -%>
+
+
+<%- include('../../layout/foot') -%>
 </body>
 </html>

@@ -1,7 +1,8 @@
 <% if (messages.flashData) { %>
   <h6 class="d-inline">
-    <mark class="text-<%- messages.flashData[0].bgColor %>">
+    <span class="text-<%- messages.flashData[0].bgColor %>">
       <%- messages.flashData[0].pageMesage %>
-    </mark>
+      <%- messages.flashData[0].bgColor %>
+    </span>
   </h6>
 <% } %>

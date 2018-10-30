@@ -35,7 +35,7 @@ let flashData = {
   page: pageInfo.page,
   pageMesage: "",
   info: "",
-  bgClass: ""
+  bgColor: ""
 }
 
 // Statement - Dashboard
@@ -281,7 +281,7 @@ router.post('/remove/statement', function(req, res, next) {
         res.redirect('/statement');
       } else {
         flashData.pageMesage = "Statement removed: " + req.body.statementId;
-        flashData.bgColor = "success";
+        flashData.bgColor = "warning";
         flashData.info = results;
         req.flash('flashData', flashData);
         res.redirect('/statement');

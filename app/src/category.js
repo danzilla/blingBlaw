@@ -24,7 +24,7 @@ let flashData = {
   page: pageInfo.page,
   pageMesage: "",
   info: "",
-  bgClass: ""
+  bgColor: ""
 }
 
 // Category - Dashboard
@@ -48,6 +48,31 @@ router.get('/', function(req, res, next) {
     const collection = db.get(collectionName);
     // get all users find()
     collection.find({},{}, function(e, results){
+
+      let catChartInfo = {
+        catTotal: 0,
+        catTotalP: 0,
+        catTotalC: 0,
+        catInfo: {
+          catId: "",
+          catPName: "",
+          catPChild: "",
+        }
+      }
+      for (let i in results) {
+        catChartInfo.catTotal = +i +1;
+
+        if (results[i].catParent == "root"){
+          catChartInfo.catTotalP = +catChartInfo.catTotalP +1;
+          console.log("PARENT resulets-"+i+ ": " + JSON.stringify(results[i]));
+        }
+
+
+        console.log("ALL resulets-"+i+ ": " + JSON.stringify(results[i]));
+      }
+
+      console.log("\n Cat Chart: " + JSON.stringify(catChartInfo) + "\n");
+
       res.render('category/index', {
         pageInfo: pageInfo,
         data: results

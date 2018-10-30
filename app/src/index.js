@@ -27,7 +27,8 @@ let pageInfo = {
 let flashData = {
   page: pageInfo.page,
   pageMesage: "",
-  info: ""
+  info: "",
+  bgColor: ""
 }
 
 
@@ -46,6 +47,7 @@ router.get('/', function(req, res, next) {
   } else { // else - session good - redirect to user
     // Session active - redirect to /user page
     flashData.pageMesage = "Auto login! " + req.session.user;
+    flashData.bgColor = "success";
     req.flash('flashData', flashData);
     res.redirect('/user');
     console.log("Auto login - Active session: " + req.session.user);
@@ -69,6 +71,7 @@ router.post('/', function(req, res, next) {
       req.session.user = req.body.uname;
       // set flash message
       flashData.pageMesage = "Logged in goood! " + req.session.user;
+      flashData.bgColor = "success";
       req.flash('flashData', flashData);
       res.redirect('/user');
       } else { // else
