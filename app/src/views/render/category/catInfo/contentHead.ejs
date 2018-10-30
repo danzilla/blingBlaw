@@ -1,3 +1,8 @@
 <div class="container">
-  <h2><%- pageInfo.page %> <small><%- pageInfo.title %></small></h2>
+  <h2>
+  <%- pageInfo.page %>
+    <small><%- pageInfo.title %>
+      <%- include('../../../components/flashMessage') -%>
+    </small>
+  </h2>
 </div>

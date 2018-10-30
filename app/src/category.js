@@ -19,6 +19,12 @@ let pageInfo = {
   request: "",
   sessionName: ""
 }
+let flashData = {
+  page: pageInfo.page,
+  pageMesage: "",
+  info: "",
+  bgClass: ""
+}
 
 // Category - Dashboard
 // GET - category page
@@ -80,11 +86,18 @@ router.post('/add', function(req, res, next) {
     // insert newData
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
-        res.send("\nError - insert data: " + err);
-      } else { // else add category and redirect to Category Dashboard
+        flashData.pageMesage = "Error Inserting data" + newData;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
         res.redirect('/category');
+      } else { // else add category and redirect to Category Dashboard
         console.log("Category added: " + results);
-        console.log("Active session: " + req.session.user);
+        flashData.pageMesage = "Category been added: " + req.body.username;
+        flashData.bgColor = "success";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
       }
     });
   }
@@ -117,12 +130,19 @@ router.post('/update', function(req, res, next) {
     }
     collection.update(valData, { $set: newData}, function(err, results){
       if(err) { // if err throw err
-        res.send("Error - updating: " + err);
+        flashData.pageMesage = "Error updating data" + newData;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
       } else { //else
         // Uplod good, move to /category
+        console.log("Category updated: " + results);
+        flashData.pageMesage = "Category been updated: " + req.body.updateCatName;
+        flashData.bgColor = "success";
+        flashData.info = results;
+        req.flash('flashData', flashData);
         res.redirect('/category');
-        console.log("Category updated: " + JSON.stringify(results));
-        console.log("Active session: " + req.session.user);
       }
     });
   }
@@ -149,11 +169,18 @@ router.post('/remove', function(req, res, next) {
     let removeData = { _id: req.body.removeCat };
     collection.remove(removeData, function(err, results) {
       if(err) {
-        res.send("Error - removing: " + err);
-      } else {
+        flashData.pageMesage = "Error removing data" + newData;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
         res.redirect('/category');
-        console.log("Category removed: " + results);
-        console.log("Active session: " + req.session.user);
+      } else {
+        console.log("Category been Removed: " + results);
+        flashData.pageMesage = "Category been Removed: " + req.body.removeCat;
+        flashData.bgColor = "warning";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
       }
     });
   }

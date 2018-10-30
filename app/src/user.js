@@ -22,8 +22,10 @@ let pageInfo = {
 let flashData = {
   page: pageInfo.page,
   pageMesage: "",
-  info: ""
+  info: "",
+  bgClass: ""
 }
+
 
 // User - Dashboard
 // GET - user page
@@ -84,11 +86,18 @@ router.post('/add', function(req, res, next) {
     // insert newData
     collection.insert(newData, function (err, results){
       if (err) { // If it failed, return error
-        res.send("\nError - insert data: " + err);
-      } else { // else add user and redirect to User Dashboard
+        flashData.pageMesage = "Error Inserting data" + newData;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
         res.redirect('/user');
+      } else { // else add user and redirect to User Dashboard
         console.log("User added: " + results);
-        console.log("Active session: " + req.session.user);
+        flashData.pageMesage = "User been added: " + req.body.username;
+        flashData.bgColor = "success";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/user');
       }
     });
   }
@@ -121,12 +130,18 @@ router.post('/update', function(req, res, next) {
     }
     collection.update(valData, { $set: newData}, function(err, results){
       if(err) { // if err throw err
-        res.send("Error - updating: " + err);
+        flashData.pageMesage = "Error updating user: " + req.body.userName;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
+        res.redirect('/user');
       } else { //else
         // Uplod good, move to /user
+        flashData.pageMesage = "User been updated: " + req.body.userName;
+        flashData.bgColor = "success";
+        flashData.info = results;
+        req.flash('flashData', flashData);
         res.redirect('/user');
-        console.log("User updated: " + JSON.stringify(results));
-        console.log("Active session: " + req.session.user);
       }
     });
   }
@@ -153,11 +168,18 @@ router.post('/remove', function(req, res, next) {
     let removeUser = { _id: req.body.userId };
     collection.remove(removeUser, function(err, results) {
       if(err) {
-        res.send("Error - removing: " + err);
-      } else {
+        flashData.pageMesage = "Error removing user: " + req.body.userName;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
         res.redirect('/user');
-        console.log("User removed: " + results);
-        console.log("Active session: " + req.session.user);
+      } else {
+        // Uplod good, move to /user
+        flashData.pageMesage = "User been removed: " + req.body.userName;
+        flashData.bgColor = "warning";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/user');
       }
     });
   }

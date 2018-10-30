@@ -1,10 +1,5 @@
-
-
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <div class="">
-    <p><%- JSON.stringify(messages) %></p>
-    <a class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </a>
-  </div>
-</div>
+<% if (messages.flashData) { %>
+  <span class="text-<%- messages.flashData[0].bgColor %>">
+    <%- messages.flashData[0].pageMesage %>
+  </span>
+<% } %>
