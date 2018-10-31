@@ -10,6 +10,11 @@ const moment = require('moment'); // moment for Time and Date
 // post - curd
 // all - /
 
+
+// Category good! CRUD works - Add, Update, Remove - Good
+// grpah - pie Chart for GET - /category - chartInfo
+//
+
 // DB collection = Category collection
 const collectionName = "categorycollection";
 // pageInfo detailes
@@ -27,6 +32,7 @@ let flashData = {
   bgColor: ""
 }
 
+
 // Category - Dashboard
 // GET - category page
 router.get('/', function(req, res, next) {
@@ -35,9 +41,8 @@ router.get('/', function(req, res, next) {
   pageInfo.request = "get";
   pageInfo.active = "active";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session user is empty
-  if(!req.session.user){
+  if (!req.session.user) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
@@ -47,40 +52,44 @@ router.get('/', function(req, res, next) {
     const db = req.db;
     const collection = db.get(collectionName);
     // get all users find()
-    collection.find({},{}, function(e, results){
-
-      let catChartInfo = {
+    collection.find({}, {}, function(e, results) {
+      // chart info
+      const chartInfo = {
+        chartName: "Category and subcategory - diversify",
         catTotal: 0,
         catTotalP: 0,
         catTotalC: 0,
-        catInfo: {
-          catId: "",
-          catPName: "",
-          catPChild: "",
+        chartData: {
+          label: [],
+          dataValue: []
         }
       }
-      for (let i in results) {
-        catChartInfo.catTotal = +i +1;
-
-        if (results[i].catParent == "root"){
-          catChartInfo.catTotalP = +catChartInfo.catTotalP +1;
-          console.log("PARENT resulets-"+i+ ": " + JSON.stringify(results[i]));
+      // go through all category list
+      for (let i = 0; i < results.length; i++) {
+        // if root - parent category
+        if (results[i].catParent == "root") {
+          // push to label array - catParent
+          chartInfo.chartData.label.push(results[i].catName);
+          let subCatTotal = 0; //set total-subCat
+          for (let j = 0; j < results.length; j++) {
+            // subcategory list = parentID
+            if (results[i]._id == results[j].catParent) {
+              // count sub category
+              subCatTotal++;
+            }
+          }
+          // push to dataValue - count child array
+          chartInfo.chartData.dataValue.push(subCatTotal++);
         }
-
-
-        console.log("ALL resulets-"+i+ ": " + JSON.stringify(results[i]));
       }
-
-      console.log("\n Cat Chart: " + JSON.stringify(catChartInfo) + "\n");
-
       res.render('category/index', {
         pageInfo: pageInfo,
-        data: results
+        data: results,
+        chartInfo: chartInfo
       });
     });
   }
 });
-
 //
 // POST
 // CRUD - Add Update Remove - Category
@@ -93,7 +102,6 @@ router.post('/add', function(req, res, next) {
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "post";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page

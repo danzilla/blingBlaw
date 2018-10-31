@@ -1,51 +1,24 @@
-<h3 class="text-center display-5">summary <small> statement</small></h3>
+<h3 class="text-center display-5">summary <small> <%- pageInfo.title %></small></h3>
 <hr>
-
-<div class="container h-100">
-  <script>
-    let subCatA = {catT: "1", catInfo: "asda"};
-    let parCatA = {catT: 0, catInfo: ""};
-  </script>
-
-  cat parent and how many child inside
-
-  <% let subCatTotal = 0; %>
-  <% for(var i=0; i < data.length; i++) { %>
-    <% if (data[i].catParent == "root" ) { %>
-
-      <%= data[i].catName %>
-      <%= subCatTotal++ %>
-
-      <% let subParTotal = 0; %>
-      <% for (var j=0; j < data.length; j++) { %>
-        <% if (data[i]._id == data[j].catParent ) { %>
-          <%= data[j].catName %><%= j %>
-          <%= subParTotal++ %>
-        <% } %>
-      <% } %>
-      <%= subParTotal %>
-    <% } %>
-  <% } %>
-  <%= subCatTotal %>
-</div>
 
 <!-- pie chart canvas element -->
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
+
   new Chart(document.getElementById("myChart"), {
       type: 'pie',
       data: {
-        labels: ["Africa", "Asia", "Europe", "Latin America"],
+        labels: <%- JSON.stringify(chartInfo.chartData.label) %>,
         datasets: [{
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-          data: [2478,5267,734,784]
+          label: "Category and subcategory",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#f442d9"],
+          data: [<%= chartInfo.chartData.dataValue %>]
         }]
       },
       options: {
         title: {
           display: true,
-          text: 'Predicted world population (millions) in 2050'
+          text: '<%= chartInfo.chartName %>'
         }
       }
   });
