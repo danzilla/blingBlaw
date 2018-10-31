@@ -34,6 +34,12 @@
           type="hidden" name="modulesTransDeposite[]" />
         <input value="<%- uploadInfo.transactionInfo[j].transBalance %>"
           type="hidden" name="modulesTransBalance[]" />
+        <% if(uploadInfo.transactionInfo[j].transWithdraw) { %>
+          <input value="withdrawal" type="hidden" name="modulesTransType[]" />
+        <% } %>
+        <% if(uploadInfo.transactionInfo[j].transDeposite) { %>
+          <input value="deposite" type="hidden" name="modulesTransType[]" />
+        <% } %>
 
         <td class="align-middle">
           <%- uploadInfo.transactionInfo[j].transDate %>

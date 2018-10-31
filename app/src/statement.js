@@ -62,6 +62,100 @@ router.get('/', function(req, res, next) {
     collectionCat.find({}, {}, function(eCat, resultsCat) {
       // get all statementCollection find()
       collectionSta.find({}, {}, function(eSta, resultsSta) {
+
+    // chart info
+    const chartInfo = {
+      chartName: "Statement overview: <statmentName>",
+      chartData: {
+        dataLabel: [],
+        dataValue: [],
+        dataColor: []
+      }
+    }
+
+    let chartDD ={
+      catName: [],
+      catTransaction: []
+    };
+
+
+    
+
+    // Find all statement with same Category from Statemetn
+    for (let i = 0; i < resultsSta.length; i++) {
+      for (let ii = 0; ii < resultsSta[i].transactionInfo.length; ii++) {
+        if (resultsSta[i].transactionInfo[ii].transCat !== "nada" && resultsSta[i].transactionInfo[ii].transCat !== "") {
+          chartDD.catName.push(resultsSta[i].transactionInfo[ii].transCat);
+          if (resultsSta[i].transactionInfo[ii].transDeposite) {
+            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transDeposite);
+          }
+          if (resultsSta[i].transactionInfo[ii].transWithdraw) {
+            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transWithdraw);
+          }
+        }
+        if (resultsSta[i].transactionInfo[ii].transCat == "nada" || resultsSta[i].transactionInfo[ii].transCat == "") {
+          chartDD.catName.push("nada");
+          if (resultsSta[i].transactionInfo[ii].transDeposite) {
+            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transDeposite);
+          }
+          if (resultsSta[i].transactionInfo[ii].transWithdraw) {
+            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transWithdraw);
+          }
+        }
+      }
+    }
+
+    let lenX = chartDD.catName.length;
+    let lenY = chartDD.catTransaction.length;
+
+    console.log("lenX: name: " + lenX + " lenY: name: " + lenY + "\n" + JSON.stringify(chartDD));
+    // label the category from Category
+
+
+    //
+
+
+    /*
+      catParent: Car
+      catChild-0 | j: 23 | name: Car Service
+      catChild-1 | j: 24 | name: Car Payment
+      catChild-2 | j: 50 | name: asdas
+      Last Row - subCatLength: 3 | i: 47
+
+      catParent: asdasdadsasd
+      catChild-0 | j: 49 | name: asdasdasdasd
+      Last Row - subCatLength: 1 | i: 48
+    */
+    // go through all category list
+    for (let i = 0; i < resultsCat.length; i++) {
+      // if Parent - parent category
+      if (resultsCat[i].catParent == "root") {
+        let subCatTotal = 0; //set total-subCat
+        console.log("catParent: " + resultsCat[i].catName);
+        for (let j = 0; j < resultsCat.length; j++) {
+          // if Child - child category
+          if (resultsCat[i]._id == resultsCat[j].catParent) {
+            let subCatL = subCatTotal++; // count sub category
+            console.log("catChild-" + subCatL  + " | j: " + j + " | name: " + resultsCat[j].catName);
+          }
+        }
+        // push to dataValue - count child array
+        console.log("Last Row - subCatLength: " + subCatTotal + " | i: " + i + "\n");
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
         res.render('statement/index', {
           pageInfo: pageInfo,
           dataCat: resultsCat,
@@ -138,7 +232,7 @@ router.post('/review', uploadFolder.single('statementFileInput'), function(req, 
     const db = req.db;
     const collectionCat = db.get(catCollectionName);
     // get all statementCollection find()
-    collectionCat.find({}, {}, function(eCat, resultsCat) {
+    collectionCat.find({}, {}, function(err, resultsCat) {
       res.render('statement/statInfo/reviewTrans/review', {
         pageInfo: pageInfo,
         dataCat: resultsCat,
@@ -179,7 +273,8 @@ router.post('/upload', function(req, res, next) {
         transDeposite: req.body.modulesTransDeposite[i],
         transBalance: req.body.modulesTransBalance[i],
         transCat: req.body.modulesCatName[i],
-        transComment: req.body.modulesTransComment[i]
+        transComment: req.body.modulesTransComment[i],
+        transType: req.body.modulesTransType[i]
       }
     };
     // request DB conections

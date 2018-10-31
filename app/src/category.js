@@ -56,9 +56,6 @@ router.get('/', function(req, res, next) {
       // chart info
       const chartInfo = {
         chartName: "Category and subcategory - diversify",
-        catTotal: 0,
-        catTotalP: 0,
-        catTotalC: 0,
         chartData: {
           label: [],
           dataValue: []
