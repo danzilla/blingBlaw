@@ -9,19 +9,19 @@
   new Chart(document.getElementById("polar-chart"), {
       type: 'polarArea',
       data: {
-        labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+        labels: <%- JSON.stringify(chartInfo.chartData.dataLabel) %>,
         datasets: [
           {
-            label: "Population (millions)",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-            data: [3,5,8,2,5]
+            label: "bling Blaw $$$",
+            backgroundColor: <%- JSON.stringify(chartInfo.chartData.dataColor) %>,
+            data: <%- JSON.stringify(chartInfo.chartData.dataValue) %>
           }
         ]
       },
       options: {
         title: {
           display: true,
-          text: 'Predicted world population (millions) in 2050'
+          text: '<%- chartInfo.chartName %>'
         }
       }
   });

@@ -20,6 +20,11 @@ const uploadFolder = multer({
 // post - curd
 // all - /
 
+//randomColor
+function randomColor() {
+    return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+}
+
 // DB collectionSta = Statement collectionSta
 const staCollectionName = "statementCollection";
 const catCollectionName = "categorycollection";
@@ -37,6 +42,7 @@ let flashData = {
   info: "",
   bgColor: ""
 }
+
 
 // Statement - Dashboard
 // GET - statement page
@@ -63,132 +69,144 @@ router.get('/', function(req, res, next) {
       // get all statementCollection find()
       collectionSta.find({}, {}, function(eSta, resultsSta) {
 
-    // chart info
-    const chartInfo = {
-      chartName: "Statement overview: <statmentName>",
-      chartData: {
-        dataLabel: [],
-        dataValue: [],
-        dataColor: []
-      }
-    }
-    let chartDD = [];
-    // Find all statement with same Category from Statemetn
-    for (let i = 0; i < resultsSta.length; i++) {
-      for (let ii = 0; ii < resultsSta[i].transactionInfo.length; ii++) {
-        if (resultsSta[i].transactionInfo[ii].transCat !== "nada" && resultsSta[i].transactionInfo[ii].transCat !== "") {
-          if (resultsSta[i].transactionInfo[ii].transDeposite) {
-            let pushD = {
-              catName: resultsSta[i].transactionInfo[ii].transCat,
-              catTransaction: resultsSta[i].transactionInfo[ii].transDeposite
-            }
-            chartDD.push(pushD);
-          }
-          if (resultsSta[i].transactionInfo[ii].transWithdraw) {
-            let pushD = {
-              catName: resultsSta[i].transactionInfo[ii].transCat,
-              catTransaction: resultsSta[i].transactionInfo[ii].transWithdraw
-            }
-            chartDD.push(pushD);
+        // prepare chart info
+        const chartInfo = {
+          chartName: "Statement overview: <statmentName>",
+          chartData: {
+            dataLabel: [],
+            dataValue: [],
+            dataColor: []
           }
         }
-        if (resultsSta[i].transactionInfo[ii].transCat == "nada" || resultsSta[i].transactionInfo[ii].transCat == "") {
-          if (resultsSta[i].transactionInfo[ii].transDeposite) {
+        // get Cat in two Arrays
+        // for ease of use... - need better way
+        const catParentArray = [];
+        const catChildArray = [];
+        for (cat in resultsCat) {
+          // Parent Category
+          if (resultsCat[cat].catParent == "root") {
             let pushD = {
-              catName: "nada",
-              catTransaction: resultsSta[i].transactionInfo[ii].transDeposite
+              _id: resultsCat[cat]._id,
+              catName: resultsCat[cat].catName,
+              catParent: resultsCat[cat].catParent,
+              catAddDate: resultsCat[cat].catAddDate
             }
-            chartDD.push(pushD);
+            catParentArray.push(pushD);
           }
-          if (resultsSta[i].transactionInfo[ii].transWithdraw) {
+          // Child Category
+          if (resultsCat[cat].catParent !== "root") {
             let pushD = {
-              catName: "nada",
-              catTransaction: resultsSta[i].transactionInfo[ii].transWithdraw
+              _id: resultsCat[cat]._id,
+              catName: resultsCat[cat].catName,
+              catParent: resultsCat[cat].catParent,
+              catAddDate: resultsCat[cat].catAddDate
             }
-            chartDD.push(pushD);
+            catChildArray.push(pushD);
           }
         }
-      }
-    }
 
-    Array.prototype.groupBy = function(prop) {
-      return this.reduce(function(groups, item) {
-        const val = item[prop]
-        groups[val] = groups[val] || []
-        groups[val].push(item)
-        return groups
-      }, {})
-    }
-    const groupedByTime = chartDD.groupBy('catName')
-    console.log(groupedByTime);
+        // transaction
+        // ready transaction to find catParentName from catParent catParentArray
+        const transInfo = [];
+        for (sta in resultsSta) {
+          for (let tra = 0; tra < resultsSta[sta].transactionInfo.length; tra++) {
 
-
-
-    // label the category from Category
-    /*
-
-    for(n in chartDD){
-      console.log("chartDD:"+n+": "+JSON.stringify(chartDD[n]));
-    }
-
-
-    */
-
-    //
-
-
-    /*
-      catParent: Car
-      catChild-0 | j: 23 | name: Car Service
-      catChild-1 | j: 24 | name: Car Payment
-      catChild-2 | j: 50 | name: asdas
-      Last Row - subCatLength: 3 | i: 47
-
-      catParent: asdasdadsasd
-      catChild-0 | j: 49 | name: asdasdasdasd
-      Last Row - subCatLength: 1 | i: 48
-
-    // go through all category list
-    for (let i = 0; i < resultsCat.length; i++) {
-      // if Parent - parent category
-      if (resultsCat[i].catParent == "root") {
-        let subCatTotal = 0; //set total-subCat
-        console.log("catParent: " + resultsCat[i].catName);
-        for (let j = 0; j < resultsCat.length; j++) {
-          // if Child - child category
-          if (resultsCat[i]._id == resultsCat[j].catParent) {
-            let subCatL = subCatTotal++; // count sub category
-            console.log("catChild-" + subCatL  + " | j: " + j + " | name: " + resultsCat[j].catName);
+            let pushD = {
+              transId: resultsSta[sta].transactionInfo[tra].transId,
+              transDate: resultsSta[sta].transactionInfo[tra].transDate,
+              transaction: "",
+              transCat: "",
+              catParent: "",
+              transCatId: "",
+              catParentId: "",
+              transType: resultsSta[sta].transactionInfo[tra].transType
+            }
+            // if the category is not empty or nada - add catname and transaction
+            if (resultsSta[sta].transactionInfo[tra].transCat !== "nada" &&
+              resultsSta[sta].transactionInfo[tra].transCat !== "") {
+              //if deposite and NOT nada - add transCat
+              if (resultsSta[sta].transactionInfo[tra].transDeposite) {
+                pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite;
+              }
+              //if withdraw and NOT nada
+              if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
+                pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw;
+              }
+              // category names for parent and child category
+              for (catC in catChildArray) {
+                if (resultsSta[sta].transactionInfo[tra].transCat == catChildArray[catC]._id) {
+                  // push CatID to transInfo - Child
+                  pushD.transCat = catChildArray[catC].catName;
+                  pushD.transCatId = resultsSta[sta].transactionInfo[tra].transCat;
+                  // push CatID to transInfo - Parent
+                  for (catP in catParentArray) {
+                    if (catParentArray[catP]._id == catChildArray[catC].catParent) {
+                      pushD.catParent = catParentArray[catP].catName;
+                      pushD.catParentId = catParentArray[catP]._id;
+                    }
+                  }
+                }
+              }
+            }
+            // if the category is empty or undefined or nada - add nada and transaction
+            if (resultsSta[sta].transactionInfo[tra].transCat == "nada" ||
+              resultsSta[sta].transactionInfo[tra].transCat == "" ||
+              resultsSta[sta].transactionInfo[tra].transCat == "undefined") {
+              if (resultsSta[sta].transactionInfo[tra].transDeposite) {
+                //if deposite and NOT nada - add transCat
+                pushD.transCat = "nada"
+                pushD.catParent = "nada"
+                pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite
+              }
+              if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
+                //if withdraw and IS nada - add nada to cat
+                pushD.transCat = "nada"
+                pushD.catParent = "nada"
+                pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw
+              }
+            }
+            transInfo.push(pushD);
           }
         }
-        // push to dataValue - count child array
-        console.log("Last Row - subCatLength: " + subCatTotal + " | i: " + i + "\n");
-      }
-    }
+        // console.log(JSON.stringify(transInfo[0]));
 
-  */
-
-
-
-
-
-
-
-
-
-
+        // group by catParent
+        // group and SUM - group catNames and sum transaction
+        // need to tune this up
+        let resultGroupSum = [];
+        transInfo.reduce(function(res, value) {
+          if (!res[value.catParent]) {
+            res[value.catParent] = {
+              catParent: value.catParent,
+              transaction: 0
+            };
+            resultGroupSum.push(res[value.catParent])
+          }
+          res[value.catParent].transaction += parseFloat(value.transaction)
+          return res;
+        }, {});
+        // console.log(JSON.stringify(resultGroupSum));
+        // append data into chartInfo
+        for (charD in resultGroupSum) {
+          chartInfo.chartData.dataLabel.push(resultGroupSum[charD].catParent)
+          chartInfo.chartData.dataValue.push(resultGroupSum[charD].transaction)
+          chartInfo.chartData.dataColor.push(randomColor())
+        }
+        // Testing
+        // Testing - resultGroupSum
+        console.log("Chart data: " + JSON.stringify(chartInfo));
+        console.log("\n");
 
         res.render('statement/index', {
           pageInfo: pageInfo,
           dataCat: resultsCat,
-          data: resultsSta
+          data: resultsSta,
+          chartInfo: chartInfo
         });
       });
     });
   }
 });
-
-
 //
 // POST
 // CRUD - Add Update Remove - Statement
