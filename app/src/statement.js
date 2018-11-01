@@ -72,45 +72,67 @@ router.get('/', function(req, res, next) {
         dataColor: []
       }
     }
-
-    let chartDD ={
-      catName: [],
-      catTransaction: []
-    };
-
-
-    
-
+    let chartDD = [];
     // Find all statement with same Category from Statemetn
     for (let i = 0; i < resultsSta.length; i++) {
       for (let ii = 0; ii < resultsSta[i].transactionInfo.length; ii++) {
         if (resultsSta[i].transactionInfo[ii].transCat !== "nada" && resultsSta[i].transactionInfo[ii].transCat !== "") {
-          chartDD.catName.push(resultsSta[i].transactionInfo[ii].transCat);
           if (resultsSta[i].transactionInfo[ii].transDeposite) {
-            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transDeposite);
+            let pushD = {
+              catName: resultsSta[i].transactionInfo[ii].transCat,
+              catTransaction: resultsSta[i].transactionInfo[ii].transDeposite
+            }
+            chartDD.push(pushD);
           }
           if (resultsSta[i].transactionInfo[ii].transWithdraw) {
-            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transWithdraw);
+            let pushD = {
+              catName: resultsSta[i].transactionInfo[ii].transCat,
+              catTransaction: resultsSta[i].transactionInfo[ii].transWithdraw
+            }
+            chartDD.push(pushD);
           }
         }
         if (resultsSta[i].transactionInfo[ii].transCat == "nada" || resultsSta[i].transactionInfo[ii].transCat == "") {
-          chartDD.catName.push("nada");
           if (resultsSta[i].transactionInfo[ii].transDeposite) {
-            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transDeposite);
+            let pushD = {
+              catName: "nada",
+              catTransaction: resultsSta[i].transactionInfo[ii].transDeposite
+            }
+            chartDD.push(pushD);
           }
           if (resultsSta[i].transactionInfo[ii].transWithdraw) {
-            chartDD.catTransaction.push(resultsSta[i].transactionInfo[ii].transWithdraw);
+            let pushD = {
+              catName: "nada",
+              catTransaction: resultsSta[i].transactionInfo[ii].transWithdraw
+            }
+            chartDD.push(pushD);
           }
         }
       }
     }
 
-    let lenX = chartDD.catName.length;
-    let lenY = chartDD.catTransaction.length;
+    Array.prototype.groupBy = function(prop) {
+      return this.reduce(function(groups, item) {
+        const val = item[prop]
+        groups[val] = groups[val] || []
+        groups[val].push(item)
+        return groups
+      }, {})
+    }
+    const groupedByTime = chartDD.groupBy('catName')
+    console.log(groupedByTime);
 
-    console.log("lenX: name: " + lenX + " lenY: name: " + lenY + "\n" + JSON.stringify(chartDD));
+
+
     // label the category from Category
+    /*
 
+    for(n in chartDD){
+      console.log("chartDD:"+n+": "+JSON.stringify(chartDD[n]));
+    }
+
+
+    */
 
     //
 
@@ -125,7 +147,7 @@ router.get('/', function(req, res, next) {
       catParent: asdasdadsasd
       catChild-0 | j: 49 | name: asdasdasdasd
       Last Row - subCatLength: 1 | i: 48
-    */
+
     // go through all category list
     for (let i = 0; i < resultsCat.length; i++) {
       // if Parent - parent category
@@ -144,7 +166,7 @@ router.get('/', function(req, res, next) {
       }
     }
 
-
+  */
 
 
 
