@@ -184,7 +184,7 @@ router.get('/', function(req, res, next) {
           return res;
         }, {});
         // console.log(JSON.stringify(resultGroupSum));
-        
+
         // chartData
         // append data into chartInfo
         for (charD in resultGroupSum) {

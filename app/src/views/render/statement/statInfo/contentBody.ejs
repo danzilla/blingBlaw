@@ -2,9 +2,9 @@
   <table class="table table-borderless">
     <thead class="thead-dark border-bottom border-danger">
       <th colspan="1" scope="col" class="text-center card-1">
-        <button data-toggle="modal" data-target="#modalStat<%= data[i]._id %>"
-          class="btn card-1 btnC btnC-4">
-        <i class="twa twa-lg twa-balloon twa-2x"></i></button>
+        <a data-toggle="modal" data-target="#modalStat<%= data[i]._id %>"
+          class="btn card-1">
+        <i class="twa twa-lg twa-balloon twa-2x"></i></a>
       </th>
       <th colspan="4" class="">
         <a>Title: </a><code class="mr-4"><%- data[i].statementInfo.statementName %></code>
@@ -18,7 +18,7 @@
         <th scope="col" class="text-center">Description</th>
         <th scope="col" class="text-center">Type</th>
         <th scope="col" class="text-center">Transaction</th>
-        <th scope="col" class="text-center"><i class="twa twa-lg twa-cake twa-2x"></i></th>
+        <th scope="col" class="text-center"><i class="twa twa-lg twa-high-brightness twa-2x fa-pulse"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -50,7 +50,7 @@
                 $ <%= data[i].transactionInfo[j].transDeposite %>
             <% } %>
           </td>
-
+          <!-- edit button -->
           <td class="text-center align-middle">
           <% for(var y=0; y < dataCat.length; y++) { %>
             <% if (data[i].transactionInfo[j].transCat == dataCat[y]._id) { %>
@@ -61,7 +61,10 @@
               </span>
             <% } %>
           <% } %>
-          <% if (data[i].transactionInfo[j].transCat == "nada") { %>
+          <% if (data[i].transactionInfo[j].transCat == "nada" ||
+              data[i].transactionInfo[j].transCat == null ||
+              data[i].transactionInfo[j].transCat == "undefined" ||
+              data[i].transactionInfo[j].transCat == "") { %>
             <button data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
               class="btn btn-outline-warning">Attention</button>
           <% } %>
@@ -140,6 +143,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Catergory</span>
                     </div>
+
                     <select name="transTransCat" class="custom-select">
                       <option value="nada">choose one</option>
                       <% for(var z=0; z < dataCat.length; z++) { %>
@@ -154,6 +158,7 @@
                         <% } %>
                       <% } %>
                     </select>
+
                     <div class="input-group-append">
                       <a class="btn btn-primary" data-toggle="collapse" href="#text<%= data[i].transactionInfo[j].transId %>"
                         role="button" aria-expanded="false">
