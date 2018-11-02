@@ -8,10 +8,10 @@
   new Chart(document.getElementById("myChart"), {
       type: 'pie',
       data: {
-        labels: <%- JSON.stringify(chartInfo.chartData.label) %>,
+        labels: <%- JSON.stringify(chartInfo.chartData.dataLabel) %>,
         datasets: [{
           label: "Category and subcategory",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#f442d9"],
+          backgroundColor: <%- JSON.stringify(chartInfo.chartData.dataColor) %>,
           data: [<%= chartInfo.chartData.dataValue %>]
         }]
       },

@@ -1,7 +1,7 @@
 /* No Var - let and const
  * try ES6 + async
  * NodeJS + Monk + Session = keep it simple
-*/
+ */
 const express = require('express');
 const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
@@ -10,6 +10,10 @@ const moment = require('moment'); // moment for Time and Date
 // post - curd
 // all - /
 
+//randomColor
+function randomColor() {
+    return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+}
 
 // Category good! CRUD works - Add, Update, Remove - Good
 // grpah - pie Chart for GET - /category - chartInfo
@@ -52,41 +56,52 @@ router.get('/', function(req, res, next) {
     const db = req.db;
     const collection = db.get(collectionName);
     // get all users find()
-    collection.find({}, {}, function(e, results) {
-      // chart info
+    collection.find({}, {}, function(e, resultsCat) {
+      // prepare chart info
       const chartInfo = {
         chartName: "Category and subcategory - diversify",
         chartData: {
-          label: [],
-          dataValue: []
+          dataLabel: [],
+          dataValue: [],
+          dataColor: []
         }
       }
+      // category chartInfo
+      // get Cat in two Arrays
       // go through all category list
-      for (let i = 0; i < results.length; i++) {
+      for (let i = 0; i < resultsCat.length; i++) {
         // if root - parent category
-        if (results[i].catParent == "root") {
-          // push to label array - catParent
-          chartInfo.chartData.label.push(results[i].catName);
+        if (resultsCat[i].catParent == "root") {
+          // push to dataLabel array - catParent
+          chartInfo.chartData.dataLabel.push(resultsCat[i].catName);
+          chartInfo.chartData.dataColor.push(randomColor());
           let subCatTotal = 0; //set total-subCat
-          for (let j = 0; j < results.length; j++) {
+          for (let j = 0; j < resultsCat.length; j++) {
             // subcategory list = parentID
-            if (results[i]._id == results[j].catParent) {
+            if (resultsCat[i]._id == resultsCat[j].catParent) {
               // count sub category
               subCatTotal++;
             }
           }
           // push to dataValue - count child array
-          chartInfo.chartData.dataValue.push(subCatTotal++);
+          chartInfo.chartData.dataValue.push(subCatTotal);
         }
       }
       res.render('category/index', {
         pageInfo: pageInfo,
-        data: results,
+        data: resultsCat,
         chartInfo: chartInfo
       });
     });
   }
 });
+
+
+
+
+
+
+
 //
 // POST
 // CRUD - Add Update Remove - Category
@@ -104,8 +119,7 @@ router.post('/add', function(req, res, next) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going home\n");
-    }
-  else { // else - session good - redirect to category list
+  } else { // else - session good - redirect to category list
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
@@ -116,7 +130,7 @@ router.post('/add', function(req, res, next) {
       catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
     // insert newData
-    collection.insert(newData, function (err, results){
+    collection.insert(newData, function(err, results) {
       if (err) { // If it failed, return error
         flashData.pageMesage = "Error Inserting data" + newData;
         flashData.bgColor = "danger";
@@ -148,20 +162,23 @@ router.post('/update', function(req, res, next) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
-    }
-  else { // else - session good - redirect to user
+  } else { // else - session good - redirect to user
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
     // set validation Data
-    let valData = { _id: req.body.updateCatId }
+    let valData = {
+      _id: req.body.updateCatId
+    }
     let newData = { // set new data for updae
       catName: req.body.updateCatName,
       catParent: req.body.updateCatParent,
       catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
-    collection.update(valData, { $set: newData}, function(err, results){
-      if(err) { // if err throw err
+    collection.update(valData, {
+      $set: newData
+    }, function(err, results) {
+      if (err) { // if err throw err
         flashData.pageMesage = "Error updating data" + newData;
         flashData.bgColor = "danger";
         flashData.info = err;
@@ -193,14 +210,15 @@ router.post('/remove', function(req, res, next) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
-    }
-  else { // else - session good - redirect to user
+  } else { // else - session good - redirect to user
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
-    let removeData = { _id: req.body.removeCat };
+    let removeData = {
+      _id: req.body.removeCat
+    };
     collection.remove(removeData, function(err, results) {
-      if(err) {
+      if (err) {
         flashData.pageMesage = "Error removing data" + newData;
         flashData.bgColor = "danger";
         flashData.info = err;
@@ -227,39 +245,39 @@ router.post('/remove', function(req, res, next) {
 router.all('/add', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
-   // if session empty // redirect login page
-   res.redirect('/');
-   console.log("\nsession incorrect - going Home\n");
+    // if session empty // redirect login page
+    res.redirect('/');
+    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /category page
-   res.redirect('/category');
-   console.log("Active session: " + req.session.user);
+    // Session active - redirect to /category page
+    res.redirect('/category');
+    console.log("Active session: " + req.session.user);
   }
 });
 // ALL update category page
 router.all('/update', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
-   // if session empty // redirect login page
-   res.redirect('/');
-   console.log("\nsession incorrect - going Home\n");
+    // if session empty // redirect login page
+    res.redirect('/');
+    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /category page
-   res.redirect('/category');
-   console.log("Active session: " + req.session.user);
+    // Session active - redirect to /category page
+    res.redirect('/category');
+    console.log("Active session: " + req.session.user);
   }
 });
 // ALL remove page
 router.all('/remove', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
-   // if session empty // redirect login page
-   res.redirect('/');
-   console.log("\nsession incorrect - going Home\n");
+    // if session empty // redirect login page
+    res.redirect('/');
+    console.log("\nsession incorrect - going Home\n");
   } else { // else - session good - redirect to user
-   // Session active - redirect to /category page
-   res.redirect('/category');
-   console.log("Active session: " + req.session.user);
+    // Session active - redirect to /category page
+    res.redirect('/category');
+    console.log("Active session: " + req.session.user);
   }
 });
 

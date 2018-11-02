@@ -68,7 +68,6 @@ router.get('/', function(req, res, next) {
     collectionCat.find({}, {}, function(eCat, resultsCat) {
       // get all statementCollection find()
       collectionSta.find({}, {}, function(eSta, resultsSta) {
-
         // prepare chart info
         const chartInfo = {
           chartName: "Statement overview: <statmentName>",
@@ -78,6 +77,7 @@ router.get('/', function(req, res, next) {
             dataColor: []
           }
         }
+        // category
         // get Cat in two Arrays
         // for ease of use... - need better way
         const catParentArray = [];
@@ -104,31 +104,30 @@ router.get('/', function(req, res, next) {
             catChildArray.push(pushD);
           }
         }
-
         // transaction
-        // ready transaction to find catParentName from catParent catParentArray
+        // ready transaction to find catParentName from catParentID catParentArray
         const transInfo = [];
         for (sta in resultsSta) {
           for (let tra = 0; tra < resultsSta[sta].transactionInfo.length; tra++) {
-
+            // set up pushD for transInfo
             let pushD = {
               transId: resultsSta[sta].transactionInfo[tra].transId,
               transDate: resultsSta[sta].transactionInfo[tra].transDate,
+              transType: resultsSta[sta].transactionInfo[tra].transType,
               transaction: "",
               transCat: "",
               catParent: "",
               transCatId: "",
-              catParentId: "",
-              transType: resultsSta[sta].transactionInfo[tra].transType
+              catParentId: ""
             }
             // if the category is not empty or nada - add catname and transaction
             if (resultsSta[sta].transactionInfo[tra].transCat !== "nada" &&
               resultsSta[sta].transactionInfo[tra].transCat !== "") {
-              //if deposite and NOT nada - add transCat
+              // if deposite and NOT nada - add transCat
               if (resultsSta[sta].transactionInfo[tra].transDeposite) {
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite;
               }
-              //if withdraw and NOT nada
+              // if withdraw and NOT nada
               if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw;
               }
@@ -169,7 +168,6 @@ router.get('/', function(req, res, next) {
           }
         }
         // console.log(JSON.stringify(transInfo[0]));
-
         // group by catParent
         // group and SUM - group catNames and sum transaction
         // need to tune this up
@@ -186,17 +184,16 @@ router.get('/', function(req, res, next) {
           return res;
         }, {});
         // console.log(JSON.stringify(resultGroupSum));
+        
+        // chartData
         // append data into chartInfo
         for (charD in resultGroupSum) {
           chartInfo.chartData.dataLabel.push(resultGroupSum[charD].catParent)
           chartInfo.chartData.dataValue.push(resultGroupSum[charD].transaction)
           chartInfo.chartData.dataColor.push(randomColor())
         }
-        // Testing
         // Testing - resultGroupSum
-        console.log("Chart data: " + JSON.stringify(chartInfo));
-        console.log("\n");
-
+        // console.log("Chart data: " + JSON.stringify(chartInfo));
         res.render('statement/index', {
           pageInfo: pageInfo,
           dataCat: resultsCat,
