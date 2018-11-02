@@ -6,7 +6,7 @@
           class="btn card-1">
         <i class="twa twa-lg twa-balloon twa-2x"></i></a>
       </th>
-      <th colspan="4" class="">
+      <th colspan="3" class="">
         <a>Title: </a><code class="mr-4"><%- data[i].statementInfo.statementName %></code>
         <a>Type: </a><code class="mr-4"><%- data[i].statementInfo.statementType %></code>
         <a>Date: </a><code><%- data[i].statementInfo.statementDate %></code>
@@ -14,11 +14,15 @@
     </thead>
     <thead class="thead-dark">
       <tr class="bg-dark text-light">
-        <th scope="col" class="text-center">Date</th>
-        <th scope="col" class="text-center">Description</th>
-        <th scope="col" class="text-center">Type</th>
-        <th scope="col" class="text-center">Transaction</th>
-        <th scope="col" class="text-center"><i class="twa twa-lg twa-high-brightness twa-2x fa-pulse"></i></th>
+        <th scope="col" class="text-center">date</th>
+        <th scope="col" class="">description</th>
+        <th scope="col" class="text-center">
+          Transaction
+          <i class="twa twa-lg twa-sparkles twa-1x"></i>
+        </th>
+        <th scope="col" class="text-center">
+          <i class="twa twa-lg twa-high-brightness twa-1x fa-pulse"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -34,39 +38,64 @@
 
           <!-- Withdraw or Deposite - label -->
           <td class="text-center align-middle">
-            <% if(data[i].transactionInfo[j].transWithdraw) { %>
-              <span class="badge badge-primary font-italic">withdrawal</span>
-            <% } %>
-            <% if(data[i].transactionInfo[j].transDeposite) { %>
-              <span class="badge badge-success font-italic">deposite</span>
-            <% } %>
-          </td>
-          <!-- Withdraw or Deposite - $ -->
-          <td class="text-center align-middle">
-            <% if(data[i].transactionInfo[j].transWithdraw) { %>
+            <h5 class="">
+              <% if(data[i].transactionInfo[j].transWithdraw) { %>
                 $ <%= data[i].transactionInfo[j].transWithdraw %>
-            <% } %>
-            <% if(data[i].transactionInfo[j].transDeposite) { %>
+              <small>
+                <span class="badge badge-secondary font-italic">withdrawal</span></small>
+              <% } %>
+              <% if(data[i].transactionInfo[j].transDeposite) { %>
                 $ <%= data[i].transactionInfo[j].transDeposite %>
-            <% } %>
+                <small>
+                  <span class="badge badge-primary font-italic ">deposite</span></small>
+              <% } %>
+            </h5>
           </td>
-          <!-- edit button -->
+
+          <!-- catergory and edit button -->
           <td class="text-center align-middle">
           <% for(var y=0; y < dataCat.length; y++) { %>
             <% if (data[i].transactionInfo[j].transCat == dataCat[y]._id) { %>
-              <span class="badge badge-warning"><%= dataCat[y].catName %></span>
-              <span data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
-                class="card-1 badge badge-info">
-                <i class="fas fa-pencil-alt"></i> | <i class="fas fa-comment"></i>
-              </span>
+
+              <h5>
+              <!-- background color for catergory -->
+              <% for(var z=0; z < chartInfo.chartData.dataValue.length; z++) { %>
+                <% if (chartInfo.chartData.dataParentId[z] == dataCat[y].catParent) { %>
+                  <span class="badge"
+                    style="background-color:<%= chartInfo.chartData.dataColor[z] %>">
+                    <%= dataCat[y].catName %>
+                  </span>
+                <% } %>
+              <% } %>
+              <small>
+                <span data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
+                  class="card-1 badge badge-info">
+                  <i class="fas fa-pencil-alt"></i> | <i class="fas fa-comment"></i>
+                </span>
+              </small>
+            </h5>
             <% } %>
           <% } %>
           <% if (data[i].transactionInfo[j].transCat == "nada" ||
               data[i].transactionInfo[j].transCat == null ||
               data[i].transactionInfo[j].transCat == "undefined" ||
               data[i].transactionInfo[j].transCat == "") { %>
-            <button data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
-              class="btn btn-outline-warning">Attention</button>
+
+              <!-- background color for catergory -->
+              <% for(var z=0; z < chartInfo.chartData.dataValue.length; z++) { %>
+                <% if (chartInfo.chartData.dataLabel[z] == "nada" ||
+                  chartInfo.chartData.dataLabel[z] == null ||
+                  chartInfo.chartData.dataLabel[z] == "undefined" ||
+                  chartInfo.chartData.dataLabel[z] == "") { %>
+
+                  <button data-toggle="modal"
+                    style="background-color:<%= chartInfo.chartData.dataColor[z] %>"
+                    data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
+                    class="btn card-1">Attention</button>
+
+                <% } %>
+              <% } %>
+
           <% } %>
           </td>
 

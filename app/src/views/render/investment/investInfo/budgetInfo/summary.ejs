@@ -1,0 +1,38 @@
+<h3 class="text-center display-5">summary <small> parent</small></h3>
+
+<!-- List group -->
+<div class="list-group" id="myList" role="tablist">
+  <a data-toggle="list" href="#messages" role="tab">Messages</a>
+</div>
+
+<canvas id="myChart0" class="container"></canvas>
+<script>
+  var data = [2568163, 598599, 3189284, 599112, 926340, 5548295, 11847685, 66445];
+  var labels = ["Business Development and Marketing", "Information Technology", "Professional Development and Training", "Knowledge Management", "Logistics", "Support", "Business Services", "Other"];
+  var bgColor = ["#c0504d", "#8064a2", "#772c2a", "#f2ab71", "#2ab881", "#4f81bd", "#2c4d75"];
+
+  	var ctx = document.getElementById("myChart0");
+  	var myChart0 = new Chart(ctx, {
+  		type: 'doughnut',
+  		data: {
+  				labels: labels,
+  				datasets: [
+  					{
+  						data: data,
+  						backgroundColor: bgColor
+  					}]
+  		}
+  	});
+  		document.getElementById("myChart0").onclick = function(evt){
+  			var activePoints = myChart0.getElementsAtEvent(evt);
+  			var firstPoint = activePoints[0];
+  			var label = myChart0.data.labels[firstPoint._index];
+  			var value = myChart0.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
+
+        if (firstPoint !== undefined)
+  				console.log(label + ": " + value);
+          $('a[href="#messages"]').tab('show');
+          $('#asdasd').modal('show');
+          $('#asdasd').trigger('focus');
+  		};
+</script>

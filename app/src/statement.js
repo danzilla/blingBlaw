@@ -7,24 +7,20 @@ const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
 const csvjson = require('csvjson'); //csv to json
 const fs = require('fs'); // fs filesystem
-
+// randomColor
+const randomColor = require('random-color');
 // ObjectID - require
 const ObjectId = require('mongodb').ObjectID;
-
-const multer = require('multer'); //mlter for file upload
+//mlter for file upload
+const multer = require('multer');
 const uploadFolder = multer({
   dest: 'app/uploads/'
 }); // upload location app/uploads/
 
+
 // get - /statement
 // post - curd
 // all - /
-
-//randomColor
-function randomColor() {
-    return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-}
-
 // DB collectionSta = Statement collectionSta
 const staCollectionName = "statementCollection";
 const catCollectionName = "categorycollection";
@@ -74,7 +70,8 @@ router.get('/', function(req, res, next) {
           chartData: {
             dataLabel: [],
             dataValue: [],
-            dataColor: []
+            dataColor: [],
+            dataParentId: []
           }
         }
         // category
@@ -105,7 +102,7 @@ router.get('/', function(req, res, next) {
           }
         }
         // transaction
-        // ready transaction to find catParentName from catParentID catParentArray
+        // ready transaction to find catParentName from catParentID - catParentArray
         const transInfo = [];
         for (sta in resultsSta) {
           for (let tra = 0; tra < resultsSta[sta].transactionInfo.length; tra++) {
@@ -176,6 +173,7 @@ router.get('/', function(req, res, next) {
           if (!res[value.catParent]) {
             res[value.catParent] = {
               catParent: value.catParent,
+              catParentId: value.catParentId,
               transaction: 0
             };
             resultGroupSum.push(res[value.catParent])
@@ -184,13 +182,14 @@ router.get('/', function(req, res, next) {
           return res;
         }, {});
         // console.log(JSON.stringify(resultGroupSum));
-
         // chartData
         // append data into chartInfo
         for (charD in resultGroupSum) {
+          let color = randomColor();
           chartInfo.chartData.dataLabel.push(resultGroupSum[charD].catParent)
-          chartInfo.chartData.dataValue.push(resultGroupSum[charD].transaction)
-          chartInfo.chartData.dataColor.push(randomColor())
+          chartInfo.chartData.dataValue.push(resultGroupSum[charD].transaction.toFixed(2))
+          chartInfo.chartData.dataParentId.push(resultGroupSum[charD].catParentId)
+          chartInfo.chartData.dataColor.push(color.hexString())
         }
         // Testing - resultGroupSum
         // console.log("Chart data: " + JSON.stringify(chartInfo));
