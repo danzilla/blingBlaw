@@ -1,0 +1,35 @@
+<h3 class="text-center display-5">summary <small> parent</small></h3>
+
+<canvas id="myChart0" class="container"></canvas>
+<script>
+  var data = <%- JSON.stringify(chartInfoParent.chartData.dataValue) %>;
+  var labels = <%- JSON.stringify(chartInfoParent.chartData.dataLabel) %>;
+  var bgColor = <%- JSON.stringify(chartInfoParent.chartData.dataColor) %>;
+  var childId = <%- JSON.stringify(chartInfoParent.chartData.dataChildId) %>;
+
+  var ctx = document.getElementById("myChart0");
+  var myChart0 = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: bgColor
+      }],
+      childId: childId
+    }
+  });
+  document.getElementById("myChart0").onclick = function(evt) {
+    var activePoints = myChart0.getElementsAtEvent(evt);
+    var firstPoint = activePoints[0];
+    var label = myChart0.data.labels[firstPoint._index];
+    var value = myChart0.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
+    var cID = myChart0.data.childId[firstPoint._index];
+
+    if (firstPoint !== undefined) {
+      console.log(label + ": " + value);
+      $('a[href="#messages"]').tab('show');
+      document.getElementById("chartDetails").innerHTML = label + ": " + value + " : ciD: " + cID;
+    }
+  };
+</script>

@@ -1,66 +1,33 @@
 
-<div class="container ">
-
-  <div class="row">
-    <div class="col-6">
-
-      <div class="container h-100">
-        <div class="row h-100 justify-content-center align-items-center">
-          <div class="col-12 text-center">
-
-            <h1 class="display-2 animated pulse slower infinite delay-2s">
-              <i class="twa twa-heart"></i>
-            </h1>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-6">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>month-year</th>
-            <th>Income</th>
-            <th>Expense</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>present</th>
-            <td>John</td>
-            <td>Doe</td>
-          </tr>
-          <tr>
-            <th>past</th>
-            <td>Mary</td>
-            <td>Moe</td>
-          </tr>
-          <tr>
-            <th>future</th>
-            <td>July</td>
-            <td>Dooley</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
+<div class="container alert-info word-break">
+  <p><%- JSON.stringify(pageInfo) %></p>
+</div>
+<div class="container alert-danger word-break">
+  <p><%- JSON.stringify(dataCat) %></p>
+</div>
+<div class="container alert-success word-break">
+  <p><%- JSON.stringify(data) %></p>
 </div>
 
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <%- include('budget/budgetInfo') -%>
+    </div>
+    <div class="col-6">
+      <%- include('budget/budgetSummary') -%>
+    </div>
+  </div>
+</div>
 <div class="container">
   <h1> Expense </h1>
   <hr>
   <div class="row">
     <div class="col-6">
-      pie - spending Parent category
-      <%- include('budgetInfo/summary') -%>
+      <%- include('expense/chart0') -%>
     </div>
     <div class="col-6">
-      POLAR - spending child category
-      <%- include('budgetInfo/summary0') -%>
+      <%- include('expense/chart1') -%>
     </div>
   </div>
 </div>
