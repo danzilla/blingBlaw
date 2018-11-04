@@ -67,23 +67,18 @@ router.get('/', function(req, res, next) {
 
         // prepare chart info
         const chartInfoParent = {
-          chartName: "overview: <parent>",
-          chartData: {
-            dataLabel: [],
-            dataValue: [],
-            dataColor: [],
-            dataChildId: []
-          }
-        }
-        // prepare chart info
-        const chartInfoChild = {
-          chartName: "overview: <child>",
+          chartName: 'Summary',
           chartData: {
             dataLabel: [],
             dataValue: [],
             dataColor: [],
             dataParentId: []
           }
+        }
+        // prepare chart info
+        const chartInfoChild = {
+          chartName: "overview: <child>",
+          charts:[]
         }
         // prepare chart info
         const budgetSummary = {
@@ -139,25 +134,26 @@ router.get('/', function(req, res, next) {
               transCatId: "",
               catParentId: ""
             }
-            // if the category is not empty or nada - add catname and transaction
-            if (resultsSta[sta].transactionInfo[tra].transCat !== "nada" &&
+            // if the category is NOT empty or nada - add catname and transaction
+            if (resultsSta[sta].transactionInfo[tra].transCat !== "nada" ||
               resultsSta[sta].transactionInfo[tra].transCat !== "") {
-              // if deposite and NOT nada - add transCat
               if (resultsSta[sta].transactionInfo[tra].transDeposite) {
+                // if deposite and NOT nada - add transCat
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite;
               }
-              // if withdraw and NOT nada
               if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
+                // if withdraw and NOT nada
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw;
               }
               // category names for parent and child category
               for (catC in catChildArray) {
+                // transCat = to catArry id
                 if (resultsSta[sta].transactionInfo[tra].transCat == catChildArray[catC]._id) {
                   // push CatID to transInfo - Child
                   pushD.transCat = catChildArray[catC].catName;
                   pushD.transCatId = resultsSta[sta].transactionInfo[tra].transCat;
                   // push CatID to transInfo - Parent
-                  for (catP in catParentArray) {
+                  for (catP in catParentArray) { // if the catP_id == catC-parent
                     if (catParentArray[catP]._id == catChildArray[catC].catParent) {
                       pushD.catParent = catParentArray[catP].catName;
                       pushD.catParentId = catParentArray[catP]._id;
@@ -166,6 +162,7 @@ router.get('/', function(req, res, next) {
                 }
               }
             }
+            // empty category
             // if the category is empty or undefined or nada - add nada and transaction
             if (resultsSta[sta].transactionInfo[tra].transCat == "nada" ||
               resultsSta[sta].transactionInfo[tra].transCat == "" ||
@@ -174,23 +171,27 @@ router.get('/', function(req, res, next) {
                 //if deposite and NOT nada - add transCat
                 pushD.transCat = "nada"
                 pushD.catParent = "nada"
+                pushD.catParentId = "lalalalalalaal"
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite
+
               }
               if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
                 //if withdraw and IS nada - add nada to cat
                 pushD.transCat = "nada"
                 pushD.catParent = "nada"
+                pushD.catParentId = "lalalalalalaal"
                 pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw
               }
             }
             transInfo.push(pushD);
           }
         }
-        // console.log(JSON.stringify(transInfo[0]));
-        // group by catParent
+        // console.log("transInfo: " + JSON.stringify(transInfo[0]));
+
+        // group by catChild
         // group and SUM - group catNames and sum transaction
         // need to tune this up
-        let resultGroupSum = [];
+        let resultGroupByParent = [];
         transInfo.reduce(function(res, value) {
           if (!res[value.catParent]) {
             res[value.catParent] = {
@@ -198,25 +199,83 @@ router.get('/', function(req, res, next) {
               catParentId: value.catParentId,
               transaction: 0
             };
-            resultGroupSum.push(res[value.catParent])
+            resultGroupByParent.push(res[value.catParent])
           }
           res[value.catParent].transaction += parseFloat(value.transaction)
           return res;
         }, {});
-        // console.log(JSON.stringify(resultGroupSum));
-        // chartData
+        // console.log("resultGroupByParent: " + JSON.stringify(resultGroupByParent[0]));
+        // chartData - chartInfoParent
         // append data into chartInfoParent
-        for (charD in resultGroupSum) {
+        for (charD in resultGroupByParent) {
+          // console.log("resultGroupByParent["+charD+"]: " + JSON.stringify(resultGroupByParent[charD]));
           let color = randomColor();
-          chartInfoParent.chartData.dataLabel.push(resultGroupSum[charD].catParent)
-          chartInfoParent.chartData.dataValue.push(resultGroupSum[charD].transaction.toFixed(2))
-          chartInfoParent.chartData.dataChildId.push(resultGroupSum[charD].catParentId)
+          chartInfoParent.chartData.dataLabel.push(resultGroupByParent[charD].catParent)
+          chartInfoParent.chartData.dataValue.push(resultGroupByParent[charD].transaction.toFixed(2))
+          chartInfoParent.chartData.dataParentId.push(resultGroupByParent[charD].catParentId)
           chartInfoParent.chartData.dataColor.push(color.hexString())
         }
-        // Testing - resultGroupSum
-        // console.log("Chart data: " + JSON.stringify(chartInfoParent));
+        // Testing - resultGroupByParent
+        // console.log("chartInfoParent data: " + JSON.stringify(chartInfoParent));
 
 
+        // group by transCat
+        // group all the child category and sum the transaction
+        // need to tune this up
+        let resultGroupByChild = [];
+        transInfo.reduce(function(res, value) {
+          if (!res[value.transCat]) {
+            res[value.transCat] = {
+              transCat: value.transCat,
+              transCatId: value.transCatId,
+              catParent: value.catParent,
+              catParentId: value.catParentId,
+              transaction: 0
+            };
+            resultGroupByChild.push(res[value.transCat])
+          }
+          res[value.transCat].transaction += parseFloat(value.transaction)
+          return res;
+        }, {});
+        // console.log("resultGroupByChild: " + JSON.stringify(resultGroupByChild[0]));
+        // chartData - chartInfoParent
+        // append data into chartInfoParent
+        for (charP in resultGroupByParent) {
+          // console.log("resultGroupByChild["+charP+"]: " + JSON.stringify(resultGroupByParent[charP]));
+          // prepare chart info
+          let pushD = {
+            chartId: charP,
+            chartName: "overview: " + resultGroupByParent[charP].catParent,
+            chartData: {
+              dataParent: "",
+              dataParentId: "",
+              dataLabel: [],
+              dataLabelId: [],
+              dataValue: [],
+              dataColor: []
+            }
+          }
+          for (charC in resultGroupByChild) {
+            if (resultGroupByChild[charC].catParentId == resultGroupByParent[charP].catParentId){
+              let color = randomColor();
+              pushD.chartData.dataLabel.push(resultGroupByChild[charC].transCat)
+              pushD.chartData.dataLabelId.push(resultGroupByChild[charC].transCatId)
+              pushD.chartData.dataParent = resultGroupByChild[charC].catParent
+              pushD.chartData.dataParentId = resultGroupByChild[charC].catParentId
+              pushD.chartData.dataValue.push(resultGroupByChild[charC].transaction.toFixed(2))
+              pushD.chartData.dataColor.push(color.hexString())
+            }
+          }
+          chartInfoChild.charts.push(pushD)
+        }
+        // Testing - resultGroupByChild
+        for(w in chartInfoChild.charts){
+          console.log("chartInfoChild data: "+w+" --"+ JSON.stringify(chartInfoChild.charts[w]));
+        }
+
+
+       // match with parent and child and create chart data for each Parent
+       // group all the child category and sum the value
 
 
         res.render('investment/index', {

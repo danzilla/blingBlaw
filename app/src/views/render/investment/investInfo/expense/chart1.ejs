@@ -1,28 +1,42 @@
 <h3 class="text-center display-5">summary <small> child</small></h3>
 
-<div class="container" id="chartDetails"></div>
+<div class="tab-content">
+  <% for(var j=0; j < chartInfoParent.chartData.dataParentId.length; j++) { %>
+    <div class="tab-pane" role="tabpanel" id="<%= chartInfoParent.chartData.dataParentId[j] %>">
+      LALALA:
+      <%= chartInfoParent.chartData.dataParentId[j] %>
+    </div>
+    <% } %>
+</div>
 
 
-<canvas id="myChart" class="container"></canvas>
-<script>
-  var bgColor = [
-    "#2ecc71",
-    "#3498db",
-    "#95a5a6",
-    "#9b59b6",
-    "#f1c40f",
-    "#e74c3c",
-    "#34495e"
-  ];
-  var ctx = document.getElementById("myChart").getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: 'polarArea',
-    data: {
-      labels: ["M", "T", "W", "T", "F", "S", "S"],
-      datasets: [{
-        backgroundColor: bgColor,
-        data: [12, 19, 3, 17, 28, 24, 7]
-      }]
-    }
-  });
-</script>
+<div class="alert word-break alert-info">
+  <% for(var jj=0; jj < chartInfoChild.charts.length; jj++) { %>
+    <canvas id="myChart<%= chartInfoChild.charts[jj].chartData.dataParentId %>" class="container"></canvas>
+    <script>
+      var data = <%- JSON.stringify(chartInfoChild.charts[jj].chartData.dataValue) %>;
+      var labels = <%- JSON.stringify(chartInfoChild.charts[jj].chartData.dataLabel) %>;
+      var bgColor = <%- JSON.stringify(chartInfoChild.charts[jj].chartData.dataColor) %>;
+      var title = <%- JSON.stringify(chartInfoChild.charts[jj].chartName) %>;
+      var chartIdName = "myChart<%= chartInfoChild.charts[jj].chartData.dataParentId %>";
+
+      var ctx = document.getElementById(chartIdName).getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        options: {
+          title: {
+            display: true,
+            text: title
+          }
+        },
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: bgColor
+          }]
+        }
+      });
+    </script>
+  <% } %>
+</div>

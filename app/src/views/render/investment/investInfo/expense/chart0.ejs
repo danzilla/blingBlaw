@@ -5,11 +5,18 @@
   var data = <%- JSON.stringify(chartInfoParent.chartData.dataValue) %>;
   var labels = <%- JSON.stringify(chartInfoParent.chartData.dataLabel) %>;
   var bgColor = <%- JSON.stringify(chartInfoParent.chartData.dataColor) %>;
-  var childId = <%- JSON.stringify(chartInfoParent.chartData.dataChildId) %>;
+  var childId = <%- JSON.stringify(chartInfoParent.chartData.dataParentId) %>;
+  var title = <%- JSON.stringify(chartInfoParent.chartName) %>;
 
   var ctx = document.getElementById("myChart0");
   var myChart0 = new Chart(ctx, {
     type: 'doughnut',
+    options: {
+      title: {
+        display: true,
+        text: title
+      }
+    },
     data: {
       labels: labels,
       datasets: [{
@@ -27,8 +34,8 @@
     var cID = myChart0.data.childId[firstPoint._index];
 
     if (firstPoint !== undefined) {
-      console.log(label + ": " + value);
-      $('a[href="#messages"]').tab('show');
+      console.log("z: " + 0 + " " + labels[0])
+      $('a[href="#' + cID + '"]').tab('show');
       document.getElementById("chartDetails").innerHTML = label + ": " + value + " : ciD: " + cID;
     }
   };
