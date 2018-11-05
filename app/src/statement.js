@@ -260,7 +260,9 @@ router.post('/review', uploadFolder.single('statementFileInput'), function(req, 
         transDesc: csvTransactionInfo[i][1],
         transWithdraw: csvTransactionInfo[i][2],
         transDeposite: csvTransactionInfo[i][3],
-        transBalance: csvTransactionInfo[i][4]
+        transBalance: csvTransactionInfo[i][4],
+        uploadUser: req.session.user,
+
       });
     };
     // request DB conections
@@ -293,8 +295,6 @@ router.post('/upload', function(req, res, next) {
     console.log("Logged in: " + req.session.user);
     // Upload object - setting up for Statement and transaction
     const uploadInfo = {
-      uploadUser: req.session.user,
-      uploadDate: moment().format('MMMM DD YYYY, h:mm:ss a'),
       statementInfo: req.session.statementInfo,
       transactionInfo: []
     }

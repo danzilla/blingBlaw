@@ -5,6 +5,58 @@ db.categorycollection.insert([
 
 
 
+
+DB redesign
+
+App - BlingBlaw
+
+BlingBlaw - Collection
+
+  _id: (objectID),
+  userInfo: {
+    user_id _id
+    userName
+    userPwd
+    userEmil
+    userCreated
+    userModify
+  },
+  statementInfo: {
+    statementModified
+    statementCreated
+    statementData: [{
+      statement_id (objectID)
+      statementName
+      statementType
+      statementDate
+      statementDesc
+      statementFileInfo
+      statementuploadDate
+    }]
+  },
+  transactionInfo: {
+    transactionModified
+    transactionCreated
+    transactionData: [{
+      transId (objectID)
+      transDate
+      transDesc
+      transWithdraw
+      transDeposite
+      transBalance
+      uploadUser
+      statement_id: statement_id
+    }]
+  },
+  categoryInfo: {
+    _id
+    catName
+    catParent
+    catCreate
+    catModify
+  }
+
+
 Income
   Paycheck
   Investment

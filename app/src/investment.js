@@ -269,9 +269,10 @@ router.get('/', function(req, res, next) {
           chartInfoChild.charts.push(pushD)
         }
         // Testing - resultGroupByChild
-        for(w in chartInfoChild.charts){
+      /*  for(w in chartInfoChild.charts){
           console.log("chartInfoChild data: "+w+" --"+ JSON.stringify(chartInfoChild.charts[w]));
         }
+        */
 
 
        // match with parent and child and create chart data for each Parent
