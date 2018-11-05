@@ -1,18 +1,27 @@
-<h3 class="text-center display-5">summary <small> child</small></h3>
+<div class="container h-50 show">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-12 text-center">
 
-<div class="tab-content">
-  <% for(var j=0; j < chartInfoParent.chartData.dataParentId.length; j++) { %>
-    <div class="tab-pane" role="tabpanel" id="<%= chartInfoParent.chartData.dataParentId[j] %>">
-      LALALA:
-      <%= chartInfoParent.chartData.dataParentId[j] %>
+      <h3 class="display-4 ">
+        <i class="fa-piggy-bank fa animated pulse slower infinite delay-2s"></i>
+        <small>expense summary <span class="text-secondary "><em>click</em> the graph</small>
+      </h3>
+
     </div>
-    <% } %>
+  </div>
 </div>
 
 
-<div class="alert word-break alert-info">
-  <% for(var jj=0; jj < chartInfoChild.charts.length; jj++) { %>
-    <canvas id="myChart<%= chartInfoChild.charts[jj].chartData.dataParentId %>" class="container"></canvas>
+<% for(var jj=0; jj < chartInfoChild.charts.length; jj++) { %>
+
+  <% var anime = ["wobble", "jello", "pulse", "rubberBand", "jackInTheBox", "lightSpeedIn", "tada"]; %>
+  <% var animeRandom = anime[Math.floor(Math.random()*anime.length)]; %>
+
+    <div id="chartDetails<%= chartInfoChild.charts[jj].chartData.dataParentId %>"
+        class="hide animated pulse container">
+      <canvas id="myChart<%= chartInfoChild.charts[jj].chartData.dataParentId %>"
+        class="container" height="250"></canvas>
+    </div>
     <script>
       var data = <%- JSON.stringify(chartInfoChild.charts[jj].chartData.dataValue) %>;
       var labels = <%- JSON.stringify(chartInfoChild.charts[jj].chartData.dataLabel) %>;
@@ -37,6 +46,6 @@
           }]
         }
       });
+
     </script>
-  <% } %>
-</div>
+    <% } %>

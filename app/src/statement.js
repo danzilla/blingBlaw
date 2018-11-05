@@ -39,7 +39,6 @@ let flashData = {
   bgColor: ""
 }
 
-
 // Statement - Dashboard
 // GET - statement page
 router.get('/', function(req, res, next) {

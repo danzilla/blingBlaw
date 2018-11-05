@@ -23,7 +23,12 @@ body {
 .word-break {
   word-wrap: break-word;
 }
-
+.hide{
+  display:none;
+}
+.show{
+  display:block;
+}
 .font-10 { font-size: 100%;}
 .font-20 { font-size: 200%;}
 .font-30 { font-size: 300%;}

@@ -1,12 +1,12 @@
-<h3 class="text-center display-5">summary <small> parent</small></h3>
 
 <canvas id="myChart0" class="container"></canvas>
 <script>
+  // cart Parent category
   var data = <%- JSON.stringify(chartInfoParent.chartData.dataValue) %>;
   var labels = <%- JSON.stringify(chartInfoParent.chartData.dataLabel) %>;
   var bgColor = <%- JSON.stringify(chartInfoParent.chartData.dataColor) %>;
-  var childId = <%- JSON.stringify(chartInfoParent.chartData.dataParentId) %>;
   var title = <%- JSON.stringify(chartInfoParent.chartName) %>;
+  var parentId = <%- JSON.stringify(chartInfoParent.chartData.dataParentId) %>;
 
   var ctx = document.getElementById("myChart0");
   var myChart0 = new Chart(ctx, {
@@ -23,20 +23,23 @@
         data: data,
         backgroundColor: bgColor
       }],
-      childId: childId
+      parentId: parentId
     }
   });
+
+  // on Click on Parent category - innerHTML
   document.getElementById("myChart0").onclick = function(evt) {
     var activePoints = myChart0.getElementsAtEvent(evt);
     var firstPoint = activePoints[0];
     var label = myChart0.data.labels[firstPoint._index];
     var value = myChart0.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
-    var cID = myChart0.data.childId[firstPoint._index];
+    var parentId = myChart0.data.parentId[firstPoint._index];
+    var canaNameId = "cana" + parentId;
 
     if (firstPoint !== undefined) {
-      console.log("z: " + 0 + " " + labels[0])
-      $('a[href="#' + cID + '"]').tab('show');
-      document.getElementById("chartDetails").innerHTML = label + ": " + value + " : ciD: " + cID;
+      $('.hide').hide();
+      $('.show').hide();
+      $('#chartDetails'+parentId).show();
     }
   };
 </script>
