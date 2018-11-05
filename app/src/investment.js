@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
 
         // prepare chart info
         const chartInfoParent = {
-          chartName: 'monthly Expenses',
+          chartName: 'Expenses',
           chartData: {
             dataLabel: [],
             dataValue: [],
