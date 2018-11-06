@@ -1,0 +1,41 @@
+<div class="card card-1 p-4 text-center">
+  <h1 class="display-1"> Budg
+    <span style="font-size: 5rem; letter-spacing: -0.1em;" class="text-danger">
+      <i class="fas fa-rocket fa-flip-horizontal fa-xs"></i>
+    </span>
+    t
+  </h1>
+  <hr>
+
+  <form class="card-body text-center" name="adduser" method="post" action="/user/add">
+
+    <div class="input-group py-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">DB collections name</span>
+      </div>
+      <input type="text" class="form-control form-control-lg" placeholder="fannyPack-blingBlaw" name="fannyPack" required>
+    </div>
+    <hr>
+
+    <div class="input-group py-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">username</span>
+      </div>
+      <input type="text" class="form-control form-control-lg" placeholder="username" name="username" required>
+    </div>
+    <div class="input-group py-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">password</span>
+      </div>
+      <input type="text" class="form-control form-control-lg" placeholder="password" name="pwd" required>
+    </div>
+    <hr>
+
+    <button class="btn btn-outline-primary" type="submit">Register</button>
+    <a href="/" class="text-center btn btn-link d-block">login</a>
+    <div class="col text-center py-3 m-0">
+      <%- include('../../../components/flashMessage') -%>
+    </div>
+  </form>
+
+</div>
