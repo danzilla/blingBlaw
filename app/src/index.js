@@ -22,7 +22,7 @@ let pageInfo = {
   page: "",
   request: "",
   sessionName: "",
-  logM: 'Login'
+  pageOption: ""
 }
 let flashData = {
   page: pageInfo.page,
@@ -43,6 +43,7 @@ router.get('/', function(req, res, next) {
   // if session is undefined - get - login page
   if (!req.session.user) {
     // render - login page
+    pageInfo.pageOption = "login";
     res.render('auth/index', {pageInfo: pageInfo});
   } else { // else - session good - redirect to user
     // Session active - redirect to /user page
@@ -63,10 +64,10 @@ router.post('/', function(req, res, next) {
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // request DB conections
   const db = req.db;
-  const connDB = db.get('usercollection'); //collection - user
-  connDB.findOne ({ userName: req.body.uname }, function(err, user) {
+  const connDB = db.get('fanny'); //collection - user
+  connDB.findOne ({ "userInfo.userName": req.body.uname }, function(err, user) {
     // if user not empty and pwd match // Credentials are matched
-    if (user !== null && user.userPwd == req.body.pwd) {
+    if (user !== null && user.userInfo.userPwd == req.body.pwd) {
       //set session for the user and redirect to /user page
       req.session.user = req.body.uname;
       // set flash message
