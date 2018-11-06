@@ -1,11 +1,11 @@
 <%- include('../../layout/head') -%>
-  
+
 <div class="container h-100">
   <div class="row h-100 justify-content-center align-items-center">
-    <% if ( pageInfo.pageOption == "login") { %>
+    <% if ( pageInfo.page == "login") { %>
       <%- include('authInfo/login') -%>
     <% } %>
-    <% if ( pageInfo.pageOption == "register") { %>
+    <% if ( pageInfo.page == "register") { %>
       <%- include('authInfo/register') -%>
     <% } %>
   </div>

@@ -5,6 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment'); // moment for Time and Date
+var ObjectId = require('mongodb').ObjectID;
 
 // get - /category
 // post - curd
@@ -12,19 +13,20 @@ const moment = require('moment'); // moment for Time and Date
 
 //randomColor
 function randomColor() {
-    return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+  return "#000000".replace(/0/g, function() {
+    return (~~(Math.random() * 16)).toString(16);
+  });
 }
-
-// Category good! CRUD works - Add, Update, Remove - Good
-// grpah - pie Chart for GET - /category - chartInfo
-//
 
 // DB collection = Category collection
 const collectionName = "categorycollection";
+
+// DB Collections - blingBlaw
+const collectionBlingBlaw = "blingBlaw";
 // pageInfo detailes
 let pageInfo = {
   title: 'Category',
-  page: "Dashboard",
+  page: "",
   request: "",
   sessionName: "",
   active: ""
@@ -35,6 +37,49 @@ let flashData = {
   info: "",
   bgColor: ""
 }
+// DB Structure
+let blingBlaw = {
+  _id: "",
+  userInfo: {
+    userId: "",
+    userFannyPack: "",
+    userName: "",
+    userPwd: "",
+    userEmil: "",
+    userGrup: "",
+    userCreated: "",
+    userModify: ""
+  },
+  statementInfo: [{
+    statement_id: "",
+    statementName: "",
+    statementType: "",
+    statementDate: "",
+    statementDesc: "",
+    statementFileInfo: "",
+    statementCreated: "",
+    statementModified: "",
+    statementModifiedtUser: ""
+  }],
+  transactionInfo: [{
+    transactionId: "",
+    transactionDate: "",
+    transactionDesc: "",
+    transactionWithdraw: "",
+    transactionDeposite: "",
+    transactionBalance: "",
+    transactiontModified: "",
+    transactiontModifiedUser: "",
+    statement_id: ""
+  }],
+  categoryInfo: [{
+    _id: "",
+    catName: "",
+    catParent: "",
+    catCreated: "",
+    catModified: ""
+  }]
+}
 
 
 // Category - Dashboard
@@ -44,6 +89,7 @@ router.get('/', function(req, res, next) {
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "get";
   pageInfo.active = "active";
+  pageInfo.page = "Dashboard";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // if session user is empty
   if (!req.session.user) {
@@ -52,46 +98,65 @@ router.get('/', function(req, res, next) {
     console.log("\nsession incorrect - going Home\n");
   } else { //else
     console.log("Active session: " + req.session.user);
+
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionName);
-    // get all users find()
-    collection.find({}, {}, function(e, resultsCat) {
-      // prepare chart info
-      const chartInfo = {
-        chartName: "Category and subcategory - diversify",
-        chartData: {
-          dataLabel: [],
-          dataValue: [],
-          dataColor: []
-        }
+    const collectionBling = db.get(collectionBlingBlaw);
+
+    collectionBling.findOne({
+      "userInfo.userName": req.session.user
+    }, function(err, user) {
+      if (err) {
+        console.log("\nerror: " + JSON.stringify(err));
       }
-      // category chartInfo
-      // get Cat in two Arrays
-      // go through all category list
-      for (let i = 0; i < resultsCat.length; i++) {
-        // if root - parent category
-        if (resultsCat[i].catParent == "root") {
-          // push to dataLabel array - catParent
-          chartInfo.chartData.dataLabel.push(resultsCat[i].catName);
-          chartInfo.chartData.dataColor.push(randomColor());
-          let subCatTotal = 0; //set total-subCat
-          for (let j = 0; j < resultsCat.length; j++) {
-            // subcategory list = parentID
-            if (resultsCat[i]._id == resultsCat[j].catParent) {
-              // count sub category
-              subCatTotal++;
-            }
+      if (user) {
+
+        // prepare chart info
+        const chartInfo = {
+          chartName: "Category and subcategory - diversify",
+          chartData: {
+            dataLabel: [],
+            dataValue: [],
+            dataColor: []
           }
-          // push to dataValue - count child array
-          chartInfo.chartData.dataValue.push(subCatTotal);
         }
+        // category chartInfo
+        // get Cat in two Arrays
+        // go through all category list
+        let categoryLenth = user.categoryInfo.length;
+        for (let catPSize = 0; catPSize < categoryLenth; catPSize++) {
+          // if root - parent category
+          if (user.categoryInfo[catPSize].catParent == "root") {
+            // push to dataLabel array - catParent
+            chartInfo.chartData.dataLabel.push(user.categoryInfo[catPSize].catName);
+            chartInfo.chartData.dataColor.push(randomColor());
+            let subCatTotal = 0; //set total-subCat
+            for (let catCSize = 0; catCSize < user.categoryInfo.length; catCSize++) {
+              // subcategory list = parentID
+              if (user.categoryInfo[catPSize]._id == user.categoryInfo[catCSize].catParent) {
+                // count sub category
+                subCatTotal++;
+              }
+            }
+            // push to dataValue - count child array
+            chartInfo.chartData.dataValue.push(subCatTotal);
+          }
+        }
+        //console.log("\nchartInfo: " + JSON.stringify(chartInfo2.chartData));
+        res.render('category/index', {
+          pageInfo: pageInfo,
+          data: user.categoryInfo,
+          chartInfo: chartInfo
+        });
+
+      } else {
+        console.log("Session mismatch! - Failed at viewing Category");
+        flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing Category";
+        flashData.bgColor = "danger";
+        req.flash('flashData', flashData);
+        res.redirect('/');
       }
-      res.render('category/index', {
-        pageInfo: pageInfo,
-        data: resultsCat,
-        chartInfo: chartInfo
-      });
     });
   }
 });
@@ -122,17 +187,28 @@ router.post('/add', function(req, res, next) {
   } else { // else - session good - redirect to category list
     // request DB conections
     const db = req.db;
-    const collection = db.get(collectionName);
-    // set newData to insert
-    let newData = { // set New data for parent Category
+    const collection = db.get(collectionBlingBlaw);
+    // set validation Data
+    let valData = {
+      "_id": req.session.userId
+    }
+    // set create category obj
+    let categoryInfo = {
+      _id: ObjectId(),
       catName: req.body.catName,
       catParent: req.body.catParent,
-      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+      catModify: "",
+      catCreated: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
-    // insert newData
-    collection.insert(newData, function(err, results) {
+    // mongo push the new category
+    collection.update(valData, {
+      $push: {
+        "categoryInfo": categoryInfo
+      }
+    }, function(err, results) {
       if (err) { // If it failed, return error
-        flashData.pageMesage = "Error Inserting data" + newData;
+        console.log("err: " + err);
+        flashData.pageMesage = "Error Inserting data" + categoryInfo;
         flashData.bgColor = "danger";
         flashData.info = err;
         req.flash('flashData', flashData);
@@ -149,6 +225,64 @@ router.post('/add', function(req, res, next) {
   }
 });
 
+// Update category
+// post to update category/Update
+router.post('/update', function(req, res, next) {
+  // get session info and set pageInfo
+  pageInfo.sessionName = req.session.user;
+  pageInfo.request = "post";
+  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
+  // if session is undefined - get - login page
+  if (!req.session.user) {
+    // if session empty // redirect login page
+    res.redirect('/');
+    console.log("\nsession incorrect - going home\n");
+  } else { // else - session good - redirect to category list
+    // request DB conections
+    const db = req.db;
+    const collection = db.get(collectionBlingBlaw);
+    // set validation Data
+    // mongo push the new category
+    collection.update({
+      _id: req.session.userId,
+      "categoryInfo._id": req.body.updateCatId
+    }, {
+      $inc: {
+        "categoryInfo.$.catName": req.body.updateCatName,
+        "categoryInfo.$.catParent": req.body.updateCatParent,
+        "categoryInfo.$.catModify": moment().format('MMMM Do YYYY, h:mm:ss a')
+      }
+    }, false, true, function(err, results) {
+      if (err) { // if err throw err
+        flashData.pageMesage = "Error updating data" + categoryInfo;
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
+      }
+      if (results) {
+
+        console.log("results: " + JSON.stringify(results));
+
+        flashData.pageMesage = "Not nModified: " + results;
+        flashData.bgColor = "danger";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
+      } else { //else
+        // Uplod good, move to /category
+        console.log("Category updated: " + results);
+        flashData.pageMesage = "Category been updated: " + req.body.updateCatName;
+        flashData.bgColor = "success";
+        flashData.info = results;
+        req.flash('flashData', flashData);
+        res.redirect('/category');
+      }
+    });
+  }
+});
+
+/*
 // Update category
 // post to update category/Update
 router.post('/update', function(req, res, next) {
@@ -196,6 +330,7 @@ router.post('/update', function(req, res, next) {
     });
   }
 });
+*/
 
 // Remove Category
 // POST to remove category/remove
@@ -213,9 +348,9 @@ router.post('/remove', function(req, res, next) {
   } else { // else - session good - redirect to user
     // request DB conections
     const db = req.db;
-    const collection = db.get(collectionName);
+    const collection = db.get(collectionBlingBlaw);
     let removeData = {
-      _id: req.body.removeCat
+      "categoryInfo.$._id": req.body.removeCat
     };
     collection.remove(removeData, function(err, results) {
       if (err) {
@@ -224,6 +359,9 @@ router.post('/remove', function(req, res, next) {
         flashData.info = err;
         req.flash('flashData', flashData);
         res.redirect('/category');
+      } if (results) {
+        console.log("results-remove: " + results + " " + removeData);
+
       } else {
         console.log("Category been Removed: " + results);
         flashData.pageMesage = "Category been Removed: " + req.body.removeCat;

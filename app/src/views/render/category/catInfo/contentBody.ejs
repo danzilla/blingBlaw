@@ -76,6 +76,7 @@ updateCatId
                   <form id="pCatRM<%= data[i]._id %>" method="post" action="/category/remove">
                     <input type="hidden" name="removeCat" value="<%= data[i]._id %>">
                   </form>
+
                   <form id="pCatUP<%= data[i]._id %>" method="post" action="/category/update">
                     <div class="input-group">
                       <input type="hidden" name="updateCatId" value="<%= data[i]._id %>">
@@ -90,6 +91,7 @@ updateCatId
                       </div>
                     </div>
                   </form>
+
                   <ul>
                     <% for (var z=0; z < data.length; z++) { %>
                       <% if (data[i]._id == data[z].catParent) { %>

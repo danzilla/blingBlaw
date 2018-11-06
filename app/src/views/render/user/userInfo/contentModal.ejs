@@ -11,7 +11,7 @@
         <p>pageInfo:
           <code><%- JSON.stringify(pageInfo) %></code>
         </p>
-        <p>data:
+        <p>User data:
           <code><%- JSON.stringify(data) %></code>
         </p>
       </div>
@@ -19,7 +19,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- user Add Modal -->
 <div class="modal fade" id="userAddD" tabindex="-1" role="dialog" aria-hidden="true">
@@ -30,15 +29,30 @@
       <div class="modal-header">
         <h1 class="modal-title display-4 text-info"><%- pageInfo.title %></h1>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
         <form class="row" name="adduser" method="post" action="/user/add">
           <div class="container">
-            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="username" name="username" required>
-            <input type="text" class="form-control form-control-lg py-2 my-2" placeholder="password" name="pwd" required>
-            <hr>
-            <div class="text-center">
-              <button type="submit" class="btn btn-outline-primary ">add user <i class="fas fa-user-check text-success"> </i></button>
+            <div class="input-group py-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">DB collections name</span>
+              </div>
+              <input type="text" class="form-control form-control-lg" placeholder="fannyPack-blingBlaw" name="fannyPack" required>
             </div>
+            <hr>
+            <div class="input-group py-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">username</span>
+              </div>
+              <input type="text" class="form-control form-control-lg" placeholder="username" name="username" required>
+            </div>
+            <div class="input-group py-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">password</span>
+              </div>
+              <input type="text" class="form-control form-control-lg" placeholder="password" name="pwd" required>
+            </div>
+            <hr>
+            <button class="btn btn-outline-primary" type="submit">Register</button>
           </div>
         </form>
       </div>

@@ -13,59 +13,53 @@ var categorycollection = db.get('categorycollection');
 // category insert
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
+
+
   // db pointing to newdb
-  var user_id = ObjectId();
-  var statement_id = ObjectId();
-
-
-  var fannyPack = {
-
-  }
-
-  var blingBlaw = {
+  const db = req.db;
+  const collection = db.get("fanny");
+  // set newData to insert
+  const user_id = ObjectId();
+  const statement_id = ObjectId();
+  const blingBlaw = {
     _id: user_id,
     userInfo: {
-      user_id: user_id,
-      fanny_pack: "",
-      userName: "",
-      userPwd: "",
+      userId: user_id,
+      userFannyPack: req.body.fannyPack,
+      userName: req.body.username,
+      userPwd: req.body.pwd,
       userEmil: "",
       userGrup: "",
-      userCreated: "",
+      userCreated: moment().format('MMMM Do YYYY, h:mm:ss a'),
       userModify: ""
     },
-    statementInfo: {
+    statementInfo: [{
+      statement_id: statement_id,
+      statementName: "",
+      statementType: "",
+      statementDate: "",
+      statementDesc: "",
+      statementFileInfo: "",
+      statementCreated: moment().format('MMMM Do YYYY, h:mm:ss a'),
       statementModified: "",
-      statementCreated: "",
-      statementData: [{
-        statement_id: statement_id,
-        statementName: "",
-        statementType: "",
-        statementDate: "",
-        statementDesc: "",
-        statementFileInfo: "",
-        statementuploadDate: ""
-      }]
-    },
-    transactionInfo: {
-      transactionModified: "",
-      transactionCreated: "",
-      transactionData: [{
-        transId:: "",
-        transDate: "",
-        transDesc: "",
-        transWithdraw: "",
-        transDeposite: "",
-        transBalance: "",
-        uploadUser: "",
-        statement_id: statement_id
-      }]
-    },
+      statementModifiedtUser: ""
+    }],
+    transactionInfo: [{
+      transactionId: "",
+      transactionDate: "",
+      transactionDesc: "",
+      transactionWithdraw: "",
+      transactionDeposite: "",
+      transactionBalance: "",
+      transactiontModified: "",
+      transactiontModifiedUser: "",
+      statement_id: statement_id
+    }],
     categoryInfo: [{
       _id: "",
       catName: "",
       catParent: "",
-      catCreate: "",
+      catCreate: moment().format('MMMM Do YYYY, h:mm:ss a'),
       catModify: ""
     }]
   }
