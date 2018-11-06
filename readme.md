@@ -6,8 +6,8 @@ A minimalist budget app (**nodeJs + Express + mongoDB**)
 ## App Requirement
 
 - MongoDB
-	* Download and Install mongoDB
-	* ~~~https://www.mongodb.com/download-center/community~~~
+	> Download and Install mongoDB
+	> https://www.mongodb.com/download-center/community
 - NPM and nodeJs
 	* Download and Install nodeJs (npm package manager included with nodejs)
 	* https://nodejs.org/en/download/
