@@ -27,7 +27,6 @@ let flashData = {
   bgClass: ""
 }
 
-
 // User - Dashboard
 // GET - user page
 router.get('/', function(req, res, next) {

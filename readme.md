@@ -2,7 +2,6 @@
 
 A minimalist budget app (**nodeJs + Express + mongoDB**)
 
-
 ## App Requirement
 
 - MongoDB
@@ -14,43 +13,43 @@ A minimalist budget app (**nodeJs + Express + mongoDB**)
 
 Once, you are done with the above requirement.
 - Use **git** to clone the repo
-	> `git clone https://github.com/danzilla/blingBlaw.git`
+	> ~~~git clone https://github.com/danzilla/blingBlaw.git~~~
 - Change directory to blingBlaw
-	> `cd blingBlaw`
+	> ~~~cd blingBlaw~~~
 - Install app **dependecies** using npm or another package manger
-	> `npm install`
+	> ~~~npm install~~~
 - **Run** the app
-	> `npm start`
+	> ~~~npm start~~~
 	> http://localhost:3000
-- **Optional** populate category from sample data before fire the app `/blingBlaw/adds/db-populate.js`
-	> `cd blingBlaw/adds/`
-	> `node db-populate.js`
+- **Optional** populate category from sample data before fire the app ~~~/blingBlaw/adds/db-populate.js~~~
+	> ~~~cd blingBlaw/adds/~~~
+	> ~~~node db-populate.js~~~
 
 ## App confutation
 
-`/blingBlaw/` - **Root** app root file
-`/blingBlaw/adds/` - **sample files** (sample CSV, category sample data)
+~~~/blingBlaw/~~~ - **Root** app root file
+~~~/blingBlaw/adds/~~~ - **sample files** (sample CSV, category sample data)
 
 #### Database Configuration
  Find the line 	38 - 45 and **change the Database name** to your database name
-`/blingBlaw/app.js` - **app.js** nodeJs app config for **ALL**
+~~~/blingBlaw/app.js~~~ - **app.js** nodeJs app config for **ALL**
 
-`// Database config | monk`
-`const mongo = require("mongo");`
-`const monk = require("monk");`
-`const db = monk("localhost:27017/danustanBling")`
-`app.use(function(req,res,next) {`
- ` req.db = db;`
- ` next();`
-`});`
+~~~// Database config | monk
+const mongo = require("mongo");
+const monk = require("monk");
+const db = monk("localhost:27017/danustanBling")
+ app.use(function(req,res,next) {
+ req.db = db;
+  next();
+});~~~
 
 
 ## DB Structure (need to be redesign)
 |Database  |             collections             |       points                  |
 |----------------|-------------------------------|-----------------------------|
-|blingBlaw-danustan|`statementCollection`            |statement Data          |
-|          |`transactionCollection`            |Transaction Data            |
-|          |`categoryCollection`|Category Data|
+|blingBlaw-danustan|~~~statementCollection~~~            |statement Data          |
+|          |~~~transactionCollection~~~            |Transaction Data            |
+|          |~~~categoryCollection~~~|Category Data|
 |                |                          |                         |
 
 
