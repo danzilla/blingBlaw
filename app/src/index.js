@@ -81,9 +81,7 @@ router.post('/', function(req, res, next) {
       console.log(flashData.pageMesage);
       flashData.pageMesage = "incorrect credentials";
       req.flash('flashData', flashData);
-      res.render('auth/index', {
-        pageInfo: pageInfo
-      });
+      res.redirect('/');
     }
   });
 });
@@ -97,8 +95,8 @@ router.all('/logout', function(req, res) {
     }
     // logout Bye~
     //set session for the user and redirect to /user page
-    res.redirect('/');
     console.log("\n Bye ~ logged off ~ \n");
+    res.redirect('/');
   });
 });
 

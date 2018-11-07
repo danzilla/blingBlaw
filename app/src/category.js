@@ -18,9 +18,6 @@ function randomColor() {
   });
 }
 
-// DB collection = Category collection
-const collectionName = "categorycollection";
-
 // DB Collections - blingBlaw
 const collectionBlingBlaw = "blingBlaw";
 // pageInfo detailes
@@ -40,38 +37,9 @@ let flashData = {
 // DB Structure
 let blingBlaw = {
   _id: "",
-  userInfo: {
-    userId: "",
-    userFannyPack: "",
-    userName: "",
-    userPwd: "",
-    userEmil: "",
-    userGrup: "",
-    userCreated: "",
-    userModify: ""
-  },
-  statementInfo: [{
-    statement_id: "",
-    statementName: "",
-    statementType: "",
-    statementDate: "",
-    statementDesc: "",
-    statementFileInfo: "",
-    statementCreated: "",
-    statementModified: "",
-    statementModifiedtUser: ""
-  }],
-  transactionInfo: [{
-    transactionId: "",
-    transactionDate: "",
-    transactionDesc: "",
-    transactionWithdraw: "",
-    transactionDeposite: "",
-    transactionBalance: "",
-    transactiontModified: "",
-    transactiontModifiedUser: "",
-    statement_id: ""
-  }],
+  userInfo: {},
+  statementInfo: [{}],
+  transactionInfo: [{}],
   categoryInfo: [{
     _id: "",
     catName: "",
@@ -80,7 +48,6 @@ let blingBlaw = {
     catModified: ""
   }]
 }
-
 
 // Category - Dashboard
 // GET - category page
@@ -98,12 +65,9 @@ router.get('/', function(req, res, next) {
     console.log("\nsession incorrect - going Home\n");
   } else { //else
     console.log("Active session: " + req.session.user);
-
     // request DB conections
     const db = req.db;
-    const collection = db.get(collectionName);
     const collectionBling = db.get(collectionBlingBlaw);
-
     collectionBling.findOne({
       "userInfo.userName": req.session.user
     }, function(err, user) {
@@ -111,7 +75,6 @@ router.get('/', function(req, res, next) {
         console.log("\nerror: " + JSON.stringify(err));
       }
       if (user) {
-
         // prepare chart info
         const chartInfo = {
           chartName: "Category and subcategory - diversify",
@@ -149,7 +112,6 @@ router.get('/', function(req, res, next) {
           data: user.categoryInfo,
           chartInfo: chartInfo
         });
-
       } else {
         console.log("Session mismatch! - Failed at viewing Category");
         flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing Category";
@@ -161,16 +123,10 @@ router.get('/', function(req, res, next) {
   }
 });
 
-
-
-
-
-
-
 //
 // POST
 // CRUD - Add Update Remove - Category
-//
+// mongo.update - PUSH | PULL | SET == Add | remove | update
 
 // Add category
 // post to add category/add
@@ -237,7 +193,8 @@ router.post('/update', function(req, res, next) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going home\n");
-  } else { // else - session good - redirect to category list
+  } else {
+    // else - session good - redirect to category list
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionBlingBlaw);
@@ -245,33 +202,39 @@ router.post('/update', function(req, res, next) {
     // mongo push the new category
     collection.update({
       _id: req.session.userId,
-      "categoryInfo._id": req.body.updateCatId
+      "categoryInfo._id": ObjectId(req.body.updateCatId)
     }, {
-      $inc: {
+      $set: {
         "categoryInfo.$.catName": req.body.updateCatName,
         "categoryInfo.$.catParent": req.body.updateCatParent,
         "categoryInfo.$.catModify": moment().format('MMMM Do YYYY, h:mm:ss a')
       }
-    }, false, true, function(err, results) {
+    }, function(err, results) {
       if (err) { // if err throw err
-        flashData.pageMesage = "Error updating data" + categoryInfo;
+        flashData.pageMesage = "Error updating data" + JSON.stringify(err);
         flashData.bgColor = "danger";
         flashData.info = err;
         req.flash('flashData', flashData);
         res.redirect('/category');
       }
       if (results) {
-
-        console.log("results: " + JSON.stringify(results));
-
-        flashData.pageMesage = "Not nModified: " + results;
-        flashData.bgColor = "danger";
-        flashData.info = results;
-        req.flash('flashData', flashData);
-        res.redirect('/category');
+        if(results.nModified > 0){
+          console.log("results: " + JSON.stringify(results));
+          flashData.pageMesage = "Category been updated: " + req.body.updateCatName;
+          flashData.bgColor = "success";
+          flashData.info = results;
+          req.flash('flashData', flashData);
+          res.redirect('/category');
+        } else {
+          flashData.pageMesage = "Error updating data: " + req.body.updateCatNam;
+          flashData.bgColor = "danger";
+          flashData.info = err;
+          req.flash('flashData', flashData);
+          res.redirect('/category');
+        }
       } else { //else
         // Uplod good, move to /category
-        console.log("Category updated: " + results);
+        console.log("Category updated: ");
         flashData.pageMesage = "Category been updated: " + req.body.updateCatName;
         flashData.bgColor = "success";
         flashData.info = results;
@@ -281,56 +244,6 @@ router.post('/update', function(req, res, next) {
     });
   }
 });
-
-/*
-// Update category
-// post to update category/Update
-router.post('/update', function(req, res, next) {
-  // get session info and set pageInfo
-  pageInfo.sessionName = req.session.user;
-  pageInfo.request = "post";
-  console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
-  // if session is undefined - get - login page
-  if (!req.session.user) {
-    // if session empty // redirect login page
-    res.redirect('/');
-    console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - redirect to user
-    // request DB conections
-    const db = req.db;
-    const collection = db.get(collectionName);
-    // set validation Data
-    let valData = {
-      _id: req.body.updateCatId
-    }
-    let newData = { // set new data for updae
-      catName: req.body.updateCatName,
-      catParent: req.body.updateCatParent,
-      catAddDate: moment().format('MMMM Do YYYY, h:mm:ss a')
-    }
-    collection.update(valData, {
-      $set: newData
-    }, function(err, results) {
-      if (err) { // if err throw err
-        flashData.pageMesage = "Error updating data" + newData;
-        flashData.bgColor = "danger";
-        flashData.info = err;
-        req.flash('flashData', flashData);
-        res.redirect('/category');
-      } else { //else
-        // Uplod good, move to /category
-        console.log("Category updated: " + results);
-        flashData.pageMesage = "Category been updated: " + req.body.updateCatName;
-        flashData.bgColor = "success";
-        flashData.info = results;
-        req.flash('flashData', flashData);
-        res.redirect('/category');
-      }
-    });
-  }
-});
-*/
 
 // Remove Category
 // POST to remove category/remove
@@ -339,41 +252,45 @@ router.post('/remove', function(req, res, next) {
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "post";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
-
   // if session is undefined - get - login page
   if (!req.session.user) {
     // if session empty // redirect login page
     res.redirect('/');
-    console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - redirect to user
+    console.log("\nsession incorrect - going home\n");
+  } else {
+    // else - session good - redirect to category list
     // request DB conections
     const db = req.db;
     const collection = db.get(collectionBlingBlaw);
-    let removeData = {
-      "categoryInfo.$._id": req.body.removeCat
-    };
-    collection.remove(removeData, function(err, results) {
-      if (err) {
-        flashData.pageMesage = "Error removing data" + newData;
+    // set validation Data
+    // mongo pull the new category
+    collection.update({
+      _id: req.session.userId,
+      "categoryInfo._id": ObjectId(req.body.removeCat)
+    }, {
+      $pull: {
+        "categoryInfo": {_id: ObjectId(req.body.removeCat)}
+      }
+    }, function(err, results) {
+      if (err) { // if err throw err
+        console.log("results: " + JSON.stringify(err));
+        flashData.pageMesage = "Error removing data" + JSON.stringify(err.message);
         flashData.bgColor = "danger";
         flashData.info = err;
         req.flash('flashData', flashData);
         res.redirect('/category');
-      } if (results) {
-        console.log("results-remove: " + results + " " + removeData);
-
-      } else {
-        console.log("Category been Removed: " + results);
-        flashData.pageMesage = "Category been Removed: " + req.body.removeCat;
-        flashData.bgColor = "warning";
-        flashData.info = results;
-        req.flash('flashData', flashData);
-        res.redirect('/category');
+      }
+      if (results) {
+          console.log("results: " + JSON.stringify(results));
+          flashData.pageMesage = "Category been removed: " + req.body.removeCat;
+          flashData.bgColor = "success";
+          flashData.info = results;
+          req.flash('flashData', flashData);
+          res.redirect('/category');
       }
     });
   }
 });
-
 
 
 
