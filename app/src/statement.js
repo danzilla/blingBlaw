@@ -17,13 +17,42 @@ const uploadFolder = multer({
   dest: 'app/uploads/'
 }); // upload location app/uploads/
 
-
 // get - /statement
 // post - curd
 // all - /
 // DB collectionSta = Statement collectionSta
 const staCollectionName = "statementCollection";
 const catCollectionName = "categorycollection";
+// DB Collections - blingBlaw
+const collectionBlingBlaw = "blingBlaw";
+// DB Structure
+let blingBlaw = {
+  _id: "",
+  userInfo: {},
+  statementInfo: [{
+    statement_id: "",
+    statementName: "",
+    statementType: "",
+    statementDate: "",
+    statementDesc: "",
+    statementFileInfo: "",
+    statementCreated: "",
+    statementModified: "",
+    statementModifiedtUser: "",
+    transactionInfo: [{
+      transactionId: "",
+      transactionDate: "",
+      transactionDesc: "",
+      transactionWithdraw: "",
+      transactionDeposite: "",
+      transactionBalance: "",
+      transactiontModified: "",
+      transactiontModifiedUser: "",
+      statement_id: ""
+    }]
+  }],
+  categoryInfo: [{}]
+}
 // pageInfo detailes
 let pageInfo = {
   title: 'Statement',
@@ -55,47 +84,49 @@ router.get('/', function(req, res, next) {
     // get session info
     pageInfo.sessionName = req.session.user;
     console.log("Active session: " + pageInfo.sessionName);
+
+    // ATTENTION!! NEED TO BE WORK ON SEARCH oR OPTIONS AND CASES
+    const navOptions = {
+      viewAll: "all",
+      viewByMonth: "",
+      viewByYear: "",
+      viewByAttention: "",
+      viewByName: ""
+    }
     // request DB conections
     const db = req.db;
-    const collectionSta = db.get(staCollectionName);
-    const collectionCat = db.get(catCollectionName);
-    // get all categorycollection find()
-    collectionCat.find({}, {}, function(eCat, resultsCat) {
-      // get all statementCollection find()
-      collectionSta.find({}, {}, function(eSta, resultsSta) {
-        // prepare chart info
-        const chartInfo = {
-          chartName: "Statement overview: <statmentName>",
-          chartData: {
-            dataLabel: [],
-            dataValue: [],
-            dataColor: [],
-            dataParentId: []
-          }
-        }
+    const collectionBling = db.get(collectionBlingBlaw);
+    collectionBling.findOne({
+      "userInfo.userName": req.session.user
+    }, function(err, user) {
+      if (err) {
+        console.log("\nerror: " + JSON.stringify(err));
+      }
+      if (user) {
         // category
         // get Cat in two Arrays
         // for ease of use... - need better way
+        let categories = user.categoryInfo;
         const catParentArray = [];
         const catChildArray = [];
-        for (cat in resultsCat) {
+        for (cat in categories) {
           // Parent Category
-          if (resultsCat[cat].catParent == "root") {
+          if (categories[cat].catParent == "root") {
             let pushD = {
-              _id: resultsCat[cat]._id,
-              catName: resultsCat[cat].catName,
-              catParent: resultsCat[cat].catParent,
-              catAddDate: resultsCat[cat].catAddDate
+              _id: categories[cat]._id,
+              catName: categories[cat].catName,
+              catParent: categories[cat].catParent,
+              catAddDate: categories[cat].catAddDate
             }
             catParentArray.push(pushD);
           }
           // Child Category
-          if (resultsCat[cat].catParent !== "root") {
+          if (categories[cat].catParent !== "root") {
             let pushD = {
-              _id: resultsCat[cat]._id,
-              catName: resultsCat[cat].catName,
-              catParent: resultsCat[cat].catParent,
-              catAddDate: resultsCat[cat].catAddDate
+              _id: categories[cat]._id,
+              catName: categories[cat].catName,
+              catParent: categories[cat].catParent,
+              catAddDate: categories[cat].catAddDate
             }
             catChildArray.push(pushD);
           }
@@ -103,13 +134,13 @@ router.get('/', function(req, res, next) {
         // transaction
         // ready transaction to find catParentName from catParentID - catParentArray
         const transInfo = [];
-        for (sta in resultsSta) {
-          for (let tra = 0; tra < resultsSta[sta].transactionInfo.length; tra++) {
+        for (sta in user.statementInfo) {
+          for (let tra = 0; tra < user.statementInfo[sta].transactionInfo.length; tra++) {
             // set up pushD for transInfo
             let pushD = {
-              transId: resultsSta[sta].transactionInfo[tra].transId,
-              transDate: resultsSta[sta].transactionInfo[tra].transDate,
-              transType: resultsSta[sta].transactionInfo[tra].transType,
+              transId: user.statementInfo[sta].transactionInfo[tra].transId,
+              transDate: user.statementInfo[sta].transactionInfo[tra].transDate,
+              transType: user.statementInfo[sta].transactionInfo[tra].transType,
               transaction: "",
               transCat: "",
               catParent: "",
@@ -117,22 +148,22 @@ router.get('/', function(req, res, next) {
               catParentId: ""
             }
             // if the category is not empty or nada - add catname and transaction
-            if (resultsSta[sta].transactionInfo[tra].transCat !== "nada" &&
-              resultsSta[sta].transactionInfo[tra].transCat !== "") {
+            if (user.statementInfo[sta].transactionInfo[tra].transCat !== "nada" &&
+              user.statementInfo[sta].transactionInfo[tra].transCat !== "") {
               // if deposite and NOT nada - add transCat
-              if (resultsSta[sta].transactionInfo[tra].transDeposite) {
-                pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite;
+              if (user.statementInfo[sta].transactionInfo[tra].transDeposite) {
+                pushD.transaction = user.statementInfo[sta].transactionInfo[tra].transDeposite;
               }
               // if withdraw and NOT nada
-              if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
-                pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw;
+              if (user.statementInfo[sta].transactionInfo[tra].transWithdraw) {
+                pushD.transaction = user.statementInfo[sta].transactionInfo[tra].transWithdraw;
               }
               // category names for parent and child category
               for (catC in catChildArray) {
-                if (resultsSta[sta].transactionInfo[tra].transCat == catChildArray[catC]._id) {
+                if (user.statementInfo[sta].transactionInfo[tra].transCat == catChildArray[catC]._id) {
                   // push CatID to transInfo - Child
                   pushD.transCat = catChildArray[catC].catName;
-                  pushD.transCatId = resultsSta[sta].transactionInfo[tra].transCat;
+                  pushD.transCatId = user.statementInfo[sta].transactionInfo[tra].transCat;
                   // push CatID to transInfo - Parent
                   for (catP in catParentArray) {
                     if (catParentArray[catP]._id == catChildArray[catC].catParent) {
@@ -144,26 +175,25 @@ router.get('/', function(req, res, next) {
               }
             }
             // if the category is empty or undefined or nada - add nada and transaction
-            if (resultsSta[sta].transactionInfo[tra].transCat == "nada" ||
-              resultsSta[sta].transactionInfo[tra].transCat == "" ||
-              resultsSta[sta].transactionInfo[tra].transCat == "undefined") {
-              if (resultsSta[sta].transactionInfo[tra].transDeposite) {
+            if (user.statementInfo[sta].transactionInfo[tra].transCat == "nada" ||
+              user.statementInfo[sta].transactionInfo[tra].transCat == "" ||
+              user.statementInfo[sta].transactionInfo[tra].transCat == "undefined") {
+              if (user.statementInfo[sta].transactionInfo[tra].transDeposite) {
                 //if deposite and NOT nada - add transCat
                 pushD.transCat = "nada"
                 pushD.catParent = "nada"
-                pushD.transaction = resultsSta[sta].transactionInfo[tra].transDeposite
+                pushD.transaction = user.statementInfo[sta].transactionInfo[tra].transDeposite
               }
-              if (resultsSta[sta].transactionInfo[tra].transWithdraw) {
+              if (user.statementInfo[sta].transactionInfo[tra].transWithdraw) {
                 //if withdraw and IS nada - add nada to cat
                 pushD.transCat = "nada"
                 pushD.catParent = "nada"
-                pushD.transaction = resultsSta[sta].transactionInfo[tra].transWithdraw
+                pushD.transaction = user.statementInfo[sta].transactionInfo[tra].transWithdraw
               }
             }
             transInfo.push(pushD);
           }
         }
-        // console.log(JSON.stringify(transInfo[0]));
         // group by catParent
         // group and SUM - group catNames and sum transaction
         // need to tune this up
@@ -183,6 +213,15 @@ router.get('/', function(req, res, next) {
         // console.log(JSON.stringify(resultGroupSum));
         // chartData
         // append data into chartInfo
+        const chartInfo = {
+          chartName: "Statement overview: <statmentName>",
+          chartData: {
+            dataLabel: [],
+            dataValue: [],
+            dataParentId: [],
+            dataColor: []
+          }
+        }
         for (charD in resultGroupSum) {
           let color = randomColor();
           chartInfo.chartData.dataLabel.push(resultGroupSum[charD].catParent)
@@ -190,18 +229,28 @@ router.get('/', function(req, res, next) {
           chartInfo.chartData.dataParentId.push(resultGroupSum[charD].catParentId)
           chartInfo.chartData.dataColor.push(color.hexString())
         }
-        // Testing - resultGroupSum
-        // console.log("Chart data: " + JSON.stringify(chartInfo));
+        // console.log("\ncatParentArray: " + JSON.stringify(catParentArray));
+        // console.log("\ncatChildArray: " + JSON.stringify(catChildArray));
+        // console.log("\nstatementInfo: " + JSON.stringify(user.statementInfo[0].statementData));
+        // console.log("\ntransactionInfo: " + JSON.stringify(user.statementInfo.transactionInfo));
         res.render('statement/index', {
           pageInfo: pageInfo,
-          dataCat: resultsCat,
-          data: resultsSta,
+          dataCat: user.categoryInfo,
+          data: user.statementInfo,
           chartInfo: chartInfo
         });
-      });
+      } else {
+        console.log("Session mismatch! - Failed at view Statement");
+        flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing Statement";
+        flashData.bgColor = "danger";
+        req.flash('flashData', flashData);
+        res.redirect('/');
+      }
     });
   }
 });
+
+
 //
 // POST
 // CRUD - Add Update Remove - Statement
@@ -219,62 +268,73 @@ router.post('/review', uploadFolder.single('statementFileInput'), function(req, 
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - procced
-    // get session info
-    pageInfo.sessionName = req.session.user;
-    console.log("Active session: " + pageInfo.sessionName);
-    // Upload object - setting up for Statement and transaction
-    let uploadInfo = {
-      statementInfo: "",
-      transactionInfo: []
-    };
-    // Statement array from GET upload
-    let statementInfo = {
-      statementName: req.body.statementName,
-      statementType: req.body.statementType,
-      statementDate: req.body.statementDate,
-      statementDesc: req.body.statementDesc,
-      statementFileInfo: req.file,
-      statementuploadDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
-    };
-    // set statementInfo
-    req.session.statementInfo = statementInfo;
-    // inserting to upload object
-    uploadInfo.statementInfo = statementInfo;
-    // getting CSV to JSON
-    let csvFile = req.file.path;
-    let csvData = fs.readFileSync(csvFile, {
-      encoding: 'utf8'
-    });
-    let options = {
-      delimiter: ',', // optional
-      quote: '"' // optional
-    };
-    // transactionInfo = New array to store json formated transaction
-    let csvTransactionInfo = csvjson.toArray(csvData, options);
-    for (let i in csvTransactionInfo) {
-      // inserting to upload object
-      uploadInfo.transactionInfo.push({
-        transId: moment(statementInfo.statementDate).format('DDMMMYYYY') + i,
-        transDate: csvTransactionInfo[i][0],
-        transDesc: csvTransactionInfo[i][1],
-        transWithdraw: csvTransactionInfo[i][2],
-        transDeposite: csvTransactionInfo[i][3],
-        transBalance: csvTransactionInfo[i][4],
-        uploadUser: req.session.user,
-
-      });
-    };
+  } else {
     // request DB conections
     const db = req.db;
-    const collectionCat = db.get(catCollectionName);
-    // get all statementCollection find()
-    collectionCat.find({}, {}, function(err, resultsCat) {
-      res.render('statement/statInfo/reviewTrans/review', {
-        pageInfo: pageInfo,
-        dataCat: resultsCat,
-        uploadInfo: uploadInfo
-      });
+    const collectionBling = db.get(collectionBlingBlaw);
+    collectionBling.findOne({
+      "userInfo.userName": req.session.user
+    }, function(err, user) {
+      if (err) {
+        console.log("\nerror: " + JSON.stringify(err));
+      }
+      if (user) {
+        // else - session good - procced
+        // get session info
+        pageInfo.sessionName = req.session.user;
+        console.log("Active session: " + pageInfo.sessionName);
+        // Upload object - setting up for Statement and transaction
+        // Statement array from GET upload
+        let statementInfo = {
+          statement_id: ObjectId(),
+          statementName: req.body.statementName,
+          statementType: req.body.statementType,
+          statementDate: req.body.statementDate,
+          statementDesc: req.body.statementDesc,
+          statementFileInfo: req.file,
+          statementCreated: moment().format('MMMM Do YYYY, h:mm:ss a'),
+          statementModified: "",
+          statementModifiedtUser: "",
+          transactionInfo: []
+        };
+        // set statementInfo
+        req.session.statementInfo = statementInfo;
+        // getting CSV to JSON
+        let csvFile = req.file.path;
+        let csvData = fs.readFileSync(csvFile, {
+          encoding: 'utf8'
+        });
+        let options = {
+          delimiter: ',', // optional
+          quote: '"' // optional
+        };
+        // transactionInfo = New array to store json formated transaction
+        let csvTransactionInfo = csvjson.toArray(csvData, options);
+        for (let i in csvTransactionInfo) {
+          // inserting to upload object
+          statementInfo.transactionInfo.push({
+            transId: moment(statementInfo.statementDate).format('DDMMMYYYY') + i,
+            transDate: csvTransactionInfo[i][0],
+            transDesc: csvTransactionInfo[i][1],
+            transWithdraw: csvTransactionInfo[i][2],
+            transDeposite: csvTransactionInfo[i][3],
+            transBalance: csvTransactionInfo[i][4],
+            uploadUser: req.session.user
+          });
+        };
+        let categories = user.categoryInfo;
+        res.render('statement/statInfo/reviewTrans/review', {
+          pageInfo: pageInfo,
+          dataCat: categories,
+          statementInfo: statementInfo
+        });
+      } else {
+        console.log("Session mismatch! - Failed at view - review");
+        flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing - review";
+        flashData.bgColor = "danger";
+        req.flash('flashData', flashData);
+        res.redirect('/');
+      }
     });
   }
 })
@@ -291,17 +351,25 @@ router.post('/upload', function(req, res, next) {
     // if session empty // redirect login page
     res.redirect('/');
     console.log("\nsession incorrect - going Home\n");
-  } else { // else - session good - procced
-    console.log("Logged in: " + req.session.user);
+  } else {
+     // else - session good - procced
+     console.log("Active session: " + req.session.user);
     // Upload object - setting up for Statement and transaction
-    const uploadInfo = {
-      statementInfo: req.session.statementInfo,
+    let statementInfo = {
+      statement_id: req.session.statementInfo.statement_id,
+      statementName: req.session.statementInfo.statementName,
+      statementType: req.session.statementInfo.statementType,
+      statementDate: req.session.statementInfo.statementDate,
+      statementDesc: req.session.statementInfo.statementDesc,
+      statementFileInfo: req.session.statementInfo.statementFileInfo,
+      statementCreated: req.session.statementInfo.statementCreated,
+      statementModified: req.session.statementInfo.statementModified,
+      statementModifiedtUser: req.session.statementInfo.statementModifiedtUser,
       transactionInfo: []
     }
-    let dataID = req.body.modulesTransId;
-    for (let i in dataID) {
-      uploadInfo.transactionInfo[i] = {
-        transId: ObjectId(),
+    for (let i in req.body.modulesTransId) {
+      statementInfo.transactionInfo[i] = {
+        transactionId: ObjectId(),
         transDate: req.body.modulesTransDate[i],
         transDesc: req.body.modulesTransDesc[i],
         transWithdraw: req.body.modulesTransWithdraw[i],
@@ -309,30 +377,44 @@ router.post('/upload', function(req, res, next) {
         transBalance: req.body.modulesTransBalance[i],
         transCat: req.body.modulesCatName[i],
         transComment: req.body.modulesTransComment[i],
-        transType: req.body.modulesTransType[i]
+        transType: req.body.modulesTransType[i],
+        statementId: req.session.statementInfo.statement_id,
+        transactiontModified: "",
+        transactiontModifiedUser: ""
       }
     };
+    // set validation Data
+    let valData = {
+      "_id": req.session.userId
+    }
     // request DB conections
     const db = req.db;
-    const collectionSta = db.get(staCollectionName);
-    collectionSta.insert(uploadInfo, function(err, results) {
+    const collectionBling = db.get(collectionBlingBlaw);
+    // mongo push the new category
+    collectionBling.update(valData, {
+      $push: {
+        "statementInfo": statementInfo
+      }
+    }, { upsert : true }, function(err, results) {
       if (err) { // If it failed, return error
-        flashData.pageMesage = "Error uploading file";
+        console.log("err: " + err);
+        flashData.pageMesage = "Error adding Statement";
         flashData.bgColor = "danger";
         flashData.info = err;
         req.flash('flashData', flashData);
         res.redirect('/statement');
-        console.log("\nUpload issue\n");
-      } else { // Hey! We Added new one!
-        flashData.pageMesage = "Statement uploaded!";
+      } else { // else add category and redirect to Category Dashboard
+        console.log("Category added: " + results);
+        flashData.pageMesage = "Statement been added!";
         flashData.bgColor = "success";
+        flashData.info = results;
         req.flash('flashData', flashData);
         res.redirect('/statement');
-        console.log("Upload good!");
       }
     });
   }
 })
+
 // Update transaction
 // post to update statement/Update
 router.post('/update', function(req, res, next) {
@@ -352,17 +434,20 @@ router.post('/update', function(req, res, next) {
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
     collectionSta.update({
-      "_id": req.body.transStaId,
-      "transactionInfo": {
+      "_id": req.session.userId,
+      "statementInfo.transactionInfo": {
         "$elemMatch": {
+          "transactionId": req.body.transTransId,
           "transDate": req.body.transTransDate,
           "transDesc": req.body.transTransDesc
         }
       }
     }, {
       "$set": {
-        "transactionInfo.$.transCat": req.body.transTransCat,
-        "transactionInfo.$.transComment": req.body.transTransComment,
+        "statementInfo.$.transCat": req.body.transTransCat,
+        "statementInfo.$.transComment": req.body.transTransComment,
+        "statementInfo.$.transactiontModified": req.body.transTransComment,
+        "statementInfo.$.transactiontModifiedUser": moment().format('MMMM Do YYYY, h:mm:ss a')
       }
     }, function(err, results) {
       if (err) {
@@ -382,6 +467,9 @@ router.post('/update', function(req, res, next) {
     })
   }
 });
+
+
+
 // Remove Statement
 // POST to remove statement/remove
 router.post('/remove/statement', function(req, res, next) {
@@ -399,6 +487,44 @@ router.post('/remove/statement', function(req, res, next) {
     // request DB conections
     const db = req.db;
     const collectionSta = db.get(staCollectionName);
+    const collection = db.get(collectionBlingBlaw);
+    // set validation Data
+    // mongo pull the new category
+
+    console.log("\n\nasdsa: " + req.body.statementId);
+    collection.update({
+      "statementInfo.statementData.statement_id": ObjectId('5be32b29ee4c322140969fd5')
+    }, {
+      $pull: {
+        "statementInfo.statementData": { 'statement_id': ObjectId('5be32b29ee4c322140969fd5')}
+      }
+    }, function(err, results) {
+      if (err) { // if err throw err
+        console.log("results: " + JSON.stringify(err));
+        flashData.pageMesage = "Error removing statement" + JSON.stringify(err.message);
+        flashData.bgColor = "danger";
+        flashData.info = err;
+        req.flash('flashData', flashData);
+        res.redirect('/statement');
+      }
+      if (results) {
+          console.log("results: " + JSON.stringify(results));
+          flashData.pageMesage = "Statement been removed: " + req.body.statementId;
+          flashData.bgColor = "success";
+          flashData.info = results;
+          req.flash('flashData', flashData);
+          res.redirect('/statement');
+      }
+    });
+
+
+
+
+
+/*
+
+
+
     let removeData = {
       _id: req.body.statementId
     };
@@ -418,6 +544,13 @@ router.post('/remove/statement', function(req, res, next) {
         console.log("Statement removed: " + results);
       }
     });
+
+
+
+*/
+
+
+
   }
 });
 

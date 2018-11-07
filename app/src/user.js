@@ -40,35 +40,8 @@ let blingBlaw = {
     userCreated: "",
     userModify: ""
   },
-  statementInfo: [{
-    statement_id: "",
-    statementName: "",
-    statementType: "",
-    statementDate: "",
-    statementDesc: "",
-    statementFileInfo: "",
-    statementCreated: "",
-    statementModified: "",
-    statementModifiedtUser: ""
-  }],
-  transactionInfo: [{
-    transactionId: "",
-    transactionDate: "",
-    transactionDesc: "",
-    transactionWithdraw: "",
-    transactionDeposite: "",
-    transactionBalance: "",
-    transactiontModified: "",
-    transactiontModifiedUser: "",
-    statement_id: ""
-  }],
-  categoryInfo: [{
-    _id: "",
-    catName: "",
-    catParent: "",
-    catCreated: "",
-    catModified: ""
-  }]
+  statementInfo: [],
+  categoryInfo: []
 }
 
 let sammpleData = [{
@@ -258,7 +231,6 @@ router.post('/add', function(req, res, next) {
         userCreated: moment().format('MMMM Do YYYY, h:mm:ss a')
       },
       statementInfo: [],
-      transactionInfo: [],
       categoryInfo: sammpleData
     }
     // create blingBlaw - user

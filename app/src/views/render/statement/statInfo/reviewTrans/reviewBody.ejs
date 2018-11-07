@@ -1,10 +1,21 @@
-
 <table class="table table-borderless">
   <thead class="thead-dark border-bottom border-danger">
     <th colspan="1" class="text-center"><i class="fab fa-gripfire"></i></th>
-    <th colspan="2" class="text-center">Title: <a class="text-info"><%- uploadInfo.statementInfo.statementName %></a></th>
-    <th colspan="2" class="text-center">Type: <a class="text-info"><%- uploadInfo.statementInfo.statementType %></a></th>
-    <th colspan="2" scope="col" class="text-center">Date: <a class="text-info"><%- uploadInfo.statementInfo.statementDate %></a></th>
+    <th colspan="2" class="text-center">Title:
+      <a class="text-info">
+        <%- statementInfo.statementName %>
+      </a>
+    </th>
+    <th colspan="2" class="text-center">Type:
+      <a class="text-info">
+        <%- statementInfo.statementType %>
+      </a>
+    </th>
+    <th colspan="2" scope="col" class="text-center">Date:
+      <a class="text-info">
+        <%- statementInfo.statementDate %>
+      </a>
+    </th>
   </thead>
   <thead class="thead-dark">
     <tr class="bg-dark text-light">
@@ -16,71 +27,64 @@
       <th scope="col" class="text-center"> <i class="twa twa-lg twa-sparkles"></i> </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody> 
     <form id="statementUpload" action="/statement/upload" method="post">
-      <input name="uploadInfo" type="hidden" value='<%- JSON.stringify(uploadInfo.statementInfo) %>' />
-    <% for(var j=0; j < uploadInfo.transactionInfo.length; j++) { %>
-      <tr class="card-1 ">
-
-        <input value="<%- uploadInfo.transactionInfo[j].transId %>"
-          type="hidden"  name="modulesTransId[]" />
-        <input value="<%- uploadInfo.transactionInfo[j].transDate %>"
-          type="hidden" name="modulesTransDate[]" />
-        <input value="<%- uploadInfo.transactionInfo[j].transDesc %>"
-          type="hidden" name="modulesTransDesc[]" />
-        <input value="<%- uploadInfo.transactionInfo[j].transWithdraw %>"
-          type="hidden" name="modulesTransWithdraw[]" />
-        <input value="<%- uploadInfo.transactionInfo[j].transDeposite %>"
-          type="hidden" name="modulesTransDeposite[]" />
-        <input value="<%- uploadInfo.transactionInfo[j].transBalance %>"
-          type="hidden" name="modulesTransBalance[]" />
-        <% if(uploadInfo.transactionInfo[j].transWithdraw) { %>
-          <input value="withdrawal" type="hidden" name="modulesTransType[]" />
-        <% } %>
-        <% if(uploadInfo.transactionInfo[j].transDeposite) { %>
-          <input value="deposite" type="hidden" name="modulesTransType[]" />
-        <% } %>
-
-        <td class="align-middle">
-          <%- uploadInfo.transactionInfo[j].transDate %>
-        </td>
-        <td class="align-middle">
-          <%- uploadInfo.transactionInfo[j].transDesc %>
-        </td>
-        <td class="align-middle">
-          <%- uploadInfo.transactionInfo[j].transWithdraw %>
-        </td>
-        <td class="align-middle">
-          <%- uploadInfo.transactionInfo[j].transDeposite %>
-        </td>
-        <td class="align-middle">
-          <%- uploadInfo.transactionInfo[j].transBalance %>
-        </td>
-        <td class="text-center align-middle">
-          <div class="input-group mb-3">
-            <input value=":)" type="hidden" name="modulesTransComment[]" />
-            <select name="modulesCatName[]" class="form-control custom-select">
-              <option value="nada">choose category</option>
-              <% for(var z=0; z < dataCat.length; z++) { %>
-                <% if (dataCat[z].catParent == "root" ) { %>
-                  <optgroup label="<%= dataCat[z].catName %>">
-                    <% for (var k=0; k < dataCat.length; k++) { %>
-                      <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
-                        <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
-                      <% } %>
-                    <% } %>
-                  </optgroup>
+      <input name="uploadInfo" type="hidden" value='<%- JSON.stringify(statementInfo) %>' />
+      <% for(var j=0; j < statementInfo.transactionInfo.length; j++) { %>
+        <tr class="card-1 ">
+          <input value="<%- statementInfo.transactionInfo[j].transId %>" type="hidden" name="modulesTransId[]" />
+          <input value="<%- statementInfo.transactionInfo[j].transDate %>" type="hidden" name="modulesTransDate[]" />
+          <input value="<%- statementInfo.transactionInfo[j].transDesc %>" type="hidden" name="modulesTransDesc[]" />
+          <input value="<%- statementInfo.transactionInfo[j].transWithdraw %>" type="hidden" name="modulesTransWithdraw[]" />
+          <input value="<%- statementInfo.transactionInfo[j].transDeposite %>" type="hidden" name="modulesTransDeposite[]" />
+          <input value="<%- statementInfo.transactionInfo[j].transBalance %>" type="hidden" name="modulesTransBalance[]" />
+          <% if(statementInfo.transactionInfo[j].transWithdraw) { %>
+            <input value="withdrawal" type="hidden" name="modulesTransType[]" />
+            <% } %>
+              <% if(statementInfo.transactionInfo[j].transDeposite) { %>
+                <input value="deposite" type="hidden" name="modulesTransType[]" />
                 <% } %>
-              <% } %>
-            </select>
-            <div class="input-group-append">
-              <button class="btn btn-outline-info" type="button">
-                <i class="fas fa-ellipsis-h"></i> </button>
-            </div>
-          </div>
-        </td>
-      </tr>
-    <% } %>
+
+                  <td class="align-middle">
+                    <%- statementInfo.transactionInfo[j].transDate %>
+                  </td>
+                  <td class="align-middle">
+                    <%- statementInfo.transactionInfo[j].transDesc %>
+                  </td>
+                  <td class="align-middle">
+                    <%- statementInfo.transactionInfo[j].transWithdraw %>
+                  </td>
+                  <td class="align-middle">
+                    <%- statementInfo.transactionInfo[j].transDeposite %>
+                  </td>
+                  <td class="align-middle">
+                    <%- statementInfo.transactionInfo[j].transBalance %>
+                  </td>
+                  <td class="text-center align-middle">
+                    <div class="input-group mb-3">
+                      <input value=":)" type="hidden" name="modulesTransComment[]" />
+                      <select name="modulesCatName[]" class="form-control custom-select">
+                        <option value="nada">choose category</option>
+                        <% for(var z=0; z < dataCat.length; z++) { %>
+                          <% if (dataCat[z].catParent == "root" ) { %>
+                            <optgroup label="<%= dataCat[z].catName %>">
+                              <% for (var k=0; k < dataCat.length; k++) { %>
+                                <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
+                                  <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
+                                <% } %>
+                              <% } %>
+                            </optgroup>
+                          <% } %>
+                        <% } %>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button">
+                          <i class="fas fa-ellipsis-h"></i> </button>
+                      </div>
+                    </div>
+                  </td>
+        </tr>
+        <% } %>
     </form>
   </tbody>
 </table>

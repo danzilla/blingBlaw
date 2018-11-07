@@ -38,8 +38,7 @@ let flashData = {
 let blingBlaw = {
   _id: "",
   userInfo: {},
-  statementInfo: [{}],
-  transactionInfo: [{}],
+  statementInfo: [],
   categoryInfo: [{
     _id: "",
     catName: "",
@@ -251,6 +250,7 @@ router.post('/remove', function(req, res, next) {
   // get session info and set pageInfo
   pageInfo.sessionName = req.session.user;
   pageInfo.request = "post";
+  pageInfo.page = "Remove";
   console.log("\n" + pageInfo.title + " - " + pageInfo.page + "(" + pageInfo.request + ")");
   // if session is undefined - get - login page
   if (!req.session.user) {

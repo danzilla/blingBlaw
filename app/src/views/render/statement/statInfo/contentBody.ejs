@@ -1,15 +1,16 @@
+
 <% for(var i=0; i < data.length; i++) { %>
   <table class="table table-borderless">
     <thead class="thead-dark border-bottom border-danger">
       <th colspan="1" scope="col" class="text-center card-1">
-        <a data-toggle="modal" data-target="#modalStat<%= data[i]._id %>"
+        <a data-toggle="modal" data-target="#modalStat<%= data[i].statement_id %>"
           class="btn card-1">
         <i class="twa twa-lg twa-balloon twa-2x"></i></a>
       </th>
       <th colspan="3" class="">
-        <a>Title: </a><code class="mr-4"><%- data[i].statementInfo.statementName %></code>
-        <a>Type: </a><code class="mr-4"><%- data[i].statementInfo.statementType %></code>
-        <a>Date: </a><code><%- data[i].statementInfo.statementDate %></code>
+        <a>Title: </a><code class="mr-4"><%- data[i].statementName %></code>
+        <a>Type: </a><code class="mr-4"><%- data[i].statementType %></code>
+        <a>Date: </a><code><%- data[i].statementDate %></code>
       </th>
     </thead>
     <thead class="thead-dark">
@@ -98,33 +99,32 @@
 
           <% } %>
           </td>
-
         </tr>
 
         <!-- Modal for remove statement -->
         <!-- Modal -->
-        <div class="modal fade" id="modalStat<%= data[i]._id %>" tabindex="-1" role="dialog"aria-hidden="true">
+        <div class="modal fade" id="modalStat<%= data[i].statement_id %>" tabindex="-1" role="dialog"aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content card-1">
 
               <div class=" btn-danger py-2" data-dismiss="modal"></div>
               <div class="modal-header"><h4><%= pageInfo.title %><small> Remove </small></h4></div>
               <div class="modal-body">
-                <form id="modalStatF<%= data[i]._id %>" action="/statement/remove/statement" method="post" class="container-fluid">
-                  <input type="hidden" name="statementId" value="<%= data[i]._id %>">
+                <form id="modalStatF<%= data[i].statement_id %>" action="/statement/remove/statement" method="post" class="container-fluid">
+                  <input type="hidden" name="statementId" value="<%= data[i].statement_id %>">
                   <div class="col">
                     <div class="list-group list-group-flush">
-                      <a class="list-group-item">_id: <em><%= data[i]._id %></em></a>
-                      <a class="list-group-item">title: <em><%= data[i].statementInfo.statementName %></em></a>
-                      <a class="list-group-item">type: <em><%= data[i].statementInfo.statementType %></em></a>
-                      <a class="list-group-item">date: <em><%= data[i].statementInfo.statementDate %></em></a>
-                      <a class="list-group-item">Description: <em><%= data[i].statementInfo.statementDesc %></em></a>
+                      <a class="list-group-item">_id: <em><%= data[i].statement_id %></em></a>
+                      <a class="list-group-item">title: <em><%= data[i].statementName %></em></a>
+                      <a class="list-group-item">type: <em><%= data[i].statementType %></em></a>
+                      <a class="list-group-item">date: <em><%= data[i].statementDate %></em></a>
+                      <a class="list-group-item">Description: <em><%= data[i].statementDesc %></em></a>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer text-center">
-                <button form="modalStatF<%= data[i]._id %>"
+                <button form="modalStatF<%= data[i].statement_id %>"
                   class="btn btn-outline-danger"> Remove statement and its Data </button>
               </div>
 
@@ -162,17 +162,15 @@
 
                 <form id="transUpdate<%= data[i].transactionInfo[j].transId %>" action="/statement/update" method="post" class="container-fluid">
                   <input type="hidden" name="transj" value="<%= j %>" />
-                  <input type="hidden" name="transStaId" value="<%= data[i]._id %>" />
-                  <input type="hidden" name="transTransId" value="<%= data[i].transactionInfo[j].transId %>" />
+                  <input type="hidden" name="transStaId" value="<%= data[i].statement_id %>" />
+                  <input type="hidden" name="transTransId" value="<%= data[i].transactionInfo[j].transactionId %>" />
                   <input type="hidden" name="transTransDate" value="<%= data[i].transactionInfo[j].transDate %>" />
                   <input type="hidden" name="transTransDesc" value="<%= data[i].transactionInfo[j].transDesc %>" />
                   <input type="hidden" name="transTransComment" value="<%= data[i].transactionInfo[j].transComment %>" />
-
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Catergory</span>
                     </div>
-
                     <select name="transTransCat" class="custom-select">
                       <option value="nada">choose one</option>
                       <% for(var z=0; z < dataCat.length; z++) { %>
@@ -187,7 +185,6 @@
                         <% } %>
                       <% } %>
                     </select>
-
                     <div class="input-group-append">
                       <a class="btn btn-primary" data-toggle="collapse" href="#text<%= data[i].transactionInfo[j].transId %>"
                         role="button" aria-expanded="false">
@@ -219,4 +216,4 @@
       <% } %>
     </tbody>
   </table>
-<% } %>
+  <% } %>

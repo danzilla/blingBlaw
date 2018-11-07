@@ -3,15 +3,15 @@
 
 <div class="alert alert-danger text-center word-break p-4 card-1">
   <h4 class="card-title">
-    <%- uploadInfo.statementInfo.statementName %>
+    <%- statementInfo.statementName %>
     <small>
-      <%- uploadInfo.statementInfo.statementType %>
+      <%- statementInfo.statementType %>
     </small>
   </h4>
   <h6 class="card-subtitle mb-2 text-muted">
-    <%- uploadInfo.statementInfo.statementDate %>
+    <%- statementInfo.statementDate %>
     <b>-</b>
-    <%- uploadInfo.statementInfo.statementFileInfo.originalname %>
+    <%- statementInfo.statementFileInfo.originalname %>
   </h6>
   <a href="/statement" class="btn btn-secondary">Not now</a>
   <div class="btn-group" role="group">
@@ -23,5 +23,5 @@
 </div>
 
 <div class="alert alert-info word-break card-1-no">
-  <%- JSON.stringify(uploadInfo.statementInfo) %>
+  <%- JSON.stringify(statementInfo) %>
 </div>
