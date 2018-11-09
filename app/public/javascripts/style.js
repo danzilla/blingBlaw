@@ -1,14 +1,5 @@
 
 $(document).ready(function() {
-  $("#1sidebar").mCustomScrollbar({
-    theme: "minimal",
-    mouseWheelPixels: 120 //change this to a value, that fits your needs
-  });
-  $(".scrollYes---").mCustomScrollbar({
-    theme: "dark",
-    mouseWheelPixels: 120 //change this to a value, that fits your needs
-  });
-
   $('#dismiss, .overlay').on('click', function() {
     $('#sidebar').removeClass('active');
     $('.overlay').removeClass('active');
