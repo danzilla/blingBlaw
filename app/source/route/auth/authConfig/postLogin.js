@@ -12,11 +12,13 @@ module.exports = {
   // POST
   // postLogin module
   postLogin: function(req, res, next) {
-    // set pageInfo
-    config.pageInfo.page = "Auth page";
-    config.pageInfo.request = "post";
-
-    console.log("\n" + config.pageInfo.title + " - " + config.pageInfo.page + "(" + config.pageInfo.request + ")");
+    // get session info and set config.pageInfo
+    config.pageInfo.title = "Bling blaw ~ Budget";
+    config.pageInfo.sessionName = req.session.user;
+    config.pageInfo.request = "POST";
+    config.pageInfo.active = "active";
+    config.pageInfo.page = "Login";
+    console.log(config.pageInfo.title + " - " + config.pageInfo.page + "(" + config.pageInfo.request + ")");
     // request DB conections
     const db = req.db;
     const connDB = db.get(config.collectionBlingBlaw); //collection - user

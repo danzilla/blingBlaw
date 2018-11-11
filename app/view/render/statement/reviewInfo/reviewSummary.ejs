@@ -1,0 +1,27 @@
+<h3 class="text-center display-5">summary <small> statement</small></h3>
+<hr>
+
+<div class="alert alert-danger text-center word-break p-4 card-1">
+  <h4 class="card-title">
+    <%- uploadInfo.statementInfo.statementName %>
+    <small>
+      <%- uploadInfo.statementInfo.statementType %>
+    </small>
+  </h4>
+  <h6 class="card-subtitle mb-2 text-muted">
+    <%- uploadInfo.statementInfo.statementDate %>
+    <b>-</b>
+    <%- uploadInfo.statementInfo.statementFileInfo.originalname %>
+  </h6>
+  <a href="/statement" class="btn btn-secondary">Not now</a>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-success active">
+      <i class="fas fa-check"></i></button>
+    <button form="statementUpload" class="btn btn-success card-1">
+      Add statement</button>
+  </div>
+</div>
+
+<div class="alert alert-info word-break card-1-no">
+  <%- JSON.stringify(uploadInfo.statementInfo) %>
+</div>

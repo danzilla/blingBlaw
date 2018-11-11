@@ -15,8 +15,10 @@ module.exports = {
   // add category module
   removeCat: function(req, res, next) {
     // get session info and set config.pageInfo
+    config.pageInfo.title = "Category";
     config.pageInfo.sessionName = req.session.user;
     config.pageInfo.request = "post";
+    config.pageInfo.active = "active";
     config.pageInfo.page = "Remove";
     console.log("\n" + config.pageInfo.title + " - " + config.pageInfo.page + "(" + config.pageInfo.request + ")");
     // if session is undefined - get - login page
@@ -36,7 +38,9 @@ module.exports = {
         "categoryInfo._id": ObjectId(req.body.removeCat)
       }, {
         $pull: {
-          "categoryInfo": {_id: ObjectId(req.body.removeCat)}
+          "categoryInfo": {
+            _id: ObjectId(req.body.removeCat)
+          }
         }
       }, function(err, results) {
         if (err) { // if err throw err
@@ -47,14 +51,13 @@ module.exports = {
           res.redirect('/category');
         }
         if (results) {
-            config.flashData.pageMesage = "Category been removed: " + req.body.removeCat;
-            config.flashData.bgColor = "success";
-            config.flashData.info = results;
-            req.flash('flashData', config.flashData);
-            res.redirect('/category');
+          config.flashData.pageMesage = "Category been removed: " + req.body.removeCat;
+          config.flashData.bgColor = "warning";
+          config.flashData.info = results;
+          req.flash('flashData', config.flashData);
+          res.redirect('/category');
         }
       });
     }
   }
-
 }

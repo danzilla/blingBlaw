@@ -15,8 +15,11 @@ module.exports = {
   // add category module
   updateCat: function(req, res, next) {
     // get session info and set config.pageInfo
+    config.pageInfo.title = "Category";
     config.pageInfo.sessionName = req.session.user;
     config.pageInfo.request = "post";
+    config.pageInfo.active = "active";
+    config.pageInfo.page = "Update";
     console.log("\n" + config.pageInfo.title + " - " + config.pageInfo.page + "(" + config.pageInfo.request + ")");
     // if session is undefined - get - login page
     if (!req.session.user) {

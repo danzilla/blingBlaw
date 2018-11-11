@@ -12,9 +12,12 @@ module.exports = {
   // GET
   // getLogin module
   login: function(req, res, next) {
-    // set pageInfo
-    config.pageInfo.page = "login";
-    config.pageInfo.request = "get";
+    // get session info and set config.pageInfo
+    config.pageInfo.title = "Bling blaw ~ Budget";
+    config.pageInfo.sessionName = req.session.user;
+    config.pageInfo.request = "GET";
+    config.pageInfo.active = "active";
+    config.pageInfo.page = "Login";
     console.log("\n ~ Hi ~" + "\n" + config.pageInfo.title + " - " + config.pageInfo.page + "(" + config.pageInfo.request + ")");
     // if session is undefined - get - login page
     if (!req.session.user) {

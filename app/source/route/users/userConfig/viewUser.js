@@ -13,6 +13,7 @@ module.exports = {
   // postLogin module
   viewUser: function(req, res, next) {
     // get session info
+    config.pageInfo.title = "Users";
     config.pageInfo.sessionName = req.session.user;
     config.pageInfo.request = "get";
     config.pageInfo.active = "active";

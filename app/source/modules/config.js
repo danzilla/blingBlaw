@@ -2,16 +2,18 @@
  * try ES6
  * NodeJS + Monk + Session = keep it minimal
  */
+// Express
 const express = require('express');
 const router = express.Router();
-const moment = require('moment'); // moment for Time and Date
+ // moment for Time and Date
+const moment = require('moment');
 const ObjectId = require('mongodb').ObjectID;
 
 // collection Name - blingBlaw
 const collectionBlingBlaw = "blingBlaw";
 // pageInfo detailes
 let pageInfo = {
-  title: 'Login',
+  title: "",
   page: "",
   request: "",
   sessionName: ""
@@ -24,8 +26,8 @@ let flashData = {
   bgColor: ""
 }
 
-// flashData
-let randomColor = function randomColor() {
+// randomColor
+const randomColor = function randomColor() {
   return "#000000".replace(/0/g, function() {
     return (~~(Math.random() * 16)).toString(16);
   });

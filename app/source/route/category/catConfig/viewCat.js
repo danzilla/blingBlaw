@@ -12,7 +12,8 @@ module.exports = {
   // POST
   // postLogin module
   viewCat: function(req, res, next) {
-    // get session info
+    // get session info and set config.pageInfo
+    config.pageInfo.title = "Category";
     config.pageInfo.sessionName = req.session.user;
     config.pageInfo.request = "get";
     config.pageInfo.active = "active";

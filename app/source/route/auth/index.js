@@ -5,9 +5,6 @@
 const express = require('express');
 const router = express.Router();
 
-// config
-var config = require("../../modules/config");
-
 // Home page
 // GET login page
 const getLogin = require('./authConfig/getLogin');

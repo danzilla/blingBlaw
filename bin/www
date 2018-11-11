@@ -68,5 +68,6 @@ function onListening() {
     'pipe ' + addr :
     'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log("Server running on http://localhost:" + port);
+  console.log("\nServer running on http://localhost:" + port);
+  console.log("BlingBlaw ~" + "\n");
 }

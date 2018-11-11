@@ -1,0 +1,239 @@
+
+<div class="alert alert-info">
+<%- JSON.stringify(pageInfo) %>
+</div>
+<div class="alert alert-danger">
+<%- JSON.stringify(dataCat) %>
+</div>
+<div class="alert alert-success">
+  <%- JSON.stringify(dataSta) %>
+</div>
+<div class="alert alert-primary">
+  <%- JSON.stringify(dataTrans) %>
+</div>
+
+
+<% if(false) { %>
+
+<% for(var i=0; i < data.length; i++) { %>
+  <table class="table table-borderless">
+    <thead class="thead-dark border-bottom border-danger">
+      <th colspan="1" scope="col" class="text-center card-1">
+        <a data-toggle="modal" data-target="#modalStat<%= data[i]._id %>"
+          class="btn card-1">
+        <i class="twa twa-lg twa-balloon twa-2x"></i></a>
+      </th>
+      <th colspan="3" class="">
+        <a>Title: </a><code class="mr-4"><%- data[i].statementInfo.statementName %></code>
+        <a>Type: </a><code class="mr-4"><%- data[i].statementInfo.statementType %></code>
+        <a>Date: </a><code><%- data[i].statementInfo.statementDate %></code>
+      </th>
+    </thead>
+    <thead class="thead-dark">
+      <tr class="bg-dark text-light">
+        <th scope="col" class="text-center">date</th>
+        <th scope="col" class="">description</th>
+        <th scope="col" class="text-center">
+          Transaction
+          <i class="twa twa-lg twa-sparkles twa-1x"></i>
+        </th>
+        <th scope="col" class="text-center">
+          <i class="twa twa-lg twa-high-brightness twa-1x fa-pulse"></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var j=0; j < data[i].transactionInfo.length; j++) { %>
+        <tr class="card-1 ">
+
+          <th scope="col" class="text-center align-middle">
+            <%- data[i].transactionInfo[j].transDate %>
+          </th>
+          <td class="align-middle">
+            <%- data[i].transactionInfo[j].transDesc %>
+          </td>
+
+          <!-- Withdraw or Deposite - label -->
+          <td class="text-center align-middle">
+            <h5 class="">
+              <% if(data[i].transactionInfo[j].transWithdraw) { %>
+                $ <%= data[i].transactionInfo[j].transWithdraw %>
+              <small>
+                <span class="badge badge-secondary font-italic">withdrawal</span></small>
+              <% } %>
+              <% if(data[i].transactionInfo[j].transDeposite) { %>
+                $ <%= data[i].transactionInfo[j].transDeposite %>
+                <small>
+                  <span class="badge badge-primary font-italic ">deposite</span></small>
+              <% } %>
+            </h5>
+          </td>
+
+          <!-- catergory and edit button -->
+          <td class="text-center align-middle">
+          <% for(var y=0; y < dataCat.length; y++) { %>
+            <% if (data[i].transactionInfo[j].transCat == dataCat[y]._id) { %>
+
+              <h5>
+              <!-- background color for catergory -->
+              <% for(var z=0; z < chartInfo.chartData.dataValue.length; z++) { %>
+                <% if (chartInfo.chartData.dataParentId[z] == dataCat[y].catParent) { %>
+                  <span class="badge"
+                    style="background-color:<%= chartInfo.chartData.dataColor[z] %>">
+                    <%= dataCat[y].catName %>
+                  </span>
+                <% } %>
+              <% } %>
+              <small>
+                <span data-toggle="modal" data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
+                  class="card-1 badge badge-info">
+                  <i class="fas fa-pencil-alt"></i> | <i class="fas fa-comment"></i>
+                </span>
+              </small>
+            </h5>
+            <% } %>
+          <% } %>
+          <% if (data[i].transactionInfo[j].transCat == "nada" ||
+              data[i].transactionInfo[j].transCat == null ||
+              data[i].transactionInfo[j].transCat == "undefined" ||
+              data[i].transactionInfo[j].transCat == "") { %>
+
+              <!-- background color for catergory -->
+              <% for(var z=0; z < chartInfo.chartData.dataValue.length; z++) { %>
+                <% if (chartInfo.chartData.dataLabel[z] == "nada" ||
+                  chartInfo.chartData.dataLabel[z] == null ||
+                  chartInfo.chartData.dataLabel[z] == "undefined" ||
+                  chartInfo.chartData.dataLabel[z] == "") { %>
+
+                  <button data-toggle="modal"
+                    style="background-color:<%= chartInfo.chartData.dataColor[z] %>"
+                    data-target="#modalTrans<%= data[i].transactionInfo[j].transId %>"
+                    class="btn card-1">Attention</button>
+
+                <% } %>
+              <% } %>
+
+          <% } %>
+          </td>
+
+        </tr>
+
+        <!-- Modal for remove statement -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalStat<%= data[i]._id %>" tabindex="-1" role="dialog"aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content card-1">
+
+              <div class=" btn-danger py-2" data-dismiss="modal"></div>
+              <div class="modal-header"><h4><%= pageInfo.title %><small> Remove </small></h4></div>
+              <div class="modal-body">
+                <form id="modalStatF<%= data[i]._id %>" action="/statement/remove/statement" method="post" class="container-fluid">
+                  <input type="hidden" name="statementId" value="<%= data[i]._id %>">
+                  <div class="col">
+                    <div class="list-group list-group-flush">
+                      <a class="list-group-item">_id: <em><%= data[i]._id %></em></a>
+                      <a class="list-group-item">title: <em><%= data[i].statementInfo.statementName %></em></a>
+                      <a class="list-group-item">type: <em><%= data[i].statementInfo.statementType %></em></a>
+                      <a class="list-group-item">date: <em><%= data[i].statementInfo.statementDate %></em></a>
+                      <a class="list-group-item">Description: <em><%= data[i].statementInfo.statementDesc %></em></a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer text-center">
+                <button form="modalStatF<%= data[i]._id %>"
+                  class="btn btn-outline-danger"> Remove statement and its Data </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Modal for update statement -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalTrans<%= data[i].transactionInfo[j].transId %>" tabindex="-1" role="dialog"aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content card-1">
+
+              <div class=" btn-danger py-2" data-dismiss="modal"></div>
+              <div class="modal-header"><h4><%= pageInfo.title %><small> update </small></h4></div>
+              <div class="modal-body">
+                <h5 class="mb-3 text-center">
+                  <a class="btn disabled"><em class="mr-3"><%- j %></em><%- data[i].transactionInfo[j].transId %></a>
+                </h5>
+                <h5 class="mb-3 text-center">
+                  <% if(data[i].transactionInfo[j].transWithdraw) { %>
+                    <span><strong><em>withdrawal</em></strong>
+                      <span class="border-bottom border-warning alert-warning p-1 font-20">
+                        $ <%= data[i].transactionInfo[j].transWithdraw %></span></span>
+                  <% } %>
+                  <% if(data[i].transactionInfo[j].transDeposite) { %>
+                    <span><strong><em>deposite</em></strong>
+                      <span class="border-bottom border-primary alert-primary">
+                        $ <%= data[i].transactionInfo[j].transDeposite %></span></span>
+                  <% } %>
+                  <small>on</small> <%- data[i].transactionInfo[j].transDate %>
+                </h5>
+                <h5 class="mb-3 text-center">
+                  <strong>Transaction: </strong><small><%- data[i].transactionInfo[j].transDesc %></small>
+                </h5>
+
+                <form id="transUpdate<%= data[i].transactionInfo[j].transId %>" action="/statement/update" method="post" class="container-fluid">
+                  <input type="hidden" name="transj" value="<%= j %>" />
+                  <input type="hidden" name="transStaId" value="<%= data[i]._id %>" />
+                  <input type="hidden" name="transTransId" value="<%= data[i].transactionInfo[j].transId %>" />
+                  <input type="hidden" name="transTransDate" value="<%= data[i].transactionInfo[j].transDate %>" />
+                  <input type="hidden" name="transTransDesc" value="<%= data[i].transactionInfo[j].transDesc %>" />
+                  <input type="hidden" name="transTransComment" value="<%= data[i].transactionInfo[j].transComment %>" />
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Catergory</span>
+                    </div>
+
+                    <select name="transTransCat" class="custom-select">
+                      <option value="nada">choose one</option>
+                      <% for(var z=0; z < dataCat.length; z++) { %>
+                        <% if (dataCat[z].catParent == "root" ) { %>
+                          <optgroup label="<%= dataCat[z].catName %>">
+                            <% for (var k=0; k < dataCat.length; k++) { %>
+                              <% if (dataCat[z]._id == dataCat[k].catParent ) { %>
+                                <option value="<%= dataCat[k]._id %>"><%= dataCat[k].catName %></option>
+                              <% } %>
+                            <% } %>
+                          </optgroup>
+                        <% } %>
+                      <% } %>
+                    </select>
+
+                    <div class="input-group-append">
+                      <a class="btn btn-primary" data-toggle="collapse" href="#text<%= data[i].transactionInfo[j].transId %>"
+                        role="button" aria-expanded="false">
+                        <i class="fas fa-comment"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="collapse" id="text<%= data[i].transactionInfo[j].transId %>">
+                    <div class="card card-body">
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">notes</label>
+                        <textarea class="form-control" rows="3" name="transTransComment"
+                          id="text<%= data[i].transactionInfo[j].transId %>">
+                          <%= data[i].transactionInfo[j].transComment %>
+                        </textarea>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button form="transUpdate<%= data[i].transactionInfo[j].transId %>"
+                  class="btn btn-outline-success">Apply </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% } %>
+    </tbody>
+  </table>
+<% } } %>
