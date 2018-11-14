@@ -5,12 +5,22 @@
 <div class="alert alert-danger">
 <%- JSON.stringify(dataCat) %>
 </div>
-<div class="alert alert-success">
-  <%- JSON.stringify(dataSta) %>
+
+
+<div class="alert alert-danger">
+  <% for(var j=0; j < dataSta.length; j++) { %>
+    <p>dataSta: <%- JSON.stringify(dataSta[j].statement_id) %></p>
+    <% for(var i=0; i < dataTrans.length; i++) { %>
+      <% if (dataSta[j].statement_id.toString().trim() === dataTrans[i].statement_id.toString().trim()) { %>
+        <span>  dataTrans: <%- JSON.stringify(dataTrans[i].statement_id) %></span>
+      <% } %>
+    <%  } %>
+  <% } %>
 </div>
-<div class="alert alert-primary">
-  <%- JSON.stringify(dataTrans) %>
-</div>
+
+
+
+
 
 
 <% if(false) { %>
