@@ -49,6 +49,7 @@ module.exports = {
           transactionWithdraw: req.body.transWithdraw[transaction],
           transactionDeposite: req.body.transDeposite[transaction],
           transactionBalance: req.body.transBalance[transaction],
+          transactiontCategory: req.body.transCatName[transaction],
           transactiontModified: "",
           transactiontModifiedUser: "",
           statement_id: statement_id

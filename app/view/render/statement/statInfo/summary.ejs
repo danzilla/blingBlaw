@@ -5,24 +5,4 @@
 <!-- bar chart canvas element -->
 <script>
 
-  // pie chart data
-  new Chart(document.getElementById("polar-chart"), {
-      type: 'polarArea',
-      data: {
-        labels: <%- JSON.stringify(chartInfo.chartData.dataLabel) %>,
-        datasets: [
-          {
-            label: "bling Blaw $$$",
-            backgroundColor: <%- JSON.stringify(chartInfo.chartData.dataColor) %>,
-            data: <%- JSON.stringify(chartInfo.chartData.dataValue) %>
-          }
-        ]
-      },
-      options: {
-        title: {
-          display: true,
-          text: '<%- chartInfo.chartName %>'
-        }
-      }
-  });
 </script>

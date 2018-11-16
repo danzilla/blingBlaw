@@ -33,33 +33,19 @@ module.exports = {
       collectionBling.findOne({
         "userInfo.userName": req.session.user
       }, function(err, user) {
-        if (err) {
-          console.log("\nerror: " + JSON.stringify(err));
-        }
+        if (err) { console.log("\nerror: " + JSON.stringify(err)); }
         if (user) {
 
+        const _ = require('lodash');
 
-        for(statement in user.statementInfo){
-          for(transaction in user.transactionInfo){
-            if (user.transactionInfo[transaction].statementName == "asd"){
-              console.log("\nStatements: " + transaction +" "+ JSON.stringify(user.statementInfo[statement].statement_id));
-              console.log("Transaction: " + transaction +" "+ JSON.stringify(user.transactionInfo[transaction].statement_id));
-            }
-            else {
-              console.log("\nELSE\n");
-            }
-          }
-        }
-
-          let statementInfo = {
-            test: "statementInfo",
-            "req.body": req.body
-          }
+        let nadaTransaction = _.filter(user.transactionInfo, { transactiontCategory: 'nada' })
+        console.log(JSON.stringify(nadaTransaction));
           res.render('statement/index', {
             pageInfo: config.pageInfo,
             dataCat: user.categoryInfo,
             dataSta: user.statementInfo,
-            dataTrans: user.transactionInfo
+            transactionInfo: nadaTransaction,
+            _data: config.pageInfo
           });
         } else {
           console.log("Session mismatch! - Failed at viewing Statement");

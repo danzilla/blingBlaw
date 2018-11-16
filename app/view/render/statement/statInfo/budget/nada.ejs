@@ -1,0 +1,55 @@
+
+<div class="scrollYes h-100">
+<table class="table table-borderless ">
+  <thead class="thead-dark">
+    <tr class="bg-dark text-light">
+      <th scope="col" class="text-center">date</th>
+      <th scope="col" class="">description</th>
+      <th scope="col" class="text-center">
+        Transaction
+        <i class="twa twa-lg twa-sparkles twa-1x"></i>
+      </th>
+      <th scope="col" class="text-center">
+        <i class="twa twa-lg twa-high-brightness twa-1x fa-pulse"></i>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(var j=0; j < transactionInfo.length; j++) { %>
+      <tr class="card-1 ">
+        <th scope="col" class="text-center align-middle">
+          <%- transactionInfo[j].transactionDate %>
+        </th>
+        <td class="align-middle">
+          <%- transactionInfo[j].transactionDesc %>
+        </td>
+        <!-- Withdraw or Deposite - label -->
+        <td class="text-center align-middle">
+          <h5 class="">
+            <% if(transactionInfo[j].transactionWithdraw) { %>
+              $ <%= transactionInfo[j].transactionWithdraw %>
+              <small><span class="badge badge-secondary font-italic">withdrawal</span></small>
+            <% } %>
+            <% if(transactionInfo[j].transactionDeposite) { %>
+              $ <%= transactionInfo[j].transactionDeposite %>
+              <small><span class="badge badge-primary font-italic ">deposite</span></small>
+            <% } %>
+          </h5>
+        </td>
+        <!-- catergory and edit button -->
+        <td class="text-center align-middle">
+        <% if (transactionInfo[j].transactionCat == "nada" ||
+            transactionInfo[j].transactionCat == null ||
+            transactionInfo[j].transactionCat == "undefined" ||
+            transactionInfo[j].transactionCat == "") { %>
+            <button data-toggle="modal"
+              style="background-color:"
+              data-target="#modalTrans<%= transactionInfo[j].transactionId %>"
+              class="btn card-1">Attention</button>
+        <% } %>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+</div>

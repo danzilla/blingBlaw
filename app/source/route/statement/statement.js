@@ -25,12 +25,14 @@ const uploadFolder = multer({
 // Statement - Dashboard - Home page
 const viewSta = require('./staConfig/viewSta');
 router.route('/').get(viewSta.viewSta);
+// POST - overview on POST
+// /overview - show statment for update
+const overViewSta = require('./staConfig/overViewSta');
+router.route('/overview').post(overViewSta.overViewSta);
 // POST - review before Upload the Document
 // POST /review - convert CSV to table and display
 const reviewSta = require('./staConfig/reviewSta');
 router.route('/review').post(uploadFolder.single('statementFileInput'), reviewSta.reviewSta);
-
-
 
 // POST
 // CRUD - Add Update Remove - Statement
