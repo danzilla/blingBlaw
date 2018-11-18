@@ -1,8 +1,26 @@
 <h3 class="text-center display-5">summary <small> <%- pageInfo.title %></small></h3>
 <hr>
+
 <!-- pie chart canvas element -->
-<canvas id="polar-chart" width="400" height="400"></canvas>
-<!-- bar chart canvas element -->
+<canvas id="myChart" width="400" height="400"></canvas>
 <script>
+
+  new Chart(document.getElementById("myChart"), {
+      type: 'pie',
+      data: {
+        labels: <%- JSON.stringify(chartInfo.chartData.dataLabel) %>,
+        datasets: [{
+          label: "Category and subcategory",
+          backgroundColor: <%- JSON.stringify(chartInfo.chartData.dataColor) %>,
+          data: [<%= chartInfo.chartData.dataValue %>]
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '<%= chartInfo.chartName %>'
+        }
+      }
+  });
 
 </script>

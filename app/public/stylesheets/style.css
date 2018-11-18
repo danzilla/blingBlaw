@@ -29,6 +29,8 @@ body {
 .show{
   display:block;
 }
+thead th { position: sticky; top: 0; }
+
 .font-10 { font-size: 100%;}
 .font-20 { font-size: 200%;}
 .font-30 { font-size: 300%;}
@@ -36,10 +38,29 @@ body {
 .font-50 { font-size: 500%;}
 .font-60 { font-size: 600%;}
 
+.pt-5 {padding-top: 5%;}
+.pt-10 {padding-top: 10%;}
+.pt-15 {padding-top: 15%;}
+.pt-25 {padding-top: 25%;}
+.pt-35 {padding-top: 35%;}
+.pd-5 {padding-bottom: 5%;}
+.pd-10 {padding-bottom: 10%;}
+.pd-15 {padding-bottom: 15%;}
+.pd-25 {padding-bottom: 25%;}
+.pd-35 {padding-bottom: 35%;}
+
+.h-5 {height: 5%}
+.h-10 {height: 10%}
+.h-15 {height: 15%}
+.h-20 {height: 20%}
+.h-45 {height: 45%}
+.h-85 {height: 85%}
+.h-90 {height: 90%}
+
 .bgColor-pink { background-color: #E040FB; }
 .bgColor-Dpink { background-color: #C2185B; }
 .bgColor-blue { background-color: #448AFF; }
-
+.bg-white { background-color: #fffcfc; }
 
 .bgColor-Lpinkish {
 background: rgba(255, 255, 255, 1.0);
@@ -48,14 +69,12 @@ background: -moz-radial-gradient(center, rgba(255, 255, 255, 1.0), rgba(255, 217
 background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1.0), rgba(255, 217, 217, 1.0));
 }
 
-
 .bgColor-pinkish {
   background: rgba(248, 198, 198, 1.0);
   background: -webkit-radial-gradient(bottom, rgba(248, 198, 198, 1.0), rgba(221, 221, 221, 1.0));
   background: -moz-radial-gradient(bottom, rgba(248, 198, 198, 1.0), rgba(221, 221, 221, 1.0));
   background: radial-gradient(to top, rgba(248, 198, 198, 1.0), rgba(221, 221, 221, 1.0));
 }
-
 .bgColor-Wpinkish {
   background: rgba(255, 255, 251, 1.0);
   background: -webkit-radial-gradient(center, rgba(255, 255, 251, 1.0), rgba(255, 246, 246, 1.0));

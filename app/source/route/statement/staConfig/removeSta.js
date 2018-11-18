@@ -12,7 +12,7 @@ const config = require("../../../modules/config");
 
 module.exports = {
   // POST
-  // add category module
+  // add statement module
   removeSta: function(req, res, next) {
     // get session info and set config.pageInfo
     config.pageInfo.title = "Statement";
@@ -27,35 +27,44 @@ module.exports = {
       res.redirect('/');
       console.log("\nsession incorrect - going home\n");
     } else {
-      // else - session good - redirect to category list
+      // else - session good - redirect to statement list
       // request DB conections
       const db = req.db;
       const collection = db.get(config.collectionBlingBlaw);
       // set validation Data
-      // mongo pull the new category
+      // mongo pull the new statement
       collection.update({
-        _id: req.session.userId,
-        "categoryInfo._id": ObjectId(req.body.removeCat)
-      }, {
-        $pull: {
-          "categoryInfo": {_id: ObjectId(req.body.removeCat)}
-        }
-      }, function(err, results) {
-        if (err) { // if err throw err
-          config.flashData.pageMesage = "Error removing data" + JSON.stringify(err.message);
-          config.flashData.bgColor = "danger";
-          config.flashData.info = err;
-          req.flash('flashData', config.flashData);
-          res.redirect('/category');
-        }
-        if (results) {
-            config.flashData.pageMesage = "Category been removed: " + req.body.removeCat;
+          _id: req.session.userId,
+          "statementInfo.statement_id": ObjectId(req.body.statement),
+          "transactionInfo.statement_id": ObjectId(req.body.statement)
+        }, {
+          $pull: {
+            "statementInfo": {
+              statement_id: ObjectId(req.body.statement)
+            },
+            "transactionInfo": {
+              statement_id: ObjectId(req.body.statement)
+            }
+          }
+        }, {
+          multi: true
+        },
+        function(err, results) {
+          if (err) { // if err throw err
+            config.flashData.pageMesage = "Error removing data" + JSON.stringify(err.message);
+            config.flashData.bgColor = "danger";
+            config.flashData.info = err;
+            req.flash('flashData', config.flashData);
+            res.redirect('/statement/review');
+          }
+          if (results) {
+            config.flashData.pageMesage = "Statement been removed: " + req.body.removeCat;
             config.flashData.bgColor = "success";
             config.flashData.info = results;
             req.flash('flashData', config.flashData);
-            res.redirect('/category');
-        }
-      });
+            res.redirect('/statement/review');
+          }
+        });
     }
   }
 

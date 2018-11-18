@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app>
 
 <head>
   <%- include('../../layout/head') -%>
@@ -26,9 +26,10 @@
               <div class="row h-100">
                 <!-- second - first - content -->
                 <div class="col-11 col-md-11 col-lg-8 h-100 ">
-                  <div class="container-fluid h-100 scrollYes m-0 p-0 card-1 bg-white alert">
-                    <div class="container alert pt-4">
+                  <div class="container-fluid h-100 m-0 p-0 card-1 scrollNo bg-white alert">
+                    <div class="container alert pt-4 h-100 ">
                       <%- include('../../layout/contentHead') -%>
+                      <%- include('reviewInfo/reviewNav') -%>
                         <hr>
                         <%- include('reviewInfo/reviewBody') -%>
                     </div>

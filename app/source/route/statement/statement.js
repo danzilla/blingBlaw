@@ -21,26 +21,29 @@ const uploadFolder = multer({
 // post - curd
 // all - /
 
-// GET - statement page
+// GET - statement page - Dashboard
 // Statement - Dashboard - Home page
-const viewSta = require('./staConfig/viewSta');
+const viewSta = require('./staConfig/index');
 router.route('/').get(viewSta.viewSta);
+
 // POST - overview on POST
 // /overview - show statment for update
-const overViewSta = require('./staConfig/overViewSta');
-router.route('/overview').post(overViewSta.overViewSta);
-// POST - review before Upload the Document
-// POST /review - convert CSV to table and display
 const reviewSta = require('./staConfig/reviewSta');
-router.route('/review').post(uploadFolder.single('statementFileInput'), reviewSta.reviewSta);
+router.route('/review').get(reviewSta.reviewStaGet);
+router.route('/review').post(reviewSta.reviewStaPost);
 
 // POST
 // CRUD - Add Update Remove - Statement
 // mongo.update - PUSH | PULL | SET == Add | remove | update
+
+// POST - review before Upload the Document
+// POST /upload - convert CSV to table and display
+const uploadSta = require('./staConfig/uploadSta');
+router.route('/upload').post(uploadFolder.single('statementFileInput'), uploadSta.uploadSta);
 // Add statement
 // post to add statement/add
-const addSta = require('./staConfig/addSta');
-router.route('/add').post(addSta.addSta);
+router.route('/upload/add').post(uploadSta.addSta);
+
 // Update statement
 // post to update statement/Update
 const updateSta = require('./staConfig/updateSta');
