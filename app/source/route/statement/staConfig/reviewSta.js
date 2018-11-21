@@ -38,16 +38,16 @@ module.exports = {
           const ObjectId = require('mongodb').ObjectID;
           const _ = require('lodash');
           const groupArray = require('group-array');
-
           // Plan
           // filter by statment ID
+          // 1 - If coming from statment - show all transactions
+          // 2 - If coming from reviewPOST - show the one from session - statement_id
           try {
             // filter by statement_id
             // Set page for GET and render ALL statment
-            config.pageInfo.request = "GET";
-            let transactions = user.transactionInfo;
-            let statement = user.statementInfo;
             // is coming from Sessions
+            let transactions = "user.transactionInfo";
+            let statement = "user.statementInfo;"
             if (req.session.statementInfo[0].statement_id) {
               // If comping from POST /review
               config.pageInfo.request = "GETPOST";
@@ -58,6 +58,10 @@ module.exports = {
               statement = _.filter(user.statementInfo, {
                 statement_id: ObjectId(req.session.statementInfo[0].statement_id)
               })
+            } else {
+              config.pageInfo.request = "GET";
+              transactions = user.transactionInfo;
+              statement = user.statementInfo;
             }
             // cat = root
             // trans cat = ch
@@ -73,59 +77,121 @@ module.exports = {
                 catChild.push(user.categoryInfo[cat])
               }
             }
-
             //  console.log("\ntransactions: " + JSON.stringify(transactions));
             //  console.log("statement: " + JSON.stringify(statement));
-
             // get cat info from transactiontCategory
+            const transactionsInfo = [];
             for (var i = 0; i < transactions.length; i++) {
+              let pushD = {};
               if (transactions[i].transactiontCategory == "nada") {
-                console.log("NADA");
+                pushD = {
+                  "transactionId": transactions[i].transactionId,
+                  "transactionDate": transactions[i].transactionDate,
+                  "transactionDesc": transactions[i].transactionDesc,
+                  "transactionWithdraw": transactions[i].transactionWithdraw,
+                  "transactionDeposite": transactions[i].transactionDeposite,
+                  "transactionBalance": transactions[i].transactionBalance,
+                  "transactiontCategory": transactions[i].transactiontCategory,
+                  "transactiontCategoryName": transactions[i].transactiontCategory,
+                  "transactiontCategoryParent": transactions[i].transactiontCategory,
+                  "transactiontCategoryParentName": transactions[i].transactiontCategory,
+                  "transactiontModified": transactions[i].transactiontModified,
+                  "transactiontModifiedUser": transactions[i].transactiontModifiedUser,
+                  "statement_id": transactions[i].statement_id,
+                  "statementName": statement[0].statementName,
+                  "statementType": statement[0].statementType,
+                  "statementDate": statement[0].statementDate,
+                  "statementCreated": statement[0].statementCreated
+                }
+                // push "nada" to transactionInfo
+                transactionsInfo.push(pushD)
               } else {
                 for (var ii = 0; ii < catChild.length; ii++) {
                   if (transactions[i].transactiontCategory == catChild[ii]._id) {
-                    let result = { ...transactions[i],
-                      ...catChild[ii]
+                    for (var iii = 0; iii < catParent.length; iii++) {
+                      if (catChild[ii].catParent == catParent[iii]._id) {
+                        pushD = {
+                          "transactionId": transactions[i].transactionId,
+                          "transactionDate": transactions[i].transactionDate,
+                          "transactionDesc": transactions[i].transactionDesc,
+                          "transactionWithdraw": Number(transactions[i].transactionWithdraw),
+                          "transactionDeposite": Number(transactions[i].transactionDeposite),
+                          "transactionBalance": Number(transactions[i].transactionBalance),
+                          "transactiontCategory": transactions[i].transactiontCategory,
+                          "transactiontCategoryName": catChild[ii].catName,
+                          "transactiontCategoryParent": catChild[ii].catParent,
+                          "transactiontCategoryParentName": catParent[iii].catName,
+                          "transactiontModified": transactions[i].transactiontModified,
+                          "transactiontModifiedUser": transactions[i].transactiontModifiedUser,
+                          "statement_id": transactions[i].statement_id,
+                          "statementName": statement[0].statementName,
+                          "statementType": statement[0].statementType,
+                          "statementDate": statement[0].statementDate,
+                          "statementCreated": statement[0].statementCreated
+                        }
+                        // push to transactionInfo
+                        transactionsInfo.push(pushD)
+                      }
                     }
-                    console.log(JSON.stringify(result));
                   }
                 }
               }
             }
+            let groupByTransCat = groupArray(transactionsInfo, 'transactiontCategoryParentName');
+            let groupByTranasCatLabel = Object.keys(groupByTransCat);
+            console.log("groupByTranasCatLabel: " + groupByTranasCatLabel);
+            // console.log("\groupByTransCat: " + JSON.stringify(groupByTransCat));
 
-        /* NEED TO CHAGE CAT ID nAME   { 
-              "transactionId": "5bf1c2d657931d57fee60ba2",
-              "transactionDate": "07/14/2018",
-              "transactionDesc": "DOMINO'S PIZZA #10503",
-              "transactionWithdraw": "24.84",
-              "transactionDeposite": "",
-              "transactionBalance": "20.77",
-              "transactiontCategory": "5bf1c25857931d57fee60b91",
-              "transactiontModified": "November 18th 2018, 5:02:20 pm",
-              "transactiontModifiedUser": "123",
-              "statement_id": "5bf1c2d657931d57fee60b9e",
-              "_id": "5bf1c25857931d57fee60b91",
-              "catName": "Car Saving",
-              "catParent": "5be07d20239f616a002cabc3",
-              "catModify": "",
-              "catCreated": "November 18th 2018, 2:49:44 pm"
+            let chartLabel = Object.keys(groupByTransCat);
+            let chartData = [];
+            let chartColor = [];
+            let ohhP = {};
+
+            for (var t in groupByTransCat) {
+
+              let balanceSum = [];
+              let depositeSum = [];
+              let withdrawSum = [];
+              let labelC = [];
+              let labelP = [];
+              for (var tt in groupByTransCat[t]) {
+                // array for SUM
+                balanceSum.push(groupByTransCat[t][tt].transactionBalance);
+                depositeSum.push(groupByTransCat[t][tt].transactionDeposite);
+                withdrawSum.push(groupByTransCat[t][tt].transactionWithdraw);
+                labelC.push(groupByTransCat[t][tt].transactiontCategoryName);
+                labelP.push(groupByTransCat[t][tt].transactiontCategoryParentName);
+              }
+
+              console.log("\ngroupByTransCat -- " + labelP[0]);
+              console.log("balanceSum: " + balanceSum);
+              console.log("depositeSum: " + depositeSum);
+              console.log("withdrawSum: " + withdrawSum);
+              console.log("labelC: " + labelC);
+              console.log("labelP: " + labelP[0]);
+              // chartColor Each Label for Groups
+              chartColor.push(config.randomColor());
             }
-            */
+
+            console.log("\nchartLabel: " + chartLabel);
+            console.log("chartData: " + chartData);
+            console.log("chartColor: " + chartColor);
 
 
             // ChartInfo
             // chartData - catP
             // chartData - catC
-            let groupByTranasCat = groupArray(transactions, 'transactiontCategory');
-            let groupByTranasCatLabel = Object.keys(groupByTranasCat);
-            console.log("\ngroupByTranasCatLabel" + JSON.stringify(groupByTranasCatLabel));
+            //  let groupByTranasCat = groupArray(transactionsInfo, 'transactiontCategory');
+            //  let groupByTranasCatLabel = Object.keys(groupByTranasCat);
+            // console.log("\ngroupByTranasCatLabel: " + JSON.stringify(groupByTranasCatLabel));
+            // console.log("\ngroupByTranasCat: " + JSON.stringify(groupByTranasCat));
             // chartData - deposite
             // chartData - withdraw
             // chartData - Balance
             // chartData - Description
-            let groupByTranasDec = groupArray(transactions, 'transactionDesc');
+            let groupByTranasDec = groupArray(transactionsInfo, 'transactionDesc');
             let groupByTranasDecLabel = Object.keys(groupByTranasDec);
-            console.log("groupByTranasCatLabel" + JSON.stringify(groupByTranasDecLabel));
+            //console.log("groupByTranasCatLabel" + JSON.stringify(groupByTranasDecLabel));
             // chartData - deposite
 
             // Chart label === Category child - Parents

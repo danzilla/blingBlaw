@@ -8,13 +8,8 @@
     </a>
     <a href="/statement" class="list-group-item list-group-item-action card-1 d-flex align-items-center
       <% if (pageInfo.title == "Statement") { %> <%- pageInfo.active %> <% } %>">
-      <i class="twa twa-lg twa-money-with-wings twa-2x mr-3"></i>
-      statements
-    </a>
-    <a href="/investment" class="list-group-item list-group-item-action card-1 d-flex align-items-center
-      <% if (pageInfo.title == "Investment") { %> <%- pageInfo.active %> <% } %>">
       <i class="fas fa-2x fa-piggy-bank mr-3 text-neon"></i>
-      budget
+      statements
     </a>
     <a href="/category" class="list-group-item list-group-item-action card-1 d-flex align-items-center
       <% if (pageInfo.title == "Category") { %> <%- pageInfo.active %> <% } %>">
@@ -27,5 +22,20 @@
       users
     </a>
   </ul>
-  <%- include('../components/dropNav') -%>
+
+  <div class="btn-group card-1-no d-flex align-items-center mt-2">
+    <button type="button" class="btn btn-info active">
+      <%- pageInfo.sessionName %>
+    </button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-info" data-toggle="dropdown">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+      <div class="dropdown-menu">
+        <a href="/logout" class="dropdown-item d-flex align-items-center">
+          <i class="fas fa-sign-out-alt mr-3 fa-1x"></i> Sign-out
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

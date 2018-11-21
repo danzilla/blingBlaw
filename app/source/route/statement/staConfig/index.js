@@ -86,7 +86,7 @@ module.exports = {
           });
         } else {
           console.log("Session mismatch! - Failed at viewing Statement");
-          config.flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing Category";
+          config.flashData.pageMesage = "Session mismatch, cannot continue - Failed at viewing statement";
           config.flashData.bgColor = "danger";
           req.flash('flashData', config.flashData);
           res.redirect('/');
