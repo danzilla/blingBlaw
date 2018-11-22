@@ -5,22 +5,26 @@
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
 
-  new Chart(document.getElementById("myChart"), {
-      type: 'pie',
-      data: {
-        labels: <%- JSON.stringify(chartInfo.chartData.dataLabel) %>,
-        datasets: [{
-          label: "Category and subcategory",
-          backgroundColor: <%- JSON.stringify(chartInfo.chartData.dataColor) %>,
-          data: [<%= chartInfo.chartData.dataValue %>]
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: '<%= chartInfo.chartName %>'
-        }
-      }
-  });
+  let chartTitle = <%= chartInfo.chartName %>;
+  let chartName = <%- JSON.stringify(chartInfo.chartData.dataLabel) %>;
+  let chartData = <%= chartInfo.chartData.dataValue %>;
+  let chartColor = <%- JSON.stringify(chartInfo.chartData.dataColor) %>;
 
+  new Chart(document.getElementById("myChart"), {
+    type: 'pie',
+    data: {
+      labels: chartName,
+      datasets: [{
+        label: "Category and subcategory",
+        backgroundColor: chartColor,
+        data: [chartData]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: chartTitle
+      }
+    }
+  });
 </script>

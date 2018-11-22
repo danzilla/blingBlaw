@@ -20,6 +20,7 @@
     "lodash": "^4.17.11",
     "middleware": "^1.0.0",
     "moment": "^2.22.2",
+    "money-math": "^2.5.1",
     "mongo": "^0.1.0",
     "monk": "^6.0.6",
     "morgan": "^1.9.1",
