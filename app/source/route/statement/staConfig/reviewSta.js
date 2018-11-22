@@ -34,12 +34,11 @@ module.exports = {
         "userInfo.userName": req.session.user
       }, function(err, user) {
         if (!err && user) {
-
+          // require config
           const ObjectId = require('mongodb').ObjectID;
           const _ = require('lodash');
           const groupArray = require('group-array');
           const money = require("money-math");
-
           // Plan
           // filter by statment ID
           // 1 - If coming from statment - show all transactions
@@ -84,9 +83,8 @@ module.exports = {
             // get cat info from transactiontCategory
             const transactionsInfo = [];
             for (var i = 0; i < transactions.length; i++) {
-              let pushD = {};
               if (transactions[i].transactiontCategory == "nada") {
-                pushD = {
+                let pushD = {
                   "transactionId": transactions[i].transactionId,
                   "transactionDate": transactions[i].transactionDate,
                   "transactionDesc": transactions[i].transactionDesc,
@@ -112,13 +110,13 @@ module.exports = {
                   if (transactions[i].transactiontCategory == catChild[ii]._id) {
                     for (var iii = 0; iii < catParent.length; iii++) {
                       if (catChild[ii].catParent == catParent[iii]._id) {
-                        pushD = {
+                        let pushD = {
                           "transactionId": transactions[i].transactionId,
                           "transactionDate": transactions[i].transactionDate,
                           "transactionDesc": transactions[i].transactionDesc,
-                          "transactionWithdraw": Number(transactions[i].transactionWithdraw),
-                          "transactionDeposite": Number(transactions[i].transactionDeposite),
-                          "transactionBalance": Number(transactions[i].transactionBalance),
+                          "transactionWithdraw": transactions[i].transactionWithdraw,
+                          "transactionDeposite": transactions[i].transactionDeposite,
+                          "transactionBalance": transactions[i].transactionBalance,
                           "transactiontCategory": transactions[i].transactiontCategory,
                           "transactiontCategoryName": catChild[ii].catName,
                           "transactiontCategoryParent": catChild[ii].catParent,
@@ -139,111 +137,99 @@ module.exports = {
                 }
               }
             }
-            let groupByTransCat = groupArray(transactionsInfo, 'transactiontCategoryParentName');
-            let groupByTranasCatLabel = Object.keys(groupByTransCat);
-            console.log("groupByTranasCatLabel: " + groupByTranasCatLabel);
+
+
+            // let groupByTranasCatLabel = Object.keys(groupByTransCat);
+            // console.log("groupByTranasCatLabel: " + groupByTranasCatLabel);
             // console.log("\groupByTransCat: " + JSON.stringify(groupByTransCat));
 
-            //let chartLabel = Object.keys(groupByTransCat);
-            let chartColor = [];
-            let chartData = {
-              balanceSum: [],
-              depositeSum: [],
-              withdrawSum: []
-            };
-            let chartLabel = {
-              labelParent: [],
-              labelChild: [],
-              labelDesc: [],
-              labelDate: []
-            };
+            // Group by transaCatParent
+            let groupByTransCat = groupArray(transactionsInfo, 'transactiontCategoryParentName');
+            // console.log("\n groupByTransCat" + JSON.stringify(groupByTransCat) + "\n");
 
             // Chart label === Category child - Parents
             // Chart data === Category child - SUM
             // Chart Color === randomColor
 
             // prepare chart info
-            const chartInfoParent = {
-              chartName: "Category and subcategory - diversify",
-              chartData: {
-                dataLabel: [],
-                dataValue: [],
-                dataColor: []
-              }
+            const chartParent = {
+              chartName: "Spending by Category",
+              dataLabel: [],
+              dataColor: [],
+              dataValue: []
             }
-            for (var t in groupByTransCat) {
-              let balanceSum = [];
-              let depositeSum = [];
-              let withdrawSum = [];
-              let labelC = [];
-              let labelP = [];
-              for (var tt in groupByTransCat[t]) {
-                // array for SUM
-                labelC.push(groupByTransCat[t][tt].transactiontCategoryName);
-                labelP.push(groupByTransCat[t][tt].transactiontCategoryParentName);
-                balanceSum.push(groupByTransCat[t][tt].transactionBalance);
-                depositeSum.push(groupByTransCat[t][tt].transactionDeposite);
-                withdrawSum.push(groupByTransCat[t][tt].transactionWithdraw);
-              }
+            // find total spending for parenet category
+            // Total spend for W | B | D
+            // Go through Parent Category -GROUP
+            for (let catP in groupByTransCat) {
+              if (groupByTransCat.hasOwnProperty(catP)) {
+                // label for Chart - cat parent
+                chartParent.dataLabel.push(catP)
+                // Color for each catParent
+                chartParent.dataColor.push(config.randomColor())
+                // Go through Child Category -GROUP
+                console.log("\n--Cat Parent: " + catP);
 
+                let pushD = [];
+                for (let catC in groupByTransCat[catP]) {
+                  if (groupByTransCat[catP].hasOwnProperty(catC)) {
 
-              console.log("\n -- ");
-              console.log("balanceSum: " + balanceSum);
-              console.log("depositeSum: " + depositeSum);
-              console.log("withdrawSum: " + parseInt(withdrawSum, 10));
-              console.log("labelC: " + labelC);
-              console.log("labelP: " + labelP[0]);
-              console.log("Color: " + config.randomColor());
+                    pushD.push(groupByTransCat[catP][catC].transactionWithdraw);
 
-              let lool = parseInt(withdrawSum, 10);
-              var total = 0;
-              for (i = 0; i < lool.length; i++) {
-                total += lool[i];
-              }
-              console.log("SUM" + total);
-              // chartColor Each Label for Groups
-              chartColor.push(config.randomColor());
-              chartInfoParent.chartData.dataLabel.push(labelP[0]);
-              chartInfoParent.chartData.dataColor.push(config.randomColor());
-            }
+                    console.log("Cat Child: " + groupByTransCat[catP][catC].transactiontCategoryName);
+                    console.log("Cat Parent: " + groupByTransCat[catP][catC].transactiontCategoryParentName);
+                    console.log("Cat Desc: " + groupByTransCat[catP][catC].transactionDesc);
+                    console.log("Cat Withdraw: " + groupByTransCat[catP][catC].transactionWithdraw);
+                    console.log("Cat Balance: " + groupByTransCat[catP][catC].transactionBalance);
+                    console.log("Cat Deposite: " + groupByTransCat[catP][catC].transactionDeposite);
 
+                  }
+                }
+                /// LOOOOL - nned more work
 
-
-            console.log("\nchartParent: " + JSON.stringify(chartInfoParent));
-            console.log("chartParent - chartName: " + chartInfoParent.chartName);
-            console.log("chartParent - dataLabel: " + chartInfoParent.chartData.dataLabel);
-            console.log("chartParent - dataColor: " + chartInfoParent.chartData.dataColor);
-            console.log("chartParent - dataValue: " + chartInfoParent.chartData.dataValue);
-
-            console.log("\nchartLabel: " + chartLabel);
-            console.log("chartData: " + chartData);
-            console.log("chartColor: " + chartColor);
-
-            // Chart label === Category child - Parents
-            // Chart data === Category child - SUM
-            // Chart Color === randomColor
-
-            // prepare chart info
-            const chartInfo = {
-              chartName: "Category and subcategory - diversify",
-              chartData: {
-                dataLabel: [],
-                dataValue: [],
-                dataColor: []
+                let sumA = 0;
+                for (var summ in pushD) {
+                  if (pushD.hasOwnProperty(summ)) {
+                    sumA += parseInt(pushD[summ], 10);
+                  }
+                }
+                console.log("pushD: " + pushD);
+                console.log("pushD sumA: " + sumA);
               }
             }
 
-            let groupByTranasDec = groupArray(transactionsInfo, 'transactionDesc');
-            let groupByTranasDecLabel = Object.keys(groupByTranasDec);
-            //console.log("groupByTranasCatLabel" + JSON.stringify(groupByTranasDecLabel));
-            // chartData - deposite
+            console.log("\nChart: " + chartParent.chartName);
+            console.log("label: " + chartParent.dataLabel);
+            console.log("Color: " + chartParent.dataColor);
+            console.log("Value: " + chartParent.dataValue);
 
+            [{
+              "transactionId": "5bf5b1601540321a404d9585",
+              "transactionDate": "07/12/2018",
+              "transactionDesc": "PAYMENT - THANK YOU",
+              "transactionWithdraw": "",
+              "transactionDeposite": "200.00",
+              "transactionBalance": "-4.07",
+              "transactiontCategory": "5bf5b10c1540321a404d9569",
+              "transactiontCategoryName": "Investment",
+              "transactiontCategoryParent": "5be07d20239f616a002cabc2",
+              "transactiontCategoryParentName": "Income",
+              "transactiontModified": "November 22nd 2018, 2:22:38 pm",
+              "transactiontModifiedUser": "123",
+              "statement_id": "5bf5b1601540321a404d9582",
+              "statementName": "123123",
+              "statementType": "saving",
+              "statementDate": "2018-10-31",
+              "statementCreated": "November 21st 2018, 2:26:24 pm"
+            }]
+
+            // chartData
             res.render('statement/review', {
               pageInfo: config.pageInfo,
               dataCat: user.categoryInfo,
               dataSta: statement,
               dataTrans: transactions,
-              chartInfo: chartInfo
+              chartInfo: chartParent
             });
           } catch (err) {
             // any other request view all statments and transactions and category
