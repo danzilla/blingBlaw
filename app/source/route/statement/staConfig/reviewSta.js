@@ -140,18 +140,6 @@ module.exports = {
               }
             }
 
-            function myFunction(p1, p2) {
-              return p1 * p2;
-            }
-
-
-
-
-
-
-            console.log("myFunction(4, 3)" + myFunction(4, 3));
-
-
             // let groupByTranasCatLabel = Object.keys(groupByTransCat);
             // console.log("groupByTranasCatLabel: " + groupByTranasCatLabel);
             // console.log("\groupByTransCat: " + JSON.stringify(groupByTransCat));
@@ -164,110 +152,57 @@ module.exports = {
             // Chart data === Category child - SUM
             // Chart Color === randomColor
 
-            function sum(arrE){
-              for (let D in arrE) {
-                if (arrE.hasOwnProperty(D)) {
-                  arrE[D] = parseFloat(arrE[D]) || 0;
-                  arrE[D] + arrE[D];
-                  return arrE[D]
+            // Sum array of str->int
+            function sum(arrD) {
+              let totalSum = 0;
+              for (let D in arrD) {
+                if (arrD.hasOwnProperty(D)) {
+                  // turn the string to Int -> if NAN - arr=0
+                  let arr = parseFloat(arrD[D]) || 0;
+                  totalSum = parseFloat(arr) + totalSum;
                 }
               }
+              return totalSum;
             }
 
             // prepare chart info
-            const chartParent = {
+            const chartInfo = {
               chartName: "Spending by Category",
-              dataLabel: [],
-              dataColor: [],
-              dataValue: []
+              chartLabel: [],
+              chartColor: [],
+              dataValueWithdraw: [],
+              dataValueBalance: [],
+              dataValueDeposite: []
             }
             // find total spending for parenet category
             // Total spend for W | B | D
             // Go through Parent Category -GROUP
-            let chartD = [];
             for (let catP in groupByTransCat) {
               if (groupByTransCat.hasOwnProperty(catP)) {
-                // label for Chart - cat parent
-                chartParent.dataLabel.push(catP)
-                // Color for each catParent
-                chartParent.dataColor.push(config.randomColor())
                 // Go through Child Category -GROUP
-                console.log("\n--Cat Parent: " + catP);
-                let chartData = {
-                  labelName: catP,
-                  labelColor: config.randomColor(),
+                // console.log("\n--Cat Parent: " + catP);
+                let pushD = {
+                  dataChild: [],
+                  dataDesc: [],
                   dataValueWithdraw: [],
                   dataValueBalance: [],
-                  dataValueDeposite: [],
-                  dataChild: [],
-                  dataDesc: []
-                }
-                let pushD = [];
+                  dataValueDeposite: []
+                };
                 for (let catC in groupByTransCat[catP]) {
                   if (groupByTransCat[catP].hasOwnProperty(catC)) {
-
-                    chartData.dataValueWithdraw.push(groupByTransCat[catP][catC].transactionWithdraw);
-                    chartData.dataValueBalance.push(groupByTransCat[catP][catC].transactionBalance);
-                    chartData.dataValueDeposite.push(groupByTransCat[catP][catC].transactionDeposite);
-
-                    chartData.dataChild.push(groupByTransCat[catP][catC].transactiontCategoryName);
-                    chartData.dataDesc.push(groupByTransCat[catP][catC].transactionDesc);
-
-                    pushD.push(groupByTransCat[catP][catC].transactionWithdraw);
-
-                    console.log("\nCat Child: " + groupByTransCat[catP][catC].transactiontCategoryName);
-                    console.log("-Cat Parent: " + groupByTransCat[catP][catC].transactiontCategoryParentName);
-                    console.log("-Cat Desc: " + groupByTransCat[catP][catC].transactionDesc);
-                    console.log("-Cat Withdraw: " + groupByTransCat[catP][catC].transactionWithdraw);
-                    console.log("-Cat Balance: " + groupByTransCat[catP][catC].transactionBalance);
-                    console.log("-Cat Deposite: " + groupByTransCat[catP][catC].transactionDeposite);
+                    pushD.dataValueWithdraw.push(groupByTransCat[catP][catC].transactionWithdraw);
+                    pushD.dataValueBalance.push(groupByTransCat[catP][catC].transactionBalance);
+                    pushD.dataValueDeposite.push(groupByTransCat[catP][catC].transactionDeposite);
                   }
                 }
-
-
-                console.log("\nLOOOL: " + JSON.stringify(chartData));
-
-                for (var D in pushD) {
-                  if (pushD.hasOwnProperty(D)) {
-                    pushD[D] = parseFloat(pushD[D]) || 0;
-                    pushD[D] =+ pushD[D];
-                  }
-                }
-                console.log("pushD[D]: " + pushD[D]);
-
-                console.log("dataValueWithdraw " + sum(chartData.dataValueWithdraw));
-                console.log("dataValueBalance " + sum(chartData.dataValueBalance));
-                console.log("dataValueDeposite " + sum(chartData.dataValueDeposite));
-
-
-
+                chartInfo.chartLabel.push(catP);
+                chartInfo.chartColor.push(config.randomColor());
+                chartInfo.dataValueWithdraw.push(sum(pushD.dataValueWithdraw));
+                chartInfo.dataValueBalance.push(sum(pushD.dataValueBalance));
+                chartInfo.dataValueDeposite.push(sum(pushD.dataValueDeposite));
               }
             }
-
-            console.log("\nChart: " + chartParent.chartName);
-            console.log("label: " + chartParent.dataLabel);
-            console.log("Color: " + chartParent.dataColor);
-            console.log("Value: " + chartParent.dataValue);
-
-            [{
-              "transactionId": "5bf5b1601540321a404d9585",
-              "transactionDate": "07/12/2018",
-              "transactionDesc": "PAYMENT - THANK YOU",
-              "transactionWithdraw": "",
-              "transactionDeposite": "200.00",
-              "transactionBalance": "-4.07",
-              "transactiontCategory": "5bf5b10c1540321a404d9569",
-              "transactiontCategoryName": "Investment",
-              "transactiontCategoryParent": "5be07d20239f616a002cabc2",
-              "transactiontCategoryParentName": "Income",
-              "transactiontModified": "November 22nd 2018, 2:22:38 pm",
-              "transactiontModifiedUser": "123",
-              "statement_id": "5bf5b1601540321a404d9582",
-              "statementName": "123123",
-              "statementType": "saving",
-              "statementDate": "2018-10-31",
-              "statementCreated": "November 21st 2018, 2:26:24 pm"
-            }]
+            console.log("ChartInfo: " + JSON.stringify(chartInfo));
 
             // chartData
             res.render('statement/review', {
@@ -275,7 +210,7 @@ module.exports = {
               dataCat: user.categoryInfo,
               dataSta: statement,
               dataTrans: transactions,
-              chartInfo: chartParent
+              chartInfo: chartInfo
             });
           } catch (err) {
             // any other request view all statments and transactions and category
