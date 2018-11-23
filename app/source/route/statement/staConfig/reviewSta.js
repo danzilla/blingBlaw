@@ -39,6 +39,8 @@ module.exports = {
           const _ = require('lodash');
           const groupArray = require('group-array');
           const money = require("money-math");
+
+
           // Plan
           // filter by statment ID
           // 1 - If coming from statment - show all transactions
@@ -138,6 +140,17 @@ module.exports = {
               }
             }
 
+            function myFunction(p1, p2) {
+              return p1 * p2;
+            }
+
+
+
+
+
+
+            console.log("myFunction(4, 3)" + myFunction(4, 3));
+
 
             // let groupByTranasCatLabel = Object.keys(groupByTransCat);
             // console.log("groupByTranasCatLabel: " + groupByTranasCatLabel);
@@ -151,6 +164,16 @@ module.exports = {
             // Chart data === Category child - SUM
             // Chart Color === randomColor
 
+            function sum(arrE){
+              for (let D in arrE) {
+                if (arrE.hasOwnProperty(D)) {
+                  arrE[D] = parseFloat(arrE[D]) || 0;
+                  arrE[D] + arrE[D];
+                  return arrE[D]
+                }
+              }
+            }
+
             // prepare chart info
             const chartParent = {
               chartName: "Spending by Category",
@@ -161,6 +184,7 @@ module.exports = {
             // find total spending for parenet category
             // Total spend for W | B | D
             // Go through Parent Category -GROUP
+            let chartD = [];
             for (let catP in groupByTransCat) {
               if (groupByTransCat.hasOwnProperty(catP)) {
                 // label for Chart - cat parent
@@ -169,32 +193,54 @@ module.exports = {
                 chartParent.dataColor.push(config.randomColor())
                 // Go through Child Category -GROUP
                 console.log("\n--Cat Parent: " + catP);
-
+                let chartData = {
+                  labelName: catP,
+                  labelColor: config.randomColor(),
+                  dataValueWithdraw: [],
+                  dataValueBalance: [],
+                  dataValueDeposite: [],
+                  dataChild: [],
+                  dataDesc: []
+                }
                 let pushD = [];
                 for (let catC in groupByTransCat[catP]) {
                   if (groupByTransCat[catP].hasOwnProperty(catC)) {
 
+                    chartData.dataValueWithdraw.push(groupByTransCat[catP][catC].transactionWithdraw);
+                    chartData.dataValueBalance.push(groupByTransCat[catP][catC].transactionBalance);
+                    chartData.dataValueDeposite.push(groupByTransCat[catP][catC].transactionDeposite);
+
+                    chartData.dataChild.push(groupByTransCat[catP][catC].transactiontCategoryName);
+                    chartData.dataDesc.push(groupByTransCat[catP][catC].transactionDesc);
+
                     pushD.push(groupByTransCat[catP][catC].transactionWithdraw);
 
-                    console.log("Cat Child: " + groupByTransCat[catP][catC].transactiontCategoryName);
-                    console.log("Cat Parent: " + groupByTransCat[catP][catC].transactiontCategoryParentName);
-                    console.log("Cat Desc: " + groupByTransCat[catP][catC].transactionDesc);
-                    console.log("Cat Withdraw: " + groupByTransCat[catP][catC].transactionWithdraw);
-                    console.log("Cat Balance: " + groupByTransCat[catP][catC].transactionBalance);
-                    console.log("Cat Deposite: " + groupByTransCat[catP][catC].transactionDeposite);
-
+                    console.log("\nCat Child: " + groupByTransCat[catP][catC].transactiontCategoryName);
+                    console.log("-Cat Parent: " + groupByTransCat[catP][catC].transactiontCategoryParentName);
+                    console.log("-Cat Desc: " + groupByTransCat[catP][catC].transactionDesc);
+                    console.log("-Cat Withdraw: " + groupByTransCat[catP][catC].transactionWithdraw);
+                    console.log("-Cat Balance: " + groupByTransCat[catP][catC].transactionBalance);
+                    console.log("-Cat Deposite: " + groupByTransCat[catP][catC].transactionDeposite);
                   }
                 }
-                /// LOOOOL - nned more work
 
-                let sumA = 0;
-                for (var summ in pushD) {
-                  if (pushD.hasOwnProperty(summ)) {
-                    sumA += parseInt(pushD[summ], 10);
+
+                console.log("\nLOOOL: " + JSON.stringify(chartData));
+
+                for (var D in pushD) {
+                  if (pushD.hasOwnProperty(D)) {
+                    pushD[D] = parseFloat(pushD[D]) || 0;
+                    pushD[D] =+ pushD[D];
                   }
                 }
-                console.log("pushD: " + pushD);
-                console.log("pushD sumA: " + sumA);
+                console.log("pushD[D]: " + pushD[D]);
+
+                console.log("dataValueWithdraw " + sum(chartData.dataValueWithdraw));
+                console.log("dataValueBalance " + sum(chartData.dataValueBalance));
+                console.log("dataValueDeposite " + sum(chartData.dataValueDeposite));
+
+
+
               }
             }
 

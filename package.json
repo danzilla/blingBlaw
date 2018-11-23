@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "arithmetic": "^1.0.1",
     "connect-mongo": "^2.0.1",
     "cookie-parser": "~1.4.3",
     "csvjson": "^5.1.0",
