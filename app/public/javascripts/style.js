@@ -1,5 +1,7 @@
 
 $(document).ready(function() {
+  $('[data-toggle="popover"]').popover();
+
   $('#dismiss, .overlay').on('click', function() {
     $('#sidebar').removeClass('active');
     $('.overlay').removeClass('active');

@@ -1,29 +1,80 @@
-
-
 <% if(pageInfo.request === "GET") { %>
   <div class="row scrollYes h-90 pd-15">
-      <% for(var i=0; i < dataSta.length; i++) { %>
-        <div class="col-4 word-break p-2">
-          <div class="card card-2 container p-2">
 
-            <form action="/statement/review" method="post" id="review<%- i %>">
-              <input name="statement" type="hidden" value="<%- dataSta[i].statement_id %>">
-            </form>
-            <form action="/statement/remove" method="post" id="remove<%- i %>">
-              <input name="statement" type="hidden" value="<%- dataSta[i].statement_id %>">
-            </form>
+    <% for(sta in dataSta) { %>
+      <div class="col-4 word-break p-2">
+        <div class="card card-2 container p-2">
+          <form action="/statement/review" method="post" id="review<%- sta %>">
+            <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
+          </form>
+          <form action="/statement/remove" method="post" id="remove<%- sta %>">
+            <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
+          </form>
 
-              <p><%- JSON.stringify(dataSta[i]) %></p>
+          <h4><%- dataSta[sta].statementName %></h4>
+          <h5><%- dataSta[sta].statementType %></h5>
+          <h5><%- dataSta[sta].statementDate %></h5>
+          <p><%- dataSta[sta].statementDesc %></p>
+          <div class="row">
+            <div class="col text-center">
 
-              <button class="btn btn-outline-info" form="review<%- i %>">
-              <i class="fas fa-angle-double-right"></i> </button>
-              <button class="btn btn-outline-danger" form="remove<%- i %>">
-              <i class="fas fa-angle-double-right"></i> </button>
+              <div class="btn-group p-4 m-1" role="group">
+                <button class="btn btn-outline-info" form="review<%- sta %>">
+                  Review <i class="fas fa-angle-double-right animated infinite heartBeat slower delay-2s"></i>
+                </button>
+                <div class="btn-group btn-group-lg" role="group">
+                  <button class="btn btn-outline-danger dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <button class="dropdown-item" form="remove<%- sta %>">
+                      Delete statement
+                    </button>
+                    <a class="dropdown-item" href="#">Edit statement</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
+          <div class="row p-3">
+            <!-- pie chart canvas element -->
+            <!-- Tilt element -->
+            <div class="col">
+              <div data-tilt data-tilt-max="7">
+                <canvas id="<%- dataSta[sta].statement_id %>" height="250"></canvas>
+              </div>
+            </div>
+            <script>
+              new Chart(document.getElementById("<%- dataSta[sta].statement_id %>"), {
+                  type: 'pie',
+                data: {
+                  labels: <%- JSON.stringify(charts.chartParent.chartLabel) %>,
+                  datasets: [{
+                    label: "Category and subcategory",
+                    backgroundColor: <%- JSON.stringify(charts.chartParent.chartColor) %>,
+                    data: [<%= charts.chartParent.dataValueWithdraw %>]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: '<%= charts.chartParent.chartName %>'
+                  }
+                }
+              });
+            </script>
+          </div>
+
         </div>
-      <% } %>
+      </div>
+    <% } %>
+
   </div>
 <% } %>
+
+
 <% if(pageInfo.request === "POST" || pageInfo.request === "GETPOST") { %>
   <table class="table table-borderless animated fadeIn">
     <thead class="thead-dark border-bottom border-danger">
@@ -59,7 +110,9 @@
       <% for(var j=0; j < dataTrans.length; j++) { %>
       <form id="update<%- j %>" action="/statement/update" method="post">
         <tr class="card-1 ">
-          <td class="align-middle text-center"> <i class="twa twa-lg twa-panda-face"></i> </td>
+          <td class="align-middle text-center">
+            <i class="twa twa-lg twa-panda-face"> </i>
+          </td>
           <td class="align-middle"> <%- dataTrans[j].transactionDate %></td>
           <td class="align-middle"> <%- dataTrans[j].transactionDesc %> </td>
 

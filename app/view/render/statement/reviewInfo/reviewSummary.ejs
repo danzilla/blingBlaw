@@ -1,26 +1,58 @@
-<h3 class="text-center display-5">summary <small> <%- pageInfo.title %></small></h3>
-<hr>
 
-<!-- pie chart canvas element -->
-<canvas id="myChart" width="400" height="400"></canvas>
+<div class="col">
+  <h3 class="text-center display-5">summary <small> <%- pageInfo.title %></small></h3>
+  <hr>
+  <!-- pie chart canvas element -->
+  <!-- Tilt element -->
+  <div data-tilt data-tilt-max="7">
+    <canvas id="chartParent" height="250"></canvas>
+  </div>
+</div>
+<div class="col">
+  <!-- pie chart canvas element -->
+  <!-- Tilt element -->
+  <div data-tilt data-tilt-max="7">
+    <canvas id="chartChild" height="250"></canvas>
+  </div>
+</div>
+
+
 <script>
-
-  new Chart(document.getElementById("myChart"), {
-      type: 'pie',
-      data: {
-        labels: <%- JSON.stringify(chartInfo.chartLabel) %>,
-        datasets: [{
-          label: "Category and subcategory",
-          backgroundColor: <%- JSON.stringify(chartInfo.chartColor) %>,
-          data: [<%= chartInfo.dataValueWithdraw %>]
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: '<%= chartInfo.chartName %>'
-        }
+  new Chart(document.getElementById("chartParent"), {
+    type: 'pie',
+    data: {
+      labels: <%- JSON.stringify(charts.chartParent.chartLabel) %>,
+      datasets: [{
+        label: "Category and subcategory",
+        backgroundColor: <%- JSON.stringify(charts.chartParent.chartColor) %>,
+        data: [<%= charts.chartParent.dataValueWithdraw %>]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '<%= charts.chartParent.chartName %>'
       }
+    }
   });
+</script>
 
+<script>
+  new Chart(document.getElementById("chartChild"), {
+    type: 'doughnut',
+    data: {
+      labels: <%- JSON.stringify(charts.chartChild.chartLabel) %>,
+      datasets: [{
+        label: "Category and subcategory",
+        backgroundColor: <%- JSON.stringify(charts.chartChild.chartColor) %>,
+        data: [<%= charts.chartChild.dataValueWithdraw %>]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '<%= charts.chartChild.chartName %>'
+      }
+    }
+  });
 </script>
