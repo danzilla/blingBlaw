@@ -41,6 +41,102 @@ const hi = function hi(arrD) {
 }
 
 
+// Sum
+// Sum array of str->int
+const hi2 = function hi2(categoryData, statmentData, transactionData, filterKey) {
+
+  let categoryInfo = categoryData;
+  let statement = statmentData;
+  let transactions = transactionData;
+  let filterKeys = filterKey;
+
+  // cat = root
+  // trans cat = ch
+  let catParent = [];
+  let catChild = [];
+  // Loop through Category for parent
+  // Add colors to arrays
+  for (let cat = 0; cat < categoryInfo.length; cat++) {
+    if (categoryInfo[cat].catParent === "root") {
+      // Parent catParent
+      catParent.push(categoryInfo[cat])
+    } else {
+      // child catChild
+      catChild.push(categoryInfo[cat])
+    }
+  }
+  //  console.log("\ntransactions: " + JSON.stringify(transactions));
+  //  console.log("statement: " + JSON.stringify(statement));
+  // get cat info from transactiontCategory
+  const transactionsInfo = [];
+  for (var i = 0; i < transactions.length; i++) {
+    if (transactions[i].transactiontCategory == "nada") {
+      let pushD = {
+        "transactionId": transactions[i].transactionId,
+        "transactionDate": transactions[i].transactionDate,
+        "transactionDesc": transactions[i].transactionDesc,
+        "transactionWithdraw": transactions[i].transactionWithdraw,
+        "transactionDeposite": transactions[i].transactionDeposite,
+        "transactionBalance": transactions[i].transactionBalance,
+        "transactiontCategory": transactions[i].transactiontCategory,
+        "transactiontCategoryName": transactions[i].transactiontCategory,
+        "transactiontCategoryParent": transactions[i].transactiontCategory,
+        "transactiontCategoryParentName": transactions[i].transactiontCategory,
+        "transactiontModified": transactions[i].transactiontModified,
+        "transactiontModifiedUser": transactions[i].transactiontModifiedUser,
+        "statement_id": transactions[i].statement_id,
+        "statementName": statement[0].statementName,
+        "statementType": statement[0].statementType,
+        "statementDate": statement[0].statementDate,
+        "statementCreated": statement[0].statementCreated
+      }
+      // push "nada" to transactionInfo
+      transactionsInfo.push(pushD)
+    } else {
+      for (var ii = 0; ii < catChild.length; ii++) {
+        if (transactions[i].transactiontCategory == catChild[ii]._id) {
+          for (var iii = 0; iii < catParent.length; iii++) {
+            if (catChild[ii].catParent == catParent[iii]._id) {
+              let pushD = {
+                "transactionId": transactions[i].transactionId,
+                "transactionDate": transactions[i].transactionDate,
+                "transactionDesc": transactions[i].transactionDesc,
+                "transactionWithdraw": transactions[i].transactionWithdraw,
+                "transactionDeposite": transactions[i].transactionDeposite,
+                "transactionBalance": transactions[i].transactionBalance,
+                "transactiontCategory": transactions[i].transactiontCategory,
+                "transactiontCategoryName": catChild[ii].catName,
+                "transactiontCategoryParent": catChild[ii].catParent,
+                "transactiontCategoryParentName": catParent[iii].catName,
+                "transactiontModified": transactions[i].transactiontModified,
+                "transactiontModifiedUser": transactions[i].transactiontModifiedUser,
+                "statement_id": transactions[i].statement_id,
+                "statementName": statement[0].statementName,
+                "statementType": statement[0].statementType,
+                "statementDate": statement[0].statementDate,
+                "statementCreated": statement[0].statementCreated
+              }
+              // push to transactionInfo
+              transactionsInfo.push(pushD)
+
+              console.log("pushD: " + JSON.stringify(pushD));
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log("transactionsInfo" + JSON.stringify(transactionsInfo[0]));
+  let hi = {
+    user: "users",
+    category: categoryData,
+    statment: statmentData,
+    transactions: transactionsInfo,
+    filterKey: filterKey
+  }
+  return hi;
+}
+
 // MODULE all charts!!!!!!!
 
 
@@ -66,3 +162,4 @@ const hi = function hi(arrD) {
 
 module.exports.sum = sum;
 module.exports.hi = hi;
+module.exports.hi2 = hi2;

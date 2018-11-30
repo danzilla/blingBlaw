@@ -37,10 +37,6 @@ module.exports = {
       }, function(err, user) {
         if (!err && user) {
 
-
-
-
-
           // require config
           const ObjectId = require('mongodb').ObjectID;
           const _ = require('lodash');
@@ -75,17 +71,22 @@ module.exports = {
 
 
 
-
-
-
             const cartResult = require("./chartReview");
-            let chart = cartResult.hi(user);
+            let chart = cartResult.hi("user");
             console.log("CHART! : " + JSON.stringify(chart));
 
-
-
-
-
+            let chartFilter = {
+              categoryData: user.categoryInfo,
+              transactionData: transactions,
+              statmentData: statement,
+              filterKey: "Key"
+            }
+            let chartD = cartResult.hi2(chartFilter.categoryData, chartFilter.transactionData, chartFilter.statmentData, chartFilter.filterKey);
+            console.log("\nCHART - user: " + JSON.stringify(chartD.user));
+            console.log("\nCHART - category: " + JSON.stringify(chartD.category));
+            console.log("\nCHART - statment: " + JSON.stringify(chartD.statment));
+            console.log("\nCHART - transactions: " + JSON.stringify(chartD.transactions));
+            console.log("\nCHART - filterKey: " + JSON.stringify(chartD.filterKey));
 
             // cat = root
             // trans cat = ch
@@ -274,6 +275,7 @@ module.exports = {
             let errMsg = "Failed at catch err " + err;
             config.flashData.pageMesage = errMsg;
             config.flashData.bgColor = "danger";
+            console.log(errMsg);
             req.flash('flashData', config.flashData);
             res.redirect('/statement');
           }
