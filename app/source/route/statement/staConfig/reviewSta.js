@@ -37,10 +37,6 @@ module.exports = {
       }, function(err, user) {
         if (!err && user) {
 
-
-
-
-
           // require config
           const ObjectId = require('mongodb').ObjectID;
           const _ = require('lodash');
@@ -73,18 +69,9 @@ module.exports = {
               statement = user.statementInfo;
             }
 
-
-
-
-
-
             const cartResult = require("./chartReview");
             let chart = cartResult.hi(user);
             console.log("CHART! : " + JSON.stringify(chart));
-
-
-
-
 
 
             // cat = root
@@ -185,7 +172,6 @@ module.exports = {
                 childCategoryId: []
               }
             }
-
 
             // GROUP BY Category
             // Group by groupByTransCatChild
@@ -432,7 +418,7 @@ module.exports = {
             }
 
             // Group by groupByTransCatChild
-            let groupByTransCatChild = groupArray(transactionsInfo, 'transactiontCategoryName');
+            let groupByTransCatChild = groupArray(transactionsInfo, 'transactiontCategoryParentName');
             // console.log("\n groupByTransCat" + JSON.stringify(groupByTransCat) + "\n");
 
             // find total spending for parenet category
@@ -468,7 +454,7 @@ module.exports = {
             // console.log("charts" + JSON.stringify(charts.chartParent));
 
             // Group by transaCatParent
-            let groupByTransCat = groupArray(transactionsInfo, 'transactiontCategoryParentName');
+            let groupByTransCat = groupArray(transactionsInfo, 'transactiontCategoryName');
             // console.log("\n groupByTransCat" + JSON.stringify(groupByTransCat) + "\n");
 
             // find total spending for parenet category

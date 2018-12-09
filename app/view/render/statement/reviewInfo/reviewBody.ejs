@@ -2,23 +2,27 @@
   <div class="row scrollYes h-90 pd-15">
 
     <% for(sta in dataSta) { %>
-      <div class="col-4 word-break p-2">
-        <div class="card card-2 container p-2">
-          <form action="/statement/review" method="post" id="review<%- sta %>">
-            <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
-          </form>
-          <form action="/statement/remove" method="post" id="remove<%- sta %>">
-            <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
-          </form>
 
-          <h4><%- dataSta[sta].statementName %></h4>
-          <h5><%- dataSta[sta].statementType %></h5>
-          <h5><%- dataSta[sta].statementDate %></h5>
-          <p><%- dataSta[sta].statementDesc %></p>
-          <div class="row">
-            <div class="col text-center">
+      <div class="col-6">
+        <div class="card card-2 container">
 
-              <div class="btn-group p-4 m-1" role="group">
+          <div class="row word-break">
+
+            <div class="col-4">
+              <form action="/statement/review" method="post" id="review<%- sta %>">
+                <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
+              </form>
+              <form action="/statement/remove" method="post" id="remove<%- sta %>">
+                <input name="statement" type="hidden" value="<%- dataSta[sta].statement_id %>">
+              </form>
+
+              <h4><%- dataSta[sta].statementName %></h4>
+              <h5><%- dataSta[sta].statementType %></h5>
+              <h5><%- dataSta[sta].statementDate %></h5>
+              <p><%- dataSta[sta].statementDesc %></p>
+
+
+              <div class="btn-group" role="group">
                 <button class="btn btn-outline-info" form="review<%- sta %>">
                   Review <i class="fas fa-angle-double-right animated infinite heartBeat slower delay-2s"></i>
                 </button>
@@ -35,44 +39,50 @@
                   </div>
                 </div>
               </div>
-
             </div>
-          </div>
-          <div class="row p-3">
-            <!-- pie chart canvas element -->
-            <!-- Tilt element -->
-            <div class="col">
-              <div data-tilt data-tilt-max="7">
-                <canvas id="<%- dataSta[sta].statement_id %>" height="250"></canvas>
+
+            <div class="col-8">
+              <div class="row p-3">
+                <!-- pie chart canvas element -->
+                <!-- Tilt element -->
+                <div class="col">
+                  <div data-tilt data-tilt-max="7">
+                    <canvas id="<%- dataSta[sta].statement_id %>" height="250"></canvas>
+                  </div>
+                </div>
+                <script>
+                  new Chart(document.getElementById("<%- dataSta[sta].statement_id %>"), {
+                      type: 'pie',
+                    data: {
+                      labels: <%- JSON.stringify(charts.chartParent.chartLabel) %>,
+                      datasets: [{
+                        label: "Category and subcategory",
+                        backgroundColor: <%- JSON.stringify(charts.chartParent.chartColor) %>,
+                        data: [<%= charts.chartParent.dataValueWithdraw %>]
+                      }]
+                    },
+                    options: {
+                      title: {
+                        display: true,
+                        text: '<%= charts.chartParent.chartName %>'
+                      }
+                    }
+                  });
+                </script>
               </div>
             </div>
-            <script>
-              new Chart(document.getElementById("<%- dataSta[sta].statement_id %>"), {
-                  type: 'pie',
-                data: {
-                  labels: <%- JSON.stringify(charts.chartParent.chartLabel) %>,
-                  datasets: [{
-                    label: "Category and subcategory",
-                    backgroundColor: <%- JSON.stringify(charts.chartParent.chartColor) %>,
-                    data: [<%= charts.chartParent.dataValueWithdraw %>]
-                  }]
-                },
-                options: {
-                  title: {
-                    display: true,
-                    text: '<%= charts.chartParent.chartName %>'
-                  }
-                }
-              });
-            </script>
+
           </div>
 
         </div>
       </div>
+
+
     <% } %>
 
   </div>
 <% } %>
+
 
 
 <% if(pageInfo.request === "POST" || pageInfo.request === "GETPOST") { %>
