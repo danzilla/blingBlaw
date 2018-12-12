@@ -28,7 +28,7 @@ router.route('/').get(viewSta.viewSta);
 
 // POST - overview on POST
 // /overview - show statment for update
-const reviewSta = require('./staConfig/reviewSta');
+const reviewSta = require('./reviewConfig/reviewSta');
 router.route('/review').get(reviewSta.reviewStaGet);
 router.route('/review').post(reviewSta.reviewStaPost);
 
@@ -43,7 +43,6 @@ router.route('/upload').post(uploadFolder.single('statementFileInput'), uploadSt
 // Add statement
 // post to add statement/add
 router.route('/upload/add').post(uploadSta.addSta);
-
 // Update statement
 // post to update statement/Update
 const updateSta = require('./staConfig/updateSta');

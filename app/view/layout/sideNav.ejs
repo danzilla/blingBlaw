@@ -1,11 +1,13 @@
 
 
 <div class="btn-group-vertical">
-  <ul class="list-group list-group-flush">
-    <a id="sidebarCollapse" class="list-group-item list-group-item-action card-1 d-flex align-items-center">
+
+  <ul class="list-group list-group-flush my-3">
+    <a id="sidebarCollapse" class="my-3 list-group-item list-group-item-action card-1 d-flex align-items-center">
       <i class="twa twa-lg twa-fire twa-2x mr-3"></i>
       search
     </a>
+
     <a href="/statement" class="list-group-item list-group-item-action card-1 d-flex align-items-center
       <% if (pageInfo.title == "Statement") { %> <%- pageInfo.active %> <% } %>">
       <i class="fas fa-2x fa-piggy-bank mr-3 text-neon"></i>
@@ -16,26 +18,28 @@
       <i class="twa twa-lg twa-peach twa-2x mr-3"></i>
       category
     </a>
-    <a href="/user" class="list-group-item list-group-item-action card-1 d-flex align-items-center
-      <% if (pageInfo.title == "Users") { %> <%- pageInfo.active %> <% } %>">
-      <i class="twa twa-lg twa-innocent twa-2x mr-3"></i>
-      users
-    </a>
+
   </ul>
 
-  <div class="btn-group card-1-no d-flex align-items-center mt-2">
-    <button type="button" class="btn btn-info active">
-      <%- pageInfo.sessionName %>
+  <div class="input-group ">
+    <button class="btn btnC btnC-6 card-1 btn-lg"
+      type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%- pageInfo.sessionName %> <i class="fas fa-ellipsis-v ml-4 text-primary"></i>
     </button>
-    <div class="btn-group">
-      <button type="button" class="btn btn-info" data-toggle="dropdown">
-        <i class="fas fa-ellipsis-v"></i>
-      </button>
-      <div class="dropdown-menu">
-        <a href="/logout" class="dropdown-item d-flex align-items-center">
-          <i class="fas fa-sign-out-alt mr-3 fa-1x"></i> Sign-out
-        </a>
-      </div>
+
+    <div class="dropdown-menu px-0 py-0 card-1">
+      <a href="/user" class="dropdown-item card-1 py-3">
+        <li class="d-flex justify-content-between align-items-center">
+          <i class="twa twa-lg twa-innocent twa-2x"></i> users list
+        </li>
+      </a>
+      <a href="/logout" class="dropdown-item card-1 py-3">
+        <li class="d-flex justify-content-between align-items-center">
+          <i class="twa twa-lg twa-door twa-2x"></i> logout
+        </li>
+      </a>
     </div>
+
   </div>
+
 </div>

@@ -34,7 +34,7 @@ module.exports = {
         config.flashData.pageMesage = "Logged in! " + req.session.user;
         config.flashData.bgColor = "success";
         req.flash('flashData', config.flashData);
-        res.redirect('/user');
+        res.redirect('/statement');
       } else { // else
         // anything else  - render login page with messages
         //set session for the user and redirect to /user page

@@ -69,22 +69,15 @@ module.exports = {
               statement = user.statementInfo;
             }
 
+
+            // chartReview chartReview chartReview chartReview chartReview
             const cartResult = require("./chartReview");
             let chart = cartResult.hi("user");
             console.log("CHART! : " + JSON.stringify(chart));
 
-            let chartFilter = {
-              categoryData: user.categoryInfo,
-              transactionData: transactions,
-              statmentData: statement,
-              filterKey: "Key"
-            }
-            let chartD = cartResult.hi2(chartFilter.categoryData, chartFilter.transactionData, chartFilter.statmentData, chartFilter.filterKey);
-            console.log("\nCHART - user: " + JSON.stringify(chartD.user));
-            console.log("\nCHART - category: " + JSON.stringify(chartD.category));
-            console.log("\nCHART - statment: " + JSON.stringify(chartD.statment));
-            console.log("\nCHART - transactions: " + JSON.stringify(chartD.transactions));
-            console.log("\nCHART - filterKey: " + JSON.stringify(chartD.filterKey));
+            // category
+            let categoryData = cartResult.transactionSummary(user.categoryInfo, transactions, statement);
+            // console.log("\ncategory: " + JSON.stringify(categoryData));
 
             // cat = root
             // trans cat = ch
@@ -101,6 +94,7 @@ module.exports = {
                 catChild.push(user.categoryInfo[cat])
               }
             }
+
             //  console.log("\ntransactions: " + JSON.stringify(transactions));
             //  console.log("statement: " + JSON.stringify(statement));
             // get cat info from transactiontCategory

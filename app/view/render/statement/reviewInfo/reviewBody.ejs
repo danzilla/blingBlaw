@@ -1,10 +1,10 @@
 <% if(pageInfo.request === "GET") { %>
-  <div class="row scrollYes h-90 pd-15">
+  <div class="row pd-15 animated fadeIn">
 
     <% for(sta in dataSta) { %>
 
       <div class="col-6">
-        <div class="card card-2 container">
+        <div class="m-1 card-2 container">
 
           <div class="row word-break">
 
@@ -77,12 +77,14 @@
         </div>
       </div>
 
-
     <% } %>
 
   </div>
-<% } %>
 
+  
+  <%- include('testREVIEW') -%>
+
+<% } %>
 
 
 <% if(pageInfo.request === "POST" || pageInfo.request === "GETPOST") { %>

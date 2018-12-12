@@ -32,7 +32,7 @@ module.exports = {
       config.flashData.pageMesage = "Auto login! " + req.session.user;
       config.flashData.bgColor = "success";
       req.flash('flashData', config.flashData);
-      res.redirect('/user');
+      res.redirect('/statement');
     }
   }
 

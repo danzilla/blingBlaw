@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "scripts": {
     "start": "pm2 start ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "test": "nodemon ./bin/www"
   },
   "dependencies": {
     "arithmetic": "^1.0.1",
