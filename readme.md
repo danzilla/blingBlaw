@@ -26,7 +26,6 @@ Once, you are done with the above requirements.
 ## App Configuration
 
 `/blingBlaw/` - **Root** app root file
-
 `/blingBlaw/adds/` - **sample files** (sample CSV, category sample data)
 
 
@@ -110,3 +109,7 @@ const blingBlaw = {
 	}]
 }
 ~~~
+
+
+
+# New DB - PostgreSQL
