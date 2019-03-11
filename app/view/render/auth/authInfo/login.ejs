@@ -1,17 +1,15 @@
 <div class="card card-1 p-4">
-  <h1 class="display-1"> Budg
-    <span style="font-size: 5rem; letter-spacing: -0.1em;" class="text-danger">
-      <i class="fas fa-rocket fa-flip-horizontal fa-xs"></i>
-    </span>
-    t
-  </h1>
+
+  <h1 class="display-1 text-center"> OEED </h1>
+  <h2 class="display-4 text-center">API <code>dev</code></h2>
 
   <form class="card-body text-center" method="POST">
     <input class="form-control mt-2 text-center" name="uname" type="text" aria-label="uname" placeholder="username">
     <input class="form-control mt-2 text-center" name="pwd" type="password" aria-label="pwd" placeholder="password" required>
     <hr>
     <button class="btn btn-outline-primary" type="submit">Login</button>
-    <a href="/user/add" class="text-center btn btn-link d-block">Register</a> 
+    <a href="/users/add" class="text-center btn btn-link d-block">Register</a>
+
     <div class="col text-center py-3 m-0">
       <%- include('../../../components/flashMessage') -%>
     </div>

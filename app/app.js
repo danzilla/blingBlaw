@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-
 const app = express();
 
 // Dev - logs
@@ -11,61 +10,47 @@ app.locals.pretty = true;
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/public/')));
 app.set('views', path.join(__dirname, '/view/render/'));
 app.set('view engine', 'ejs');
 
-// Session config
+
+// Session - Express-session
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo')(session);
 app.use(cookieParser());
 app.use(session({
-  secret: 'dannustan-BlingBlaw',
+  secret: 'Danzilla-Rawr',
   proxy: true,
   resave: true,
-  saveUninitialized: true,
-  store: new MongoStore({
-    url: "mongodb://localhost:27017/danustanBling"
-  })
+  saveUninitialized: true
 }));
-
 // Flash message
 const flash = require('express-flash');
 app.use(flash());
 
-// Database config | monk
-const mongo = require("mongo");
-const monk = require("monk");
-const db = monk("localhost:27017/danustanBling");
-app.use(function(req, res, next) {
-  req.db = db;
-  next();
-});
 
-// routes
-const indexRouter = require('./source/route/auth/index');
-const userRouter = require('./source/route/users/user');
-const categoryRouter = require('./source/route/category/category');
-const statementRouter = require('./source/route/statement/statement');
+// Routes - API
+const indexRouter = require('./src/router/auth/index');
+const assetsRouter = require('./src/router/assets/assets');
+const searchRouter = require('./src/router/search/search');
+const userRouter = require('./src/router/users/users');
 app.use('/', indexRouter);
-app.use('/user', userRouter);
-app.use('/category', categoryRouter);
-app.use('/statement', statementRouter);
+app.use('/assets', assetsRouter);
+app.use('/search', searchRouter);
+app.use('/users', userRouter);
 
+
+// Error catch
 const createError = require('http-errors');
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

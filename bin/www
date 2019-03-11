@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 const app = require('../app/app');
-const debug = require('debug')('bling-budget:server');
+const debug = require('debug')('Danzilla-Rawr:server');
 const http = require('http');
 /**
  * Get port from environment and store in Express.
@@ -68,6 +68,7 @@ function onListening() {
     'pipe ' + addr :
     'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log("\nServer running on http://localhost:" + port);
-  console.log("BlingBlaw ~" + "\n");
+  console.log("\nDanzilla_BlingBlaw v2");
+  console.log("Server running on http://localhost:" + port);
+  console.log("\n");
 }

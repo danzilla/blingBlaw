@@ -1,33 +1,32 @@
 {
-  "name": "blingBlaw_BudgetApp",
-  "version": "1.2.0",
+  "name": "BlingBlaw",
+  "version": "2.5.0",
   "scripts": {
-    "start": "pm2 start ./bin/www",
+    "start": "node ./bin/www",
     "test": "nodemon ./bin/www"
   },
   "dependencies": {
-    "arithmetic": "^1.0.1",
-    "connect-mongo": "^2.0.1",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "csvjson": "^5.1.0",
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
     "express-flash": "0.0.2",
+    "express-pg-session": "^1.1.0",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "group-array": "^0.3.3",
     "http-errors": "~1.6.2",
     "lodash": "^4.17.11",
     "middleware": "^1.0.0",
-    "moment": "^2.22.2",
-    "money-math": "^2.5.1",
-    "mongo": "^0.1.0",
-    "monk": "^6.0.6",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
+    "node-fetch": "^2.3.0",
     "nodemon": "^1.18.4",
-    "random-color": "^1.0.1",
-    "randomcolor": "^0.5.3"
+    "pg": "^7.8.1",
+    "pg-pool": "^2.0.6",
+    "uuid": "^3.3.2"
   }
 }
