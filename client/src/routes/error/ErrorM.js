@@ -5,7 +5,7 @@ class ErrorM extends Component {
   render() {
     return (
       <div className="container">
-          <h1> React </h1>
+          <h1> Error </h1>
       </div>
     );
   }

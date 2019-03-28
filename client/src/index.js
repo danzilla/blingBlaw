@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Redirect, Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -19,7 +19,8 @@ const routing = (
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/" component={Dashboard} />
-            <Route component={ErrorM} />
+            <Route path='/404' component={ErrorM} />
+            <Redirect from='*' to='/404' />
         </Switch>
     </Router>
 )
