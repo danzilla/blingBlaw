@@ -46,50 +46,55 @@ class Dashboard extends Component {
       <div className="row h-100 w-100">
         <Materialize />
 
+          <div id="slideout" class="sidenav">
+            <div className="row">
+              <div className="col">
+                <p> Height-Top: {this.state.heightY} </p>
+                <p> Height-Bottom: {this.state.heightYY} </p>
+              </div>
+              <div className="col">
+                <p> Width-Nav : {this.state.widthX} </p>
+                <p> Width-Content : {this.state.widthXX} </p>
+              </div>
+            </div>
+            <div className="row">
+              <p class="range-field center-align">
+                <input
+                  className="vranger pink lighten-1"
+                  type="range"
+                  min={this.state.minValueY} max={this.state.maxValueY}
+                  value={this.state.valueY}
+                  onChange={this.handleChangeY.bind(this)}
+                  step="1" />
+              </p>
+              <p class="range-field center-align">
+                <input
+                  type="range"
+                  min={this.state.minValueX} max={this.state.maxValueX}
+                  value={this.state.valueX}
+                  onChange={this.handleChangeX.bind(this)}
+                  step="1" />
+              </p>
+            </div>
+          </div>
+          
+          <a href="#" data-target="slideout" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+          </a>
+        
           {/* Content | Default 80%*/}
           <div className="col h-96" style={{ width: this.state.widthX }}>
             
             <div style={{ height: "50%" }}>
               <div className="card z-depth-2 h-100 valign-wrapper ">
-                <div className="col">
-                  <p> Height-Top: {this.state.heightY} </p>
-                  <p> Height-Bottom: {this.state.heightYY} </p>
-                </div>
-                <div className="col">
-                  <p> Width-Nav : {this.state.widthX} </p>
-                  <p> Width-Content : {this.state.widthXX} </p>
-                </div>
+                asdasdsd
               </div>
             </div>
             <div style={{ height: "50%"}}>
               <div className="card z-depth-2 h-100 valign-wrapper">
-
                 <div className="col">
-                  <p class="range-field center-align">
-                    <input
-                    className="vranger pink lighten-1"
-                      type="range"
-                      min={this.state.minValueY} max={this.state.maxValueY}
-                      value={this.state.valueY}
-                      onChange={this.handleChangeY.bind(this)}
-                      step="1" />
-                  </p>
-                  <p class="range-field center-align">
-                    <input
-                      type="range"
-                      min={this.state.minValueX} max={this.state.maxValueX}
-                      value={this.state.valueX}
-                      onChange={this.handleChangeX.bind(this)}
-                      step="1" />
-                  </p>
+                  asdasdasdasd
                 </div>
-                <div className="col">
-                  <p> Height-Top: {this.state.heightY} </p>
-                  <p> Height-Bottom: {this.state.heightYY} </p>
-                  <p> Width-Nav : {this.state.widthX} </p>
-                  <p> Width-Content : {this.state.widthXX} </p>
-                </div>
-
               </div>
             </div>
 

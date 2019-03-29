@@ -10,15 +10,17 @@ import * as serviceWorker from './serviceWorker';
 // Routers
 import ErrorM from './routes/error/ErrorM';
 import Dashboard from './routes/dashboard/Dashboard';
+import Test from './routes/test/Dashboard';
 import Register from './routes/register/Register';
 import Login from './routes/login/Login';
 
 const routing = (
     <Router>
         <Switch>
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/test" component={Test} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/" component={Dashboard} />
             <Route path='/404' component={ErrorM} />
             <Redirect from='*' to='/404' />
         </Switch>
