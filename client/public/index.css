@@ -33,8 +33,20 @@ code {
 .h-100 {
   height: 100% !important;
 }
+.h-95 {
+  height: 95% !important;
+}
 .h-96 {
   height: 96% !important;
+}
+.h-93 {
+  height: 93% !important;
+}
+.h-90 {
+  height: 90% !important;
+}
+.h-88 {
+  height: 88% !important;
 }
 .h-85 {
   height: 85% !important;
@@ -48,6 +60,8 @@ code {
 .h-25 {
   height: 25% !important;
 }
+
+
 
 /* width */
 .w-100 {
@@ -131,6 +145,9 @@ code {
 }
 .overflowY {
   overflow-y: auto;
+}
+.overflowN {
+  overflow:hidden;
 }
 
 

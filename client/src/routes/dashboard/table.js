@@ -51,6 +51,11 @@ class Table extends Component {
                     <td>Mexico</td>
                 </tr>
                 <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovanni Rovelli</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
                     <td>Ernst Handel</td>
                     <td>Roland Mendel</td>
                     <td>Austria</td>
@@ -64,6 +69,26 @@ class Table extends Component {
                     <td>Laughing Bacchus Winecellars</td>
                     <td>Yoshi Tannamuri</td>
                     <td>Canada</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovanni Rovelli</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Yoshi Tannamuri</td>
+                    <td>Canada</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovanni Rovelli</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
                 </tr>
                 <tr>
                     <td>Magazzini Alimentari Riuniti</td>

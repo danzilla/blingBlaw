@@ -29,32 +29,45 @@ class LeftNav extends Component {
             heightY: event.target.value + '%',
             heightYY: +100 - event.target.value + '%'
         });
+        this.props.getLeftNav(event.target.value)
     }
 
     render() {
+        let text = {
+            id: 'xyz',
+            name: 'zzzasdasdasdasdasd',
+        };
         return (
-            <div id="slideoutLeft" class="sidenav container">
+            <div id="slideoutLeft" className="sidenav container">
+
+
+                <h4>HHH {this.props.hah}</h4>
+                
+                <button onClick={() => this.props.getLeftNav(this.state.minValueX)}>LOLAA</button>
+                <button onClick={() => this.props.getRightNav()}>123213</button>
+
+
                 <div className="row">
-                    <div className="col">
+                    <div className="col m6">
                         <p> Height-Top: {this.state.heightY} </p>
                         <p> Height-Bottom: {this.state.heightYY} </p>
                     </div>
-                    <div className="col">
+                    <div className="col m6">
                         <p> Width-Nav : {this.state.widthX} </p>
                         <p> Width-Content : {this.state.widthXX} </p>
                     </div>
                 </div>
-                <div className="row">
-                    <p class="range-field center-align">
+                <div className="row ">
+                    <p className="range-field center-align">
                         <input
-                            className="vranger pink lighten-1"
+                            className="vranger"
                             type="range"
                             min={this.state.minValueY} max={this.state.maxValueY}
                             value={this.state.valueY}
                             onChange={this.handleChangeY.bind(this)}
                             step="1" />
                     </p>
-                    <p class="range-field center-align">
+                    <p className="range-field center-align">
                         <input
                             type="range"
                             min={this.state.minValueX} max={this.state.maxValueX}
@@ -63,6 +76,9 @@ class LeftNav extends Component {
                             step="1" />
                     </p>
                 </div>
+
+
+
             </div>
         );
     }

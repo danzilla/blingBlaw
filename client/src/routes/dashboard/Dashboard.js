@@ -10,7 +10,6 @@ class Dashboard extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       minValueX: '15',
       maxValueX: '50',
@@ -46,7 +45,7 @@ class Dashboard extends Component {
       <div className="row h-100 w-100">
         <Materialize />
 
-          <div id="slideout" class="sidenav">
+          <div id="slideout" className="sidenav">
             <div className="row">
               <div className="col">
                 <p> Height-Top: {this.state.heightY} </p>
@@ -58,7 +57,7 @@ class Dashboard extends Component {
               </div>
             </div>
             <div className="row">
-              <p class="range-field center-align">
+              <p className="range-field center-align">
                 <input
                   className="vranger pink lighten-1"
                   type="range"
@@ -67,7 +66,7 @@ class Dashboard extends Component {
                   onChange={this.handleChangeY.bind(this)}
                   step="1" />
               </p>
-              <p class="range-field center-align">
+              <p className="range-field center-align">
                 <input
                   type="range"
                   min={this.state.minValueX} max={this.state.maxValueX}
@@ -78,8 +77,8 @@ class Dashboard extends Component {
             </div>
           </div>
           
-          <a href="#" data-target="slideout" class="sidenav-trigger">
-            <i class="material-icons">menu</i>
+          <a href="#" data-target="slideout" className="sidenav-trigger">
+            <i className="material-icons">menu</i>
           </a>
         
           {/* Content | Default 80%*/}

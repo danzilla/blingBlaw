@@ -15,35 +15,35 @@ class Login extends Component {
 
     return (
 
-      <div class="valign-wrapper" style={style}>
-        <div class="valign" style={h100}>
-          <div class="container">
+      <div className="valign-wrapper" style={style}>
+        <div className="valign" style={h100}>
+          <div className="container">
           
-            <div class="row">
-              <div class="col s8 m4 offset-m3">
-                <div class="card">
-                  <div class="card-content">
+            <div className="row">
+              <div className="col s8 m4 offset-m3">
+                <div className="card">
+                  <div className="card-content">
                     
-                    <span class="card-title black-text">Sign In</span>
+                    <span className="card-title black-text">Sign In</span>
                     <form>
 
-                      <div class="row">    
-                        <div class="input-field col s12">
-                          <input name="user" id="user" type="text" class="validate" />
+                      <div className="row">    
+                        <div className="input-field col s12">
+                          <input name="user" id="user" type="text" className="validate" />
                           <label for="user">User name</label>
                         </div>
-                        <div class="input-field col s12">
-                          <input name="password" id="password" type="password" class="validate" />
+                        <div className="input-field col s12">
+                          <input name="password" id="password" type="password" className="validate" />
                           <label for="password">Password</label>
                         </div>
                       </div>
 
                       <div className="row center-align">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                        <button className="btn waves-effect waves-light" type="submit" name="action">
                           Sign In
-                        <i class="material-icons right">send</i>
+                        <i className="material-icons right">send</i>
                         </button>
-                        <a href="/register" class="waves-effect waves-light">
+                        <a href="/register" className="waves-effect waves-light">
                           Register
                         </a>
                       </div>

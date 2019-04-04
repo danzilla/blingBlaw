@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
+import { emojify } from 'react-emojione';
 
 class TopNav extends Component {
-
     render() {
       
         return (
@@ -11,7 +11,7 @@ class TopNav extends Component {
           <div className="container w-100">
             
             {/* Search */}
-            <nav className="col m5 s11 px-0">
+            <nav className="col m5 s12 px-0 light-blue darken-2">
               <div className="nav-wrapper">
                 
                 <form>
@@ -25,11 +25,11 @@ class TopNav extends Component {
               </div>
             </nav>
             {/* Nav */}
-            <nav className="col m7 s11 px-0">
+            <nav className="col m7 s12 px-0 light-blue darken-3">
               <div className="nav-wrapper">
                 {/* LOGO */}
                 <a href="/" className="brand-logo px-1 left">
-                  BlingBlaw
+                    {emojify('🔥')}
                 </a>
                 {/* Pull-right - Menu */}
                 <ul className="right">
@@ -59,10 +59,10 @@ class TopNav extends Component {
             {/* Dropdown */}
             <ul id='dropdown1' className='dropdown-content w-auto'>
               <li className=" w-auto">
-                  <a href="#!" class="collection-item w-auto">asdasdasdasdasdasd</a>
+                  <a href="#!" className="collection-item w-auto">asdasdasdasdasdasd</a>
               </li>
               <li>
-                <a href="#!" class="collection-item w-auto">asdasdasdasdasdasd</a>
+                <a href="#!" className="collection-item w-auto">asdasdasdasdasdasd</a>
               </li>
             </ul>
 

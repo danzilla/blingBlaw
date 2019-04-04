@@ -1,30 +1,43 @@
 // React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Redirect, Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
-
-
 
 // Routers
 import ErrorM from './routes/error/ErrorM';
 import Dashboard from './routes/dashboard/Dashboard';
-import Test from './routes/test/Dashboard';
 import Register from './routes/register/Register';
 import Login from './routes/login/Login';
 
+import Test from './routes/test/Dashboard';
+import Test1 from './routes/test1/Dashboard';
+
+//Redux
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './store/reducer/reducer_1'
+
+let store = createStore(rootReducer)
+
+
 const routing = (
-    <Router>
-        <Switch>
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/test" component={Test} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path='/404' component={ErrorM} />
-            <Redirect from='*' to='/404' />
-        </Switch>
-    </Router>
+    <Provider store={store}>
+        <Router>
+            <Switch>
+                <Route path="/test" component={Test} />
+                <Route path="/test1" component={Test1} />
+
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path='/404' component={ErrorM} />
+                <Redirect from='*' to='/login' />
+            </Switch>
+        </Router>
+    </Provider>
+
 )
 ReactDOM.render(routing, document.getElementById('root'))
 

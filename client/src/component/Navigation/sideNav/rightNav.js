@@ -33,7 +33,7 @@ class LeftNav extends Component {
 
     render() {
         return (
-            <div id="slideoutRight" class="sidenav container">
+            <div id="slideoutRight" className="sidenav container">
                 <div className="row">
                     <h1>
                         Right Side
