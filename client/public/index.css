@@ -33,11 +33,17 @@ code {
 .h-100 {
   height: 100% !important;
 }
-.h-95 {
-  height: 95% !important;
+.h-98 {
+  height: 98% !important;
+}
+.h-97 {
+  height: 97% !important;
 }
 .h-96 {
   height: 96% !important;
+}
+.h-95 {
+  height: 95% !important;
 }
 .h-93 {
   height: 93% !important;
@@ -56,6 +62,9 @@ code {
 }
 .h-50 {
   height: 50% !important;
+}
+.h-40 {
+  height: 40% !important;
 }
 .h-25 {
   height: 25% !important;
@@ -143,6 +152,19 @@ code {
   margin-top: 1em !important;
   margin-bottom: 1em !important;
 }
+.my-2 {
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+.py-1 {
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+}
+.py-2 {
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+}
+
 .overflowY {
   overflow-y: auto;
 }
