@@ -3,6 +3,8 @@ import { emojify } from 'react-emojione';
 
 import CSVReader from 'react-csv-reader'
 
+import Papa from './papa'
+
 
 class NewStatement extends Component {
     constructor(props) {
@@ -39,8 +41,6 @@ class NewStatement extends Component {
 
         this.setState({ data: data });
 
-
-
         console.log("Data: " + this.state.data);
     };
     
@@ -59,6 +59,7 @@ class NewStatement extends Component {
 
                     <div className="modal-content ">
                         <form id="uploadStatement" onSubmit={this.handleSubmit}>
+                           
                             <div className="row center-align">
                                 <div className="input-field col s6 s6">
                                     <input type="text"
@@ -67,7 +68,7 @@ class NewStatement extends Component {
                                         onChange={this.handleChange} />
                                     <label>Date</label>
                                 </div>
-                                <div className="input-field col s6 s6 center-align">
+                                <div className="input-field col s6 s6">
                                     <select name="value2" onChange={this.handleChange}>                                        
                                         <option value="" disabled selected>Type</option>
                                         <option value="1">Option 1</option>
@@ -101,24 +102,7 @@ class NewStatement extends Component {
                                 </div>
                             </div>
 
-                            <input type="text" onChange={this.handleChange.bind(this, 'firstName')} value={this.state.contact.firstName} />
-                            <input type="text" onChange={this.handleChange.bind(this, 'lastName')} value={this.state.contact.lastName} />
-                            
-                            <input 
-                                type="file" 
-                                onChange={this.handleChange.bind(this, 'phone1')} 
-                                value={this.state.contact.phone} />
-
-
-                            <CSVReader
-                                cssClass="csv-reader-input"
-                                label="Select CSV with secret Death Star statistics"
-                                onFileLoaded={this.handleForce}
-                                onError={"this.handleDarkSideForce"}
-                                inputId="ObiWan"
-                                inputStyle={{ color: 'red' }}
-                            />
-
+                            <Papa className="bg-info" />
 
 
                         </form>
@@ -128,7 +112,7 @@ class NewStatement extends Component {
                         <div className="center-align">
                             <button onClick={this.handleSubmit} type="submit" for="uploadStatement"
                                 className="waves-effect waves-dark btn light-blue darken-3">
-                              Review statement 
+                              Review
                              </button> 
                         </div>
                     </div>

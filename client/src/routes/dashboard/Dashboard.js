@@ -64,6 +64,7 @@ class Dashboard extends Component {
 
   render() {
     let text = "12321321312321321321312"
+    
     return (
       <div className="row h-100 w-100">
         {/* Init Materializecss */}
