@@ -28,6 +28,10 @@ app.use(session({
   saveUninitialized: true
 }));
 
+// Cors - Cross-Origin Resource Sharing
+const cors = require('cors')
+app.use(cors());
+
 // Flash message
 const flash = require('express-flash');
 app.use(flash());

@@ -1,124 +1,89 @@
 import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 
-import CSVReader from 'react-csv-reader'
-
-import Papa from './papa'
-
+import Papa from './papaCSVReader'
+import TableReview from './tableReviewCSV'
 
 class NewStatement extends Component {
+    // States
     constructor(props) {
         super(props);
         this.state = { 
-            value1: '',
-            value2: '',
-            value3: '',
-            value4: '',
-            contact: {},
-            data: {}
+            reviewData: [],
+            contact: ''
         };
-
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getReviewData = this.getReviewData.bind(this)
     }
-
-    componentDidMount(){
-        console.log(this.state.value1)
-    }
-
+    // Submit 
     handleSubmit(event) {
         event.preventDefault();
         console.log("contact " + JSON.stringify(this.state.contact));
     }
-    
-
-    handleChange = (propertyName, event) => {
-        const contact = this.state.contact;
-        contact[propertyName] = event.target.value;
-        this.setState({ contact: contact });
-    }   
-
-    handleForce = data => {
-
-        this.setState({ data: data });
-
-        console.log("Data: " + this.state.data);
-    };
-    
-    
+    // ReviewData - callback
+    getReviewData(reviewCSV){
+        this.setState({
+            reviewData: reviewCSV
+        })
+    }
+    // Render
     render() {
         return (
-            <div>
-                <div id="NewStatement" className="w-50 modal card-1">
-                   
-                    <div className="">
-                        <h4 className="p-1">
-                            {emojify('💰')} Add CSV                           
-                        </h4>
-                        <hr className="hr black-text text-darken" />
-                    </div>
-
-                    <div className="modal-content ">
-                        <form id="uploadStatement" onSubmit={this.handleSubmit}>
-                           
-                            <div className="row center-align">
-                                <div className="input-field col s6 s6">
-                                    <input type="text"
-                                        name="value1"
-                                        className="datepicker"
-                                        onChange={this.handleChange} />
-                                    <label>Date</label>
+        <div>
+            <div id="NewStatement" className="w-50 modal">
+                {/* Header */}
+                <h4 className="m-1">{emojify('💰')} Add CSV </h4>
+                <hr className="hr black-text text-darken" />
+                {/* Content */}
+                <div className="modal-content">
+                    <div class="row">
+                        
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col m3 s3">
+                                    <Papa
+                                        btnText={"Select a CSV file"}
+                                        reviewData={this.getReviewData}
+                                        className="blue-text text-darken-2 card-1 col m12 upload grey lighten-4 waves-effect waves-dark btn-large" />
                                 </div>
-                                <div className="input-field col s6 s6">
-                                    <select name="value2" onChange={this.handleChange}>                                        
-                                        <option value="" disabled selected>Type</option>
+                                <div class="input-field col m3 s3">
+                                    <i class="material-icons prefix">unfold_more</i>
+                                    <select name="staType">
                                         <option value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
                                     </select>
+                                    <label for="autocomplete-input">Type</label>
+                                </div>
+                                <div class="input-field col m3 s3">
+                                    <i class="material-icons prefix">date_range</i>
+                                    <input name="staDate" type="text" id="staDate" class="datepicker" />
+                                    <label for="datepicker1">Date</label>
+                                </div>
+                                <div class="input-field col m3 s3">
+                                    <i class="material-icons prefix">add_comment</i>
+                                    <input type="text" id="staComment" name="staComment" />
+                                    <label for="autocomplete-input">lalala... </label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="row center-align">
-                                <div className="input-field col m6 s6">
-                                    <textarea id="textarea2" 
-                                        className="materialize-textarea"
-                                        name="value3"
-                                        onChange={this.handleChange}></textarea>
-                                    <label for="textarea2">Note </label>
-                                </div>
-                                <div className="file-field input-field col m6 s6">
-                                    <div className="btn waves-effect waves-light">
-                                        <span>
-                                            <i className="material-icons">file_upload</i>
-                                        </span>
-                                        <input type="file" 
-                                            name="value4"
-                                            onChange={this.handleChange} />
-                                    </div>
-                                    <div className="file-path-wrapper">
-                                        <input className="file-path validate" type="text" />
-                                        <label>Upload statement (.csv)</label>
-                                    </div>
-                                </div>
+                        <div className={this.state.reviewData == "" ? "hide" : "col s12"}>
+                            <div className="center-align">
+                                <a class="card-1 waves-effect waves-teal btn-flat card-panel blue lighten-5">
+                                    Review and upload <i class="material-icons right">send</i>
+                                </a>
                             </div>
-
-                            <Papa className="bg-info" />
-
-
-                        </form>
-                    </div>
-
-                    <div className="modal-footer ">
-                        <div className="center-align">
-                            <button onClick={this.handleSubmit} type="submit" for="uploadStatement"
-                                className="waves-effect waves-dark btn light-blue darken-3">
-                              Review
-                             </button> 
+                        </div>
+                        <div className={!this.state.reviewData == "" ? "hide" : "col s12"}>
+                            <TableReview
+                                reviewCSV={this.state.reviewData}
+                                className={"Table"} />
                         </div>
                     </div>
-
                 </div>
             </div>
+        </div>
         );
     }
 }

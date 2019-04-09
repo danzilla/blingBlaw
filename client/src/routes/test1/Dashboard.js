@@ -4,9 +4,9 @@ import TopNav from '../../component/Navigation/topNav/topNav'
 import LeftNav from '../../component/Navigation/sideNav/leftNav'
 import RightNav from '../../component/Navigation/sideNav/rightNav'
 
+import Table from '../../component/Charts/table'
+import Chart from '../../component/Charts/chart'
 
-import Table from '../dashboard/table'
-import Chart from '../dashboard/chart'
 
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'

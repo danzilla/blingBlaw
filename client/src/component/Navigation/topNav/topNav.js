@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { emojify } from 'react-emojione';
 
-
 import NewStatement from '../../Modals/addNewStatement'
 
 

@@ -16,6 +16,13 @@ code {
     monospace;
 }
 
+
+
+.upload input{
+  width: 100% !important;
+  display:none;
+}
+
 .z-100 {
   z-index: -100;
 }
@@ -177,10 +184,6 @@ code {
    transform: rotate(90deg);
   -moz-transform: rotate(90deg); /*do same for other browsers if required*/
 }
-
-
-
-
 
 
 

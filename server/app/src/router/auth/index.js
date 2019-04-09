@@ -15,10 +15,18 @@ router.route('/').get(getLogin.login);
 const postLogin = require('./authConfig/postLogin');
 router.route('/').post(postLogin.postLogin);
 
+
+// Auth POST 
+// POST login page - React
+const postLoginReact = require('./login/postLogin');
+router.route('/login').post(postLoginReact.postLogin);
+
+
 // logout All
 // POST login page.
 const logout = require('./authConfig/logout');
 router.route('/logout').all(logout.logOutAll);
+
 
 module.exports = router;
 

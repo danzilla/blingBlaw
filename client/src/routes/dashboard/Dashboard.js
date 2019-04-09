@@ -4,7 +4,6 @@ import TopNav from '../../component/Navigation/topNav/topNav'
 import LeftNav from '../../component/Navigation/sideNav/leftNav'
 import RightNav from '../../component/Navigation/sideNav/rightNav'
 
-
 import Table from '../../component/Charts/table'
 import Chart from '../../component/Charts/chart'
 
@@ -78,6 +77,7 @@ class Dashboard extends Component {
               update={this.state.testTestUpdate}
               getLeftNav={this.getLeftNav}
               getRightNav={this.getRightNav}  />
+
             <RightNav />
         </div>
 
@@ -114,11 +114,16 @@ class Dashboard extends Component {
                   {/* Quo Box */}
                   {/* Width - col m12 */}
                   <div className="my-1 card z-depth-2 col m12 h-100">
+                   
+                   
+                   
                     <div className="h-100 overflowY">
                       {this.state.displaySettings.div_D.width}
                       {this.state.testTestUpdate}
                       {this.state.textTest}
                     </div>
+
+
                   </div>
                 </div>
 
