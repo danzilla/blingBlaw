@@ -16,11 +16,50 @@ code {
     monospace;
 }
 
+
+
+.upload input{
+  width: 100% !important;
+  display:none;
+}
+
+.z-100 {
+  z-index: -100;
+}
+.z-1000 {
+  z-index: 1000;
+}
+.h-auto {
+  height: auto !important;
+}
+.w-auto {
+  width: auto !important;
+}
+
+/* height */
 .h-100 {
   height: 100% !important;
 }
+.h-98 {
+  height: 98% !important;
+}
+.h-97 {
+  height: 97% !important;
+}
+.h-96 {
+  height: 96% !important;
+}
 .h-95 {
   height: 95% !important;
+}
+.h-93 {
+  height: 93% !important;
+}
+.h-90 {
+  height: 90% !important;
+}
+.h-88 {
+  height: 88% !important;
 }
 .h-85 {
   height: 85% !important;
@@ -31,10 +70,282 @@ code {
 .h-50 {
   height: 50% !important;
 }
+.h-40 {
+  height: 40% !important;
+}
 .h-25 {
   height: 25% !important;
 }
 
+
+
+/* width */
+.w-100 {
+  width: 100% !important;
+}
+.w-95 {
+  width: 95% !important;
+}
+.w-85 {
+  width: 85% !important;
+}
+.w-75 {
+  width: 75% !important;
+}
+.w-50 {
+  width: 50% !important;
+}
+.w-25 {
+  width: 25% !important;
+}
+
+
+.m-0 {
+  margin: 0 !important;
+}
+.m-1 {
+  margin: 1em !important;
+}
+.m-2 {
+  margin: 2em !important;
+}
+.m-3 {
+  margin: 3em !important;
+}
+.m-4 {
+  margin: 4em !important;
+}
+.m-5 {
+  margin: 5em !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+.p-1 {
+  padding: 1em !important;
+}
+.p-2 {
+  padding: 2em !important;
+}
+.p-3 {
+  padding: 3em !important;
+}
+.p-4 {
+  padding: 4em !important;
+}
+.p-5 {
+  padding: 5em !important;
+}
+
+.px-0{
+  padding-left: 0em !important;
+  padding-right: 0em !important;
+}
+.mx-0{
+  margin-left: 0em !important;
+  margin-right: 0em !important;
+}
+.px-1{
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+.mx-1{
+  margin-left: 1em !important;
+  margin-right: 1em !important;
+}
+
+.my-1 {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+}
+.my-2 {
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+.py-1 {
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+}
+.py-2 {
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+}
+
 .overflowY {
   overflow-y: auto;
+}
+.overflowN {
+  overflow:hidden;
+}
+
+
+.vranger {
+   transform: rotate(90deg);
+  -moz-transform: rotate(90deg); /*do same for other browsers if required*/
+}
+
+
+
+.reset-this {
+    animation : none;
+    animation-delay : 0;
+    animation-direction : normal;
+    animation-duration : 0;
+    animation-fill-mode : none;
+    animation-iteration-count : 1;
+    animation-name : none;
+    animation-play-state : running;
+    animation-timing-function : ease;
+    backface-visibility : visible;
+    background : 0;
+    background-attachment : scroll;
+    background-clip : border-box;
+    background-color : transparent;
+    background-image : none;
+    background-origin : padding-box;
+    background-position : 0 0;
+    background-position-x : 0;
+    background-position-y : 0;
+    background-repeat : repeat;
+    background-size : auto auto;
+    border : 0;
+    border-style : none;
+    border-width : medium;
+    border-color : inherit;
+    border-bottom : 0;
+    border-bottom-color : inherit;
+    border-bottom-left-radius : 0;
+    border-bottom-right-radius : 0;
+    border-bottom-style : none;
+    border-bottom-width : medium;
+    border-collapse : separate;
+    border-image : none;
+    border-left : 0;
+    border-left-color : inherit;
+    border-left-style : none;
+    border-left-width : medium;
+    border-radius : 0;
+    border-right : 0;
+    border-right-color : inherit;
+    border-right-style : none;
+    border-right-width : medium;
+    border-spacing : 0;
+    border-top : 0;
+    border-top-color : inherit;
+    border-top-left-radius : 0;
+    border-top-right-radius : 0;
+    border-top-style : none;
+    border-top-width : medium;
+    bottom : auto;
+    box-shadow : none;
+    box-sizing : content-box;
+    caption-side : top;
+    clear : none;
+    clip : auto;
+    color : inherit;
+    columns : auto;
+    column-count : auto;
+    column-fill : balance;
+    column-gap : normal;
+    column-rule : medium none currentColor;
+    column-rule-color : currentColor;
+    column-rule-style : none;
+    column-rule-width : none;
+    column-span : 1;
+    column-width : auto;
+    content : normal;
+    counter-increment : none;
+    counter-reset : none;
+    cursor : auto;
+    direction : ltr;
+    display : inline;
+    empty-cells : show;
+    float : none;
+    font : normal;
+    font-family : inherit;
+    font-size : medium;
+    font-style : normal;
+    font-variant : normal;
+    font-weight : normal;
+    height : auto;
+    hyphens : none;
+    left : auto;
+    letter-spacing : normal;
+    line-height : normal;
+    list-style : none;
+    list-style-image : none;
+    list-style-position : outside;
+    list-style-type : disc;
+    margin : 0;
+    margin-bottom : 0;
+    margin-left : 0;
+    margin-right : 0;
+    margin-top : 0;
+    max-height : none;
+    max-width : none;
+    min-height : 0;
+    min-width : 0;
+    opacity : 1;
+    orphans : 0;
+    outline : 0;
+    outline-color : invert;
+    outline-style : none;
+    outline-width : medium;
+    overflow : visible;
+    overflow-x : visible;
+    overflow-y : visible;
+    padding : 0;
+    padding-bottom : 0;
+    padding-left : 0;
+    padding-right : 0;
+    padding-top : 0;
+    page-break-after : auto;
+    page-break-before : auto;
+    page-break-inside : auto;
+    perspective : none;
+    perspective-origin : 50% 50%;
+    position : static;
+    /* May need to alter quotes for different locales (e.g fr) */
+    quotes : '\201C' '\201D' '\2018' '\2019';
+    right : auto;
+    tab-size : 8;
+    table-layout : auto;
+    text-align : inherit;
+    text-align-last : auto;
+    text-decoration : none;
+    text-decoration-color : inherit;
+    text-decoration-line : none;
+    text-decoration-style : solid;
+    text-indent : 0;
+    text-shadow : none;
+    text-transform : none;
+    top : auto;
+    transform : none;
+    transform-style : flat;
+    transition : none;
+    transition-delay : 0s;
+    transition-duration : 0s;
+    transition-property : none;
+    transition-timing-function : ease;
+    unicode-bidi : normal;
+    vertical-align : baseline;
+    visibility : visible;
+    white-space : normal;
+    widows : 0;
+    width : auto;
+    word-spacing : normal;
+    z-index : auto;
+    /* basic modern patch */
+    all: initial;
+    all: unset;
+}
+
+/* basic modern patch */
+
+#reset-this-root {
+    all: initial;
+    * {
+        all: unset;
+    }
 }
