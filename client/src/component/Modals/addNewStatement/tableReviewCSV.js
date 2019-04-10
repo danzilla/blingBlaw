@@ -1,8 +1,4 @@
-import React, { useCallback } from 'react'
-import Dropzone from 'react-dropzone'
-import Papa from 'papaparse'
-import csv from "csvtojson";
-import CSVReader from 'react-csv-reader'
+import React from 'react'
 
 class TableReview extends React.Component {
     // React States
@@ -37,7 +33,7 @@ class TableReview extends React.Component {
                                 Check if Deposite or Withdrawl
                                 Display only one
                             */}
-                            <td>{row.field3 == '' ? row.field4 : row.field3}</td>
+                            <td>{row.field3 === '' ? row.field4 : row.field3}</td>
                             <td>{row.field5}</td>
                         </tr>
                     )}

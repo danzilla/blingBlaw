@@ -33,10 +33,6 @@ class LeftNav extends Component {
     }
 
     render() {
-        let text = {
-            id: 'xyz',
-            name: 'zzzasdasdasdasdasd',
-        };
         return (
             <div id="slideoutLeft" className="sidenav container">
 
