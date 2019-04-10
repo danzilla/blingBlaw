@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import { emojify } from 'react-emojione';
+import axios from 'axios';
+
+// To-do 
+// Session and Auto login/redirect 
+// Session Client 
 
 // Login
-class Login extends Component {
-  //states
+class LoginForm extends Component {
+  // states
   constructor(props) {
     super(props)
     this.state = {
@@ -11,77 +16,101 @@ class Login extends Component {
         userName: "",
         password: ""
       },
-      pgMsg: "asdas",
-      pgMsgColor: ""
+      pageMesage: "",
+      pageGood: false
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   // onChange - get and set state for Login form
-  handleChange(propertyName, event){
+  handleChange = (propertyName, event) => {
     const login = this.state.login;
     login[propertyName] = event.target.value;
     this.setState({ login: login });
   }
 
-  handleSubmit(event){
-    axios.post('http://localhost:5000/login', {
+  // submit login
+  handleSubmit = (event) => {
+
+    
+    if (!this.state.login.userName || !this.state.login.password){
+      // If the input are empty 
+      // setState to = False
+      this.setState({ pageMesage: "Credentials required ", pageGood: false });
+    } else {
+      // validate against server:5000
+      // query 
+      axios.post('http://localhost:5000/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
       })
-      .then(function (response) {
-        console.log(response.data.hello)
-        this.setState({ pgMsg: "pga" })
+      .then((response) => {
+        if ((!response.data) || (response.data.pageGood === false)) {
+          // if response.data = empty or bad
+          // set local state
+          this.setState({ pageMesage: response.data.pageMesage, pageGood: response.data.pageGood });
+          // get and set props - Login state
+          this.props.isLogged(response.data.pageGood)
+        } else {
+          // if response.data = good
+          // set local state
+          this.setState({ pageMesage: response.data.pageMesage, pageGood: response.data.pageGood });
+          // get and set props - Login state
+          this.props.isLogged(response.data.pageGood)
+        }
       })
-      .catch(function (error) {
+      .catch((error) => {
+        // get and set props - Login state
+        this.props.isLogged(false)
         console.log(error);
       });
-    
+    }
+    // default prevent-refresh form dawg
     event.preventDefault();
   }
 
-
   render() {
-
     return (
       <div className="valign-wrapper w-100 h-100">
         <div className="valign w-100">
           <div className="container">
           
             <div className="row">
-              <div className="col s8 m4 offset-m3">
-                <div className="card">
+              <div className="col m4 offset-m4 s8 offset-s2">
+                <div className="card card-1 z-depth-4">
                   <div className="card-content">
-                    
-                    <span className="card-title black-text">Sign In</span>
-                    {this.state.pgMsg}
-                    <form onSubmit={this.handleSubmit}>
 
-                      <div className="row">    
+                    <h5 className="card-title black-text">Sign In <span>{emojify(':rocket:')}</span></h5>
+
+                    <form onSubmit={this.handleSubmit}>
+                      {/* Login Form - input */}  
+                      <div className="row">  
+                        {/* User Name */}  
                         <div className="input-field col s12">
                           <input name="userName" id="userName" type="text"
                             onChange={this.handleChange.bind(this, 'userName')}
                             value={this.state.login.userName}
-                            className="validate" />
+                            className="validate" required />
                           <label for="userName">User name</label>
                         </div>
+                        {/* Password */}  
                         <div className="input-field col s12">
                           <input name="password" id="password" type="password"
                             onChange={this.handleChange.bind(this, 'password')} 
                             value={this.state.login.password}
-                            className="validate" />
+                            className="validate" required />
                           <label for="password">Password</label>
                         </div>
+                        {/* err */}  
+                        <div className="center-align col s12 pink-text text-lighten-2">
+                          {this.state.pageMesage}  
+                        </div>
                       </div>
-
+                      {/* Login Form - Sub button */}  
                       <div className="row center-align">
                         <button className="btn waves-effect waves-light" type="submit" name="action"> Sign In </button>
                         <br />
                         <a href="/register" className="waves-effect waves-light"> Register </a>
                       </div>
-         
                     </form>
 
                   </div>
@@ -97,5 +126,5 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LoginForm;
 

@@ -67,19 +67,17 @@ class NewStatement extends Component {
                                 </div>
                             </div>
                         </div>
-
                         <div className={this.state.reviewData == "" ? "hide" : "col s12"}>
                             <div className="center-align">
                                 <a class="card-1 waves-effect waves-teal btn-flat card-panel blue lighten-5">
                                     Review and upload <i class="material-icons right">send</i>
                                 </a>
                             </div>
-                        </div>
-                        <div className={!this.state.reviewData == "" ? "hide" : "col s12"}>
                             <TableReview
                                 reviewCSV={this.state.reviewData}
                                 className={"Table"} />
                         </div>
+
                     </div>
                 </div>
             </div>

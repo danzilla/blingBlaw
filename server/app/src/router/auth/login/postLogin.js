@@ -24,6 +24,7 @@ module.exports = {
       req.body.uname,
       req.body.pwd
     ]
+    
     //DBPG - DataBase postgress
     // request DB conections
     const danzillaDB = require("../../../modules/danzillaDB");
@@ -31,38 +32,25 @@ module.exports = {
     danzillaDB.pool.query(query, loginPayLoad, function (err, result) {
       if (err) {
         // if err - redirect to login page
-        console.log("errr:" + err);
+        config.flashData.pageMesage = "Incorrect credentials -err-DB: " + err;
         console.log(config.flashData.pageMesage);
-        config.flashData.pageMesage = "Incorrect credentials -err-DB";
-        config.flashData.bgColor = "danger";
-        res.send({ hello: config.flashData.pageMesage });
-      }
-      else {
-
+        res.send({ pageMesage: config.flashData.pageMesage, pageGood: false });
+      } else {
         // if result = 1 and pwd match // Credentials are matched
         if (result.rowCount == 1 && result.rows[0].user_pwd_hash == req.body.pwd) {
-
           // Session ON - Set session
           //set session for the user and redirect to /user page
           req.session.user = req.body.uname;
           req.session.userId = result.rows[0].user_serial;
           
-          console.log(config.flashData.pageMesage);
           config.flashData.pageMesage = "Logged in! " + result.rows[0].user_name;
-          config.flashData.bgColor = "success";
-          req.flash('flashData', config.flashData);
-          // redirect to view_users list
-          res.send({ hello: config.flashData.pageMesage });
-        } else {
-
-          console.log("errr:" + JSON.stringify(result.rows));
-
-          // if password and row count is NOT one - redirect to login page
           console.log(config.flashData.pageMesage);
-          config.flashData.pageMesage = "Incorrect credentials -err-PWD";
-          config.flashData.bgColor = "danger";
-          req.flash('flashData', config.flashData);
-          res.send({ hello: config.flashData.pageMesage });
+          res.send({ pageMesage: config.flashData.pageMesage, pageGood: true });
+        } else {
+          // if password and row count is NOT one - redirect to login page
+          config.flashData.pageMesage = "Incorrect password";
+          console.log(config.flashData.pageMesage);
+          res.send({ pageMesage: config.flashData.pageMesage, pageGood: false });
         }
       }
     });

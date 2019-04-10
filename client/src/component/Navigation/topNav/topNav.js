@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import { emojify } from 'react-emojione';
 
 import NewStatement from '../../Modals/addNewStatement'
-
 
 class TopNav extends Component {
     render() {
@@ -50,11 +48,17 @@ class TopNav extends Component {
                       <i className="material-icons">settings_overscan</i></a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-light modal-trigger tooltipped"
-                          data-position="bottom" data-tooltip="Upload new statement"
-                          href="#NewStatement">
-                          <i className="material-icons">file_upload</i>
-                        </a>
+                      <a class="waves-effect waves-light modal-trigger tooltipped"
+                        data-position="bottom" data-tooltip="Upload new statement"
+                        href="#NewStatement">
+                        <i className="material-icons">file_upload</i></a>
+                    </li>
+                    {/* Need to be update the LOGOUT */}
+                    <li>
+                      <a class="waves-effect waves-light modal-trigger tooltipped"
+                        data-position="bottom" data-tooltip="Sign out"
+                        href="/login/">
+                        <i className="material-icons">exit_to_app</i></a>
                     </li>
                   </ul>
                 </div>
