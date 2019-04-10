@@ -116,7 +116,6 @@ class Dashboard extends Component {
                   <div className="my-1 card z-depth-2 col m12 h-100">
                    
                    
-                   
                     <div className="h-100 overflowY">
                       {this.state.displaySettings.div_D.width}
                       {this.state.testTestUpdate}

@@ -14,9 +14,13 @@ router.route('/').get(viewUser.viewUser);
 const addUser = require('./userConfig/addUser');
 router.route('/add').get(addUser.addUserGET);
 
+
 // Add users
 // post to add user/add
-router.route('/add').post(addUser.addUserPOST);
+const addUser1 = require('./addUser/addUser');
+router.route('/add').post(addUser1.addUserPOST);
+
+
 // Remove user
 // POST to remove user/remove
 const removeUser = require('./userConfig/removeUser');

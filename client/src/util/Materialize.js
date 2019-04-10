@@ -28,6 +28,7 @@ class Materialize extends Component {
         // Nav
         M.Sidenav.init(navLeft, optionsL)
         M.Sidenav.init(navRight, optionsR)
+
     }
 
 
