@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 
+// Navigation
 import TopNav from '../../component/Navigation/topNav/topNav'
 import LeftNav from '../../component/Navigation/sideNav/leftNav'
 import RightNav from '../../component/Navigation/sideNav/rightNav'
 
+// Charts and Tables
 import Table from '../../component/Charts/table'
 import Chart from '../../component/Charts/chart'
 
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import {actionName} from '../../store/action/action'
-
+// Dashboard
 class Dashboard extends Component {
   
   constructor(props) {
@@ -62,8 +61,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    let text = "12321321312321321321312"
-    
+
     return (
       <div className="row h-100 w-100">
         {/* Init Materializecss */}
@@ -71,90 +69,61 @@ class Dashboard extends Component {
         {/* Navigation */}
         <div className="my-1">
             <TopNav />
-
             <LeftNav 
               hah={this.state.textTest} 
               update={this.state.testTestUpdate}
               getLeftNav={this.getLeftNav}
               getRightNav={this.getRightNav}  />
-
             <RightNav />
         </div>
 
+        {
+          /* 
+            2 onClick hide Graphs and change Container -> ROW and  s12 m12 l12 -> Table
+            3 onClick show Graph and change ROW -> CONTAINER
 
+            onClick => SHOW 
+              wrapper-content => "row w-100 h-100 overflowN"
+              side-content => "col s12 m4 l3 h-100"
+              body-content => "col s12 m8 l9 h-100"
+
+            onClick => HIDE
+              wrapper-content => "container w-100 h-100 overflowN"
+              side-content => "hide"
+              body-content => "col s12 m12 l12 h-100"
+
+          */
+        }
 
         {/* Content */}
         <div className="row w-100 h-100 overflowN">
-          <div className="col w-100 h-95 overflowN">
+          <div className="col w-100 h-90 overflowN">
 
-              {/* Content FULL MAX */}
-              <div className="row h-90">
-                {/* Side Box */}
-                {/* Width - col m3 s12 */}
-                <div className="col m3 s12 h-100">
-                  {/* Uno Box */}
-                  {/* Width - col m12 s12*/}
-                  <div className="col m12 s12 h-50 card z-depth-2">
-                    <div className="h-100 valign-wrapper">
-                      <Chart />
-                    </div>
-                  </div>
-                  {/* Dos Box */}
-                  {/* Width - col m12 s12*/}
-                  <div className="col m12 s12 h-50 card z-depth-2">
-                    <div className="h-100">
-                      <Table />
-                    </div>
+            {/* Body */}
+            <div id="wrapper-content" className="row w-100 h-100 overflowN">
+              {/* Side Content */}
+              <div id="side-content" className="col s12 m4 l3 h-100">
+                <div className="col s6 m12 h-50">
+                  <div className="card z-depth-2 h-90 valign-wrapper">
+                    <Chart />
                   </div>
                 </div>
-                
-                {/* Dos Box */}
-                {/* Width - col m9 s12*/}
-                <div className="col m9 s12 h-100">
-                  {/* Quo Box */}
-                  {/* Width - col m12 */}
-                  <div className="my-1 card z-depth-2 col m12 h-100">
-                   
-                   
-                    <div className="h-100 overflowY">
-                      {this.state.displaySettings.div_D.width}
-                      {this.state.testTestUpdate}
-                      {this.state.textTest}
-                    </div>
-
-
+                <div className="col s6 m12 h-50">
+                  <div className="card z-depth-2 h-90 valign-wrapper ">
+                    <Chart />
                   </div>
                 </div>
-
               </div>
-
-              {
-
-                // Hide 
-                // View on Big Mscreen 
-                // Main Template 
-
-                // Max col row range - col m12 
-
-                // If I want to View just the - Content Box - Taggle 
-                  // Side Box - Class -
-                  // Content Box - Class -
-                // If I want to view side by side - Taggle 
-                  // Side Box - Class -
-                  // Content Box - Class -
-                // If I want change settings - Range 
-                  // Side Box - Class -
-                  // Content Box - Class -
-              }
-
-
-              {/*
-                button onClick={() => this.createNewArray()} >Button </button>
-                {this.state.newArray}
-              */}
+              {/* Body Content*/}
+              <div id="body-content"  className="col s12 m8 l9 h-100">
+                <div className="card z-depth-2 row h-95 overflowY">
+                  <Table />
+                </div>
+              </div>
+            </div>
+          
           </div>
         </div>
-
 
       </div>
     );

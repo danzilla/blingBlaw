@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 
+// Modals
 import NewStatement from '../../Modals/addNewStatement'
+import NewCategory from '../../Modals/addNewCategory'
+import NewUsers from '../../Modals/addNewUsers'
 
 class TopNav extends Component {
     render() {
@@ -27,44 +30,51 @@ class TopNav extends Component {
               {/* Nav */}
               <nav className="col m7 s12 px-0 light-blue darken-3">
                 <div className="nav-wrapper">
-                  
                   {/* LOGO */}
-                  <a href="/" className="brand-logo px-1 left">
-                      {emojify('🔥')}
+                  <a href="/dashboard/" className="brand-logo px-1 left">
+                    {emojify('🚀')}
                   </a>
-
                   {/* Pull-right - Menu */}
                   <ul className="right">
+                    {/* Category */}
                     <li>
-                      <a data-target="slideoutLeft"
-                        data-position="bottom" data-tooltip="Profile preferences"
-                        className="tooltipped mx-0 sidenav-trigger waves-effect waves-light show-on-medium-and-up show-on-medium-and-down">
-                      <i className="material-icons">tune</i></a>
+                      <a class="waves-effect waves-light modal-trigger tooltipped"
+                        data-position="bottom" data-tooltip="Labels and categories"
+                        href="#NewCategory">
+                        <i className="material-icons">more</i></a>
                     </li>
-                    <li>
-                      <a data-target="slideoutRight"
-                        data-position="bottom" data-tooltip="Display preferences"
-                        className="tooltipped mx-0 sidenav-trigger waves-effect waves-light show-on-medium-and-up show-on-medium-and-down">
-                      <i className="material-icons">settings_overscan</i></a>
-                    </li>
+                    {/* FileUpload */}
                     <li>
                       <a class="waves-effect waves-light modal-trigger tooltipped"
                         data-position="bottom" data-tooltip="Upload new statement"
                         href="#NewStatement">
                         <i className="material-icons">file_upload</i></a>
                     </li>
-                    {/* Need to be update the LOGOUT */}
+                    {/* Logout - Need to be update the LOGOUT function */}
                     <li>
-                      <a class="waves-effect waves-light modal-trigger tooltipped"
-                        data-position="bottom" data-tooltip="Sign out"
-                        href="/login/">
-                        <i className="material-icons">exit_to_app</i></a>
+                      <a class="waves-effect waves-light dropdown-trigger"
+                        data-target="dropdown1">
+                        <i className="material-icons">more_vert</i></a>
                     </li>
                   </ul>
                 </div>
               </nav>
 
+              <ul id='dropdown1' class='dropdown-content'>
+                <li><a href="#!">Profile</a></li>
+                <li class="divider" tabindex="-1"></li>
+                <li>
+                  <a class="waves-effect waves-light modal-trigger" href="#NewUsers">
+                    Users
+                  </a>
+                </li>
+                <li class="divider" tabindex="-1"></li>
+                <li><a href="/login/">Log out</a></li>
+              </ul>
+
               <NewStatement />
+              <NewCategory />
+              <NewUsers />
             </div>
           </div>
         );
@@ -74,4 +84,21 @@ class TopNav extends Component {
 export default TopNav;
 
 
+
+/*
+  Left slideout
+  <li>
+    <a data-target="slideoutLeft"
+      data-position="bottom" data-tooltip="Profile preferences"
+      className="tooltipped mx-0 sidenav-trigger waves-effect waves-light show-on-medium-and-up show-on-medium-and-down">
+      <i className="material-icons">tune</i></a>
+  </li>
+  Right slideout
+  <li>
+    <a data-target="slideoutRight"
+      data-position="bottom" data-tooltip="Display preferences"
+      className="tooltipped mx-0 sidenav-trigger waves-effect waves-light show-on-medium-and-up show-on-medium-and-down">
+      <i className="material-icons">settings_overscan</i></a>
+  </li>
+*/
 

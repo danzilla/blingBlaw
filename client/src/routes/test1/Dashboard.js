@@ -11,9 +11,6 @@ import Chart from '../../component/Charts/chart'
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import {actionName} from '../../store/action/action'
 
 class Dashboard extends Component {
   
@@ -63,7 +60,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    let text = "12321321312321321321312"
     return (
       <div className="row h-100 w-100">
         {/* Init Materializecss */}
@@ -81,15 +77,12 @@ class Dashboard extends Component {
             <RightNav />
         </div>
 
-
-
         {/* Content */}
         <div className="row w-100 h-100 overflowN">
           <div className="col w-100 h-90 overflowN">
 
-
-              {/* Content FULL MAX h-88 | MIN h-50 */}
-              <div className="row h-100 overflowN">
+            {/* Content FULL MAX h-88 | MIN h-50 */}
+            <div className="row h-100 overflowN">
 
               <div className="col m3 h-100">
                   <div className="col m12 h-50">
@@ -110,15 +103,12 @@ class Dashboard extends Component {
                   </div>
                 </div>
 
-
                 {/* Side Navigation */}
                 <div id="div_A" className="col m3 purple lighten-1 h-50 overflowY">
-                  A {this.state.displaySettings.div_A.width}
                   <Chart />
                 </div>
                 {/* Side Navigation */}
                 <div id="div_B" className="col m9 purple lighten-4 h-50 overflowY">
-                  B {this.state.displaySettings.div_B.width}
                   <Table />
                 </div>
 
@@ -130,19 +120,11 @@ class Dashboard extends Component {
 
                 {/* Overall Graph */}
                 <div id="div_D" className="col m9 purple lighten-2 h-50 overflowY">
-                   {this.state.displaySettings.div_D.width}
-                  {this.state.testTestUpdate}
-                  {this.state.textTest}
                   <Chart />
                 </div>
 
-              </div>
+            </div>
 
-
-              {/*
-                button onClick={() => this.createNewArray()} >Button </button>
-                {this.state.newArray}
-              */}
           </div>
         </div>
       </div>
