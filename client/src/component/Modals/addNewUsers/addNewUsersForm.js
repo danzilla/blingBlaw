@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import { emojify } from 'react-emojione';
-
 import axios from 'axios';
-
-
-import Table from '../../Charts/table'
 
 class addNewUsersForm extends Component {
     // states

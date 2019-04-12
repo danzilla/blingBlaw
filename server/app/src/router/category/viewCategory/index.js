@@ -7,13 +7,13 @@ const config = require("../../../modules/config");
 
 module.exports = {
     // GET
-    viewUser: function (req, res, next) {
+    viewCategory: function (req, res, next) {
         // get session info and set config.pageInfo
         config.pageInfo.request = "GET";
         config.pageInfo.page = "view user";
         console.log("\n" + config.pageInfo.page + "(" + config.pageInfo.request + ")");        
         // Query View all 
-        const userView = 'SELECT * FROM user_DB.user_auth ORDER BY user_pwd_salt DESC;';
+        const userView = 'SELECT * FROM category_DB.category;';
         // DB Connections
         const danzillaDB = require("../../../modules/danzillaDB");
         // Blaze_up
@@ -21,7 +21,7 @@ module.exports = {
             .then(data => {
                 if (data.rowCount) {
                     // return results 
-                    let pageMesage = "User Total Count" + data.rowCount;
+                    let pageMesage = "User Total Count: " + data.rowCount;
                     console.log(pageMesage);
                     res.send({ pageMesage: pageMesage, rowCount: data.rowCount, data: data.rows });
                 }

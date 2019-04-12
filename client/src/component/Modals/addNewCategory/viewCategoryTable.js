@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
 import axios from 'axios';
 
-class viewUsersTable extends Component {
+class viewCategoryTable extends Component {
     // states
     constructor(props) {
         super(props)
@@ -10,14 +11,16 @@ class viewUsersTable extends Component {
         }
     }
     componentDidMount = () => {
-        console.log("componentDidMount: " + "loading Users");
-        // load Users
-        // Better way to manage Users
+        console.log("componentDidMount: " + "loading category");
+        // loading category
+        // Better way to manage category
         // submit to server
-        axios.get('http://localhost:5000/users/view')
+        axios.get('http://localhost:5000/category/view')
         .then((response) => {
             if (response.data.rowCount >= 1) {
                 this.setState({ data: response.data.data });
+                // pass it to props-Parent
+                this.props.categories(response.data.data);
             } else {
                 this.setState({ data: "error" });
             }
@@ -26,27 +29,30 @@ class viewUsersTable extends Component {
             // get and set props - register state
             this.setState({ data: error });
         });
+        
     }
     // Render
     render() {
         return (
-            <div>
+            <div className="row">
                 <table className="table">
                     <thead className="thead-dark">
                         <tr className="bg-dark text-light">
-                            <th scope="col" className="">Time</th>
-                            <th scope="col" className="">user_serial</th>
-                            <th scope="col" className="text-center">user_name</th>
-                            <th scope="col" className="text-center">user_pwd</th>
+                            <th scope="col" className="">category_id</th>
+                            <th scope="col" className="">category_serial</th>
+                            <th scope="col" className="">category_name</th>
+                            <th scope="col" className="text-center">category_parent</th>
+                            <th scope="col" className="text-center">category_created</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.data.map((row, i) =>
                             <tr key={i}>
-                                <td>{row.user_pwd_salt}</td>
-                                <td>{row.user_serial}</td>
-                                <td>{row.user_name}</td>
-                                <td>{row.user_pwd_hash}</td>
+                                <td>{row.category_id}</td>
+                                <td>{row.category_serial}</td>
+                                <td>{row.category_name}</td>
+                                <td>{row.category_parent}</td>
+                                <td>{row.category_created}</td>
                             </tr>
                         )}
                     </tbody>
@@ -56,4 +62,4 @@ class viewUsersTable extends Component {
     }
 }
 
-export default viewUsersTable;
+export default viewCategoryTable;

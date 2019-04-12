@@ -39,8 +39,10 @@ app.use(flash());
 // Routes - API
 const indexRouter = require('./src/router/auth/index');
 const userRouter = require('./src/router/users/users');
+const categoryRouter = require('./src/router/category/category');
 app.use('/', indexRouter);
 app.use('/users', userRouter);
+app.use('/category', categoryRouter);
 
 // Error catch
 const createError = require('http-errors');

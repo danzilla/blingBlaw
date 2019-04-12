@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { emojify } from 'react-emojione';
-
-import Table from '../../Charts/table'
 
 import NewUsersForm from './addNewUsersForm'
 import ViewUsers from './viewUsersTable'
@@ -18,7 +15,6 @@ class addNewUsers extends Component {
             }
         };
     }
-
     // Render
     render() {
         return (
