@@ -7,10 +7,10 @@ const config = require("../../../modules/config");
 
 module.exports = {
     // GET
-    viewCategory: function (req, res, next) {
+    viewStatement: function (req, res, next) {
         // get session info and set config.pageInfo
         config.pageInfo.request = "GET";
-        config.pageInfo.page = "view-Category";
+        config.pageInfo.page = "view-Statement";
         console.log("\n" + config.pageInfo.page + "(" + config.pageInfo.request + ")");        
         // Query View all 
         const userView = 'SELECT * FROM category_DB.category;';

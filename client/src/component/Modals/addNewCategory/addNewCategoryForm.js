@@ -52,36 +52,47 @@ class addNewCategoryForm extends Component {
     }
     // Render
     render() {
-
-        let optionTemplate = this.props.categories.map((row, i) => (
-            <option key={i} value={row.category_serial}>{row.category_name}</option>
-        ));
-
         return (
             <form onSubmit={this.handleSubmit}>
-                <div class="row">
-                    <div class="input-field col m4 s12">
-                        <i class="material-icons prefix">loyalty</i>
-                        <input id="categoryName" type="text" class="validate" name="categoryName"
-                            onChange={this.handleChange.bind(this, 'categoryName')}
-                            value={this.state.addCategory.categoryName}
-                            placeholder="Trappin'" required />
-                        <label for="categoryName">Label name</label>
+                <div className="row valign-wrapper">
+                    <div className="col m4">
+                        <div className="input-field">
+                            <i className="material-icons prefix pink-text text-lighten-2">loyalty</i>
+                            <input id="categoryName" type="text" className="validate" name="categoryName"
+                                onChange={this.handleChange.bind(this, 'categoryName')}
+                                value={this.state.addCategory.categoryName}
+                                placeholder="Trappin'" required />
+                            <label for="categoryName">Label name</label>
+                        </div>
                     </div>
-                    <div class="input-field col m4 s12">
-                        <i class="material-icons prefix">unfold_more</i>
-                        <select name="categoryParent" id="categoryParent"
-                            onChange={this.handleChange.bind(this, 'categoryParent')}
-                            value={this.state.addCategory.categoryParent}>
-                            {optionTemplate}
-                        </select>
-                        <label for="autocomplete-input">Parent Label</label>
+                    <div className="col m4">
+                        <div className="input-field">
+                            <select name="categoryParent" id="categoryType" 
+                                className="select-style browser-default"
+                                onChange={this.handleChange.bind(this, 'categoryParent')}
+                                value={this.state.addCategory.categoryParent}>
+                                <option value="lola" disabled selected>
+                                    Choose your option
+                                </option>
+                            {
+                                this.props.categories.map((row, i) => (
+                                    <option key={i} value={row.category_serial}>
+                                        {row.category_name}
+                                    </option>
+                                ))
+                            }
+                            </select>
+                        </div>
                     </div>
-
-                    <div className="col m4 s12">
-                        <button className="blue-text text-lighten-2 card-1 grey lighten-3 waves-effect waves-dark btn-large btn-flat">
-                            new label <i class="material-icons right">done_all</i></button>
+                    <div className="col m4 center-align">
+                        <button className="btn-large card-1 waves-effect waves-pink btn-flat card-panel blue-grey lighten-5">
+                            New label
+                            <i className="material-icons right">
+                                done_all</i>
+                        </button>
                     </div>
+                </div>
+                <div classNameclassName="row">
                     <div className="center-align col s12 pink-text text-lighten-2">
                         {this.state.pageMesage}
                     </div>

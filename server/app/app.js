@@ -40,9 +40,11 @@ app.use(flash());
 const indexRouter = require('./src/router/auth/index');
 const userRouter = require('./src/router/users/users');
 const categoryRouter = require('./src/router/category/category');
+const statementRouter = require('./src/router/statement/statement');
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
+app.use('/statement', statementRouter);
 
 // Error catch
 const createError = require('http-errors');

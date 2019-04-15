@@ -30,8 +30,7 @@ class TableReview extends React.Component {
                             <td>{row.field1}</td>
                             <td>{row.field2}</td>
                             {/* 
-                                Check if Deposite or Withdrawl
-                                Display only one
+                                Check if Deposite or Withdrawl | Display only one
                             */}
                             <td>{row.field3 === '' ? row.field4 : row.field3}</td>
                             <td>{row.field5}</td>

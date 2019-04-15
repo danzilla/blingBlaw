@@ -65,7 +65,7 @@ class Dashboard extends Component {
     return (
       <div className="row h-100 w-100">
         {/* Init Materializecss */}
-        <Materialize />
+
         {/* Navigation */}
         <div className="my-1">
             <TopNav />
@@ -77,28 +77,9 @@ class Dashboard extends Component {
             <RightNav />
         </div>
 
-        {
-          /* 
-            2 onClick hide Graphs and change Container -> ROW and  s12 m12 l12 -> Table
-            3 onClick show Graph and change ROW -> CONTAINER
-
-            onClick => SHOW 
-              wrapper-content => "row w-100 h-100 overflowN"
-              side-content => "col s12 m4 l3 h-100"
-              body-content => "col s12 m8 l9 h-100"
-
-            onClick => HIDE
-              wrapper-content => "container w-100 h-100 overflowN"
-              side-content => "hide"
-              body-content => "col s12 m12 l12 h-100"
-
-          */
-        }
-
         {/* Content */}
         <div className="row w-100 h-100 overflowN">
           <div className="col w-100 h-90 overflowN">
-
             {/* Body */}
             <div id="wrapper-content" className="row w-100 h-100 overflowN">
               {/* Side Content */}
@@ -124,7 +105,7 @@ class Dashboard extends Component {
           
           </div>
         </div>
-
+        <Materialize />
       </div>
     );
   }
