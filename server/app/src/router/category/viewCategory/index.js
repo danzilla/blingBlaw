@@ -28,7 +28,7 @@ module.exports = {
             })
             .catch(error => {
                 // Error, no records to show
-                let pageMesage = "Error! " + error.detail;
+                let pageMesage = "Error! " + error;
                 console.log(pageMesage);
                 res.send({ pageMesage: pageMesage });
             });

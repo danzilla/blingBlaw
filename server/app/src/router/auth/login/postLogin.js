@@ -42,6 +42,9 @@ module.exports = {
           //set session for the user and redirect to /user page
           req.session.user = req.body.uname;
           req.session.userId = result.rows[0].user_serial;
+
+          console.log("session: " + JSON.stringify(req.session));
+
           
           config.flashData.pageMesage = "Logged in! " + result.rows[0].user_name;
           console.log(config.flashData.pageMesage);

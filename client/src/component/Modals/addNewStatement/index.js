@@ -38,10 +38,13 @@ class NewStatement extends Component {
     // Submit - POST
     // Add reviewd CSV 
     submitReviewTransaction = (event) => {
-        if (!this.state.statementInfo.staType || !this.state.statementInfo.staDate) {
-            // If the input are empty 
-            this.setState({ pageMesage: "Statement date and Types are required "});
+        // if no date or type given
+        if (!this.state.statementInfo.staType || !this.state.statementInfo.staDate || !this.state.reviewData) {
+            // If the input are empty
+            this.setState({ pageMesage: "Please fill the require fileds"});
         } else {
+            // If the input are all good
+            this.setState({ pageMesage: "" });
             axios.post('http://localhost:5000/statement/add', {
                 reviewTransactionData: this.state.reviewData,
                 statementInfo: this.state.statementInfo

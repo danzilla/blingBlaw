@@ -1,7 +1,7 @@
-CREATE DATABASE blingBlaw;
-
+/* CREATE SCHEMA: transaction_DB */
 /* CREATE SCHEMA transaction_DB; */
 
+/* CREATE Table: transactions */
 CREATE TABLE transaction_DB.transactions(
    transaction_Id SERIAL PRIMARY KEY NOT NULL UNIQUE,
    transaction_serial VARCHAR(36) NOT NULL UNIQUE,
@@ -17,3 +17,4 @@ CREATE TABLE transaction_DB.transactions(
    statement_serial VARCHAR(36) REFERENCES statement_DB.statement_details(statement_serial),
    statement_id INTEGER REFERENCES statement_DB.statement_details(statement_Id)
 );
+

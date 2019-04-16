@@ -1,7 +1,7 @@
-CREATE DATABASE blingBlaw;
-
+/* CREATE SCHEMA: statement_DB */
 /* CREATE SCHEMA category_DB; */
 
+/* CREATE Table: category */
 CREATE TABLE category_DB.category(
    category_id SERIAL PRIMARY KEY NOT NULL UNIQUE,
    category_serial VARCHAR(36) NOT NULL UNIQUE,
