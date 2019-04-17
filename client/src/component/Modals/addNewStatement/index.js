@@ -57,7 +57,8 @@ class NewStatement extends Component {
                 } else {
                     // if response.data = good
                     // set local state
-                    console.log("Recolla-2: " + response);
+                    console.log("Recolla-2: " + JSON.stringify(response));
+                    this.setState({ pageMesage: response.data.pageMesage });
                 }
             })
             .catch((error) => {

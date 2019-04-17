@@ -10,6 +10,8 @@ const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
 const async = require('async');
 
+const danzillaDB = require("../../../modules/danzillaDB");
+
 
 module.exports = {
     // POST
@@ -57,8 +59,7 @@ module.exports = {
             'statement_serial, statement_Type, statement_Date, statement_Desc, statement_Created, statement_owner_serial' +
             ') VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
 
-
-        /*
+            /*
             transaction_DB.transactions
 
             transaction_Id SERIAL PRIMARY KEY NOT NULL UNIQUE,
@@ -78,7 +79,7 @@ module.exports = {
         // prepare data
         const transactionData = [];
         const reviewTransactionData = req.body.reviewTransactionData;
-
+        // loop through array and prepare data
         for (let i = 0; i < reviewTransactionData.length; i++) {
             transactionData.push([
                 uuidv1(),
@@ -94,50 +95,56 @@ module.exports = {
         // console.log("transaction: " + JSON.stringify(transactionData[0]));
         // Query Insert 
         const transactionAddQuery = 'INSERT INTO transaction_DB.transactions(' +
-            'transaction_serial, transaction_Date, transaction_Desc, transaction_Withdrawls, transaction_Deposits, transaction_Balance, transaction_Updated, statement_serial' +
+            'transaction_serial, transaction_Date, transaction_Desc, ' +
+            'transaction_Withdrawls, transaction_Deposits, transaction_Balance, transaction_Updated, statement_serial' +
             ') VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
 
-        const danzillaDB = require("../../../modules/danzillaDB");
-        var return_data = {};
-        async.parallel([
-            function (parallel_done) {
-
-                danzillaDB.pool.query(statementAddQuery, statementData, function (err, results) {
-                    if (err) return parallel_done(err);
-                    return_data.table1 = results;
-                    console.log("Uno - done");
-                    parallel_done();
-                });
-
-            },
-            function (parallel_done) {
-
-                let arrLength = transactionData.length;
-                console.log('arrLength ' + arrLength);
-                
-                for (i = 0; i < arrLength; i++) {
-
-                    console.log("Done!!! - " + i + " " + JSON.stringify(transactionData[i]));
-                    
-                    danzillaDB.pool.query(statementAddQuery, transactionData[i], function (err, results) {
-                        if (err) console.log(err);
-                        return_data.table1 = results;
-                        console.log("Done - " + i + JSON.stringify(transactionData[i]));
-                    });
-
-                    if ((i + 1) === arrLength) {
-                        console.log('End ');
+        // async - 2 queries 
+        async.parallel({
+            statementUpload: function (callback) {
+                // statementData Insert
+                danzillaDB.pool.query(statementAddQuery, statementData, function (err, statementResults) {
+                    if (err) { console.log(err); callback(null, err); }
+                    else { // Done and Send to callback
+                        console.log("StatementData - done");
+                        callback(null, statementResults);
                     }
+                });
+            },
+            transactionUpload: function (callback) {
+                // TransactionData insert
+                let arrLength = transactionData.length;
+                let transGoodResults = [];
+                // loop through transactions
+                for (z = 0; z < arrLength; z++) {
+                    danzillaDB.pool.query(transactionAddQuery, transactionData[z], function (err, transactionResults) {
+                        if (err) { console.log(err); callback(null, err); }
+                        else { // if not errors - push it to transGoodResults[]
+                            transGoodResults.push(transactionResults);
+                        }
+                    });
                 }
-                parallel_done();
+                console.log("TransactionData - done");
+                callback(null, transGoodResults);
             }
-        ], function (err) {
-            if (err) console.log(err);
-            danzillaDB.pool.end();
-            res.send(return_data);
+        }, function (err, results) {
+            if (err){
+                // err 
+                let pageMesage = "Error" + err;
+                danzillaDB.pool.end;
+                res.send({ pageMesage: pageMesage });
+            } 
+            if((results.statementUpload.rowCount === 1) && (results.transactionUpload[0])){
+                let pageMesage = "Upload been success";
+                danzillaDB.pool.end;
+                res.send({ pageMesage: pageMesage});
+            } else { // console.log("else: " + JSON.stringify(results));
+                let pageMesage = "Failed to upload Transaction";
+                danzillaDB.pool.end;
+                res.send({ pageMesage: pageMesage });
+            }
         });
-
-        console.log("return_data: " + JSON.stringify(return_data));
-
+ 
     }
-}
+} 
+ 
