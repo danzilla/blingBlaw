@@ -32,15 +32,14 @@ class addNewCategoryForm extends Component {
                 categoryParent: this.state.addCategory.categoryParent
             })
             .then((response) => {
-                if (!response.data) {
-                    // if response.data = empty or bad
-                    // set local state
-                    this.setState({ pageMesage: response.data.pageMesage });
-                } else {
-                    // if response.data = good
-                    // set local state
-                    this.setState({ pageMesage: response.data.pageMesage });
-                }
+                this.setState(prevState => ({
+                    pageMesage: response.data.pageMesage,
+                    addCategory: {
+                        ...prevState.statementInfo,
+                        categoryName: "",
+                        categoryParent: ""
+                    }
+                }));
             })
             .catch((error) => {
                 // get and set props - register state
@@ -62,7 +61,7 @@ class addNewCategoryForm extends Component {
                                 onChange={this.handleChange.bind(this, 'categoryName')}
                                 value={this.state.addCategory.categoryName}
                                 placeholder="Trappin'" required />
-                            <label for="categoryName">Label name</label>
+                            <label htmlFor="categoryName">Label name</label>
                         </div>
                     </div>
                     <div className="col m4">
@@ -71,8 +70,8 @@ class addNewCategoryForm extends Component {
                                 className="select-style browser-default"
                                 onChange={this.handleChange.bind(this, 'categoryParent')}
                                 value={this.state.addCategory.categoryParent}>
-                                <option value="lola" disabled selected>
-                                    Choose your option
+                                <option defaultValue="lola">
+                                    Add new category
                                 </option>
                             {
                                 this.props.categories.map((row, i) => (
@@ -92,7 +91,7 @@ class addNewCategoryForm extends Component {
                         </button>
                     </div>
                 </div>
-                <div classNameclassName="row">
+                <div className="row">
                     <div className="center-align col s12 pink-text text-lighten-2">
                         {this.state.pageMesage}
                     </div>

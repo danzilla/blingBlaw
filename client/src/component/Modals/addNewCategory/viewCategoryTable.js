@@ -11,7 +11,7 @@ class viewCategoryTable extends Component {
         }
     }
     componentDidMount = () => {
-        console.log("componentDidMount: " + "loading category");
+        console.log("componentDidMount: loading category");
         // loading category
         // Better way to manage category
         // submit to server
@@ -34,7 +34,7 @@ class viewCategoryTable extends Component {
     // Render
     render() {
         return (
-            <div className="row">
+            <div className="col m12">
                 <table className="table">
                     <thead className="thead-dark">
                         <tr className="bg-dark text-light">
@@ -42,7 +42,6 @@ class viewCategoryTable extends Component {
                             <th scope="col" className="">category_serial</th>
                             <th scope="col" className="">category_name</th>
                             <th scope="col" className="text-center">category_parent</th>
-                            <th scope="col" className="text-center">category_created</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,7 +51,6 @@ class viewCategoryTable extends Component {
                                 <td>{row.category_serial}</td>
                                 <td>{row.category_name}</td>
                                 <td>{row.category_parent}</td>
-                                <td>{row.category_created}</td>
                             </tr>
                         )}
                     </tbody>

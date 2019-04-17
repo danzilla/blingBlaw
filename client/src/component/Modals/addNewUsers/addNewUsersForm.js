@@ -64,7 +64,7 @@ class addNewUsersForm extends Component {
                             onChange={this.handleChange.bind(this, 'fannyPack')}
                             value={this.state.register.fannyPack}
                             className="validate" required />
-                        <label for="fannyPack">Fanny Pack</label>
+                        <label htmlFor="fannyPack">Fanny Pack</label>
                     </div>
                     {/* User Name */}
                     <div className="input-field col s4 m4">
@@ -72,7 +72,7 @@ class addNewUsersForm extends Component {
                             onChange={this.handleChange.bind(this, 'userName')}
                             value={this.state.register.userName}
                             className="validate" required />
-                        <label for="userName">User name</label>
+                        <label htmlFor="userName">User name</label>
                     </div>
                     {/* Password */}
                     <div className="input-field col s4 m4">
@@ -80,7 +80,7 @@ class addNewUsersForm extends Component {
                             onChange={this.handleChange.bind(this, 'password')}
                             value={this.state.register.password}
                             className="validate" required />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                     </div>
                     {/* err */}
                     <div className="center-align col s12 pink-text text-lighten-2">

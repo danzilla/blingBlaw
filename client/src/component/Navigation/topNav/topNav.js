@@ -19,7 +19,7 @@ class TopNav extends Component {
                   <form>
                     <div className="input-field">
                       <input id="search" type="search" required />
-                      <label className="label-icon" for="search"><i className="material-icons">search</i></label>
+                      <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
                       <i className="material-icons">close</i>
                     </div>
                   </form>
@@ -38,21 +38,21 @@ class TopNav extends Component {
                   <ul className="right">
                     {/* Category */}
                     <li>
-                      <a class="waves-effect waves-light modal-trigger tooltipped"
+                      <a className="waves-effect waves-light modal-trigger tooltipped"
                         data-position="bottom" data-tooltip="Labels and categories"
                         href="#NewCategory">
                         <i className="material-icons">more</i></a>
                     </li>
                     {/* FileUpload */}
                     <li>
-                      <a class="waves-effect waves-light modal-trigger tooltipped"
+                      <a className="waves-effect waves-light modal-trigger tooltipped"
                         data-position="bottom" data-tooltip="Upload new statement"
                         href="#NewStatement">
                         <i className="material-icons">file_upload</i></a>
                     </li>
-                    {/* Logout - Need to be update the LOGOUT function */}
+                    {/* User options */}
                     <li>
-                      <a class="waves-effect waves-light dropdown-trigger"
+                      <a className="waves-effect waves-light dropdown-trigger"
                         data-target="dropdown1">
                         <i className="material-icons">more_vert</i></a>
                     </li>
@@ -60,15 +60,15 @@ class TopNav extends Component {
                 </div>
               </nav>
 
-              <ul id='dropdown1' class='dropdown-content'>
+              <ul id='dropdown1' className='dropdown-content'>
                 <li><a href="#!">Profile</a></li>
-                <li class="divider" tabindex="-1"></li>
+                <li className="divider" tabIndex="-1"></li>
                 <li>
-                  <a class="waves-effect waves-light modal-trigger" href="#NewUsers">
+                  <a className="waves-effect waves-light modal-trigger" href="#NewUsers">
                     Users
                   </a>
                 </li>
-                <li class="divider" tabindex="-1"></li>
+                <li className="divider" tabIndex="-1"></li>
                 <li><a href="/login/">Log out</a></li>
               </ul>
 

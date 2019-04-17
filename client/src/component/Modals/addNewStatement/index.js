@@ -5,10 +5,11 @@ import Papa from './papaCSVReader'
 import TableReview from './tableReviewCSV'
 
 class NewStatement extends Component {
+    
     // States
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             reviewData: [],
             statementInfo: {
                 staType: "",
@@ -16,7 +17,6 @@ class NewStatement extends Component {
                 staDate: ""
             },
             pageMesage: ""
-
         }
     }
 
@@ -49,28 +49,28 @@ class NewStatement extends Component {
                 reviewTransactionData: this.state.reviewData,
                 statementInfo: this.state.statementInfo
             })
+            // if any response
             .then((response) => {
-                if ((!response.data)) {
-                    // if response.data = empty or bad
-                    // set local state
-                    console.log("Recolla-1: " + response);
-                } else {
-                    // if response.data = good
-                    // set local state
-                    console.log("Recolla-2: " + JSON.stringify(response));
-                    this.setState({ pageMesage: response.data.pageMesage });
-                }
+                this.setState(prevState => ({
+                    pageMesage: response.data.pageMesage, 
+                    reviewData: [],
+                    statementInfo: {
+                        ...prevState.statementInfo,
+                        staType: "",
+                        staComment: "",
+                        staDate: ""
+                    }}));
             })
+            // catch error
             .catch((error) => {
                 // get and set props - register state
                 console.log("message: " + error.message);
+                this.setState({pageMesage: error.message});
             });
         }
         // naa reload
         event.preventDefault();
     }
-
-
 
     // Render
     render() {
@@ -82,38 +82,38 @@ class NewStatement extends Component {
                 <hr className="hr black-text text-darken" />
                 {/* Content */}
                 <div className="modal-content">
-                    <div class="row">
+                    <div className="row">
                         
-                        <div class="col s12">
-                            <div class="row">
-                                <div class="input-field col m3 s12">
+                        <div className="col s12">
+                            <div className="row">
+                                <div className="input-field col m3 s12">
                                     <Papa
                                         btnText={"Select a CSV file"}
                                         reviewData={this.getReviewData}
                                         className="blue-text text-darken-2 card-1 col m12 s12 upload grey lighten-4 waves-effect waves-dark btn-large" />
                                 </div>
-                                <div class="input-field col m3 s12">
-                                    <i class="material-icons prefix">unfold_more</i>
+                                <div className="input-field col m3 s12">
+                                    <i className="material-icons prefix">unfold_more</i>
                                     <select name="staType" value={this.state.statementInfo.staType} 
                                         onChange={this.handleChange.bind(this, 'staType')}>
                                         <option value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
                                     </select>
-                                    <label for="autocomplete-input">Type</label>
+                                    <label htmlFor="autocomplete-input">Type</label>
                                 </div>
-                                <div class="input-field col m3 s12">
-                                    <i class="material-icons prefix">date_range</i>
+                                <div className="input-field col m3 s12">
+                                    <i className="material-icons prefix">date_range</i>
                                     <input name="staDate" type="date" id="staDate"
                                         value={this.state.statementInfo.staDate} 
                                         onChange={this.handleChange.bind(this, 'staDate')} />
                                 </div>
-                                <div class="input-field col m3 s12">
-                                    <i class="material-icons prefix">add_comment</i>
+                                <div className="input-field col m3 s12">
+                                    <i className="material-icons prefix">add_comment</i>
                                     <input type="text" id="staComment" name="staComment" 
                                         value={this.state.statementInfo.staComment}
                                         onChange={this.handleChange.bind(this, 'staComment')} />
-                                    <label for="autocomplete-input">lalala... </label>
+                                    <label htmlFor="autocomplete-input">lalala... </label>
                                 </div>
                                 {/* err */}
                                 <div className="center-align col s12 pink-text text-lighten-2">
@@ -125,8 +125,8 @@ class NewStatement extends Component {
                             <div className="row ">
                                 <div className="center-align">
                                     <button onClick={this.submitReviewTransaction}
-                                        class="card-1 waves-effect waves-teal btn-flat card-panel blue lighten-5">
-                                        Review and upload <i class="material-icons right">send</i>
+                                        className="card-1 waves-effect waves-teal btn-flat card-panel blue lighten-5">
+                                        Review and upload <i className="material-icons right">send</i>
                                     </button>
                                 </div>
                                 <div className="center-align">

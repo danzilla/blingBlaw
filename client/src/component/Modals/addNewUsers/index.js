@@ -25,7 +25,7 @@ class addNewUsers extends Component {
                     <hr className="hr black-text text-darken" />
                     {/* Content */}
                     <div className="modal-content">
-                        <div class="row center-align">
+                        <div className="row center-align">
                             <NewUsersForm />
                         </div>
                         <div className="row">

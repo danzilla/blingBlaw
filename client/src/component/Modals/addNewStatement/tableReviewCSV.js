@@ -13,14 +13,14 @@ class TableReview extends React.Component {
     render() {
          return (
         <table className={this.props.className}>
-                <thead class="thead-dark">
-                    <tr class="bg-dark text-light">
-                        <th scope="col" class="text-center"> ID </th>
-                        <th scope="col" class="">Date</th>
-                        <th scope="col" class="">Description</th>
-                        <th scope="col" class="text-center">Transaction</th>
-                        <th scope="col" class="text-center">Balance</th>
-                        <th scope="col" class="text-center">Labels</th>
+                <thead className="thead-dark">
+                    <tr className="bg-dark text-light">
+                        <th scope="col" className="text-center"> ID </th>
+                        <th scope="col" className="">Date</th>
+                        <th scope="col" className="">Description</th>
+                        <th scope="col" className="text-center">Transaction</th>
+                        <th scope="col" className="text-center">Balance</th>
+                        <th scope="col" className="text-center">Labels</th>
                     </tr>
                 </thead>
                 <tbody>

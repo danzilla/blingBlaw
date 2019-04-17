@@ -10,7 +10,7 @@ class viewUsersTable extends Component {
         }
     }
     componentDidMount = () => {
-        console.log("componentDidMount: " + "loading Users");
+        console.log("componentDidMount: loading Users");
         // load Users
         // Better way to manage Users
         // submit to server
