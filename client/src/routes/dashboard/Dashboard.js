@@ -9,6 +9,9 @@ import RightNav from '../../component/Navigation/sideNav/rightNav'
 import Table from '../../component/Charts/table'
 import Chart from '../../component/Charts/chart'
 
+import ViewStatements from '../../component/Contents/viewStatements'
+import ViewTransaction from '../../component/Contents/viewTransaction'
+
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
 
@@ -97,8 +100,10 @@ class Dashboard extends Component {
               </div>
               {/* Body Content*/}
               <div id="body-content"  className="col s12 m8 l9 h-100">
-                <div className="card z-depth-2 row h-95 overflowY">
-                  <Table />
+                <div className="card z-depth-2 row h-95 overflowN">
+
+                  <ViewStatements />
+
                 </div>
               </div>
             </div>
