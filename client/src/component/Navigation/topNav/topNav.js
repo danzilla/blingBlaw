@@ -13,9 +13,8 @@ class TopNav extends Component {
             <div className="container w-100">
 
               {/* Search */}
-              <nav className="col m5 s12 px-0 light-blue darken-2">
+              <nav className="col m6 s12 px-0 light-blue darken-2">
                 <div className="nav-wrapper">
-                  
                   <form>
                     <div className="input-field">
                       <input id="search" type="search" required />
@@ -23,12 +22,11 @@ class TopNav extends Component {
                       <i className="material-icons">close</i>
                     </div>
                   </form>
-
                 </div>
               </nav>
 
               {/* Nav */}
-              <nav className="col m7 s12 px-0 light-blue darken-3">
+              <nav className="col m6 s12 light-blue darken-3">
                 <div className="nav-wrapper">
                   {/* LOGO */}
                   <a href="/dashboard/" className="brand-logo px-1 left">

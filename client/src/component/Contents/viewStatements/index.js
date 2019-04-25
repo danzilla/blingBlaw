@@ -19,9 +19,9 @@ class viewStatements extends Component {
         // submit to server
         axios.get('http://localhost:5000/statement/view')
             .then((response) => {
-
-                console.log(JSON.stringify(response.data.bigTable));
-                
+                // console.log(JSON.stringify(response.data.bigTable));
+                // let lolaa = response.data.bigTable;
+                // var customer = Object.keys(lolaa).map(function (s) { return lolaa[s] });
                 if (response.data.bigTable) {
                     this.setState({ data: response.data.bigTable });
                 }
@@ -34,69 +34,32 @@ class viewStatements extends Component {
 
     render() {
 
-        var Apap = React.createClass({
-            render() {
-                var tifs = { 1: 'Joe', 2: 'Jane' };
+        // console.log(JSON.stringify(this.state.data));
+        const rows = this.state.data;
+        let cardStatement = "";
+        if (rows){
+            cardStatement = Object.keys(rows).map((i) =>
+                <StatementCard
+                    cardTitle={rows[i][0].statement_date}
+                    cardBody={rows[i]}
+                    cardChartData={rows[i]} />,
+            );
+        } else {
+            cardStatement = "No Data";
+        }
 
-                var tifOptions = Object.keys(tifs).map(function (key) {
-                    return <option key={key} value={key}>{tifs[key]}</option>
-                });
-
-                const tifOptionsES6 = Object.keys(tifs).map(key =>
-                    <option key={key} value={key}>{tifs[key]}</option>
-                )
-
-                var tifOptionsForEach = []
-                Object.keys(tifs).forEach(function (key) {
-                    tifOptionsForEach.push(<option key={key} value={key}>{tifs[key]}</option>);
-                });
-
-                return (
-                    <div>
-                        <select>{tifOptions}</select>
-                        <select>{tifOptionsES6}</select>
-                        <select>{tifOptionsForEach}</select>
-                    </div>
-                );
-            }
-        });
-
-
-        console.log(JSON.stringify(this.state.data));
-        
         return (
             <div className="h-100">
-                <nav>
-                    <div class="nav-wrapper container">
-                        <div className="left">
-                            <a href="">123</a>
-                            <a href="">123</a>
+                <div className="col m12 s12 h-100 overflowY">
+                    <nav className="card-1 waves-effect waves-block waves-darker red accent-1">
+                        <div class="nav-wrapper container ">
+                            <div className="center">
+                                <a href="">Chart - need to be SUM and GROUP of Parent Spends </a>
+                            </div>
                         </div>
-                        <div className="right">
-                            <a href="">asd</a>
-                            <a href="">asd</a>
-                            <a href="">asd</a>
-                            <a href="">asd</a>
-                            <a href="">asd</a>
-                            <a href="">asd</a>
-                        </div>
-                        <div className="center">
-                            <a href="">123</a>
-                            <a href="">123</a>
-                        </div>
-                    </div>
-                </nav>
-
-                <div className="col m12 s12 h-95 overflowY">
+                    </nav>
                     <div className="row">
-
-                        <div className="col m3">
-                            <StatementCard
-                            cardData={"hello"}
-                            chartData={"chartInfo"} />
-                        </div>
-
-                        <Apap />                                        
+                        {cardStatement}
                     </div>
                 </div>
             </div>

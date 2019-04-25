@@ -12,7 +12,6 @@ import Register from './routes/register/Register';
 import Login from './routes/login/index';
 
 import Test from './routes/test/Dashboard';
-import Test1 from './routes/test1/Dashboard';
 
 //Redux
 import { Provider } from 'react-redux';
@@ -27,7 +26,6 @@ const routing = (
         <Router>
             <Switch>
                 <Route path="/test" component={Test} />
-                <Route path="/test1" component={Test1} />
 
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/login" component={Login} />

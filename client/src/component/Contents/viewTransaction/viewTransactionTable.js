@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Table extends Component {
+class TransactionTable extends Component {
 
     render() {
         return (
@@ -103,4 +103,4 @@ class Table extends Component {
     }
 }
 
-export default Table;
+export default TransactionTable;

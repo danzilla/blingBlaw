@@ -1,106 +1,60 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import axios from 'axios'
 
-class Table extends Component {
+import TransactionTable from './viewTransactionTable'
+
+class viewStatements extends Component {
+
+    // states
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: []
+        }
+    }
+    componentDidMount = () => {
+        console.log("componentDidMount: loading Statements");
+        // load statement
+        // Better way to manage statement
+        // submit to server
+        axios.get('http://localhost:5000/statement/view')
+            .then((response) => {
+                // console.log(JSON.stringify(response.data.bigTable));
+                // let lolaa = response.data.bigTable;
+                // var customer = Object.keys(lolaa).map(function (s) { return lolaa[s] });
+                if (response.data.bigTable) {
+                    this.setState({ data: response.data.bigTable });
+                }
+            })
+            .catch((error) => {
+                // get and set props - register state
+                this.setState({ data: error });
+            });
+    }
 
     render() {
-        return (
-            <table className="highlight responsive-table">
-                <tbody>
-                <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Country</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                <tr>
-                    <td>Ernst Handel</td>
-                    <td>Roland Mendel</td>
-                    <td>Austria</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
-                </tbody>
-            </table>
 
+        // console.log(JSON.stringify(this.state.data));
+        const rows = this.state.data;
+        let cardStatement = "";
+
+        return (
+            <div className="h-100">
+                <div className="col m12 s12 h-100 overflowY">
+                    <nav className="card-1 waves-effect waves-block waves-darker red accent-1">
+                        <div class="nav-wrapper container ">
+                            <div className="center">
+                                <a href="">Chart - need to be SUM and GROUP of Parent Spends </a>
+                            </div>
+                        </div>
+                    </nav>
+                    <div className="row">
+                        <TransactionTable />
+                    </div>
+                </div>
+            </div>
         );
     }
 }
 
-export default Table;
+export default viewStatements;
