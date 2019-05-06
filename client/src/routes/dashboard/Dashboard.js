@@ -28,12 +28,8 @@ class Dashboard extends Component {
   }
 
   render() {
-
-
-
     return (
       <div className="row h-100 w-100 overflowN">
-
         <div className="container h-100">
           {/* Navigation */}
           <div className="my-1 px-0">
@@ -41,20 +37,15 @@ class Dashboard extends Component {
           </div>
           {/* Content */}
           <div className="card z-depth-2 h-90 overflowN">
-
-            <ViewTransaction />
-
+            <ViewStatements />
           </div>
         </div>
-
-
         {/* Init Materializecss */}
         <Materialize />
       </div>
     );
   }
 }
-
 
 export default Dashboard;
 

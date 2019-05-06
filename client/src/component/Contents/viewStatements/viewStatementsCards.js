@@ -20,10 +20,10 @@ class StatementCard extends Component {
                             <i className="material-icons right">more_vert</i>
                         </span>
                     </div>
-                    <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4">
+                    <div className="card-reveal">
+                        <span className="card-title grey-text text-darken-4">
                             {this.props.cardTitle}
-                            <i class="material-icons right">close</i>
+                            <i className="material-icons right">close</i>
                         </span>
                         <blockquote>
                             Description:  <br />
@@ -33,15 +33,16 @@ class StatementCard extends Component {
                         </blockquote>
 
                         <div className="center">
-                            <a href="#!" class="waves-effect waves-light btn light-blue lighten-2 tooltipped"
-                                data-position="bottom" data-tooltip="View">
+                            {/* Modal id  - From props */}
+                            <a href={'#modal' + this.props.cardModalId} 
+                                className="waves-effect waves-light btn light-blue lighten-2 modal-trigger">
                                 <i className="material-icons">web</i>
                             </a>
-                            <a href="#!" class="waves-effect waves-light btn mx-1 orange darken-3 tooltipped"
+                            <a href="#!" className="waves-effect waves-light btn mx-1 orange darken-3 tooltipped"
                                 data-position="bottom" data-tooltip="Update">
                                 <i className="material-icons">mode_edit</i>
                             </a>
-                            <a href="#!" class="waves-effect waves-dark btn pink darken-3 tooltipped"
+                            <a href="#!" className="waves-effect waves-dark btn pink darken-3 tooltipped"
                                 data-position="bottom" data-tooltip="Delete">
                                 <i className="material-icons">delete</i>
                             </a>
