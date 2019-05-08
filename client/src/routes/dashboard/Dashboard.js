@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 // Navigation
 import TopNav from '../../component/Navigation/topNav/topNav'
-import LeftNav from '../../component/Navigation/sideNav/leftNav'
-import RightNav from '../../component/Navigation/sideNav/rightNav'
 
 // Charts and Tables
 import Table from '../../component/Charts/table'
@@ -11,6 +9,7 @@ import Chart from '../../component/Charts/chart'
 
 import ViewStatements from '../../component/Contents/viewStatements'
 import ViewTransaction from '../../component/Contents/viewTransaction'
+import ViewDashboard from '../../component/Contents/viewDashboard'
 
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
@@ -21,9 +20,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      newArray: "",
-      textTest: "hahahah",
-      testTestUpdate: "no-updated..."
+      dashboardPage: "",
+      dashboardPageState: ""
     }
   }
 
@@ -37,7 +35,7 @@ class Dashboard extends Component {
           </div>
           {/* Content */}
           <div className="card z-depth-2 h-90 overflowN">
-            <ViewStatements />
+            <ViewDashboard />
           </div>
         </div>
         {/* Init Materializecss */}

@@ -72,7 +72,6 @@ class viewStatements extends Component {
                         {statementTransaction}
                         {cardStatement}
                     </div>
-                   
                 </div>
             </div>
         );
