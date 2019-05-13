@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import TransactionTable from './viewTransactionTable'
+import Table from '../../Charts/table'
+import Chart from '../../Charts/chart'
 
 class viewStatements extends Component {
 
@@ -34,22 +35,34 @@ class viewStatements extends Component {
 
     render() {
 
-        // console.log(JSON.stringify(this.state.data));
-        const rows = this.state.data;
-        let cardStatement = "";
-
         return (
-            <div className="h-100">
-                <div className="col m12 s12 h-100 overflowY">
-                    <nav className="card-1 waves-effect waves-block waves-darker red accent-1">
-                        <div class="nav-wrapper container ">
-                            <div className="center">
-                                <a href="">Chart - need to be SUM and GROUP of Parent Spends </a>
+            <div className="w-100 h-100">
+                <div className="col m12 s12 w-100 h-100">
+                    <div className="row h-100 overflowN">
+
+                        <div className="col m9 h-100">
+                            <div className="card-panel hoverable col m12 h-95 overflowY">
+                                <Table />
                             </div>
                         </div>
-                    </nav>
-                    <div className="row">
-                        <TransactionTable />
+
+                        <div className="col m3 h-100">
+                            <div className="row h-100 overflowN">
+
+                                <div class="valign-wrapper h-50">
+                                    <div className="card-1 col m12 card h-auto">
+                                        <Chart />
+                                    </div>
+                                </div>
+                                <div class="valign-wrapper h-0">
+                                    <div className="card-1 col m12 card h-auto">
+                                        <Chart />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

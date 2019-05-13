@@ -29,24 +29,32 @@ class TopNav extends Component {
               <nav className="col m6 s12 light-blue darken-3">
                 <div className="nav-wrapper">
                   {/* LOGO */}
-                  <a href="/dashboard/" className="brand-logo px-1 left">
+                  <a href="/dashboard/" className="brand-logo px-1 left tooltipped"
+                    data-position="bottom" data-tooltip="Dashboard">
                     {emojify('🚀')}
                   </a>
                   {/* Pull-right - Menu */}
                   <ul className="right">
-                    {/* Category */}
+                    {/* Statements */}
                     <li>
-                      <a className="waves-effect waves-light modal-trigger tooltipped"
-                        data-position="bottom" data-tooltip="Labels and categories"
-                        href="#NewCategory">
-                        <i className="material-icons">more</i></a>
+                      <a className="waves-effect waves-light tooltipped"
+                        data-position="bottom" data-tooltip="View statement">
+                        <i className="material-icons light-blue-text text-lighten-4">receipt</i></a>
                     </li>
                     {/* FileUpload */}
                     <li>
                       <a className="waves-effect waves-light modal-trigger tooltipped"
                         data-position="bottom" data-tooltip="Upload new statement"
                         href="#NewStatement">
-                        <i className="material-icons">file_upload</i></a>
+                        <i className="material-icons cyan-text text-lighten-4">file_upload</i>
+                        </a>
+                    </li>
+                    {/* Category */}
+                    <li>
+                      <a className="waves-effect waves-light modal-trigger tooltipped"
+                        data-position="bottom" data-tooltip="Labels and categories"
+                        href="#NewCategory">
+                        <i className="material-icons pink-text text-lighten-3">loyalty</i></a>
                     </li>
                     {/* User options */}
                     <li>

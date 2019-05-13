@@ -22,29 +22,90 @@ class Dashboard extends Component {
     return (
       <div className="w-100 h-100">
         <div className="col m12 s12 w-100 h-100">
-          <div className="row h-100 overflowN">
+          <div className="row h-98 overflowN pink lighten-4">
 
-            <div className="col m3 h-100">
-              <div className="row h-100 overflowN">
-                <div className="col h-50 valign-wrapper">
-                  <div className="z-depth-2 h-100">
-                    <Chart />
-                  </div>
-                </div>
-                <div className="col h-50 valign-wrapper">
-                  <div className="z-depth-2 h-100">
-                    <Chart />
-                  </div>
-                </div>
-              </div>
+            <div className=" h-100 overflowY pink lighten-4">
+ asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                          asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                        asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                       asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                         asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+                           asdadasdasd           asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd asdasdasd asdasdasd asdasdasd asdasdasdasdasdasdasdasdasd asdasdasd 
+               
+                                         
             </div>
-
-            <div className="col m9 h-100">
-              <div className="card z-depth-2 col m12 h-95 overflowY">
-                <Table />
-              </div>
-            </div>
-
+         
+                            
           </div>
         </div>
       </div>

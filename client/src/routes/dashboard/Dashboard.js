@@ -25,16 +25,17 @@ class Dashboard extends Component {
     }
   }
 
+
   render() {
     return (
       <div className="row h-100 w-100 overflowN">
-        <div className="container h-100">
+        <div className="col m12 h-100">
           {/* Navigation */}
           <div className="my-1 px-0">
             <TopNav />
           </div>
           {/* Content */}
-          <div className="card z-depth-2 h-90 overflowN">
+          <div className="h-90 overflowN">
             <ViewDashboard />
           </div>
         </div>
