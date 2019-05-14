@@ -69,8 +69,8 @@ class viewStatements extends Component {
                         </div>
                     </nav>
                     <div className="row">
-                        {statementTransaction}
                         {cardStatement}
+                        {statementTransaction}
                     </div>
                 </div>
             </div>

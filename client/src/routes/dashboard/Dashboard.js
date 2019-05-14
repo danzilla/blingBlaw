@@ -20,23 +20,59 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      dashboardPage: "",
-      dashboardPageState: ""
+      dashboardPage: true,
+      statementPage: false,
+      transactionPage: false
     }
   }
 
+  // isDashboardPage == GET from props
+  isDashboardPage = (pageInfo) => {
+    this.setState({
+      dashboardPage: pageInfo
+    })
+  }
+  // isDashboardPage == GET from props
+  isTransactionPage = (isTrue) => {
+    this.setState({
+      transactionPage: isTrue
+    })
+  }
+  // isDashboardPage == GET from props
+  isStatementPage = (isTrue) => {
+    this.setState({
+      statementPage: isTrue
+    })
+  }
 
   render() {
+
+    // render Dashboard or Statement 
+    let dashboardPage;
+
+    if (this.state.dashboardPage === true) {
+      dashboardPage = <ViewDashboard />;
+    }
+    if (this.state.transactionPage === true) {
+      dashboardPage = <ViewTransaction />;
+    }
+    if (this.state.statementPage === true) {
+      dashboardPage = <ViewStatements />;
+    }
+
     return (
       <div className="row h-100 w-100 overflowN">
+        {/* Navigation */}
+        <div className="container my-1 px-0">
+          <TopNav
+            isDashboardPage={this.isDashboardPage} 
+            isTransactionPage={this.isTransactionPage} 
+            isStatementPage={this.isStatementPage} />
+        </div>
+        {/* Content */}
         <div className="col m12 h-100">
-          {/* Navigation */}
-          <div className="my-1 px-0">
-            <TopNav />
-          </div>
-          {/* Content */}
           <div className="h-90 overflowN">
-            <ViewDashboard />
+            {dashboardPage}
           </div>
         </div>
         {/* Init Materializecss */}
