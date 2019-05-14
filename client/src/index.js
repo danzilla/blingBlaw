@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker';
 // Routers
 import ErrorM from './routes/error/ErrorM';
 import Dashboard from './routes/dashboard/Dashboard';
-import Register from './routes/register/Register';
 import Login from './routes/authentication/index';
 
 import Test from './routes/test/Dashboard';
@@ -29,7 +28,6 @@ const routing = (
 
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
                 <Route path='/404' component={ErrorM} />
                 <Redirect from='*' to='/login' />
             </Switch>
