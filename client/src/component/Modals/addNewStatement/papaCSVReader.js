@@ -1,6 +1,4 @@
-import React, { useCallback } from 'react'
-import Dropzone from 'react-dropzone'
-import Papa from 'papaparse'
+import React from 'react';
 import csv from "csvtojson";
 
 import CSVReader from 'react-csv-reader'
@@ -22,7 +20,7 @@ class FileReader extends React.Component {
         for (var i = 0; i < array.length; i++) {
             var line = '';
             for (var index in array[i]) {
-                if (line != '') line += ','
+                if (line !== '') line += ','
                 line += array[i][index];
             }
             str += line + '\r\n';

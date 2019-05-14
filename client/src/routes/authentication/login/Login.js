@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 import axios from 'axios';
 
-// To-do 
-// Session and Auto login/redirect 
-// Session Client 
+// To-do
+// Session and Auto login/redirect
+// Session Client
 
 // Login
 class LoginForm extends Component {
@@ -31,14 +31,13 @@ class LoginForm extends Component {
   // submit login
   handleSubmit = (event) => {
 
-    
     if (!this.state.login.userName || !this.state.login.password){
-      // If the input are empty 
+      // If the input are empty
       // setState to = False
       this.setState({ pageMesage: "Credentials required ", pageGood: false });
     } else {
       // validate against server:5000
-      // query 
+      // query
       axios.post('http://localhost:5000/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
@@ -68,12 +67,16 @@ class LoginForm extends Component {
     event.preventDefault();
   }
 
+  activeRegisterForm = () => {
+    this.props.isRegisterForm(true)
+  }
+
   render() {
     return (
       <div className="valign-wrapper w-100 h-100">
         <div className="valign w-100">
           <div className="container">
-          
+
             <div className="row">
               <div className="col m4 offset-m4 s8 offset-s2">
                 <div className="card card-1 z-depth-4">
@@ -82,9 +85,9 @@ class LoginForm extends Component {
                     <h5 className="card-title black-text">Sign In <span>{emojify(':rocket:')}</span></h5>
 
                     <form onSubmit={this.handleSubmit}>
-                      {/* Login Form - input */}  
-                      <div className="row">  
-                        {/* User Name */}  
+                      {/* Login Form - input */}
+                      <div className="row">
+                        {/* User Name */}
                         <div className="input-field col s12">
                           <input name="userName" id="userName" type="text"
                             onChange={this.handleChange.bind(this, 'userName')}
@@ -92,24 +95,24 @@ class LoginForm extends Component {
                             className="validate" required />
                           <label for="userName">User name</label>
                         </div>
-                        {/* Password */}  
+                        {/* Password */}
                         <div className="input-field col s12">
                           <input name="password" id="password" type="password"
-                            onChange={this.handleChange.bind(this, 'password')} 
+                            onChange={this.handleChange.bind(this, 'password')}
                             value={this.state.login.password}
                             className="validate" required />
                           <label for="password">Password</label>
                         </div>
-                        {/* err */}  
+                        {/* err */}
                         <div className="center-align col s12 pink-text text-lighten-2">
-                          {this.state.pageMesage}  
+                          {this.state.pageMesage}
                         </div>
                       </div>
-                      {/* Login Form - Sub button */}  
+                      {/* Login Form - Sub button */}
                       <div className="row center-align">
                         <button className="btn waves-effect waves-light" type="submit" name="action"> Sign In </button>
                         <br />
-                        <a href="/register" className="waves-effect waves-light"> Register </a>
+                        <a  onClick={this.activeRegisterForm} className="waves-effect waves-light"> Register </a>
                       </div>
                     </form>
 
@@ -127,4 +130,3 @@ class LoginForm extends Component {
 }
 
 export default LoginForm;
-

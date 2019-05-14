@@ -1,8 +1,4 @@
-import React, { useCallback } from 'react'
-import Dropzone from 'react-dropzone'
-import Papa from 'papaparse'
-import csv from "csvtojson";
-import CSVReader from 'react-csv-reader'
+import React from 'react'
 
 class TableReview extends React.Component {
     // React States
@@ -17,14 +13,14 @@ class TableReview extends React.Component {
     render() {
          return (
         <table className={this.props.className}>
-                <thead class="thead-dark">
-                    <tr class="bg-dark text-light">
-                        <th scope="col" class="text-center"> ID </th>
-                        <th scope="col" class="">Date</th>
-                        <th scope="col" class="">Description</th>
-                        <th scope="col" class="text-center">Transaction</th>
-                        <th scope="col" class="text-center">Balance</th>
-                        <th scope="col" class="text-center">Labels</th>
+                <thead className="thead-dark">
+                    <tr className="bg-dark text-light">
+                        <th scope="col" className="text-center"> ID </th>
+                        <th scope="col" className="">Date</th>
+                        <th scope="col" className="">Description</th>
+                        <th scope="col" className="text-center">Transaction</th>
+                        <th scope="col" className="text-center">Balance</th>
+                        <th scope="col" className="text-center">Labels</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,10 +30,9 @@ class TableReview extends React.Component {
                             <td>{row.field1}</td>
                             <td>{row.field2}</td>
                             {/* 
-                                Check if Deposite or Withdrawl
-                                Display only one
+                                Check if Deposite or Withdrawl | Display only one
                             */}
-                            <td>{row.field3 == '' ? row.field4 : row.field3}</td>
+                            <td>{row.field3 === '' ? row.field4 : row.field3}</td>
                             <td>{row.field5}</td>
                         </tr>
                     )}

@@ -5,6 +5,7 @@ class Table extends Component {
     render() {
         return (
             <table className="highlight responsive-table">
+                <tbody>
                 <tr>
                     <th>Company</th>
                     <th>Contact</th>
@@ -95,6 +96,7 @@ class Table extends Component {
                     <td>Giovanni Rovelli</td>
                     <td>Italy</td>
                 </tr>
+                </tbody>
             </table>
 
         );

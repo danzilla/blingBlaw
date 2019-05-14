@@ -48,4 +48,11 @@
   transition: 0.5s;
 }
 
-
+.select-style {
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none;       /* remove default arrow */
+  border-bottom: solid 1px #ccc;
+	background-color: transparent;
+  background: url(https://raw.githubusercontent.com/google/material-design-icons/master/navigation/2x_web/ic_expand_more_black_48dp.png) 96% / 10% no-repeat #eee;
+}

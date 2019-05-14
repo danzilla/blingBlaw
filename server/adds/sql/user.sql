@@ -10,7 +10,7 @@ CREATE TABLE user_DB.user_auth(
    user_name VARCHAR(12) UNIQUE NOT NULL,
    user_email VARCHAR(254) UNIQUE NOT NULL,
    user_pwd_salt VARCHAR(254) NOT NULL,
-   user_pwd_hash VARCHAR(254) UNIQUE NOT NULL,
+   user_pwd_hash VARCHAR(254) NOT NULL,
    user_auth_token VARCHAR(36)
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE user_DB.user_details(
    user_address VARCHAR(254),
    user_group_id INTEGER REFERENCES user_DB.user_groups(group_id),
    user_id INTEGER REFERENCES user_DB.user_auth(user_id),
-   user_serial VARCHAR(36) UNIQUE REFERENCES user_DB.user_auth(user_serial)
+   user_serial VARCHAR(36) REFERENCES user_DB.user_auth(user_serial)
 );
 
 /* user_record table */
@@ -47,7 +47,7 @@ CREATE TABLE user_DB.user_record(
    user_last_reset_pwd TIMESTAMP,
    user_id INTEGER REFERENCES user_DB.user_auth(user_id),
    user_group_id INTEGER REFERENCES user_DB.user_groups(group_id),
-   user_serial VARCHAR(36) UNIQUE REFERENCES user_DB.user_auth(user_serial) 
+   user_serial VARCHAR(36) REFERENCES user_DB.user_auth(user_serial) 
 );
 
 

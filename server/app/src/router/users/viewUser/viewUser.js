@@ -1,0 +1,39 @@
+/* No Var - let and const
+ * try ES6
+ * NodeJS + Monk + Session = keep it minimal
+ */
+// config.config.config.pageInfo | flashData |
+const config = require("../../../modules/config");
+
+module.exports = {
+    // GET
+    viewUser: function (req, res, next) {
+        // get session info and set config.pageInfo
+        config.pageInfo.request = "GET";
+        config.pageInfo.page = "view user";
+        console.log("\n" + config.pageInfo.page + "(" + config.pageInfo.request + ")");        
+        // Query View all 
+        const userView = 'SELECT * FROM user_DB.user_auth ORDER BY user_pwd_salt DESC;';
+        // DB Connections
+        const danzillaDB = require("../../../modules/danzillaDB");
+        // Blaze_up
+        danzillaDB.pool.query(userView)
+            .then(data => {
+                if (data.rowCount) {
+                    // return results 
+                    let pageMesage = "User Total Count" + data.rowCount;
+                    console.log(pageMesage);
+                    res.send({ pageMesage: pageMesage, rowCount: data.rowCount, data: data.rows });
+                }
+            })
+            .catch(error => {
+                // Error, no records to show
+                let pageMesage = "Error! " + error;
+                console.log(pageMesage);
+                res.send({ pageMesage: pageMesage });
+            });
+    }
+}
+
+
+

@@ -19,14 +19,19 @@ class Materialize extends Component {
             draggable: true,
             edge: 'right'
         }
-        const navLeft = document.querySelectorAll('#slideoutLeft');
-        const navRight = document.querySelectorAll('#slideoutRight');
 
         // Auto initialize all the things!
         M.AutoInit();
 
-        // Nav
+        // select
+        const selectF = document.querySelectorAll('#categoryParent');
+        M.FormSelect.init(selectF)
+
+        // navLeft
+        const navLeft = document.querySelectorAll('#slideoutLeft');
         M.Sidenav.init(navLeft, optionsL)
+        // navRight
+        const navRight = document.querySelectorAll('#slideoutRight');
         M.Sidenav.init(navRight, optionsR)
 
     }

@@ -65,7 +65,7 @@ module.exports = {
             })
             .catch(error => {
                 // Error, no records inserted
-                let pageMesage = "Error! " + error.detail;
+                let pageMesage = "Error! " + error;
                 res.send({ pageMesage: pageMesage });
                 console.log(pageMesage);
             });

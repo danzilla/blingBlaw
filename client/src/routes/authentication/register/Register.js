@@ -13,7 +13,8 @@ class RegisterForm extends Component {
         password: "",
         fannyPack: ""
       },
-      pageMesage: ""
+      pageMesage: "",
+      isRegFrom: true
     }
   }
   // handleChange - get and set state for register form
@@ -25,7 +26,7 @@ class RegisterForm extends Component {
   // handleSubmit - register
   handleSubmit = (event) => {
     if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
-      // If the input are empty 
+      // If the input are empty
       // setState to = False
       this.setState({ pageMesage: "Credentials required ", pageGood: false });
     } else {
@@ -53,6 +54,10 @@ class RegisterForm extends Component {
     }
     // default prevent-refresh Form dawg
     event.preventDefault();
+  }
+
+  activeLoginForm = () => {
+    this.props.isRegisterForm(false)
   }
 
   render() {
@@ -104,7 +109,7 @@ class RegisterForm extends Component {
                       <div className="row center-align">
                         <button className="btn waves-effect waves-light" type="submit" name="action"> Register </button>
                         <br />
-                        <a href="/login" className="waves-effect waves-light"> login </a>
+                        <a onClick={this.activeLoginForm} className="waves-effect waves-light"> login </a>
                       </div>
                     </form>
 
@@ -122,4 +127,3 @@ class RegisterForm extends Component {
 }
 
 export default RegisterForm;
-
