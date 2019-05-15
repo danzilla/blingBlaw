@@ -22,7 +22,9 @@ class Dashboard extends Component {
     this.state = {
       dashboardPage: true,
       statementPage: false,
-      transactionPage: false
+      transactionPage: false,
+      transStatmentId: "123",
+      theposition: window.pageYOffset
     }
   }
 
@@ -44,25 +46,43 @@ class Dashboard extends Component {
       statementPage: isTrue
     })
   }
+  // Get Transaction-Statement Serial
+  getTranStateSerial = (getSerial) => {
+    this.setState({
+      transStatmentId: getSerial
+    })
+  }
 
   render() {
 
     // render Dashboard or Statement 
     let dashboardPage;
-
+    // Dashboard 
     if (this.state.dashboardPage === true) {
-      dashboardPage = <ViewDashboard />;
+      dashboardPage = <ViewDashboard
+        isDashboardPage={this.isDashboardPage}
+        isTransactionPage={this.isTransactionPage}
+        isStatementPage={this.isStatementPage} />;
     }
-    if (this.state.transactionPage === true) {
-      dashboardPage = <ViewTransaction />;
-    }
+    // Statement 
     if (this.state.statementPage === true) {
-      dashboardPage = <ViewStatements />;
+      dashboardPage = <ViewStatements
+        isDashboardPage={this.isDashboardPage}
+        isTransactionPage={this.isTransactionPage}
+        isStatementPage={this.isStatementPage} />;
+    }
+    // Transaction 
+    if (this.state.transactionPage === true) {
+      dashboardPage = <ViewTransaction
+        isDashboardPage={this.isDashboardPage}
+        isTransactionPage={this.isTransactionPage}
+        isStatementPage={this.isStatementPage} />;
     }
 
     return (
       <div className="row h-100 w-100 overflowN">
         {/* Navigation */}
+        {this.state.transStatmentId} | {this.state.theposition}
         <div className="container my-1 px-0">
           <TopNav
             isDashboardPage={this.isDashboardPage} 

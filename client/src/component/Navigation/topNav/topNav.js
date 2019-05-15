@@ -14,11 +14,6 @@ class TopNav extends Component {
     this.props.isStatementPage(true)
     this.props.isTransactionPage(false)
   }
-  showTransaction = () => {
-    this.props.isDashboardPage(false)
-    this.props.isStatementPage(false)
-    this.props.isTransactionPage(true)  
-  }
 
   render() {
     return (
@@ -47,12 +42,6 @@ class TopNav extends Component {
               </a>
               {/* Pull-right - Menu */}
               <ul className="right">
-                {/* Transaction */}
-                <li>
-                  <a className="waves-effect waves-light tooltipped"
-                    data-position="bottom" data-tooltip="View statement" onClick={this.showTransaction}>
-                    <i className="material-icons light-blue-text text-lighten-4">assessment</i></a>
-                </li>
                 {/* Statements */}
                 <li>
                   <a className="waves-effect waves-light tooltipped"
