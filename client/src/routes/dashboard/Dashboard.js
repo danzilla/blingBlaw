@@ -82,7 +82,6 @@ class Dashboard extends Component {
     return (
       <div className="row h-100 w-100 overflowN">
         {/* Navigation */}
-        {this.state.transStatmentId} | {this.state.theposition}
         <div className="container my-1 px-0">
           <TopNav
             isDashboardPage={this.isDashboardPage} 

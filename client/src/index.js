@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-
+// serviceWorker
 import * as serviceWorker from './serviceWorker';
 
 // Routers
@@ -12,28 +12,16 @@ import Login from './routes/authentication/index';
 
 import Test from './routes/test/Dashboard';
 
-//Redux
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from './store/reducer/reducer_1'
-
-let store = createStore(rootReducer)
-
-
 const routing = (
-    <Provider store={store}>
-        <Router>
-            <Switch>
-                <Route path="/test" component={Test} />
-
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/login" component={Login} />
-                <Route path='/404' component={ErrorM} />
-                <Redirect from='*' to='/login' />
-            </Switch>
-        </Router>
-    </Provider>
-
+    <Router>
+        <Switch>
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path='/404' component={ErrorM} />
+            <Route path="/test" component={Test} />
+            <Redirect from='*' to='/login' />
+        </Switch>
+    </Router>
 )
 ReactDOM.render(routing, document.getElementById('root'))
 
