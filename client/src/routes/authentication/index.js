@@ -23,6 +23,7 @@ class Login extends Component {
             pageGood: isLoggedState
         })
     }
+    // isRegisterForm
     isRegisterForm = (isRegisterFormState) => {
       this.setState({
           isRegFrom: isRegisterFormState
@@ -38,7 +39,7 @@ class Login extends Component {
             // Register form
             return ( <ReqForm isRegisterForm={this.isRegisterForm} /> )
         } else {
-            // Login Page - if Bad
+            // Login Page
             return ( <LoginForm isLogged={this.isLogged} isRegisterForm={this.isRegisterForm} /> )
         }
     }

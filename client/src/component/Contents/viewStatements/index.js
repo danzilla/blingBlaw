@@ -5,7 +5,6 @@ import StatementCard from './viewStatementsCards'
 import StatementsTransactions from './viewStatementsTransactions'
 
 class viewStatements extends Component {
-
     // states
     constructor(props) {
         super(props)
@@ -32,13 +31,21 @@ class viewStatements extends Component {
                 this.setState({ data: error });
             });
     }
+    showTransaction = () => {
+        this.props.isDashboardPage(false);
+        this.props.isStatementPage(true);
+        this.props.isTransactionPage(false);
+        console.log("adasds  asd  ada");
+    }
+
+    showLola = (lola) => {
+        console.log(lola);
+    }
 
     render() {
-
         // console.log(JSON.stringify(this.state.data));
         const rows = this.state.data;
         let cardStatement = "";
-        let statementTransaction = "";
         if (rows){
             cardStatement = Object.keys(rows).map((i) =>
                 <StatementCard
@@ -46,30 +53,16 @@ class viewStatements extends Component {
                     cardTitle={rows[i][0].statement_date}
                     cardModalId={rows[i][0].statement_serial}
                     cardBody={rows[i]}
+                    showTransaction={this.showTransaction}
                     cardChartData={rows[i]} />,
-            );
-            statementTransaction = Object.keys(rows).map((j) =>
-                <StatementsTransactions
-                    key={rows[j][0].statement_serial}
-                    cardModalId={rows[j][0].statement_serial}
-                    cardBody={rows[j]} />,
             );
         } else {
             cardStatement = "No Data";
         }
-
         return (
             <div className="h-100">
                 <div className="col m12 s12 h-100 overflowY">
-                    <nav className="card-1 waves-effect waves-block waves-darker red accent-1">
-                        <div className="nav-wrapper container ">
-                            <div className="center">
-                                <a href="">Chart - need to be SUM and GROUP of Parent Spends </a>
-                            </div>
-                        </div>
-                    </nav>
                     <div className="row">
-                        {statementTransaction}
                         {cardStatement}
                     </div>
                 </div>

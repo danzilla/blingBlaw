@@ -56,6 +56,8 @@ class RegisterForm extends Component {
     event.preventDefault();
   }
 
+  // onClick show LoginForm
+  // isRegisterForm === false
   activeLoginForm = () => {
     this.props.isRegisterForm(false)
   }

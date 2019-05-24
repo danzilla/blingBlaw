@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import Chart from './viewStatementsChart'
 
-
 class StatementCard extends Component {
-
     render() {
         return (
             <div className="col m3">
@@ -31,11 +29,14 @@ class StatementCard extends Component {
                             Last modified:  <br />
                             {this.props.cardBody[0].statement_created}  <br />
                         </blockquote>
-
+                        
+                        {this.props.cardModalId}
+                        
+                        {/* Buttons and Edit Card */}
                         <div className="center">
                             {/* Modal id  - From props */}
-                            <a href={'#modal' + this.props.cardModalId} 
-                                className="waves-effect waves-light btn light-blue lighten-2 modal-trigger">
+                            <a className="waves-effect waves-light btn light-blue lighten-2"
+                                onClick={this.props.showTransaction}>
                                 <i className="material-icons">web</i>
                             </a>
                             <a href="#!" className="waves-effect waves-light btn mx-1 orange darken-3 tooltipped"
