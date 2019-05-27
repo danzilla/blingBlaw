@@ -46,6 +46,10 @@ app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/statement', statementRouter);
 
+// dummy-data-add-table-lalala
+const dummy = require('./src/modules/dummyDB');
+app.use('/dummy', dummy);
+
 // Error catch
 const createError = require('http-errors');
 // catch 404 and forward to error handler

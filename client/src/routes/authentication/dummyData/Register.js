@@ -13,7 +13,6 @@ class RegisterForm extends Component {
         password: "",
         fannyPack: ""
       },
-      code: "",
       pageMesage: "",
       isRegFrom: true
     }
@@ -29,25 +28,22 @@ class RegisterForm extends Component {
     if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
       // If the input are empty
       // setState to = False
-      this.setState({ pageMesage: "Credentials required "});
+      this.setState({ pageMesage: "Credentials required ", pageGood: false });
     } else {
-        // submit to server
-        axios.post('http://localhost:5000/users/add', {
-          userName: this.state.register.userName,
-          password: this.state.register.password,
-          fannyPack: this.state.register.fannyPack
-        })
+      // submit to server
+      axios.post('http://localhost:5000/users/add', {
+        userName: this.state.register.userName,
+        password: this.state.register.password,
+        fannyPack: this.state.register.fannyPack
+      })
         .then((response) => {
-          // code - 3D000 - No Databases
-          // code - 42P01 - No Tables 
-          // Else - Show Good/Bad Message 
-          if(response.data.code === "3D000" || response.data.code === "42P01"){
-            console.log("No DB(3D000) or Table(42P01): " + response.data.code);
-            this.setState({ pageMesage: response.data.pageMesage, code: response.data.code });
+          if ((!response.data) || (response.data.pageGood === false)) {
+            // if response.data = empty or bad
+            // set local state
+            this.setState({ pageMesage: response.data.pageMesage });
           } else {
             // if response.data = good
             // set local state
-            console.log("Else-register: " + JSON.stringify(response));
             this.setState({ pageMesage: response.data.pageMesage });
           }
         })
@@ -59,28 +55,6 @@ class RegisterForm extends Component {
     // default prevent-refresh Form dawg
     event.preventDefault();
   }
-
-
-  // Init Database and Table 
-  // onClick create DB - Request 
-  initDatabase = () => {
-    console.log("asdasdasdasd + ");
-
-    // submit to server
-    axios.post('http://localhost:5000/dummy/createTable', {
-      userName: this.state.register.userName,
-      password: this.state.register.password,
-      fannyPack: this.state.register.fannyPack
-    })
-    .then((response) => {
-      console.log("asdasdasdasd : " + JSON.stringify(response));
-    })
-    .catch((error) => {
-      console.log("message: " + error.message);
-    });
-
-  }
-
 
   // onClick show LoginForm
   // isRegisterForm === false
@@ -128,24 +102,10 @@ class RegisterForm extends Component {
                             className="validate" required />
                           <label for="password">Password</label>
                         </div>
-
-
                         {/* err */}
-                        <div className="center-align col m12 s12 pink-text text-lighten-2">
+                        <div className="center-align col s12 pink-text text-lighten-2">
                           {this.state.pageMesage}
                         </div>
-
-                        {/* if no DB or Table - Init First run*/}
-                        {this.state.code && 
-                          <div className="col m12 center-align">
-                            <a className=" waves-effect waves-light btn pink lighten-4"
-                              onClick={this.initDatabase}>
-                              <i className="material-icons left">sd_storage</i>
-                              Initialize Database!
-                            </a>
-                          </div>
-                        }
-                        
                       </div>
                       {/* Form - Sub button */}
                       <div className="row center-align">
