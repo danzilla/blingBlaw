@@ -47,7 +47,7 @@ app.use('/category', categoryRouter);
 app.use('/statement', statementRouter);
 
 // dummy-data-add-table-lalala
-const dummy = require('./src/modules/dummyDB');
+const dummy = require('./src/router/dummyDB');
 app.use('/dummy', dummy);
 
 // Error catch

@@ -12,33 +12,20 @@ A minimalist budget app (**nodeJs + Express + PostgreSQL**)
 
 #### Database - Design - Draft - May 26, 2019
 ```
-database_Name - blingBlaw
+database_Name - blingblaw_assets
 │
-└───Schema - Users
-|   │   Table - Users_Auth - User_ID
-|   │   Table - User_Details - User_ID - User_Record
-└───Schema - Category
-|   │   Table - Users_Category_ID - User_ID - Category_details - CategoryChangeInfo
-└───Schema - fannyPack
-│   │   Table - fannyPackID - UserID - fannyPackDetails - fannyPackChangeInfo
+└───Schema - users
+|   │   Table - user_auth - user_id
+|   │   Table - user_details - user_id
+|   │   Table - user_record - user_id
+└───Schema - fannypack
+│   │   Table - fannypack_id - user_id - fannyPackName - fannyPackChangeInfo
 ```
 ```
-database_Name - blingBlaw-fannyPack
+database_Name - blingblaw_fannypack
 |  
-└───Schema - fannyPackID-0-fannyPackName-A
-│   │   Table - Debit card info
-│   │   Table - Credit card info
-|   |   Table - Saving card info
-|
-└───Schema - fannyPackID-1-fannyPackName-B
-│   │   Table - Debit card info
-│   │   Table - Credit card info
-|   |   Table - Saving card info
+└───Schema - fannypack_id
+|   │   Table - category - category_id - category_details - category_change_info
+│   │   Table - wallet - wallet_id -  wallet_name - wallet_change_info
+│   │   Table - wallet_details - wallet_id
 ```
-
-
-# To-Do
-- Global config for General Configuration 
-	> APP_NAME | APP_PORT | APP_VERSION | APP_MESSAGE | APP_SERVICE
-	> DB_Config
-	> Password_Auth_Key_Config

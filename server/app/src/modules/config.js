@@ -1,11 +1,3 @@
-// App Config
-const appConfig = {
-  appName: "BlingBlaw",
-  appPort: 3000,
-  appMsg: ""
-}
-
-
 // pageInfo detailes
 let pageInfo = {
   title: "",
@@ -21,6 +13,5 @@ let flashData = {
   bgColor: ""
 }
 
-module.exports.appConfig = appConfig;
 module.exports.pageInfo = pageInfo;
 module.exports.flashData = flashData;
