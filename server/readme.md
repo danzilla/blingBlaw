@@ -18,6 +18,7 @@ database_Name - blingblaw_assets
 |   │   Table - user_auth - user_id
 |   │   Table - user_details - user_id
 |   │   Table - user_record - user_id
+|   │   Table - user_group - user_group_id
 └───Schema - fannypack
 │   │   Table - fannypack_id - user_id - fannyPackName - fannyPackChangeInfo
 ```
