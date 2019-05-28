@@ -14,7 +14,7 @@ const appDB = {
     danustan: "danustanDB"
 }
 
-// Default DB connection
+// Default postgres_DB connection
 const defaultDB = {
     dbUser: "danzilla",
     dbPwd: "1035621",

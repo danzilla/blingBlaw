@@ -6,15 +6,15 @@ const appConfig = require('../../../../config/app.config');
 // DB connections 
 const danzillaDB = require("../../../modules/danzillaDB");
 
-// Create DB - fannyPack
-function fannyPack() {
+// Create DB - blingBlaw
+function blingBlaw() {
     // Query Insert 
-    let CreateFannyPack = "CREATE DATABASE " + appConfig.appDB.dbName_fannyPack + ";";
+    let CreateblingBlaw = "CREATE DATABASE 123" + appConfig.appDB.dbName_assets + ";";
     // Return query result to Promise 
     return new Promise((resolve, reject) => {
-        danzillaDB.pool.query(CreateFannyPack, function (err, transactionResults) {
+        danzillaDB.pool.query(CreateblingBlaw, function (err, transactionResults) {
             if (err) { 
-                console.log("2: " + err.code + err);
+                console.log("1: " + err.code + err);
                 resolve(err) 
             }
             else { 
@@ -24,4 +24,4 @@ function fannyPack() {
     })
 }
 
-module.exports = fannyPack;
+module.exports = blingBlaw;

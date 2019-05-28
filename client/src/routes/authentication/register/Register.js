@@ -18,12 +18,20 @@ class RegisterForm extends Component {
       isRegFrom: true
     }
   }
+
+  // onClick show LoginForm
+  // set - isRegisterForm === false
+  activeLoginForm = () => {
+    this.props.isRegisterForm(false)
+  }
+
   // handleChange - get and set state for register form
   handleChange = (propertyName, event) => {
     const register = this.state.register;
     register[propertyName] = event.target.value;
     this.setState({ register: register });
   }
+
   // handleSubmit - register
   handleSubmit = (event) => {
     if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
@@ -44,6 +52,10 @@ class RegisterForm extends Component {
           if(response.data.code === "3D000" || response.data.code === "42P01"){
             console.log("No DB(3D000) or Table(42P01): " + response.data.code);
             this.setState({ pageMesage: response.data.pageMesage, code: response.data.code });
+            // Set Register Form == false
+            this.props.isRegisterForm(false);
+            // Set Database Initial Config == true
+            this.props.isInitalConfig(true);
           } else {
             // if response.data = good
             // set local state
@@ -64,8 +76,6 @@ class RegisterForm extends Component {
   // Init Database and Table 
   // onClick create DB - Request 
   initDatabase = () => {
-    console.log("asdasdasdasd + ");
-
     // submit to server
     axios.post('http://localhost:5000/dummy/createTable', {
       userName: this.state.register.userName,
@@ -78,15 +88,10 @@ class RegisterForm extends Component {
     .catch((error) => {
       console.log("message: " + error.message);
     });
-
   }
 
 
-  // onClick show LoginForm
-  // isRegisterForm === false
-  activeLoginForm = () => {
-    this.props.isRegisterForm(false)
-  }
+
 
   render() {
     return (
