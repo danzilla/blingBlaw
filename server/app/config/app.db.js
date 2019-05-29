@@ -41,7 +41,7 @@ const default_DB = "postgres";
 const assets_db_config = {
     // database
     db_name: app_assets_db_name,
-    // schema_users
+    // schema_Assets.users
     schema_users: {
         schema_name: "users",
         table_users_auth: "user_auth",
@@ -49,7 +49,7 @@ const assets_db_config = {
         table_users_record: "user_records",
         table_users_group: "user_groups",
     },
-    // schema_fannypacks
+    // schema_Assets.fannypacks
     schema_fannypacks: {
         schema_name: "fannypacks",
         table_fannypacks: "wallets",
@@ -58,9 +58,9 @@ const assets_db_config = {
 }
 // Database - FannyPacks
 const fannypacks_db_config = {
-    // Database - 
+    // Database - FannyPacks
     db_name: app_fannyPack_db_name,
-    // Schema - fannypack_user_id
+    // Schema - FannyPacks.fannypack_user_id
     schema_fannypack_userID: {
         schema_name: "fannyPack_" + "users_serial_ID",
         table_wallet: "wallet",
@@ -77,7 +77,7 @@ const database = {
     blingblaw: {
         user: db_User,
         password: db_Pwd,
-        database: assets_db_config.asset_db_name,
+        database: assets_db_config.db_name,
         port: db_Port,
         host: db_Host
     },
@@ -85,7 +85,7 @@ const database = {
     fannypack: {
         user: db_User,
         password: db_Pwd,
-        database: fannypacks_db_config.fannypack_db_name,
+        database: fannypacks_db_config.db_name,
         port: db_Port,
         host: db_Host
     },
@@ -110,10 +110,10 @@ const database = {
 // Export - Labels for Database - Schema - Tables
 module.exports.assets_db_config = assets_db_config;
 module.exports.fannypacks_db_config = fannypacks_db_config;
+
 // Export - Databases settings 
 module.exports.blingBlaw = database.blingblaw;
 module.exports.fannyPack = database.fannypack;
 module.exports.postgres = database.default_postgres_db;
-
 // Danzilla
 module.exports.Home = database.danzilla_db;

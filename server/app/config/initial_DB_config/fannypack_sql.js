@@ -27,7 +27,7 @@ const create_DB_fannyPack = "CREATE DATABASE IF NOT EXISTS " + DB_fannyPack + ";
 
 // Dynamic-Schema-Table for Each users
 // Schema - user_fannyPack_ID
-const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + DB_fannyPack + "." + Schema_fannypack + " AUTHORIZATION " + DB_user + ";";
+const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + Schema_fannypack + " AUTHORIZATION " + DB_user + ";";
 // Table - fannypacks.category
 const create_table_fannypacks_category = "CREATE TABLE IF NOT EXISTS " + Schema_fannypack + "." + Table_fannypack_category +
 `(
@@ -53,3 +53,13 @@ const create_table_fannypacks_wallet = "CREATE TABLE IF NOT EXISTS " + Schema_fa
    transaction_Updated TIMESTAMP,
    transaction_UpdateUser VARCHAR(254)
 );`;
+
+// Export Create_DB_Design for fannyPack
+const fannypack_database = {
+   create_DB_fannyPack: create_DB_fannyPack,
+   // Each Account should have own Schema and Tables inside
+   create_schema_fannyPack: create_schema_fannyPack,
+   create_table_fannypacks_category: create_table_fannypacks_category,
+   create_table_fannypacks_wallet: create_table_fannypacks_wallet
+}
+module.exports.fannypack_database = fannypack_database;

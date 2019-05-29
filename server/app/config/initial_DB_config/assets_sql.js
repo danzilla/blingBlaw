@@ -1,4 +1,4 @@
-/* SQL statementz - Assets
+/* SQL statementz - Assets || BlingBlaw - Database configuration
  * 
  * database_Name - blingblaw_assets
  * │
@@ -14,19 +14,18 @@
 
 // App Global config
 const dbConfig = require('../app.db');
-
 // default db owner_user
 const DB_user = dbConfig.blingBlaw.user;
 
-// BlingBlaw - Database configuration 
+
 // Database - blingblaw_assets
-const create_DB_asset = "CREATE DATABASE IF NOT EXISTS " + 
-   dbConfig.assets_db_config.db_name + ";";
+const create_DB_asset = 'CREATE DATABASE '+dbConfig.assets_db_config.db_name;
+
+// Users
 // Schema - DB_assets_name.users
 const create_schema_users = "CREATE SCHEMA IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_users.schema_name + 
    " AUTHORIZATION " + DB_user + ";";
-
 // Table - users.user_auth
 const create_table_userAuth = "CREATE TABLE IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_users.schema_name + "." +
@@ -78,12 +77,11 @@ const create_table_userGroup = "CREATE TABLE IF NOT EXISTS " +
       user_group_updated TIMESTAMP
    );`;
 
-
+// fannyPack
 // Schema - fannypack
 const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_fannypacks.schema_name + 
    " AUTHORIZATION " + DB_user + ";";
-
 // Table fannypacks.fannypacks
 const create_table_fannypacks_fannypacks = "CREATE TABLE IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_fannypacks.schema_name + "." +
@@ -100,59 +98,24 @@ const create_table_fannypacks_records = "CREATE TABLE IF NOT EXISTS " +
    dbConfig.assets_db_config.schema_fannypacks.schema_name + "." +
    dbConfig.assets_db_config.schema_fannypacks.table_records + "." +
    `(
-      fannypack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+      fannypack_records_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
       fannypack_owner VARCHAR(36) UNIQUE NOT NULL,
       fannypack_name VARCHAR(240) NOT NULL,
       fannypack_created TIMESTAMP,
-      fannypack_updated TIMESTAMP
+      fannypack_updated TIMESTAMP,
+      fannypack_modified TIMESTAMP
    );`;
 
-
-
-
-
-
-
-
-
-// Get Ready Export module 
-const assets_sql = {
-   db_name: DB_assets_name,
-   db_user: DB_user,
-   db_create: create_DB_asset,
-   // schema_users
-   schema_users: {
-      schema_name: Schema_assets_users,
-      schema_create: create_schema_users,
-      table_users_auth: {
-         table_name: Table_assets_users_auth,
-         table_create: create_table_userAuth
-      },
-      table_users_details: {
-         table_name: Table_assets_users_details,
-         table_create: create_table_userDetails
-      },
-      table_users_record: {
-         table_name: Table_assets_users_record,
-         table_create: create_table_userRecords
-      },
-      table_users_group: {
-         table_name: Table_assets_users_group,
-         table_create: create_table_userGroup
-      }
-   },
-   // schema_fannypacks
-   schema_fannypacks: {
-      schema_name: Schema_assets_fannypacks,
-      schema_create: create_schema_fannyPack,
-      table_fannypacks: {
-         table_name: Table_fannypacks_fannypacks,
-         table_create: create_table_fannypacks_fannypacks
-      },
-      table_records: {
-         table_name: Table_fannypacks_records,
-         table_create: create_table_fannypacks_records
-      }
-   }
+// Export Create_DB_Design for Assets and Users
+const assets_database = {
+   create_db: create_DB_asset,
+   create_schema_users: create_schema_users,
+   create_schema_fannyPack: create_schema_fannyPack,
+   create_table_userAuth: create_table_userAuth,
+   create_table_userDetails: create_table_userDetails,
+   create_table_userRecords: create_table_userRecords,
+   create_table_userGroup: create_table_userGroup,
+   create_table_fannypacks_records: create_table_fannypacks_records,
+   create_table_fannypacks_fannypacks: create_table_fannypacks_fannypacks
 }
-
+module.exports = assets_database;
