@@ -18,26 +18,31 @@ module.exports = {
     let pageMsg_DB_good = "Database initialized!"; 
     let pageMsg_DB_bad = "Ewww... Database not initialize"; 
 
+    
+    // Create database for assets
     danzillaDB.pool.query(createDatabase, function (err, res) {
-
-      
+      // if err = throw
+      if (err) {
+        console.log("______________________");
+        console.log("1-err: " + err);
+        console.log("______________________");
+      } // If error = 3D000 = No default DB exit
       if (err.code === "3D000") {
-        // Log no_DB
+        // Log pageMsg_noDB
         console.log(pageMsg_noDB);
         // trying with default_postgres_settings
         danzillaDB.postgresDefault.query(createDatabase, function (err, Results2) {
           if (err) {
-            // Still error create DB
+            // Still error creating DB
             console.log(pageMsg_DB_bad);
-            console.log("2: Err: " + err);
-          }
-          else {
+          } else {
             console.log(pageMsg_DB_good);
             console.log("2: Result: " + JSON.stringify(Results2));
           }
         });
-      } if (err){
-        console.log("asd: " + err);
+      } if (err.code === "42P04"){
+        console.log(err.code);
+        console.log("3: " + err);
       }
       else {
         console.log(pageMsg_DB_good);
