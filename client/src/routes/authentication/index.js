@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 
 // Form Login
 import LoginForm from './login/Login'
@@ -14,17 +13,23 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            isLogForm: true,
             isRegFrom: false,
             isInitalConfig: false
         }
     }
+    // isLoginForm
+    // Get isLoginForm - From Login
+    isLoginForm = (isLoginFormState) => {
+        this.setState({ isLogForm: isLoginFormState })
+    }
     // isRegisterForm
-    // Get isRegisterForm - From Login
+    // Get isRegisterForm - From Register
     isRegisterForm = (isRegisterFormState) => {
       this.setState({ isRegFrom: isRegisterFormState })
     }
     // isRegisterForm
-    // Get isRegisterForm - From Register
+    // Get isRegisterForm - From DB
     isInitalConfig = (isInialDBState) => {
       this.setState({ isInitalConfig: isInialDBState })
     }
@@ -33,13 +38,24 @@ class Login extends Component {
     render() {
         if (this.state.isRegFrom === true) {
             // Register form
-            return ( <ReqForm isRegisterForm={this.isRegisterForm} isInitalConfig={this.isInitalConfig} /> )
+            return ( 
+                <ReqForm 
+                isRegisterForm={this.isRegisterForm} 
+                isInitalConfig={this.isInitalConfig} /> 
+            )
         } else if (this.state.isInitalConfig === true) {
             // Inital Database setting
-            return ( <Dummy isRegisterForm={this.isRegisterForm} isInitalConfig={this.isInitalConfig} /> )
+            return ( 
+                <Dummy 
+                isRegisterForm={this.isRegisterForm} 
+                isInitalConfig={this.isInitalConfig} /> 
+            )
         } else {
             // Login Page
-            return ( <LoginForm isRegisterForm={this.isRegisterForm} /> )
+            return ( 
+                <LoginForm 
+                isRegisterForm={this.isRegisterForm} /> 
+            )
         }
     }
 }

@@ -58,26 +58,65 @@ class RegisterForm extends Component {
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
 
-                    <h5 className="card-title black-text">Register {emojify(':heart:')}</h5>
+                    <h5 className="card-title black-text">
+                      Creating Initial Databases {emojify(':hot_pepper:')}
+                    </h5>
 
-                     {/* err */}
-                     <div className="center-align col m12 s12 pink-text text-lighten-2">
-                       {JSON.stringify(this.state.pageMesage)}
-                     </div>
+                    {/* Content */}
+                    <div className="col m12 s12 pink-text text-lighten-2">
 
-                     <div className="col m12 center-align">
-                        <a className=" waves-effect waves-light btn pink lighten-4"
-                          onClick={this.initDatabase}>
-                          <i className="material-icons left">sd_storage</i>
-                          Initialize Database!
-                        </a>
-                      </div>
+                      <ul>
 
-                       {/* Form - Sub button */}
-                      <div className="row center-align">
-                        <a onClick={this.activeLoginForm} className="waves-effect waves-light"> Register </a>
-                        <a onClick={this.activeLoginForm} className="waves-effect waves-light"> login </a>
-                      </div>
+                        <li>Database - Assets
+                          <ul>
+                            <li>Users_Database</li>
+                            <li>Table_user_auth</li>
+                            <li>Table_user_details</li>
+                            <li>Table_user_record</li>
+                          </ul>
+                        </li>
+                        
+                        <li>Database - Wallets
+                          <ul>
+                            <li>Wallets_Database</li>
+                            <li>Green tea</li>
+                          </ul>
+                        </li>
+
+                      </ul> 
+
+                      <p>
+                        <label>
+                          <input type="checkbox" checked="checked" />
+                          <span>Yellow</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input type="checkbox" disabled="disabled" className="pink lighten-1" />
+                          <span>Brown</span>
+                        </label>
+                      </p>
+                    </div>
+
+                    {/* err */}
+                    <div className="center-align col m12 s12 pink-text text-lighten-2">
+                      {JSON.stringify(this.state.pageMesage)}
+                    </div>
+
+                    <div className="col m12 center-align">
+                      <a className=" waves-effect waves-light btn pink lighten-4"
+                        onClick={this.initDatabase}>
+                        <i className="material-icons left">sd_storage</i>
+                        Initialize Database!
+                      </a>
+                    </div>
+
+                    {/* Form - Sub button */}
+                    <div className="row center-align">
+                      <a onClick={this.activeLoginForm} className="waves-effect waves-light"> Register </a>
+                      <a onClick={this.activeLoginForm} className="waves-effect waves-light"> login </a>
+                    </div>
 
                   </div>
                 </div>
@@ -87,7 +126,6 @@ class RegisterForm extends Component {
           </div>
         </div>
       </div>
-
     );
   }
 }
