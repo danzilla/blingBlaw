@@ -18,21 +18,13 @@ class RegisterForm extends Component {
       isRegFrom: true
     }
   }
-
-  // onClick show LoginForm
-  // set - isRegisterForm === false
-  activeLoginForm = () => {
-    this.props.isRegisterForm(false)
-  }
-
   // handleChange - get and set state for register form
   handleChange = (propertyName, event) => {
     const register = this.state.register;
     register[propertyName] = event.target.value;
     this.setState({ register: register });
   }
-
-  // handleSubmit - register
+  // handleSubmit - POST - register
   handleSubmit = (event) => {
     if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
       // If the input are empty
@@ -52,47 +44,39 @@ class RegisterForm extends Component {
           if(response.data.code === "3D000" || response.data.code === "42P01"){
             console.log("No DB(3D000) or Table(42P01): " + response.data.code);
             this.setState({ pageMesage: response.data.pageMesage, code: response.data.code });
-            // Set Register Form == false
+            // Set state for landing page
+            // Set to isInitalConfig == True
+            this.props.isLoginForm(false);
             this.props.isRegisterForm(false);
-            // Set Database Initial Config == true
             this.props.isInitalConfig(true);
           } else {
             // if response.data = good
             // set local state
             console.log("Else-register: " + JSON.stringify(response));
             this.setState({ pageMesage: response.data.pageMesage });
+            // Set state for landing page
+            // Set to isLoginForm == True
+            this.props.isLoginForm(false);
+            //this.props.isRegisterForm(true);
+            this.props.isInitalConfig(false);
           }
         })
         .catch((error) => {
           // get and set props - register state
-          console.log("message: " + error.message);
+          console.log("message: " + error);
         });
     }
     // default prevent-refresh Form dawg
     event.preventDefault();
   }
 
-
-  // Init Database and Table 
-  // onClick create DB - Request 
-  initDatabase = () => {
-    // submit to server
-    axios.post('http://localhost:5000/dummy/createTable', {
-      userName: this.state.register.userName,
-      password: this.state.register.password,
-      fannyPack: this.state.register.fannyPack
-    })
-    .then((response) => {
-      console.log("asdasdasdasd : " + JSON.stringify(response));
-    })
-    .catch((error) => {
-      console.log("message: " + error.message);
-    });
+  // onClick show LoginForm
+  // set - isRegisterForm === false
+  activeLoginForm = () => {
+    this.props.isRegisterForm(false)
   }
 
-
-
-
+  // brr brr
   render() {
     return (
       <div className="valign-wrapper w-100 h-100">
@@ -134,22 +118,10 @@ class RegisterForm extends Component {
                           <label for="password">Password</label>
                         </div>
 
-
                         {/* err */}
                         <div className="center-align col m12 s12 pink-text text-lighten-2">
                           {this.state.pageMesage}
                         </div>
-
-                        {/* if no DB or Table - Init First run*/}
-                        {this.state.code && 
-                          <div className="col m12 center-align">
-                            <a className=" waves-effect waves-light btn pink lighten-4"
-                              onClick={this.initDatabase}>
-                              <i className="material-icons left">sd_storage</i>
-                              Initialize Database!
-                            </a>
-                          </div>
-                        }
                         
                       </div>
                       {/* Form - Sub button */}
@@ -168,7 +140,6 @@ class RegisterForm extends Component {
           </div>
         </div>
       </div>
-
     );
   }
 }

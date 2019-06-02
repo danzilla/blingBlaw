@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
+// Form FirstRun
+import FirstRun from './firstRun/FirstRun'
 // Form Login
 import LoginForm from './login/Login'
 // Form Register
-import ReqForm from './register/Register'
-// Form Dummy
-import Dummy from './dummyData/Dummy'
+import RegForm from './register/Register'
 
 // Login - page
 class Login extends Component {
@@ -18,6 +18,7 @@ class Login extends Component {
             isInitalConfig: false
         }
     }
+    
     // isLoginForm
     // Get isLoginForm - From Login
     isLoginForm = (isLoginFormState) => {
@@ -28,8 +29,8 @@ class Login extends Component {
     isRegisterForm = (isRegisterFormState) => {
       this.setState({ isRegFrom: isRegisterFormState })
     }
-    // isRegisterForm
-    // Get isRegisterForm - From DB
+    // isInitalConfig
+    // Get isInitalConfig - From DB
     isInitalConfig = (isInialDBState) => {
       this.setState({ isInitalConfig: isInialDBState })
     }
@@ -39,22 +40,29 @@ class Login extends Component {
         if (this.state.isRegFrom === true) {
             // Register form
             return ( 
-                <ReqForm 
-                isRegisterForm={this.isRegisterForm} 
-                isInitalConfig={this.isInitalConfig} /> 
+                <RegForm
+                    isLoginForm={this.isLoginForm}
+                    isRegisterForm={this.isRegisterForm} 
+                    isInitalConfig={this.isInitalConfig}
+                 /> 
             )
         } else if (this.state.isInitalConfig === true) {
-            // Inital Database setting
+            // First Run
             return ( 
-                <Dummy 
-                isRegisterForm={this.isRegisterForm} 
-                isInitalConfig={this.isInitalConfig} /> 
+                <FirstRun 
+                    isLoginForm={this.isLoginForm}
+                    isRegisterForm={this.isRegisterForm} 
+                    isInitalConfig={this.isInitalConfig}
+                /> 
             )
         } else {
             // Login Page
             return ( 
                 <LoginForm 
-                isRegisterForm={this.isRegisterForm} /> 
+                    isLoginForm={this.isLoginForm}
+                    isRegisterForm={this.isRegisterForm} 
+                    isInitalConfig={this.isInitalConfig}
+                /> 
             )
         }
     }

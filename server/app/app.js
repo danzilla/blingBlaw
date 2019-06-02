@@ -47,8 +47,8 @@ app.use('/category', categoryRouter);
 app.use('/statement', statementRouter);
 
 // dummy-data-add-table-lalala
-const dummy = require('./src/router/initialDB');
-app.use('/dummy', dummy);
+const firstrun = require('./src/router/initialDB');
+app.use('/firstrun', firstrun);
 
 // Error catch
 const createError = require('http-errors');

@@ -14,7 +14,7 @@ class RegisterForm extends Component {
         fannyPack: ""
       },
       code: "",
-      pageMesage: "asdasd",
+      pageMesage: "",
       isRegFrom: true
     }
   }
@@ -22,6 +22,7 @@ class RegisterForm extends Component {
   // onClick show LoginForm
   // set - isRegisterForm === false
   activeLoginForm = () => {
+    this.props.isLoginForm(true)
     this.props.isRegisterForm(false)
     this.props.isInitalConfig(false)
   }
@@ -29,10 +30,9 @@ class RegisterForm extends Component {
   // Init Database and Table 
   // onClick create DB - Request 
   initDatabase = () => {
-    console.log("asdfsafsdf: initDatabase");
-
+    console.log("- First - Run -");
     // submit to server
-    axios.post('http://localhost:5000/dummy/createTable', {
+    axios.post('http://localhost:5000/firstrun/createTable', {
       userName: this.state.register.userName,
       password: this.state.register.password,
       fannyPack: this.state.register.fannyPack
@@ -62,46 +62,9 @@ class RegisterForm extends Component {
                       Creating Initial Databases {emojify(':hot_pepper:')}
                     </h5>
 
-                    {/* Content */}
-                    <div className="col m12 s12 pink-text text-lighten-2">
-
-                      <ul>
-
-                        <li>Database - Assets
-                          <ul>
-                            <li>Users_Database</li>
-                            <li>Table_user_auth</li>
-                            <li>Table_user_details</li>
-                            <li>Table_user_record</li>
-                          </ul>
-                        </li>
-                        
-                        <li>Database - Wallets
-                          <ul>
-                            <li>Wallets_Database</li>
-                            <li>Green tea</li>
-                          </ul>
-                        </li>
-
-                      </ul> 
-
-                      <p>
-                        <label>
-                          <input type="checkbox" checked="checked" />
-                          <span>Yellow</span>
-                        </label>
-                      </p>
-                      <p>
-                        <label>
-                          <input type="checkbox" disabled="disabled" className="pink lighten-1" />
-                          <span>Brown</span>
-                        </label>
-                      </p>
-                    </div>
-
                     {/* err */}
                     <div className="center-align col m12 s12 pink-text text-lighten-2">
-                      {JSON.stringify(this.state.pageMesage)}
+                      {this.state.pageMesage}
                     </div>
 
                     <div className="col m12 center-align">
