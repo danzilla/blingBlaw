@@ -22,8 +22,8 @@ class RegisterForm extends Component {
   // onClick show LoginForm
   // set - isRegisterForm === false
   activeLoginForm = () => {
-    this.props.isLoginForm(true)
-    this.props.isRegisterForm(false)
+    this.props.isLoginForm(false)
+    this.props.isRegisterForm(true)
     this.props.isInitalConfig(false)
   }
 
@@ -42,11 +42,12 @@ class RegisterForm extends Component {
       console.log("response : " + JSON.stringify(response));
     })
     .catch((error) => {
-      this.setState({ pageMesage: error.message});
+      this.setState({ pageMesage: error});
       console.log("error: " + error.message);
     });
   }
 
+  // First Run
   render() {
     return (
       <div className="valign-wrapper w-100 h-100">
@@ -57,14 +58,36 @@ class RegisterForm extends Component {
               <div className="col m4 offset-m4 s8 offset-s2">
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
-
-                    <h5 className="card-title black-text">
-                      Creating Initial Databases {emojify(':hot_pepper:')}
+                    
+                    {/* Heading */}
+                    <h5 className="card-title black-text center-align">
+                      Initial app config {emojify(':hot_pepper:')}
                     </h5>
-
+                    {/* contents */}
+                    <div className="container">
+                      <p>
+                        <label>
+                          <input id="indeterminate-checkbox" type="checkbox" checked="checked" />
+                          <span>Indeterminate Style</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input id="indeterminate-checkbox" type="checkbox" checked="checked" />
+                          <span>Indeterminate Style</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input id="indeterminate-checkbox" type="checkbox" />
+                          <span>Indeterminate Style</span>
+                        </label>
+                      </p>
+                    </div>
+                    
                     {/* err */}
                     <div className="center-align col m12 s12 pink-text text-lighten-2">
-                      {this.state.pageMesage}
+                      {JSON.stringify(this.state.pageMesage)}
                     </div>
 
                     <div className="col m12 center-align">
@@ -78,7 +101,6 @@ class RegisterForm extends Component {
                     {/* Form - Sub button */}
                     <div className="row center-align">
                       <a onClick={this.activeLoginForm} className="waves-effect waves-light"> Register </a>
-                      <a onClick={this.activeLoginForm} className="waves-effect waves-light"> login </a>
                     </div>
 
                   </div>

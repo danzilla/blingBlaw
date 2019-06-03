@@ -6,7 +6,7 @@ const assets_database = require('../../../../config/firstRun/assets_sql');
 const danzillaDB = require("../../../modules/danzillaDB");
 
 module.exports = {
-  // POST - Create Table
+  // POST - Create initial Database 
   createDB: function(req, res, next) {
 
     // Statement - Create Database user_assets
@@ -25,7 +25,6 @@ module.exports = {
       if (err) {
         console.log("______________________");
         console.log("1-err: " + err);
-        console.log("______________________");
       } // If error = 3D000 = No default DB exit
       if (err.code === "3D000") {
         // Log pageMsg_noDB

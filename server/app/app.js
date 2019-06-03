@@ -45,9 +45,8 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/statement', statementRouter);
-
-// dummy-data-add-table-lalala
-const firstrun = require('./src/router/initialDB');
+// firstRun-lalala
+const firstrun = require('./src/router/firstRun');
 app.use('/firstrun', firstrun);
 
 // Error catch
