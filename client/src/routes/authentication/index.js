@@ -44,7 +44,7 @@ class Login extends Component {
                     isLoginForm={this.isLoginForm}
                     isRegisterForm={this.isRegisterForm} 
                     isInitalConfig={this.isInitalConfig}
-                 /> 
+                 />
             )
         } else if (this.state.isInitalConfig === true) {
             // First Run
@@ -53,16 +53,16 @@ class Login extends Component {
                     isLoginForm={this.isLoginForm}
                     isRegisterForm={this.isRegisterForm} 
                     isInitalConfig={this.isInitalConfig}
-                /> 
+                />
             )
         } else {
             // Login Page
-            return ( 
+            return (
                 <LoginForm 
                     isLoginForm={this.isLoginForm}
                     isRegisterForm={this.isRegisterForm} 
                     isInitalConfig={this.isInitalConfig}
-                /> 
+                />
             )
         }
     }

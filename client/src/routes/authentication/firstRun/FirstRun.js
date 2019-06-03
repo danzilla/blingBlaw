@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 import axios from 'axios';
 
+const firstRunInitialDB = require('../../../settings/fetch');
+
 // RegisterForm
-class RegisterForm extends Component {
+class FirstRun extends Component {
   // states
   constructor(props) {
     super(props)
     this.state = {
+      firstRun: {
+        assets: 'checked',
+        fannyPack: ''
+      },
       register: {
-        userName: "",
-        password: "",
         fannyPack: ""
       },
       code: "",
@@ -30,25 +34,41 @@ class RegisterForm extends Component {
   // Init Database and Table 
   // onClick create DB - Request 
   initDatabase = () => {
-    console.log("- First - Run -");
+    console.log("\n- First - Run -");
+    console.log("firstRunInitialDB: " + firstRunInitialDB + "\n");
     // submit to server
-    axios.post('http://localhost:5000/firstrun/createTable', {
-      userName: this.state.register.userName,
-      password: this.state.register.password,
+    axios.post('http://localhost:5000/firstrun/initDB', {
       fannyPack: this.state.register.fannyPack
     })
     .then((response) => {
-      this.setState({ pageMesage: response});
-      console.log("response : " + JSON.stringify(response));
+      console.log("response : " + JSON.stringify(response.data));
+      this.setState({ 
+        pageMesage: response.data,
+        firstRun: response.data.firstRun
+      });
     })
     .catch((error) => {
-      this.setState({ pageMesage: error});
+      this.setState({ 
+        pageMesage: error,
+        firstRun: {
+          assets: '',
+          fannyPack: ''
+        }
+      });
       console.log("error: " + error.message);
     });
   }
 
+
+
+
+
+
+
   // First Run
   render() {
+    console.log(JSON.stringify(this.state.firstRun));
+    
     return (
       <div className="valign-wrapper w-100 h-100">
         <div className="valign w-100">
@@ -59,36 +79,41 @@ class RegisterForm extends Component {
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
                     
-                    {/* Heading */}
-                    <h5 className="card-title black-text center-align">
-                      Initial app config {emojify(':hot_pepper:')}
-                    </h5>
                     {/* contents */}
                     <div className="container">
-                      <p>
-                        <label>
-                          <input id="indeterminate-checkbox" type="checkbox" checked="checked" />
-                          <span>Indeterminate Style</span>
-                        </label>
-                      </p>
-                      <p>
-                        <label>
-                          <input id="indeterminate-checkbox" type="checkbox" checked="checked" />
-                          <span>Indeterminate Style</span>
-                        </label>
-                      </p>
-                      <p>
-                        <label>
-                          <input id="indeterminate-checkbox" type="checkbox" />
-                          <span>Indeterminate Style</span>
-                        </label>
-                      </p>
+
+                      1: {this.state.firstRun.assets}
+                      2: {this.state.firstRun.fannyPack}
+
+                      {/* Heading */}
+                      <h5 className="card-title black-text">
+                        Initial app config {emojify(':hot_pepper:')}
+                      </h5>
+                      {/* assets config */}
+                      <ul>
+                        <li>
+                          <label>
+                            <input type="checkbox" 
+                              checked={this.state.firstRun.assets} />
+                            <span>Initial assets config</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" 
+                              checked={this.state.firstRun.fannyPack} />
+                            <span>Initial fannyPackz config</span>
+                          </label>
+                        </li>
+                      </ul>
                     </div>
                     
                     {/* err */}
-                    <div className="center-align col m12 s12 pink-text text-lighten-2">
-                      {JSON.stringify(this.state.pageMesage)}
-                    </div>
+                    {this.state.pageMesage &&
+                      <div className="center-align col m12 s12 pink-text text-lighten-2">
+                        {JSON.stringify(this.state.pageMesage)}
+                      </div>
+                    }
 
                     <div className="col m12 center-align">
                       <a className=" waves-effect waves-light btn pink lighten-4"
@@ -100,7 +125,10 @@ class RegisterForm extends Component {
 
                     {/* Form - Sub button */}
                     <div className="row center-align">
-                      <a onClick={this.activeLoginForm} className="waves-effect waves-light"> Register </a>
+                      <a onClick={this.activeLoginForm} 
+                        className="waves-effect waves-light"> 
+                        Register 
+                      </a>
                     </div>
 
                   </div>
@@ -115,4 +143,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+export default FirstRun;

@@ -41,7 +41,7 @@ class RegisterForm extends Component {
           // code - 3D000 - No Databases
           // code - 42P01 - No Tables 
           // Else - Show Good/Bad Message 
-          if(response.data.code === "3D000" || response.data.code === "42P01"){
+          if (response.data.code === "3D000" || response.data.code === "42P01"){
             console.log("No DB(3D000) or Table(42P01): " + response.data.code);
             this.setState({ pageMesage: response.data.pageMesage, code: response.data.code });
             // Set state for landing page

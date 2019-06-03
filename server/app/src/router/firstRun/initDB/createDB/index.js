@@ -23,27 +23,8 @@ module.exports = {
     danzillaDB.pool.query(createDatabase, function (err, res) {
       // if err = throw
       if (err) {
-        console.log("______________________");
         console.log("1-err: " + err);
-      } // If error = 3D000 = No default DB exit
-      if (err.code === "3D000") {
-        // Log pageMsg_noDB
-        console.log(pageMsg_noDB);
-        // trying with default_postgres_settings
-        danzillaDB.postgresDefault.query(createDatabase, function (err, Results2) {
-          if (err) {
-            // Still error creating DB
-            console.log(pageMsg_DB_bad);
-          } else {
-            console.log(pageMsg_DB_good);
-            console.log("2: Result: " + JSON.stringify(Results2));
-          }
-        });
-      } if (err.code === "42P04"){
-        console.log(err.code);
-        console.log("3: " + err);
-      }
-      else {
+      } else if (res) {
         console.log(pageMsg_DB_good);
         console.log("1 Results: " + res);
       }

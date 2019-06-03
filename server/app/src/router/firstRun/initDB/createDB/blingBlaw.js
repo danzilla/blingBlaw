@@ -2,9 +2,9 @@
 // Create DB -> Shecma -> and Table
 
 // App Global config
-const appConfig = require('../../../../config/app.config');
+const appConfig = require('../../../../../config/app.config');
 // DB connections 
-const danzillaDB = require("../../../modules/danzillaDB");
+const danzillaDB = require("../../../../modules/danzillaDB");
 
 // Create DB - blingBlaw
 function blingBlaw() {
@@ -24,4 +24,4 @@ function blingBlaw() {
     })
 }
 
-module.exports = blingBlaw;
+module.exports.blingBlaw = blingBlaw;

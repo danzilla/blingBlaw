@@ -65,10 +65,10 @@ module.exports = {
             })
             .catch(error => {
                 // Error, no records inserted
-                let pageMesage = "Error " + error;
-                console.log(error);
                 // code - 3D000 - No Databases
                 // code - 42P01 - No Tables 
+                let pageMesage = "Error: " + error;
+                console.log(pageMesage);
                 res.send({ pageMesage: pageMesage, code: error.code  });
             });
         }

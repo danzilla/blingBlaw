@@ -46,7 +46,7 @@ app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/statement', statementRouter);
 // firstRun-lalala
-const firstrun = require('./src/router/firstRun');
+const firstrun = require('./src/router/firstRun/firstRun');
 app.use('/firstrun', firstrun);
 
 // Error catch
