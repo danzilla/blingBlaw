@@ -16,10 +16,8 @@
 const dbConfig = require('../app.db');
 // default db owner_user
 const DB_user = dbConfig.blingBlaw.user;
-
-
 // Database - blingblaw_assets
-const create_DB_asset = 'CREATE DATABASE '+dbConfig.assets_db_config.db_name;
+const create_DB_asset = 'CREATE DATABASE '+ dbConfig.assets_db_config.db_name;
 
 // Users
 // Schema - DB_assets_name.users

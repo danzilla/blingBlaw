@@ -4,22 +4,21 @@ import axios from 'axios';
 
 const firstRunInitialDB = require('../../../settings/fetch');
 
-// RegisterForm
+// FirstRun
 class FirstRun extends Component {
   // states
   constructor(props) {
     super(props)
     this.state = {
       firstRun: {
-        assets: 'checked',
+        assets: '',
         fannyPack: ''
       },
       register: {
-        fannyPack: ""
+        fannyPack: "asd-FFF"
       },
       code: "",
-      pageMesage: "",
-      isRegFrom: true
+      pageMesage: ""
     }
   }
 
@@ -35,40 +34,30 @@ class FirstRun extends Component {
   // onClick create DB - Request 
   initDatabase = () => {
     console.log("\n- First - Run -");
-    console.log("firstRunInitialDB: " + firstRunInitialDB + "\n");
     // submit to server
-    axios.post('http://localhost:5000/firstrun/initDB', {
-      fannyPack: this.state.register.fannyPack
+    axios.post('http://localhost:5000/firstrun', {
+      code: "this.state.code"
     })
     .then((response) => {
       console.log("response : " + JSON.stringify(response.data));
       this.setState({ 
-        pageMesage: response.data,
+        pageMesage: response.data.pageMesage,
         firstRun: response.data.firstRun
       });
     })
     .catch((error) => {
+      let errMsg = error.response.statusText + " - " + error.response.status;
+      let firstRun = { assets: '', fannyPack: ''};
+      console.log("error: " + errMsg);
       this.setState({ 
-        pageMesage: error,
-        firstRun: {
-          assets: '',
-          fannyPack: ''
-        }
+        pageMesage: errMsg,
+        firstRun: firstRun
       });
-      console.log("error: " + error.message);
     });
   }
 
-
-
-
-
-
-
   // First Run
   render() {
-    console.log(JSON.stringify(this.state.firstRun));
-    
     return (
       <div className="valign-wrapper w-100 h-100">
         <div className="valign w-100">
@@ -81,9 +70,6 @@ class FirstRun extends Component {
                     
                     {/* contents */}
                     <div className="container">
-
-                      1: {this.state.firstRun.assets}
-                      2: {this.state.firstRun.fannyPack}
 
                       {/* Heading */}
                       <h5 className="card-title black-text">
@@ -116,7 +102,8 @@ class FirstRun extends Component {
                     }
 
                     <div className="col m12 center-align">
-                      <a className=" waves-effect waves-light btn pink lighten-4"
+                      <a 
+                        className="capitalize waves-effect waves-light btn pink lighten-2"
                         onClick={this.initDatabase}>
                         <i className="material-icons left">sd_storage</i>
                         Initialize Database!

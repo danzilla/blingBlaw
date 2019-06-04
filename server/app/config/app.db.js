@@ -110,7 +110,6 @@ const database = {
 // Export - Labels for Database - Schema - Tables
 module.exports.assets_db_config = assets_db_config;
 module.exports.fannypacks_db_config = fannypacks_db_config;
-
 // Export - Databases settings 
 module.exports.blingBlaw = database.blingblaw;
 module.exports.fannyPack = database.fannypack;

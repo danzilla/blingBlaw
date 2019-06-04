@@ -2,11 +2,6 @@
  * try ES6
  * NodeJS + Monk + Session = keep it minimal
  */
-const assets_database = require('../../../modules/sqlStatements/firstRun/assets_database');
-const danzillaDB = require("../../../modules/danzillaDB");
-
-const initDB = require('./createDB/blingBlaw');
-
 
 // 1. Create DB_
 // If - Failed - Try with default_settings
@@ -15,35 +10,24 @@ module.exports = {
     // POST - initial Database 
     initDB: function (req, res, next) {
 
-        // Statement - Create Database user_assets
-        let createDatabase = assets_database.create_db;
-        let looola = "createDatabase: " + assets_database.create_schema_users
-        console.log(looola);
+        console.log("REQ: " + JSON.stringify(req.body));
 
 
-        function resolveAfter2Seconds() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve('resolved');
-                }, 2000);
-            });
-        }
-        async function asyncCall() {
-            console.log('calling');
-            var result = await resolveAfter2Seconds();
-            console.log(result);
-            // expected output: 'resolved'
-        }
+        const createDatabase = require("./createDB");
 
-        asyncCall();
+        createDatabase.createAssetsDB()
+        createDatabase.createFannyPacksDB()
 
+
+        // Compile functions | results and rejects
         res.send({
-            pageMesage: looola,
+            pageMesage: "looola",
             firstRun: {
                 fannyPack: "checked",
-                assets: ""
+                assets: "checked"
             }
         })
+
     }
 }
 

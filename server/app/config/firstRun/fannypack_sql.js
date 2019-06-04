@@ -8,24 +8,26 @@
  * │   │   Table - wallet_details - wallet_id
  *  
  */
+
 // App Global config
-const appConfig = require('../app.config');
+const appConfig = require('../app.db');
 
 // Database - Labels
 // Database userName
-const DB_user = appConfig.defaultDB.dbUser;
+const DB_user = appConfig.blingBlaw.user;
 // Database for FannyPack
-const DB_fannyPack = appConfig.appDB.dbName_fannyPack;
+const DB_fannyPack = appConfig.fannypacks_db_config.db_name;
+// Database - fannypacks 
+const create_DB_fannyPack = "CREATE DATABASE " + DB_fannyPack + ";";
+
+
+// Dynamic-Schema-Table for Each users
+//
 // Schemas - fannypack.user_fannyPack_ID
 const Schema_fannypack = "user_fannyPack_ID";
 // Tables - db_assets.users.Tables
 const Table_fannypack_category = "category";
 const Table_fannypack_wallet = "wallet";
-
-// Database - fannypacks 
-const create_DB_fannyPack = "CREATE DATABASE IF NOT EXISTS " + DB_fannyPack + ";";
-
-// Dynamic-Schema-Table for Each users
 // Schema - user_fannyPack_ID
 const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + Schema_fannypack + " AUTHORIZATION " + DB_user + ";";
 // Table - fannypacks.category
@@ -54,12 +56,13 @@ const create_table_fannypacks_wallet = "CREATE TABLE IF NOT EXISTS " + Schema_fa
    transaction_UpdateUser VARCHAR(254)
 );`;
 
+
 // Export Create_DB_Design for fannyPack
 const fannypack_database = {
-   create_DB_fannyPack: create_DB_fannyPack,
+   create_db: create_DB_fannyPack,
    // Each Account should have own Schema and Tables inside
    create_schema_fannyPack: create_schema_fannyPack,
    create_table_fannypacks_category: create_table_fannypacks_category,
    create_table_fannypacks_wallet: create_table_fannypacks_wallet
 }
-module.exports.fannypack_database = fannypack_database;
+module.exports = fannypack_database;

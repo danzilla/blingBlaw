@@ -7,7 +7,7 @@ const router = express.Router();
 
 // initDB 
 const initDB = require('./initDB');
-router.route('/initDB').post(initDB.initDB);
+router.route('/').post(initDB.initDB);
 
 module.exports = router;
 
