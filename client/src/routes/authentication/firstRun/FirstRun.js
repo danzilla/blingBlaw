@@ -10,14 +10,10 @@ class FirstRun extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      firstRun: {
+      databaseStatus: {
         assets: '',
         fannyPack: ''
       },
-      register: {
-        fannyPack: "asd-FFF"
-      },
-      code: "",
       pageMesage: ""
     }
   }
@@ -42,16 +38,16 @@ class FirstRun extends Component {
       console.log("response : " + JSON.stringify(response.data));
       this.setState({ 
         pageMesage: response.data.pageMesage,
-        firstRun: response.data.firstRun
+        databaseStatus: response.data.firstRun
       });
     })
     .catch((error) => {
       let errMsg = error.response.statusText + " - " + error.response.status;
-      let firstRun = { assets: '', fannyPack: ''};
+      let databaseStatus = { assets: '', fannyPack: ''};
       console.log("error: " + errMsg);
       this.setState({ 
         pageMesage: errMsg,
-        firstRun: firstRun
+        databaseStatus: databaseStatus
       });
     });
   }
@@ -70,7 +66,6 @@ class FirstRun extends Component {
                     
                     {/* contents */}
                     <div className="container">
-
                       {/* Heading */}
                       <h5 className="card-title black-text">
                         Initial app config {emojify(':hot_pepper:')}
@@ -80,24 +75,25 @@ class FirstRun extends Component {
                         <li>
                           <label>
                             <input type="checkbox" 
-                              checked={this.state.firstRun.assets} />
+                              checked={this.state.databaseStatus.assets} />
                             <span>Initial assets config</span>
                           </label>
                         </li>
                         <li>
                           <label>
                             <input type="checkbox" 
-                              checked={this.state.firstRun.fannyPack} />
+                              checked={this.state.databaseStatus.fannyPack} />
                             <span>Initial fannyPackz config</span>
                           </label>
                         </li>
+                        
                       </ul>
                     </div>
                     
                     {/* err */}
                     {this.state.pageMesage &&
                       <div className="center-align col m12 s12 pink-text text-lighten-2">
-                        {JSON.stringify(this.state.pageMesage)}
+                        {this.state.pageMesage}
                       </div>
                     }
 

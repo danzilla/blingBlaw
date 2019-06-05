@@ -59,6 +59,7 @@ const create_table_fannypacks_wallet = "CREATE TABLE IF NOT EXISTS " + Schema_fa
 
 // Export Create_DB_Design for fannyPack
 const fannypack_database = {
+   db_name: appConfig.fannypacks_db_config.db_name,
    create_db: create_DB_fannyPack,
    // Each Account should have own Schema and Tables inside
    create_schema_fannyPack: create_schema_fannyPack,

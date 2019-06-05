@@ -106,6 +106,7 @@ const create_table_fannypacks_records = "CREATE TABLE IF NOT EXISTS " +
 
 // Export Create_DB_Design for Assets and Users
 const assets_database = {
+   db_name: dbConfig.assets_db_config.db_name,
    create_db: create_DB_asset,
    create_schema_users: create_schema_users,
    create_schema_fannyPack: create_schema_fannyPack,

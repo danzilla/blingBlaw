@@ -1,33 +1,40 @@
-/* No Var - let and const
- * try ES6
- * NodeJS + Monk + Session = keep it minimal
+/* FirstRun
+ * Async Action 
+ * Keep it minimal
  */
-
-// 1. Create DB_
-// If - Failed - Try with default_settings
-// else - Create 
+const async = require('async');
+// POST - initial Database 
 module.exports = {
     // POST - initial Database 
     initDB: function (req, res, next) {
-
-        console.log("REQ: " + JSON.stringify(req.body));
-
-
+        // Careate Database
         const createDatabase = require("./createDB");
-
-        createDatabase.createAssetsDB()
-        createDatabase.createFannyPacksDB()
-
-
-        // Compile functions | results and rejects
-        res.send({
-            pageMesage: "looola",
-            firstRun: {
-                fannyPack: "checked",
-                assets: "checked"
+  
+        // Async Waterfall 
+        // 
+        async.waterfall([
+            function (callback) {
+                console.log("\n1: createAssetsDB");
+                createDatabase.createAssetsDB(callback)
+            },
+            function (arg1, callback) {
+                console.log("\n2: createFannyPacksDB");
+                createDatabase.createFannyPacksDB(callback)
             }
-        })
-
+        ], function (err, result) {
+            if (!err && result){
+                console.log("result: " + JSON.stringify(result));
+            } else {
+                console.log("err: " + err);
+            }
+            res.send({
+                pageMesage: result.FannyPacks.message,
+                firstRun: {
+                    fannyPack: result.FannyPacks.checked,
+                    assets: result.UserAssets.checked
+                }
+            })
+        });
     }
 }
 
