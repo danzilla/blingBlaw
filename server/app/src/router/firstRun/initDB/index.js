@@ -7,33 +7,64 @@ const async = require('async');
 module.exports = {
     // POST - initial Database 
     initDB: function (req, res, next) {
+        // Check list for firstRun
+        const firstRunCheck = {
+            database: {
+                usersDB: "",
+                fannyDB: ""
+            },
+            schema: {
+                usersSchema: "",
+                fannypackSchema: ""
+            },
+            table: {
+                userAuth: "",
+                userDetails: "",
+                userRecord: "",
+                userGroup: "",
+                fannypack: ""
+            }
+        }
         // Careate Database
         const createDatabase = require("./createDB");
-  
+        const createSchema = require("./createSchema");
+        const createTable = require("./createTable");
+
         // Async Waterfall 
-        // 
         async.waterfall([
-            function (callback) {
-                console.log("\n1: createAssetsDB");
-                createDatabase.createAssetsDB(callback)
-            },
-            function (arg1, callback) {
-                console.log("\n2: createFannyPacksDB");
-                createDatabase.createFannyPacksDB(callback)
+            function (callback) { // Create Users_Assets
+                createDatabase.createAssetsDB(callback, firstRunCheck)
+            }, function (resultAssetDB, callback) { // Create Fanny_Packs
+                createDatabase.createFannyPacksDB(callback, firstRunCheck)
+            }, function (resultFannyPacksDB, callback) { // Create Schema - create_schema_users
+                createSchema.create_schema_users(callback, firstRunCheck)
+            }, function (resultUserSchema, callback) { // Create Schema - create_schema_fannyPack
+                createSchema.create_schema_fannyPack(callback, firstRunCheck)
+            }, function (resultfannyPackSchema, callback) { // Create Schema - create_schema_fannyPack
+                createTable.create_table_userAuth(callback, firstRunCheck)
             }
         ], function (err, result) {
+
+            let pageMesage = ""
             if (!err && result){
-                console.log("result: " + JSON.stringify(result));
+                pageMesage = "result: " + JSON.stringify(result);
             } else {
-                console.log("err: " + err);
+                pageMesage = "err: " + err;
             }
+
+            console.log("\npageMesage: " + pageMesage);
+            console.log("\nfirstRunCheck: " + JSON.stringify(firstRunCheck));
+            console.log("\n firstRunCheck.database: " + JSON.stringify(firstRunCheck.database));
+            
             res.send({
-                pageMesage: result.FannyPacks.message,
+                pageMesage: pageMesage,
+                firstRunCheck: firstRunCheck,
                 firstRun: {
-                    fannyPack: result.FannyPacks.checked,
-                    assets: result.UserAssets.checked
+                    fannyPack: firstRunCheck.database.fannyDB.checked,
+                    assets: firstRunCheck.database.usersDB.checked
                 }
             })
+            
         });
     }
 }

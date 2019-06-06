@@ -1,22 +1,26 @@
-/* No Var - let and const
- * try ES6
- * NodeJS + Monk + Session = keep it minimal
+/* Authentication - Router
+ * Keep it minimal
  */
 const express = require('express');
 const router = express.Router();
+/*
+ * root / 
+ */
 
-
-// REACT - REST
+// React
 
 // POST - Login POST - React
 // Authentication - login page
-const postLoginReact = require('./login/postLogin');
-router.route('/login').post(postLoginReact.postLogin);
+const login = require('./login/login');
+router.route('/login').post(login.login);
+// POST - Register POST - React
+// Authentication - Register page
+const register = require('./register/register');
+router.route('/register').post(register.register);
 
 
-// Backend - REST
-
-// Home page - Backend - EJS
+// Backend - REST - GUI - EJS
+// Home page - Backend
 // GET login page
 const getLogin = require('./authConfig/login');
 router.route('/').get(getLogin.login);

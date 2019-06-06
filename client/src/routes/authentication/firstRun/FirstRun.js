@@ -14,7 +14,8 @@ class FirstRun extends Component {
         assets: '',
         fannyPack: ''
       },
-      pageMesage: ""
+      pageMesage: "",
+      data: ""
     }
   }
 
@@ -38,7 +39,8 @@ class FirstRun extends Component {
       console.log("response : " + JSON.stringify(response.data));
       this.setState({ 
         pageMesage: response.data.pageMesage,
-        databaseStatus: response.data.firstRun
+        databaseStatus: response.data.firstRun,
+        data: response.data.firstRunCheck
       });
     })
     .catch((error) => {
@@ -89,6 +91,9 @@ class FirstRun extends Component {
                         
                       </ul>
                     </div>
+
+                    {JSON.stringify(this.state.data)}
+
                     
                     {/* err */}
                     {this.state.pageMesage &&
