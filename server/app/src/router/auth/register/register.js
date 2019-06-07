@@ -27,17 +27,17 @@ module.exports = {
             let user_serial = uuidv5(req.body.userName, uuidv1());
             let user_name = req.body.userName;
             let user_pwd_hash = req.body.password; // Salt!
+            let user_email = req.body.userName + "@cool.me";
             // let user_auth_token = uuidv5('Hello!', saltTime);
             // let user_crated = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             // Query Insert 
-            const userAddQuery = 'INSERT INTO user_DB.user_auth(' +
-                'user_serial, user_name, user_pwd_salt, user_pwd_hash' +
-                ') VALUES($1, $2, $3, $4) RETURNING *';
+            const userAddQuery = 'INSERT INTO users.user_auth(' +
+                'user_serial, user_name, user_pwd_salt, user_pwd_hash, user_email' +
+                ') VALUES($1, $2, $3, $4, $5) RETURNING *';
             // Insert Data
             const userAddData = [ 
-                user_serial, user_name, user_pwd_salt, user_pwd_hash
+                user_serial, user_name, user_pwd_salt, user_pwd_hash, user_email
             ];
-
 
             // DB Connections
             const danzillaDB = require("../../../modules/danzillaDB");

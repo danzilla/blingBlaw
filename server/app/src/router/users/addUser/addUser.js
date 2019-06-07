@@ -41,7 +41,7 @@ module.exports = {
             // let user_crated = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
             // Query Insert 
-            const userAddQuery = 'INSERT INTO user_DB.user_auth(' +
+            const userAddQuery = 'INSERT INTO users.user_auth(' +
                 'user_serial, user_name, user_pwd_salt, user_pwd_hash' +
                 ') VALUES($1, $2, $3, $4) RETURNING *';
             // Insert Data

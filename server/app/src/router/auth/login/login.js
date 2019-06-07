@@ -1,7 +1,6 @@
 /* Login user
  * Keep it minimal
  */
-
 module.exports = {
   // POST
   // login module
@@ -19,7 +18,7 @@ module.exports = {
       // Request DB conections
       const danzillaDB = require("../../../modules/danzillaDB");
       // TO DO - LIMIT search collumn - * - testing
-      let query = 'SELECT * FROM user_db.user_auth ' +
+      let query = 'SELECT * FROM users.user_auth ' +
         'WHERE user_name = $1 AND user_pwd_hash = $2 LIMIT 1;';
       // NEED TO Validate and Optimize 
       let loginPayLoad = [

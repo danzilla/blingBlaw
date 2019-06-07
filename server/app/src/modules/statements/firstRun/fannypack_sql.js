@@ -10,7 +10,7 @@
  */
 
 // App Global config
-const appConfig = require('../app.db');
+const appConfig = require('../../../../config/app.db');
 
 // Database - Labels
 // Database userName

@@ -4,8 +4,8 @@
 // SQL - statemetns 
 // pool - blingBlaw - danzillaDB.pool
 // postgresDefault - default postgres - danzillaDB.postgresDefault
-const assets_database = require('../../../../../config/firstRun/assets_sql');
-const fannypack_database = require('../../../../../config/firstRun/fannypack_sql');
+const assets_database = require('../../../../modules/statements/firstRun/assets_sql');
+const fannypack_database = require('../../../../modules/statements/firstRun/fannypack_sql');
 const danzillaDB = require("../../../../modules/danzillaDB");
 // Message
 let pushD = {};
@@ -16,6 +16,9 @@ const create_db_assets = function (callback, firstRunCheck) {
     function (err, Results) {
       if (!err && Results) { // If no errors and Results == Good
         pushD = { checked: "checked", results: Results }
+        firstRunCheck.database.usersDB = pushD;
+      } else if (err.code == "42P04") { // if any errors
+        pushD = { checked: "checked", results: "Database alredy exists" }
         firstRunCheck.database.usersDB = pushD;
       } else if (err) { // if any errors
         pushD = { checked: "", results: err }
@@ -31,6 +34,9 @@ const create_db_fannyPacks = function (callback, firstRunCheck) {
     function (err, Results) {
       if (!err && Results) { // If no errors and Results == Good
         pushD = { checked: "checked", results: Results }
+        firstRunCheck.database.fannyDB = pushD;
+      } else if (err.code == "42P04") { // if any errors
+        pushD = { checked: "checked", results: "Database alredy exists" }
         firstRunCheck.database.fannyDB = pushD;
       } else if (err) { // if any errors
         pushD = { checked: "", results: err }

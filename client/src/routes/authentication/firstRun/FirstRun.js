@@ -2,18 +2,37 @@ import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 import axios from 'axios';
 
+import List from './List';
+
 const firstRunInitialDB = require('../../../settings/fetch');
+
 
 // FirstRun
 class FirstRun extends Component {
+  
   // states
   constructor(props) {
+    const firstRunCheck = {
+      database: {
+        usersDB: {checked: ""},
+        fannyDB: { checked: "" }
+      },
+      schema: {
+        usersSchema: { checked: "" },
+        fannypackSchema: { checked: "" }
+      },
+      table: {
+        userAuth: { checked: "" },
+        userDetails: { checked: "" },
+        userRecord: { checked: "" },
+        userGroup: { checked: "" },
+        fannyPack: { checked: "" },
+        fannyRecord: { checked: "" }
+      }
+    }
     super(props)
     this.state = {
-      databaseStatus: {
-        assets: '',
-        fannyPack: ''
-      },
+      firstRunCheck: firstRunCheck,
       pageMesage: "",
       data: ""
     }
@@ -38,6 +57,7 @@ class FirstRun extends Component {
     .then((response) => {
       console.log("response : " + JSON.stringify(response.data));
       this.setState({ 
+        firstRunCheck: response.data.firstRunCheck,
         pageMesage: response.data.pageMesage,
         databaseStatus: response.data.firstRun,
         data: response.data.firstRunCheck
@@ -73,27 +93,9 @@ class FirstRun extends Component {
                         Initial app config {emojify(':hot_pepper:')}
                       </h5>
                       {/* assets config */}
-                      <ul>
-                        <li>
-                          <label>
-                            <input type="checkbox" 
-                              checked={this.state.databaseStatus.assets} />
-                            <span>Initial assets config</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label>
-                            <input type="checkbox" 
-                              checked={this.state.databaseStatus.fannyPack} />
-                            <span>Initial fannyPackz config</span>
-                          </label>
-                        </li>
-                        
-                      </ul>
+                      <List firstRunCheck={this.state.firstRunCheck}
+                        databaseStatus={this.state.databaseStatus} />
                     </div>
-
-                    {JSON.stringify(this.state.data)}
-
                     
                     {/* err */}
                     {this.state.pageMesage &&
