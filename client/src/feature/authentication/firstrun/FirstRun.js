@@ -9,7 +9,7 @@ const firstRunInitialDB = require('../../../settings/fetch');
 
 // FirstRun
 class FirstRun extends Component {
-  
+
   // states
   constructor(props) {
     const firstRunCheck = {
@@ -46,8 +46,8 @@ class FirstRun extends Component {
     this.props.isInitalConfig(false)
   }
 
-  // Init Database and Table 
-  // onClick create DB - Request 
+  // Init Database and Table
+  // onClick create DB - Request
   initDatabase = () => {
     console.log("\n- First - Run -");
     // submit to server
@@ -56,7 +56,7 @@ class FirstRun extends Component {
     })
     .then((response) => {
       console.log("response : " + JSON.stringify(response.data));
-      this.setState({ 
+      this.setState({
         firstRunCheck: response.data.firstRunCheck,
         pageMesage: response.data.pageMesage,
         databaseStatus: response.data.firstRun,
@@ -67,7 +67,7 @@ class FirstRun extends Component {
       let errMsg = error.response.statusText + " - " + error.response.status;
       let databaseStatus = { assets: '', fannyPack: ''};
       console.log("error: " + errMsg);
-      this.setState({ 
+      this.setState({
         pageMesage: errMsg,
         databaseStatus: databaseStatus
       });
@@ -85,7 +85,7 @@ class FirstRun extends Component {
               <div className="col m4 offset-m4 s8 offset-s2">
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
-                    
+
                     {/* contents */}
                     <div className="container">
                       {/* Heading */}
@@ -96,7 +96,7 @@ class FirstRun extends Component {
                       <List firstRunCheck={this.state.firstRunCheck}
                         databaseStatus={this.state.databaseStatus} />
                     </div>
-                    
+
                     {/* err */}
                     {this.state.pageMesage &&
                       <div className="center-align col m12 s12 pink-text text-lighten-2">
@@ -105,7 +105,7 @@ class FirstRun extends Component {
                     }
 
                     <div className="col m12 center-align">
-                      <a 
+                      <a
                         className="capitalize waves-effect waves-light btn pink lighten-2"
                         onClick={this.initDatabase}>
                         <i className="material-icons left">sd_storage</i>
@@ -115,9 +115,9 @@ class FirstRun extends Component {
 
                     {/* Form - Sub button */}
                     <div className="row center-align">
-                      <a onClick={this.activeLoginForm} 
-                        className="waves-effect waves-light"> 
-                        Register 
+                      <a onClick={this.activeLoginForm}
+                        className="waves-effect waves-light">
+                        Register
                       </a>
                     </div>
 

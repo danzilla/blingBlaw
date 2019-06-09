@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
 // Form FirstRun
-import FirstRun from './firstRun/FirstRun'
+import FirstRun from './firstrun/FirstRun'
 // Form Login
 import LoginForm from './login/Login'
 // Form Register
 import RegForm from './register/Register'
-
 // Login - page
 class Login extends Component {
     // States
@@ -18,7 +16,6 @@ class Login extends Component {
             isInitalConfig: false
         }
     }
-    
     // isLoginForm
     // Get isLoginForm - From Login
     isLoginForm = (isLoginFormState) => {
@@ -34,7 +31,6 @@ class Login extends Component {
     isInitalConfig = (isInialDBState) => {
       this.setState({ isInitalConfig: isInialDBState })
     }
-    
     // blaze
     render() {
         if (this.state.isRegFrom === true) {
@@ -67,5 +63,4 @@ class Login extends Component {
         }
     }
 }
-
 export default Login;

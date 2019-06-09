@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
 import { emojify } from 'react-emojione';
 import axios from 'axios';
 
@@ -20,45 +21,38 @@ class LoginForm extends Component {
       pageGood: false
     }
   }
-
   // onChange - get and set state for Login form
   handleChange = (propertyName, event) => {
     const login = this.state.login;
     login[propertyName] = event.target.value;
     this.setState({ login: login });
   }
-
   // submit login
   handleSubmit = (event) => {
-
+    // If the input are empty
     if (!this.state.login.userName || !this.state.login.password){
-      // If the input are empty
       // setState to = False
       this.setState({ pageMesage: "Credentials required ", pageGood: false });
-    } else {
-      // validate against server:5000
-      // query
+    } else { // validate against server:5000
+      // Post | query
       axios.post('http://localhost:5000/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
       })
-      .then((response) => {
-        if ((!response.data) || (response.data.pageGood === false)) {
-          // if response.data = empty or bad
-          // set local state
-          this.setState({ pageMesage: response.data.pageMesage, pageGood: response.data.pageGood });
-          // get and set props - Login state
-          this.props.isLogged(response.data.pageGood)
-        } else {
-          // if response.data = good
-          // set local state
-          this.setState({ pageMesage: response.data.pageMesage, pageGood: response.data.pageGood });
-          // get and set props - Login state
-          this.props.isLogged(response.data.pageGood)
+      .then((response) => { // set local state
+        // If login is good
+        if (response.data.pageGood && response.data.pageGood === true){
+          console.log("Logged in!");
+          this.props.history.push('/user');
+        } else { // if login is bad
+          console.log("Failed Logged in");
+          this.setState({
+            pageMesage: response.data.pageMesage,
+            pageGood: response.data.pageGood
+          });
         }
       })
-      .catch((error) => {
-        // get and set props - Login state
+      .catch((error) => { // get and set props - Login state
         this.props.isLogged(false)
         console.log(error);
       });
@@ -66,13 +60,12 @@ class LoginForm extends Component {
     // default prevent-refresh form dawg
     event.preventDefault();
   }
-
   // onClick show RegisterForm
   // isRegisterForm === TRUE
   activeRegisterForm = () => {
     this.props.isRegisterForm(true)
   }
-
+  // validation
   render() {
     return (
       <div className="valign-wrapper w-100 h-100">
@@ -95,7 +88,7 @@ class LoginForm extends Component {
                             onChange={this.handleChange.bind(this, 'userName')}
                             value={this.state.login.userName}
                             className="validate" required />
-                          <label for="userName">User name</label>
+                          <label htmlFor="userName">User name</label>
                         </div>
                         {/* Password */}
                         <div className="input-field col s12">
@@ -103,7 +96,7 @@ class LoginForm extends Component {
                             onChange={this.handleChange.bind(this, 'password')}
                             value={this.state.login.password}
                             className="validate" required />
-                          <label for="password">Password</label>
+                          <label htmlFor="password">Password</label>
                         </div>
                         {/* err */}
                         <div className="center-align col s12 pink-text text-lighten-2">
@@ -112,9 +105,15 @@ class LoginForm extends Component {
                       </div>
                       {/* Login Form - Sub button */}
                       <div className="row center-align">
-                        <button className="btn waves-effect waves-light" type="submit" name="action"> Sign In </button>
+                        <button className="btn waves-effect waves-light"
+                          type="submit" name="action">
+                          Sign In
+                        </button>
                         <br />
-                        <a  onClick={this.activeRegisterForm} className="waves-effect waves-light"> Register </a>
+                        <button className="my-1 waves-effect waves-teal btn-flat"
+                          onClick={this.activeRegisterForm} >
+                          Register
+                        </button>
                       </div>
                     </form>
 
@@ -131,4 +130,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 
-// Modals
-import NewStatement from '../../Modals/addNewStatement'
-import NewCategory from '../../Modals/addNewCategory'
-import NewUsers from '../../Modals/addNewUsers'
-
 class TopNav extends Component {
   // onClick show Statement
   // isDashboardPage === false
@@ -85,9 +80,6 @@ class TopNav extends Component {
             <li><a href="/login/">Log out</a></li>
           </ul>
 
-          <NewStatement />
-    {/* <NewCategory /> */}}
-          <NewUsers />
         </div>
     );
   }
@@ -113,4 +105,3 @@ export default TopNav;
       <i className="material-icons">settings_overscan</i></a>
   </li>
 */
-

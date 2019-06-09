@@ -3,7 +3,7 @@ import { emojify } from 'react-emojione';
 import axios from 'axios';
 
 // RegisterForm
-class RegisterForm extends Component {
+class Register extends Component {
   // states
   constructor(props) {
     super(props)
@@ -69,11 +69,12 @@ class RegisterForm extends Component {
     // default prevent-refresh Form dawg
     event.preventDefault();
   }
-
   // onClick show LoginForm
   // set - isRegisterForm === false
   activeLoginForm = () => {
-    this.props.isRegisterForm(false)
+    this.props.isLoginForm(true);
+    this.props.isRegisterForm(false);
+    this.props.isInitalConfig(false);  
   }
 
   // brr brr
@@ -99,7 +100,7 @@ class RegisterForm extends Component {
                             onChange={this.handleChange.bind(this, 'fannyPack')}
                             value={this.state.register.fannyPack}
                             className="validate" required />
-                          <label for="fannyPack">Fanny Pack</label>
+                          <label htmlFor="fannyPack">Fanny Pack</label>
                         </div>
                         {/* User Name */}
                         <div className="input-field col s12">
@@ -107,7 +108,7 @@ class RegisterForm extends Component {
                             onChange={this.handleChange.bind(this, 'userName')}
                             value={this.state.register.userName}
                             className="validate" required />
-                          <label for="userName">User name</label>
+                          <label htmlFor="userName">User name</label>
                         </div>
                         {/* Password */}
                         <div className="input-field col s12">
@@ -115,7 +116,7 @@ class RegisterForm extends Component {
                             onChange={this.handleChange.bind(this, 'password')}
                             value={this.state.register.password}
                             className="validate" required />
-                          <label for="password">Password</label>
+                          <label htmlFor="password">Password</label>
                         </div>
 
                         {/* err */}
@@ -126,9 +127,15 @@ class RegisterForm extends Component {
                       </div>
                       {/* Form - Sub button */}
                       <div className="row center-align">
-                        <button className="btn waves-effect waves-light" type="submit" name="action"> Register </button>
+                      <button className="btn waves-effect waves-light" 
+                          type="submit" name="action"> 
+                          Register
+                        </button>
                         <br />
-                        <a onClick={this.activeLoginForm} className="waves-effect waves-light"> login </a>
+                        <button className="my-1 waves-effect waves-teal btn-flat"
+                          onClick={this.activeLoginForm} > 
+                          login 
+                        </button>
                       </div>
                     </form>
 
@@ -144,4 +151,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+export default Register;
