@@ -1,6 +1,6 @@
 {
-  "name": "BlingBlaw",
-  "version": "2.5.0",
+  "name": "blingblaw",
+  "version": "3.5.0",
   "scripts": {
     "test": "node ./bin/www",
     "start": "nodemon ./bin/www"

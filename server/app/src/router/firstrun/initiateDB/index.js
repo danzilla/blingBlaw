@@ -7,7 +7,7 @@ const async = require('async');
 // POST - initial Database 
 module.exports = {
     // POST - initial Database 
-    initDB: function (req, res, next) {
+    initiateDB: function (req, res, next) {
         // Check list for firstRun
         const firstRunCheck = {
             database: {

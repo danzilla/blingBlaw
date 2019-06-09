@@ -1,7 +1,6 @@
-// App - Danzilla inc.
+// App - BlingBlaw - Danzilla
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const app = express();
 
 // Dev - logs
@@ -9,12 +8,11 @@ const logger = require('morgan');
 app.use(logger('dev'));
 app.locals.pretty = true;
 
+// Beautiy
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/public/')));
-app.set('views', path.join(__dirname, '/view/render/'));
 app.set('view engine', 'ejs');
 
 // Session - Express-session
@@ -32,22 +30,11 @@ app.use(session({
 const cors = require('cors')
 app.use(cors());
 
-// Flash message
-const flash = require('express-flash');
-app.use(flash());
-
 // Routes - API
-const indexRouter = require('./src/router/auth/index');
-const userRouter = require('./src/router/users/users');
-const categoryRouter = require('./src/router/category/category');
-const statementRouter = require('./src/router/statement/statement');
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/category', categoryRouter);
-app.use('/statement', statementRouter);
-// firstRun-lalala
-const firstrun = require('./src/router/firstRun/firstRun');
-app.use('/firstrun', firstrun);
+const indexRouter = require('./src/router/authentication');
+const firstrun = require('./src/router/firstrun');
+app.use('/', indexRouter); // Authentication - /
+app.use('/firstrun', firstrun); // Firstrun - /firstrun
 
 // Error catch
 const createError = require('http-errors');
@@ -66,4 +53,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Wicked
 module.exports = app;

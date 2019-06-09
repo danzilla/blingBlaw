@@ -20,7 +20,6 @@ const DB_fannyPack = appConfig.fannypacks_db_config.db_name;
 // Database - fannypacks 
 const create_DB_fannyPack = "CREATE DATABASE " + DB_fannyPack + ";";
 
-
 // Dynamic-Schema-Table for Each users
 //
 // Schemas - fannypack.user_fannyPack_ID
@@ -28,6 +27,7 @@ const Schema_fannypack = "user_fannyPack_ID";
 // Tables - db_assets.users.Tables
 const Table_fannypack_category = "category";
 const Table_fannypack_wallet = "wallet";
+
 // Schema - user_fannyPack_ID
 const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + Schema_fannypack + " AUTHORIZATION " + DB_user + ";";
 // Table - fannypacks.category
@@ -55,7 +55,6 @@ const create_table_fannypacks_wallet = "CREATE TABLE IF NOT EXISTS " + Schema_fa
    transaction_Updated TIMESTAMP,
    transaction_UpdateUser VARCHAR(254)
 );`;
-
 
 // Export Create_DB_Design for fannyPack
 const fannypack_database = {

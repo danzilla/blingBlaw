@@ -7,7 +7,6 @@ module.exports = {
     register: function (req, res, next) {
         // Register user
         let pageMesage = "";
-
         if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
             pageMesage = "Error! cannot be empty fields";
             console.log(pageMesage);

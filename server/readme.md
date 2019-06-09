@@ -1,14 +1,8 @@
-# BlingBlaw  :green_heart: :sparkles: :fire: :tada:
+# BlingBlaw  :red_heart: :sparkles: :fire: :tada:
 A minimalist budget app (**nodeJs + Express + PostgreSQL**)
-
-
-### Server - side
-- Access - REST GUI - localhost:5000
-- EJS + Flash -> take out the whole gui-backend? 
 
 ## Express - REST
 - http://localhost:5000
-
 
 #### Database - Design - Draft - May 26, 2019
 ```
@@ -20,7 +14,8 @@ database_Name - blingblaw_assets
 |   │   Table - user_record - user_id
 |   │   Table - user_group - user_group_id
 └───Schema - fannypack
-│   │   Table - fannypack_id - user_id - fannyPackName - fannyPackChangeInfo
+│   │   Table - fannypack_id
+│   │   Table - fannypack_Record
 ```
 ```
 database_Name - blingblaw_fannypack

@@ -86,7 +86,7 @@ class TopNav extends Component {
           </ul>
 
           <NewStatement />
-          <NewCategory />
+    {/* <NewCategory /> */}}
           <NewUsers />
         </div>
     );

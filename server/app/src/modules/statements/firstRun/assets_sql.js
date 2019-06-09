@@ -8,8 +8,8 @@
  * |   │   Table - user_record - user_id
  * |   │   Table - user_group - user_group_id
  * └───Schema - fannypacks
- * │   │   Table - fannypack_id - user_id 
- * 
+ * │   │   Table - fannypack - user_id 
+ * │   │   Table - fannypacks_records - fannypack_id 
  */
 
 // App Global config
@@ -93,7 +93,6 @@ const create_table_userRecords = "CREATE TABLE IF NOT EXISTS " +
          + `(user_serial)
    );`;
 
-
 // fannyPack
 // Schema - fannypack
 const create_schema_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + 
@@ -108,7 +107,7 @@ const create_table_fannypacks_fannypacks = "CREATE TABLE IF NOT EXISTS " +
       fannypack_owner VARCHAR(36) UNIQUE NOT NULL,
       fannypack_name VARCHAR(240) NOT NULL
    );`;
-// Table fannypacks.table_records
+// Table fannypacks.fannypacks_records
 const create_table_fannypacks_records = "CREATE TABLE IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_fannypacks.schema_name + "." +
    dbConfig.assets_db_config.schema_fannypacks.table_records +

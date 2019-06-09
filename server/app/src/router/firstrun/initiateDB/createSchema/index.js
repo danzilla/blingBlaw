@@ -18,7 +18,7 @@ const create_schema_users = function (callback, firstRunCheck) {
         pushD = { checked: "checked", results: Results }
         firstRunCheck.schema.usersSchema = pushD;
       } else if (err) { // if any errors
-        pushD = { checked: "checked", results: err }
+        pushD = { checked: "", results: err }
         firstRunCheck.schema.usersSchema = pushD;
       }
       callback(null, pushD);
@@ -33,7 +33,7 @@ const create_schema_fannyPack = function (callback, firstRunCheck) {
         pushD = { checked: "checked", results: Results }
         firstRunCheck.schema.fannypackSchema = pushD;
       } else if (err) { // if any errors
-        pushD = { checked: "checked", results: err }
+        pushD = { checked: "", results: err }
         firstRunCheck.schema.fannypackSchema = pushD;
       }
       callback(null, pushD);
