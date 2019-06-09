@@ -3,22 +3,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 // serviceWorker
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './util/serviceWorker';
 
 // Routers
-import ErrorM from './routes/error/ErrorM';
-import Dashboard from './routes/dashboard/Dashboard';
-import Login from './routes/authentication/index';
-
-import Test from './routes/test/Dashboard';
+import ErrorM from './feature/404';
+import Login from './feature/authentication';
+import User from './feature/user';
+import Dashboard from './feature/dashboard';
+import Test from './feature/test/test';
 
 const routing = (
     <Router>
         <Switch>
-            <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/login" component={Login} />
-            <Route path='/404' component={ErrorM} />
+            <Route path="/user" component={User} />
+            <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/test" component={Test} />
+            <Route path='/404' component={ErrorM} />
             <Redirect from='*' to='/login' />
         </Switch>
     </Router>

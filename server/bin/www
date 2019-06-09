@@ -2,13 +2,20 @@
 /**
  * Module dependencies.
  */
+/**
+ * App Global Config
+ */
+const Config = require('../app/config/app.config');
+/**
+ * Express config
+ */
 const app = require('../app/app');
-const debug = require('debug')('Danzilla-Rawr:server');
+const debug = require('debug')(Config.app.appName + ':' + Config.app.appVer);
 const http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '5000');
+const port = normalizePort(process.env.PORT || Config.app.appPort);
 app.set('port', port);
 /**
  * Create HTTP server.
@@ -68,7 +75,11 @@ function onListening() {
     'pipe ' + addr :
     'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log("\nDanzilla_BlingBlaw v2");
-  console.log("Server running on http://localhost:" + port);
-  console.log("\n");
+
+  // #Yeeeeeee
+  let msg0 = "App: " + Config.app.appName + " v" + Config.app.appVer;
+  let msg1 = "Author: " + Config.app.appAuthor;
+  let msg2 = "Git: " + Config.app.appGit;
+  let msg3 = "Server running on http://localhost:" + port;
+  console.log("\n" + msg0 + "\n" + msg1 + "\n" + msg2 + "\n" + msg3 + "\n");
 }

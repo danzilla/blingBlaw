@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import NewCategoryForm from './addNewCategoryForm'
-import CategoryTable from './viewCategoryTable'
+// import NewCategoryForm from './addNewCategoryForm'
+// import CategoryTable from './viewCategoryTable'
 
 class addNewCategory extends Component {
     // States
@@ -21,18 +21,22 @@ class addNewCategory extends Component {
     // Render
     render() {
         return (
-            <div>
+
+            {/* 
+              <div>
                 <div id="NewCategory" className="container modal">
-                    {/* Header */}
+                    {// Header }
                     <h4 className="m-1"> Labels </h4>
                     <hr className="hr black-text text-darken" />
-                    {/* Content */}
+                    {// Content }
                     <div className="modal-content">
                         <NewCategoryForm categories={this.state.categories} />
                         <CategoryTable categories={this.categories}/>
                     </div>
                 </div>
             </div>
+            */}
+          
         );
     }
 }

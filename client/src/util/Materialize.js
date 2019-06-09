@@ -22,7 +22,6 @@ class Materialize extends Component {
 
         // Auto initialize all the things!
         M.AutoInit();
-
         // select
         const selectF = document.querySelectorAll('#categoryParent');
         M.FormSelect.init(selectF)
@@ -33,10 +32,7 @@ class Materialize extends Component {
         // navRight
         const navRight = document.querySelectorAll('#slideoutRight');
         M.Sidenav.init(navRight, optionsR)
-
     }
-
-
     render() { return ("");}
 }
 
