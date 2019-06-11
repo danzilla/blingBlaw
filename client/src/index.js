@@ -6,7 +6,7 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 import * as serviceWorker from './util/serviceWorker';
 
 // Routers
-import ErrorM from './feature/404';
+import ErrorP from './feature/error';
 import Login from './feature/authentication';
 import User from './feature/user';
 import Dashboard from './feature/dashboard';
@@ -19,7 +19,7 @@ const routing = (
             <Route path="/user" component={User} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/test" component={Test} />
-            <Route path='/404' component={ErrorM} />
+            <Route path='/404' component={ErrorP} />
             <Redirect from='*' to='/login' />
         </Switch>
     </Router>

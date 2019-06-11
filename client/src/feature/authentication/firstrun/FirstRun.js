@@ -4,9 +4,6 @@ import axios from 'axios';
 
 import List from './List';
 
-const firstRunInitialDB = require('../../../settings/fetch');
-
-
 // FirstRun
 class FirstRun extends Component {
 
@@ -73,7 +70,6 @@ class FirstRun extends Component {
       });
     });
   }
-
   // First Run
   render() {
     return (
@@ -85,7 +81,7 @@ class FirstRun extends Component {
               <div className="col m4 offset-m4 s8 offset-s2">
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
-
+                    
                     {/* contents */}
                     <div className="container">
                       {/* Heading */}
@@ -96,14 +92,12 @@ class FirstRun extends Component {
                       <List firstRunCheck={this.state.firstRunCheck}
                         databaseStatus={this.state.databaseStatus} />
                     </div>
-
                     {/* err */}
                     {this.state.pageMesage &&
                       <div className="center-align col m12 s12 pink-text text-lighten-2">
                         {this.state.pageMesage}
                       </div>
                     }
-
                     <div className="col m12 center-align">
                       <a
                         className="capitalize waves-effect waves-light btn pink lighten-2"
@@ -112,7 +106,6 @@ class FirstRun extends Component {
                         Initialize Database!
                       </a>
                     </div>
-
                     {/* Form - Sub button */}
                     <div className="row center-align">
                       <a onClick={this.activeLoginForm}
@@ -132,5 +125,4 @@ class FirstRun extends Component {
     );
   }
 }
-
 export default FirstRun;
