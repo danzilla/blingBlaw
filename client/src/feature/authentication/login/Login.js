@@ -43,7 +43,7 @@ class LoginForm extends Component {
         // If login is good
         if (response.data.pageGood && response.data.pageGood === true){
           console.log("Logged in!");
-          this.props.history.push('/user');
+          this.props.history.push('/profile');
         } else { // if login is bad
           console.log("Failed Logged in");
           this.setState({

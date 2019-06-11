@@ -1,4 +1,4 @@
-# BlingBlaw  :red_heart: :sparkles: :fire: :tada:
+# BlingBlaw  :heartbeat: :sparkles: :fire:
 A minimalist budget app (**nodeJs + Express + PostgreSQL**)
 
 ## Express - REST
