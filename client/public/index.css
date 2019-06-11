@@ -74,8 +74,14 @@ code {
 .h-85 {
   height: 85% !important;
 }
+.h-80 {
+  height: 80% !important;
+}
 .h-75 {
   height: 75% !important;
+}
+.h-60 {
+  height: 60% !important;
 }
 .h-50 {
   height: 50% !important;
@@ -86,7 +92,12 @@ code {
 .h-25 {
   height: 25% !important;
 }
-
+.h-20 {
+  height: 20% !important;
+}
+.h-10 {
+  height: 10% !important;
+}
 
 
 /* width */
