@@ -8,18 +8,15 @@ import * as serviceWorker from './util/serviceWorker';
 import Login from './feature/authentication';
 import Profile from './feature/profile';
 import Dashboard from './feature/dashboard';
-import Test from './feature/test/test';
 import errorPages from './feature/errorPages';
-import User from './feature/user';
-
+import Account from './feature/accounts';
 // zzz
 const routing = (
     <Router>
         <Switch>
             <Route path="/login" component={Login} />
             <Route path="/profile" component={Profile} />
-            <Route path="/user" component={User} />
-            <Route path="/test" component={Test} />
+            <Route path="/accounts" component={Account} />
             <Route path='/404' component={errorPages} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Redirect from='*' to='/login' />

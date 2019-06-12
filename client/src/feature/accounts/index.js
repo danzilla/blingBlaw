@@ -5,15 +5,18 @@ import TopNav from '../../component/Navigation/topNav/topNav'
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
 // Content 
-import Content from './content';
+import Content from './addNewStatement';
+// Content2 
+import Content2 from './viewAllStatement';
+
 // Profile
 class Profile extends Component {
   // state
   constructor(props) {
     super(props);
-    this.state = { 
-      width: 0, 
-      height: 0 
+    this.state = {
+      width: 0,
+      height: 0
     };
   }
   // Rrrr
@@ -27,9 +30,15 @@ class Profile extends Component {
         </div>
         {/* Content */}
         <div className="h-90 col l12 m12 s12 overflowY grey lighten-2">
-          <div className="container h-100">
-            <div className="card card-1 z-depth-4 p-1 h-100">
+          <div className=" h-100">
+            <div className="container grey lighten-3 z-depth-5">
               <Content />
+            </div>
+            <div className="col m8 l8 grey lighten-1">
+              <Content2 />
+            </div>
+            <div className="col m4 l4 grey lighten-5">
+              <Content2 />
             </div>
           </div>
         </div>
