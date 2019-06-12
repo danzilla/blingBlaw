@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { emojify } from 'react-emojione';
 // Navigation
-import TopNav from '../../component/Navigation/topNav/topNav2'
+import TopNav from '../../component/Navigation/topNav/topNav'
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
 
@@ -22,7 +22,9 @@ class Profile extends Component {
     return (
       <div className="row w-100 h-100">
         <div className="h-10 w-100 grey lighten-3">
-          <TopNav />
+          <div className="container">
+            <TopNav />
+          </div>
         </div>
         {/* Content */}
         <div className="h-90 col l12 m12 s12 overflowY grey lighten-2">
@@ -32,6 +34,8 @@ class Profile extends Component {
             </div>
           </div>
         </div>
+        {/* Init Materializecss */}
+        <Materialize />
       </div>
     );
   }

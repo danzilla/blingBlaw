@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
 // Navigation
-import TopNav from '../../component/Navigation/topNav/topNav'
-
+import TopNav from '../../component/Navigation/topNav/topNav';
 // Global-Style Materialize
-import Materialize from '../../util/Materialize'
-
+import Materialize from '../../util/Materialize';
+// Content
+import Content from './content';
 // User
 class User extends Component {
   // state
@@ -15,8 +14,7 @@ class User extends Component {
       dashboardPage: true,
       statementPage: false,
       transactionPage: false,
-      transStatmentId: "123",
-      theposition: window.pageYOffset
+      transStatmentId: "123"
     }
   }
   // Rrrr
@@ -28,12 +26,15 @@ class User extends Component {
           <TopNav
             isDashboardPage={this.isDashboardPage}
             isTransactionPage={this.isTransactionPage}
-            isStatementPage={this.isStatementPage} />
+            isStatementPage={this.isStatementPage} 
+          />
         </div>
         {/* Content */}
         <div className="col m12 h-100">
           <div className="h-90 overflowN">
-            User : {this.state.theposition}
+            <div className="container">
+              <Content />
+            </div>
           </div>
         </div>
         {/* Init Materializecss */}
