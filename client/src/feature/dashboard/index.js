@@ -20,13 +20,13 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="row w-100 h-100">
-        <div className="h-10 w-100 grey lighten-3">
+        <div className="h-10 col l12 m12 s12 black">
           <div className="container">
             <TopNav />
           </div>
         </div>
         {/* Content */}
-        <div className="h-90 col l12 m12 s12 overflowY grey lighten-2">
+        <div className="h-90 col l12 m12 s12 overflowY grey darken-4">
           <div className="container">
             <div className="card card-1 z-depth-4 p-1">
               <Content />

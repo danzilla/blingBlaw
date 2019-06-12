@@ -32,7 +32,9 @@ class Chart extends Component {
             ]
         };
         return (
-            <Scatter data={data} />
+            <div className="container">
+                <Scatter data={data} />
+            </div>
         );
     }
 }

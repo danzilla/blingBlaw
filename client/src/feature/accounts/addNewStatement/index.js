@@ -41,7 +41,7 @@ class Content extends Component {
   render() {
     return (
     <div>
-      <ul class="collapsible">
+      <ul class="collapsible popout">
         <li>
           <div class="collapsible-header">
             <i class="material-icons ">filter_drama</i>
@@ -91,7 +91,7 @@ class Content extends Component {
                 </div>
               </div>
               
-                <div className={this.state.reviewData == "" ? "hide" : "col s12 m12"}>
+              <div className={this.state.reviewData == "" ? "hide" : "col s12 m12 pink lighten-5"}>
                 <div className="center-align">
                   {/*  onClick={this.submitReviewTransaction} */}
                   <button
@@ -102,7 +102,7 @@ class Content extends Component {
                 <div className="center-align">
                   <TableReview
                     reviewCSV={this.state.reviewData}
-                    className="Table grey lighten-2" />
+                    className="Table" />
                 </div>
               </div>
 
