@@ -4,35 +4,112 @@
 import React, { Component } from 'react'
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
+
+
+
+import Papa from './papaCSVReader'
+import TableReview from './tableReviewCSV'
+
+
+
 // Content
 class Content extends Component {
   // state
   constructor(props) {
     super(props)
-    this.state = {
-      dashboardPage: true
-    }
+      this.state = {
+          reviewData: [],
+          statementInfo: {
+              staType: "",
+              staComment: "",
+              staDate: ""
+          },
+          pageMesage: ""
+      }
+  }
+  // Handle Events 
+  // On Event update the states for input
+  handleChange = (propertyName, event) => {
+    const statementInfo = this.state.statementInfo;
+    statementInfo[propertyName] = event.target.value;
+    this.setState({ statementInfo: statementInfo });
+  }
+  // ReviewData - callback
+  // Get child-componets review-data  
+  getReviewData = (reviewCSV) => {
+    this.setState({
+      reviewData: reviewCSV
+    })
   }
   // Rrrr
   render() {
     return (
       <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla posuere risus vitae rhoncus. Curabitur ut condimentum nisl. Suspendisse potenti. Sed a aliquet ligula. Mauris libero justo, tempor a metus ac, euismod lacinia ligula. Morbi tincidunt scelerisque leo vitae aliquet. Nulla mattis turpis nulla, ut gravida lorem feugiat id. Vestibulum orci ipsum, pulvinar nec venenatis eu, facilisis at ligula. Sed quis mauris dolor. Morbi sed mauris convallis, scelerisque enim ut, convallis velit. Nam dictum risus nisi, a tempus lorem faucibus ac. Pellentesque ut ultricies mi, ut maximus erat. Nam nec tincidunt sem. Ut efficitur massa lorem, eu sollicitudin lorem accumsan vel. Sed iaculis, arcu sit amet tincidunt tristique, nunc ligula venenatis neque, at consectetur quam elit eu neque.</p>
-        <p>Etiam pulvinar, nunc at consequat ullamcorper, erat erat congue metus, sed tempor sapien lorem sit amet massa. Maecenas ut nibh neque. Mauris auctor egestas sapien, et varius quam egestas id. Quisque elementum nulla nec arcu elementum molestie. Sed lectus metus, molestie non tristique non, convallis eu eros. Nulla ultricies eros at ligula rhoncus, eu tempor neque semper. Nulla id urna at lectus eleifend maximus. Donec accumsan justo blandit, semper mi in, accumsan leo. Sed consectetur molestie quam bibendum ultricies. Aliquam erat volutpat. Cras nec diam eu ipsum euismod porta. Fusce tempus nunc pellentesque arcu efficitur, et varius dolor pretium. Sed pulvinar mauris diam, vitae pharetra ante porta ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
-        <p>Vestibulum ut elit volutpat felis rhoncus rutrum. Suspendisse facilisis sem sed placerat ultrices. Suspendisse iaculis, augue a venenatis mattis, nulla risus vestibulum ligula, sed tristique nisl mauris vitae lorem. Pellentesque posuere dui libero, non accumsan ipsum mollis pellentesque. Pellentesque in eleifend quam. Aenean viverra dui odio, vel sagittis sapien placerat id. Suspendisse congue tincidunt lorem, et tristique dui dapibus a. Mauris non tellus id quam sagittis eleifend in non mauris. Proin sodales tellus tortor, ut tempus leo semper non. Nulla facilisi. Nullam aliquet imperdiet sodales. Maecenas ornare turpis et felis luctus, a blandit magna convallis.</p>
-        <p>Sed tincidunt pellentesque leo, eget aliquam odio semper in. Maecenas tincidunt lobortis congue. Integer vitae odio ultrices, convallis dolor et, accumsan erat. Ut venenatis consectetur ligula at gravida. Vivamus eleifend tincidunt elit eu viverra. Duis rutrum elit et sodales fermentum. Nam tempus mauris eu leo sagittis, vel rutrum elit vestibulum. Fusce pretium augue lectus, sed ultricies turpis egestas a. Aliquam viverra risus sed dapibus vestibulum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla posuere risus vitae rhoncus. Curabitur ut condimentum nisl. Suspendisse potenti. Sed a aliquet ligula. Mauris libero justo, tempor a metus ac, euismod lacinia ligula. Morbi tincidunt scelerisque leo vitae aliquet. Nulla mattis turpis nulla, ut gravida lorem feugiat id. Vestibulum orci ipsum, pulvinar nec venenatis eu, facilisis at ligula. Sed quis mauris dolor. Morbi sed mauris convallis, scelerisque enim ut, convallis velit. Nam dictum risus nisi, a tempus lorem faucibus ac. Pellentesque ut ultricies mi, ut maximus erat. Nam nec tincidunt sem. Ut efficitur massa lorem, eu sollicitudin lorem accumsan vel. Sed iaculis, arcu sit amet tincidunt tristique, nunc ligula venenatis neque, at consectetur quam elit eu neque.</p>
-        <p>Vestibulum ut elit volutpat felis rhoncus rutrum. Suspendisse facilisis sem sed placerat ultrices. Suspendisse iaculis, augue a venenatis mattis, nulla risus vestibulum ligula, sed tristique nisl mauris vitae lorem. Pellentesque posuere dui libero, non accumsan ipsum mollis pellentesque. Pellentesque in eleifend quam. Aenean viverra dui odio, vel sagittis sapien placerat id. Suspendisse congue tincidunt lorem, et tristique dui dapibus a. Mauris non tellus id quam sagittis eleifend in non mauris. Proin sodales tellus tortor, ut tempus leo semper non. Nulla facilisi. Nullam aliquet imperdiet sodales. Maecenas ornare turpis et felis luctus, a blandit magna convallis.</p>
-        <p>Sed tincidunt pellentesque leo, eget aliquam odio semper in. Maecenas tincidunt lobortis congue. Integer vitae odio ultrices, convallis dolor et, accumsan erat. Ut venenatis consectetur ligula at gravida. Vivamus eleifend tincidunt elit eu viverra. Duis rutrum elit et sodales fermentum. Nam tempus mauris eu leo sagittis, vel rutrum elit vestibulum. Fusce pretium augue lectus, sed ultricies turpis egestas a. Aliquam viverra risus sed dapibus vestibulum.</p>
-        <p>Maecenas nec congue justo, in egestas lacus. Duis in dignissim enim, nec tincidunt arcu. Duis metus ipsum, convallis quis commodo in, ullamcorper eu leo. Integer consectetur ipsum ut felis efficitur dictum. Sed in dolor orci. Mauris molestie tincidunt lacus a ultrices. Donec quis convallis ex, vel tristique mi. Fusce ut lacus sit amet mi cursus lobortis. Donec fringilla semper arcu a egestas. Curabitur porta erat eu orci scelerisque porta. Nunc id sodales felis. Proin sed tempus mauris, sed ultrices lorem. Vivamus condimentum aliquet consequat. Suspendisse eget libero at nisl eleifend elementum. Integer leo mauris, placerat sed ligula at, faucibus pellentesque sem.</p>
-        <p>Sed tincidunt pellentesque leo, eget aliquam odio semper in. Maecenas tincidunt lobortis congue. Integer vitae odio ultrices, convallis dolor et, accumsan erat. Ut venenatis consectetur ligula at gravida. Vivamus eleifend tincidunt elit eu viverra. Duis rutrum elit et sodales fermentum. Nam tempus mauris eu leo sagittis, vel rutrum elit vestibulum. Fusce pretium augue lectus, sed ultricies turpis egestas a. Aliquam viverra risus sed dapibus vestibulum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla posuere risus vitae rhoncus. Curabitur ut condimentum nisl. Suspendisse potenti. Sed a aliquet ligula. Mauris libero justo, tempor a metus ac, euismod lacinia ligula. Morbi tincidunt scelerisque leo vitae aliquet. Nulla mattis turpis nulla, ut gravida lorem feugiat id. Vestibulum orci ipsum, pulvinar nec venenatis eu, facilisis at ligula. Sed quis mauris dolor. Morbi sed mauris convallis, scelerisque enim ut, convallis velit. Nam dictum risus nisi, a tempus lorem faucibus ac. Pellentesque ut ultricies mi, ut maximus erat. Nam nec tincidunt sem. Ut efficitur massa lorem, eu sollicitudin lorem accumsan vel. Sed iaculis, arcu sit amet tincidunt tristique, nunc ligula venenatis neque, at consectetur quam elit eu neque.</p>
-        <p>Etiam pulvinar, nunc at consequat ullamcorper, erat erat congue metus, sed tempor sapien lorem sit amet massa. Maecenas ut nibh neque. Mauris auctor egestas sapien, et varius quam egestas id. Quisque elementum nulla nec arcu elementum molestie. Sed lectus metus, molestie non tristique non, convallis eu eros. Nulla ultricies eros at ligula rhoncus, eu tempor neque semper. Nulla id urna at lectus eleifend maximus. Donec accumsan justo blandit, semper mi in, accumsan leo. Sed consectetur molestie quam bibendum ultricies. Aliquam erat volutpat. Cras nec diam eu ipsum euismod porta. Fusce tempus nunc pellentesque arcu efficitur, et varius dolor pretium. Sed pulvinar mauris diam, vitae pharetra ante porta ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla posuere risus vitae rhoncus. Curabitur ut condimentum nisl. Suspendisse potenti. Sed a aliquet ligula. Mauris libero justo, tempor a metus ac, euismod lacinia ligula. Morbi tincidunt scelerisque leo vitae aliquet. Nulla mattis turpis nulla, ut gravida lorem feugiat id. Vestibulum orci ipsum, pulvinar nec venenatis eu, facilisis at ligula. Sed quis mauris dolor. Morbi sed mauris convallis, scelerisque enim ut, convallis velit. Nam dictum risus nisi, a tempus lorem faucibus ac. Pellentesque ut ultricies mi, ut maximus erat. Nam nec tincidunt sem. Ut efficitur massa lorem, eu sollicitudin lorem accumsan vel. Sed iaculis, arcu sit amet tincidunt tristique, nunc ligula venenatis neque, at consectetur quam elit eu neque.</p>
-        <p>Vestibulum ut elit volutpat felis rhoncus rutrum. Suspendisse facilisis sem sed placerat ultrices. Suspendisse iaculis, augue a venenatis mattis, nulla risus vestibulum ligula, sed tristique nisl mauris vitae lorem. Pellentesque posuere dui libero, non accumsan ipsum mollis pellentesque. Pellentesque in eleifend quam. Aenean viverra dui odio, vel sagittis sapien placerat id. Suspendisse congue tincidunt lorem, et tristique dui dapibus a. Mauris non tellus id quam sagittis eleifend in non mauris. Proin sodales tellus tortor, ut tempus leo semper non. Nulla facilisi. Nullam aliquet imperdiet sodales. Maecenas ornare turpis et felis luctus, a blandit magna convallis.</p>
-        <p>Sed tincidunt pellentesque leo, eget aliquam odio semper in. Maecenas tincidunt lobortis congue. Integer vitae odio ultrices, convallis dolor et, accumsan erat. Ut venenatis consectetur ligula at gravida. Vivamus eleifend tincidunt elit eu viverra. Duis rutrum elit et sodales fermentum. Nam tempus mauris eu leo sagittis, vel rutrum elit vestibulum. Fusce pretium augue lectus, sed ultricies turpis egestas a. Aliquam viverra risus sed dapibus vestibulum.</p>
-        {/* Init Materializecss */}
-        <Materialize />
+        <div id="NewStatement" className="">
+          {/* Header */}
+          <h4 className="m-1"> Upload </h4>
+          <hr className="hr black-text text-darken" />
+          {/* Content */}
+          <div className="modal-content">
+            <div className="row">
+
+              <div className="col s12">
+                <div className="row">
+                  <div className="input-field col m3 s12">
+                    <Papa
+                      btnText={"Select a CSV file"}
+                      reviewData={this.getReviewData}
+                      className="blue-text text-darken-2 card-1 col m12 s12 upload grey lighten-4 waves-effect waves-dark btn-large" />
+                  </div>
+                  <div className="input-field col m3 s12">
+                    <i className="material-icons prefix">unfold_more</i>
+                    <select name="staType" value={this.state.statementInfo.staType}
+                      onChange={this.handleChange.bind(this, 'staType')}>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="3">Option 3</option>
+                    </select>
+                    <label htmlFor="autocomplete-input">Type</label>
+                  </div>
+                  <div className="input-field col m3 s12">
+                    <i className="material-icons prefix">date_range</i>
+                    <input name="staDate" type="date" id="staDate"
+                      value={this.state.statementInfo.staDate}
+                      onChange={this.handleChange.bind(this, 'staDate')} />
+                  </div>
+                  <div className="input-field col m3 s12">
+                    <i className="material-icons prefix">add_comment</i>
+                    <input type="text" id="staComment" name="staComment"
+                      value={this.state.statementInfo.staComment}
+                      onChange={this.handleChange.bind(this, 'staComment')} />
+                    <label htmlFor="autocomplete-input">lalala... </label>
+                  </div>
+                  {/* err */}
+                  <div className="center-align col s12 pink-text text-lighten-2">
+                    {this.state.pageMesage}
+                  </div>
+                </div>
+              </div>
+              <div className={this.state.reviewData == "" ? "hide" : "col s12 m12"}>
+                <div className="row ">
+                  <div className="center-align">
+                    {/*  onClick={this.submitReviewTransaction} */}
+                    <button
+                      className="card-1 waves-effect waves-teal btn-flat card-panel blue lighten-5">
+                      Review and upload <i className="material-icons right">send</i>
+                    </button>
+                  </div>
+                  <div className="center-align">
+                    <TableReview
+                      reviewCSV={this.state.reviewData}
+                      className={"Table"} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

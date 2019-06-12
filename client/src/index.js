@@ -5,20 +5,21 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 // serviceWorker
 import * as serviceWorker from './util/serviceWorker';
 // Routers
-import ErrorP from './feature/error';
-import errorPages from './feature/errorPages';
 import Login from './feature/authentication';
 import Profile from './feature/profile';
 import Dashboard from './feature/dashboard';
 import Test from './feature/test/test';
+import errorPages from './feature/errorPages';
+import User from './feature/user';
+
 // zzz
 const routing = (
     <Router>
         <Switch>
             <Route path="/login" component={Login} />
             <Route path="/profile" component={Profile} />
+            <Route path="/user" component={User} />
             <Route path="/test" component={Test} />
-            <Route path='/404' component={ErrorP} />
             <Route path='/404' component={errorPages} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Redirect from='*' to='/login' />
