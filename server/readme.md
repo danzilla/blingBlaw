@@ -1,8 +1,11 @@
-# BlingBlaw  :heartbeat: :sparkles: :fire:
-A minimalist budget app (**nodeJs + Express + PostgreSQL**)
+# BlingBlaw - API :heartbeat: :sparkles: :fire:
 
 ## Express - REST
 - http://localhost:5000
+
+### Launch server :fire: 
+> npm start
+> http://localhost:5000
 
 #### Database - Design - Draft - May 26, 2019
 ```
