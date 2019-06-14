@@ -3,13 +3,13 @@
 
 ## App Requirement
 - PostgreSQL
-	> Download and Install PostgreSQL
+	- Download and Install PostgreSQL
 - NPM and nodeJs
-	> Download and Install nodeJs v8+
-- Docker and Docker-compose 
-	> Download and Install Docker and Docker-compose (Optional)
-	> https://docs.docker.com/install/
-	> https://docs.docker.com/compose/install/
+	- Download and Install nodeJs v8+
+- Docker and Docker-compose (Optional)
+	- Download and Install Docker and Docker-compose
+	- https://docs.docker.com/install/
+	- https://docs.docker.com/compose/install/
 
 # Deploy 
 Once, you are done with the above requirements.
