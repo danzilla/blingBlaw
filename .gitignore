@@ -1,2 +1,4 @@
-# dependencies
+# Ignore list
+
+# node dependencies
 node_modules/

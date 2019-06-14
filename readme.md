@@ -17,8 +17,8 @@ Once, you are done with the above requirements.
 	* `git clone https://github.com/danzilla/blingBlaw.git`
 
 ## Deploy user Docker
-- Change directory to blingBlaw\devops
-	* `cd blingBlaw\devops`
+- Change directory to blingBlaw
+	* `cd blingBlaw`
 - Launch app
 	* `docker-compose up`
 

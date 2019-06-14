@@ -1,5 +1,8 @@
 FROM node:8
 
+# Make dir to store DB data
+RUN mkdir -p /srv/app/blingBlaw/dbData
+
 # Create app-server folder -blingBlaw
 RUN mkdir -p /srv/app/blingBlaw/server
 WORKDIR /srv/app/blingBlaw/server
