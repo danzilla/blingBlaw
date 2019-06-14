@@ -15,27 +15,21 @@ class searchBar extends Component {
                         {/* Pull-right - Menu */}
                         <ul className="right">
                             <li>
-                                <a class="m-0 btn waves-effect waves-light tooltipped light-blue darken-4"
-                                    data-position="bottom" data-tooltip="Dashboard" href="/test">
-                                    <i class="material-icons">loyalty</i>
-                                </a>
-                            </li>
-                            <li>
                                 <a class="btn waves-effect waves-light tooltipped light-blue darken-4"
-                                    data-position="bottom" data-tooltip="Labels and Category" href="/User">
-                                    <i class="material-icons">favorite_border</i>
+                                    data-position="bottom" data-tooltip="FannyPackz" href="/accounts">
+                                    <i class="material-icons red-text text-accent-1">favorite_border</i>
                                 </a>
                             </li>
                             <li>
                                 <a class="m-0 btn waves-effect waves-light tooltipped light-blue darken-4"
-                                    data-position="bottom" data-tooltip="Bling Blaw" href="/dashboard">
-                                    <i class="material-icons">photo_filter</i>
+                                    data-position="bottom" data-tooltip="Labels and Category" href="/dashboard">
+                                    <i class="material-icons pink-text text-lighten-1">loyalty</i>
                                 </a>
                             </li>
                             <li>
                                 <a class="btn waves-effect waves-light tooltipped light-blue darken-4"
-                                    data-position="bottom" data-tooltip="Settings" href="/profile">
-                                    <i class="material-icons">filter_vintage</i>
+                                    data-position="bottom" data-tooltip="Profile and Settings" href="/profile">
+                                    <i class="material-icons amber-text text-darken-2">filter_vintage</i>
                                 </a>
                             </li>
                         </ul>

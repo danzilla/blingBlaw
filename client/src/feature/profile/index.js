@@ -4,9 +4,10 @@ import { emojify } from 'react-emojione';
 import TopNav from '../../component/Navigation/topNav/topNav'
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
-
-import Content from './content';
-
+// User Comboz
+import ViewUserInfo from './viewUserInfo'
+import ViewUserList from './viewUserList'
+import ViewUserRecord from './viewUserRecord'
 // Profile
 class Profile extends Component {
   // state
@@ -21,16 +22,31 @@ class Profile extends Component {
   render() {
     return (
       <div className="row w-100 h-100">
-        <div className="h-10 w-100 grey lighten-3">
+        {/* Navigation */}
+        <div className="h-10 col l12 m12 s12 grey lighten-3">
           <div className="container">
             <TopNav />
           </div>
         </div>
         {/* Content */}
-        <div className="h-90 col l12 m12 s12 overflowY grey lighten-2">
-          <div className="container">
-            <div className="card card-1 z-depth-4 p-1">
-              <Content />
+        <div className="h-90 col l12 m12 s12 overflowN">
+          <div className="container h-98">
+            <div className="p-1 h-100">
+              {/* H-50 */}
+              <div className="row h-50">
+                <div className="col m6 s6 h-100 overflowN">
+                  <ViewUserInfo />
+                </div>
+                <div className="col m6 s6 h-100 overflowN">
+                  <ViewUserList />
+                </div>
+              </div>
+              {/* H-50 */}
+              <div className="row h-50">
+                <div className="col m12 s12 h-100 overflowN">
+                  <ViewUserRecord />
+                </div>
+              </div>
             </div>
           </div>
         </div>
