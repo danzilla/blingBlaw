@@ -1,0 +1,32 @@
+version: "3"
+## Yeee lets go - BlingBlaw
+services:
+# Server-setup
+  server:
+    build: ./server
+    expose:
+      - ${SERVER_APP_POST}
+    environment:
+      - API_HOST=${API_HOST}
+      - SERVER_APP_POST=${SERVER_APP_POST}
+    ports:
+      - ${SERVER_APP_POST}:${SERVER_APP_POST}
+    volumes:
+      - ./server/app:/srv/app/blingBlaw/server/app
+      - ./server/bin:/srv/app/blingBlaw/server/bin
+    command: npm run start
+# Client-setup 
+  client:
+    build: ./client
+    environment:
+      - REACT_APP_POST=${CLIENT_APP_PORT}
+    expose:
+      - ${CLIENT_APP_PORT}
+    ports:
+      - ${CLIENT_APP_PORT}:${CLIENT_APP_PORT}
+    volumes:
+      - ./client/public:/srv/app/blingBlaw/client/public
+      - ./client/src:/srv/app/blingBlaw/client/src
+    links:
+      - server
+    command: npm run start
