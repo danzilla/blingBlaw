@@ -6,7 +6,7 @@
 	- Download and Install PostgreSQL
 - NPM and nodeJs
 	- Download and Install nodeJs v8+
-- Docker and Docker-compose (Optional)
+- Docker and Docker-compose
 	- Download and Install Docker and Docker-compose
 	- https://docs.docker.com/install/
 	- https://docs.docker.com/compose/install/
@@ -30,8 +30,3 @@ Once, you are done with the above requirements.
 - **Run** the app
 	* `npm start`
 	* http://localhost:3000
-
-
-#### TO:DO
-> Docker-compose 
-  > Client + Server + DB + PGAdmin

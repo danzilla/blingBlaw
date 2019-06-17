@@ -30,9 +30,9 @@ const db_Danzilla = "danustanDB";
 // Default-Database connection configuration
 const db_User = "danzilla";
 const db_Pwd = "1035621";
-const db_Port = "6543";
-const db_Host = "localhost";
-const default_DB = "postgres";
+const db_Port = "5432";
+const db_Host = "postgres_db";
+const default_DB = "public";
 
 /* 
 * Labels For - Database - Schema - Tables
