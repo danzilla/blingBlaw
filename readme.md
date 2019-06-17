@@ -16,9 +16,9 @@ Once, you are done with the above requirements.
 - Use **git** to clone the repo
 	* `git clone https://github.com/danzilla/blingBlaw.git`
 
-## Deploy user Docker
-- Change directory to blingBlaw\devops
-	* `cd blingBlaw\devops`
+## Deploy using Docker
+- Change directory to blingBlaw
+	* `cd blingBlaw`
 - Launch app
 	* `docker-compose up`
 
@@ -32,6 +32,6 @@ Once, you are done with the above requirements.
 	* http://localhost:3000
 
 
-
 #### TO:DO
-> Docker-compose - Database and store volume in devOps folder? 
+> Docker-compose 
+  > Client + Server + DB + PGAdmin

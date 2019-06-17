@@ -1,32 +1,67 @@
-version: "3"
-## Yeee lets go - BlingBlaw
+# Compose docker
+version: '3'
+# Persistent Storage
+volumes:
+  database_data:
+  pgadmin:
+# Services
 services:
-# Server-setup
+  # Postgres - Database
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 6543:5432
+    environment:
+      - 'POSTGRES_USER:danzilla'
+      - 'POSTGRES_PASSWORD:1035621'
+      - 'POSTGRES_DB:public'
+    volumes:
+      - database_data:/var/lib/postgresql/data
+  # PG Admin - DB Tool
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    ports:
+      - 5050:80
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-dalphonza@cims.carleton.ca}"
+      - "PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-1035621}"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    links:
+      - postgres
+  # API - Server
   server:
     build: ./server
     expose:
-      - ${SERVER_APP_POST}
+      - '5000'
     environment:
-      - API_HOST=${API_HOST}
-      - SERVER_APP_POST=${SERVER_APP_POST}
+      - '5000:5000'
     ports:
-      - ${SERVER_APP_POST}:${SERVER_APP_POST}
+      - '5000:5000'
     volumes:
-      - ./server/app:/srv/app/blingBlaw/server/app
-      - ./server/bin:/srv/app/blingBlaw/server/bin
+      - './server/app:/srv/app/blingBlaw/server/app'
+      - './server/bin:/srv/app/blingBlaw/server/bin'
     command: npm run start
-# Client-setup 
+    links:
+      - postgres
+  # UI - Client
   client:
     build: ./client
     environment:
-      - REACT_APP_POST=${CLIENT_APP_PORT}
+      - '3000=3000'
     expose:
-      - ${CLIENT_APP_PORT}
+      - '3000'
     ports:
-      - ${CLIENT_APP_PORT}:${CLIENT_APP_PORT}
+      - '3000:3000'
     volumes:
-      - ./client/public:/srv/app/blingBlaw/client/public
-      - ./client/src:/srv/app/blingBlaw/client/src
+      - './client/public:/srv/app/blingBlaw/client/public'
+      - './client/src:/srv/app/blingBlaw/client/src'
+    command: npm run start
     links:
       - server
-    command: npm run start
+
+
+
+  
