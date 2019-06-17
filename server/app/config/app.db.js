@@ -27,11 +27,16 @@ const app_fannyPack_db_name = "blingblaw_fannypacks";
 // Database for Danzilla_
 const db_Danzilla = "danustanDB";
 
+// If Docker - SET (PROD)
+let db_Host_PROD = "postgres_db";
+// If Local - SET (DEV)
+let db_Host_Dev = "0.0.0.0";
+
 // Default-Database connection configuration
 const db_User = "danzilla";
 const db_Pwd = "1035621";
 const db_Port = "5432";
-const db_Host = "postgres_db";
+const db_Host = db_Host_Dev;
 const default_DB = "public";
 
 /* 
