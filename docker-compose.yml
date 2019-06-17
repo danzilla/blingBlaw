@@ -1,67 +1,40 @@
-# Compose docker
+# BlingBlaw
+# PostgreSQL + PGAdmin + Node(React) + Node(Express)
+
+# Docker-compose
 version: '3'
-# Persistent Storage
-volumes:
-  database_data:
-  pgadmin:
 # Services
 services:
-  # Postgres - Database
-  postgres:
-    image: postgres:latest
-    restart: always
+  # PostgreSQL - postgres_db
+  postgres_db:
+    build: ./devops/postgreSQL_DB
     ports:
-      - 6543:5432
-    environment:
-      - 'POSTGRES_USER:danzilla'
-      - 'POSTGRES_PASSWORD:1035621'
-      - 'POSTGRES_DB:public'
-    volumes:
-      - database_data:/var/lib/postgresql/data
-  # PG Admin - DB Tool
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: unless-stopped
-    ports:
-      - 5050:80
-    environment:
-      - "PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-dalphonza@cims.carleton.ca}"
-      - "PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-1035621}"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    links:
-      - postgres
-  # API - Server
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+  # API - server
   server:
     build: ./server
-    expose:
-      - '5000'
-    environment:
-      - '5000:5000'
-    ports:
-      - '5000:5000'
-    volumes:
-      - './server/app:/srv/app/blingBlaw/server/app'
-      - './server/bin:/srv/app/blingBlaw/server/bin'
     command: npm run start
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
     links:
-      - postgres
-  # UI - Client
+      - postgres_db
+  # UI - client
   client:
     build: ./client
-    environment:
-      - '3000=3000'
-    expose:
-      - '3000'
-    ports:
-      - '3000:3000'
-    volumes:
-      - './client/public:/srv/app/blingBlaw/client/public'
-      - './client/src:/srv/app/blingBlaw/client/src'
     command: npm run start
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    expose: 
+      - ${CLIENT_PORT}
     links:
       - server
-
-
-
-  
+  # PGAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT}:80"
+    links:
+      - postgres_db
