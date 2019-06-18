@@ -13,8 +13,10 @@ class Register extends Component {
         password: "",
         fannyPack: ""
       },
-      code: "",
-      pageMesage: "",
+      pageInfo: {
+        pageCode: "",
+        pageMessage: ""
+      },
       isRegFrom: true
     }
   }
@@ -29,7 +31,7 @@ class Register extends Component {
     if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
       // If the input are empty
       // setState to = False
-      this.setState({ pageMesage: "Credentials required "});
+      this.setState({ pageMesage: "Credentials required"});
     } else {
         // submit to server
         axios.post('http://localhost:5000/register', {
@@ -40,26 +42,26 @@ class Register extends Component {
         .then((response) => {
           // code - 3D000 - No Databases
           // code - 42P01 - No Tables 
+          // code - ECONNREFUSED - Database - not being configured in Settings 
+          //      - Change /server/app/config/app.db [ Dev or Prod ]
           // Else - Show Good/Bad Message 
-          if (response.data.code === "3D000" || response.data.code === "42P01"){
-            console.log("No DB(3D000) or Table(42P01): " + response.data.code);
-            this.setState({ pageMesage: response.data.pageMesage, code: response.data.code });
+          if (response.data.pageInfo.pageCode === "3D000" || response.data.pageInfo.pageCode === "42P01"){
+            this.setState({ pageInfo: response.data.pageInfo });
             // Set state for landing page
             // Set to isInitalConfig == True
             this.props.isLoginForm(false);
             this.props.isRegisterForm(false);
             this.props.isInitalConfig(true);
           } else {
-            // if response.data = good
             // set local state
-            console.log("Else-register: " + JSON.stringify(response));
-            this.setState({ pageMesage: response.data.pageMesage });
+            this.setState({ pageInfo: response.data.pageInfo });
             // Set state for landing page
             // Set to isLoginForm == True
             this.props.isLoginForm(false);
             //this.props.isRegisterForm(true);
             this.props.isInitalConfig(false);
           }
+          console.log(JSON.stringify(response.data.pageInfo));
         })
         .catch((error) => {
           // get and set props - register state
@@ -121,7 +123,7 @@ class Register extends Component {
 
                         {/* err */}
                         <div className="center-align col m12 s12 pink-text text-lighten-2">
-                          {this.state.pageMesage}
+                          {this.state.pageInfo.pageMessage}
                         </div>
                         
                       </div>

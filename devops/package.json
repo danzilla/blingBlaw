@@ -9,7 +9,7 @@
     "install-server": "cd ../server && npm install",
     "install-client": "cd ../client && npm install",
     "postinstall": "npm run install-server && npm run install-client",
-    "start": "concurrently --kill-others \"npm run start-server\" \"npm run start-client\" \"npm run start-docker-dev\" "
+    "start": "concurrently --kill-others \"npm run start-server\" \"npm run start-client\" \"npm run start-docker-dev\""
   },
   "repository": {
     "type": "git",

@@ -5,12 +5,15 @@ module.exports = {
     // POST
     // POST - add user module
     register: function (req, res, next) {
-        // Register user
-        let pageMesage = "";
+        // Register user - pageMessage
+        let pageInfo = {
+            pageCode: "",
+            pageMessage: ""
+          };
         if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
-            pageMesage = "Error! cannot be empty fields";
-            console.log(pageMesage);
-            res.send({ pageMesage: pageMesage, code: "bad" });
+            pageInfo.pageMesage = "Error! cannot be empty fields";
+            console.log(pageInfo.pageMesage);
+            res.send({ pageInfo: pageInfo });
         } else {
             // TODO: JOIN Tables Insert - Map Groups and Permissions
             // API: Store
@@ -37,7 +40,6 @@ module.exports = {
             const userAddData = [ 
                 user_serial, user_name, user_pwd_salt, user_pwd_hash, user_email
             ];
-
             // DB Connections
             const danzillaDB = require("../../../modules/danzillaDB");
             // Blaze_up
@@ -45,26 +47,28 @@ module.exports = {
             .then(data => {
                 if (data.rowCount === 1){
                     // records been inserted
-                    pageMesage = "User added! #yeee " + data.rows[0].user_name;
-                    res.send({ pageMesage: pageMesage, code: "good" });
-                    console.log(pageMesage);
+                    pageInfo.pageMessage = "User added! #yeee " + data.rows[0].user_name;
+                    pageInfo.pageCode = true;
+                    res.send({ pageInfo: pageInfo });
+                    console.log(JSON.stringify(pageInfo));
                 }
             })
-            .catch(error => {
-                let pageMesage = "err";
-                if (error.code == "ECONNREFUSED") {
-                    pageMesage = "Error connecting to database - " + error.code;
-                } else {
-                    pageMesage = "Error-Reg: " + error;
+            .catch(err => {
+                // if err
+                pageInfo.pageMessage = err;
+                if (err.code == "ECONNREFUSED" || err.code == "ENOTFOUND") {
+                    pageInfo.pageMessage = "Trouble connecting to database - Is it [prod or dev?] - " + err.code;
                 }
-                // Error, no records inserted
-                // code - 3D000 - No Databases
-                // code - 42P01 - No Tables 
-                res.send({ pageMesage: pageMesage, code: error.code });
-                console.log(pageMesage);
+                else if (err.code == "3D000" || err.code == "42P01") {
+                    pageInfo.pageMessage = "Database not inintialize " + err.code;
+                }
+                else if (err.code == "23505"){
+                    pageInfo.pageMessage = err.detail + " " + err.code;
+                }
+                pageInfo.pageCode = err.code;
+                res.send({ pageInfo: pageInfo });
+                console.log(pageInfo.pageMessage);
             });
         }
-
-
     }
 }
