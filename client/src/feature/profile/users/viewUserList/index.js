@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { emojify } from 'react-emojione';
-
-import Chart from '../../../component/Charts/chart'
+import Table from '../../../../component/Charts/table'
 
 // viewUserInfo
 class viewUserInfo extends Component {
@@ -13,12 +12,9 @@ class viewUserInfo extends Component {
     }
     render() {
       return (
-        <div className="h-100 m-1 card card-1 z-depth-3 light-blue lighten-5">
-          <div className="valign-wrapper w-100 h-100">
-            <div className="valign w-100 h-100 center-align">
-              <Chart />
-            </div>
-          </div>
+        <div className="row h-100 overflowY green accent-2 p-0">
+          <h3 className=""> {emojify('💓')} </h3>
+          <Table />
         </div>
       );
     }

@@ -1,9 +1,7 @@
 html, body, #root {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  overflow:hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -11,11 +9,10 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+.code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
 .lowercase {
   text-transform: lowercase;
   }
@@ -90,14 +87,20 @@ code {
 .h-50 {
   height: 50% !important;
 }
+.h-45 {
+  height: 45% !important;
+}
 .h-40 {
   height: 40% !important;
 }
+.h-35 {
+  height: 35% !important;
+}
+.h-30 {
+  height: 30% !important;
+}
 .h-25 {
   height: 25% !important;
-}
-.h-5 {
-  height: 5% !important;
 }
 .h-20 {
   height: 20% !important;
@@ -105,7 +108,9 @@ code {
 .h-10 {
   height: 10% !important;
 }
-
+.h-5 {
+  height: 5% !important;
+}
 
 /* width */
 .w-100 {
@@ -200,3 +205,16 @@ code {
   padding-bottom: 2em !important;
 }
 
+
+.line-h-100 {
+  line-height: 100% !important;
+}
+.line-h-200 {
+  line-height: 200% !important;
+}
+.line-h-300 {
+  line-height: 300% !important;
+}
+.line-h-400 {
+  line-height: 400% !important;
+}
