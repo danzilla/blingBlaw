@@ -1,43 +1,96 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { emojify } from 'react-emojione';
-// Navigation
-import TopNav from '../../component/Navigation/topNav/topNav';
+
 // Global-Style Materialize
-import Materialize from '../../util/Materialize';
-// Content 
-import Content from './content';
+import Materialize from '../../util/Materialize'
+
+
+import Navigation from '../../component/Navigation/goodNav'
+import MessageAlert from '../../component/MessageAlert'
+
+
+import Account from './account'
+import Category from './category'
+import Test from './test'
+
+
 // Dashboard
 class Dashboard extends Component {
+
   // state
   constructor(props) {
+
     super(props);
-    this.state = { 
-      width: 0, 
-      height: 0 
+    // Page-Display Setting
+    const pageDisplay = {
+      accountPage: false,
+      labelPage: false,
+      searchPage: false,
+      settingPage: false,
+      userPage: false
+    };
+    this.state = {
+      pageDisplay: pageDisplay,
+      lolMesg: "0"
     };
   }
-  // Rrrr
+
+  active = (aaa) => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false,
+        labelPage: true,
+        searchPage: false,
+        settingPage: false,
+        userPage: false
+      } 
+    })
+    this.setState({ lolMesg: aaa})
+  }
+
+  // blaze
   render() {
+
+    let showPage, pageName;
+    if (this.state.pageDisplay.accountPage === true) {
+      // Account page
+      showPage = <Account
+        active={this.active}
+        pageDisplay={this.state.pageDisplay}
+      />;
+      pageName = "Account page";
+    } else if (this.state.pageDisplay.labelPage === true) {
+      // Category page
+      showPage = <Category
+        active={this.active}
+        pageDisplay={this.state.pageDisplay}
+      />;
+      pageName = "Category page";
+
+    } else {
+      // Test page
+      showPage = <Test
+        active={this.active}
+        pageDisplay={this.state.pageDisplay}
+      />;
+      pageName = "Test page";
+    }
+
     return (
-      <div className="row w-100 h-100">
-        <div className="h-10 col l12 m12 s12 black">
-          <div className="container">
-            <TopNav />
-          </div>
-        </div>
-        {/* Content */}
-        <div className="h-90 col l12 m12 s12 overflowY grey darken-4">
-          <div className="container">
-            <div className="card card-1 z-depth-4 p-1">
-              <Content />
-            </div>
-          </div>
-        </div>
+      <div className="h-100 w-100">
+
+        <Navigation pageName={pageName} />
+        <MessageAlert pageDisplay={this.state.pageDisplay} />
+        {showPage}
+
         {/* Init Materializecss */}
         <Materialize />
       </div>
     );
   }
 }
-// Dashboard
+// Bling
 export default Dashboard;
+
+
+

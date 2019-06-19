@@ -7,12 +7,12 @@ import NavList from './navList';
 class TopNav extends Component {
   render() {
     return (
-      <div className="row w-100 p-1">
-          {/* Search */}
-          <SearchBar />
-          {/* Nav */}
-          <NavList />
-        </div>
+      <div className="row w-100">
+        {/* Nav */}
+        <NavList pageName={this.props.pageName} />
+        {/* Search */}
+        <SearchBar />
+      </div>
     );
   }
 }

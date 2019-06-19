@@ -204,6 +204,14 @@ html, body, #root {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
 }
+.py-3 {
+  padding-top: 3em !important;
+  padding-bottom: 3em !important;
+}
+.py-4 {
+  padding-top: 4em !important;
+  padding-bottom: 4em !important;
+}
 
 
 .line-h-100 {
