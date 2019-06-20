@@ -37,14 +37,15 @@ class LoginForm extends Component {
       this.setState({ pageMesage: "Credentials required "});
     } else { // validate against server:5000
       // Post | query
-      axios.post('http://localhost:5000/login', {
+      axios
+      .post('http://localhost:5000/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
       })
       .then((response) => { // set local state
         // If login is good
         if (response.data.pageInfo.pageCode === true){
-          this.props.history.push('/profile');
+          this.props.history.push('/dashboard');
         } // if login is bad
         else {
           this.setState({pageInfo: response.data.pageInfo});

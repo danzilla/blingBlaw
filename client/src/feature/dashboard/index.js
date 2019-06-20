@@ -1,86 +1,138 @@
+// Dashboard 
+// Page-Redirect
 import React, { Component } from 'react'
-import { emojify } from 'react-emojione';
-
 // Global-Style Materialize
 import Materialize from '../../util/Materialize'
-
-
-import Navigation from '../../component/Navigation/goodNav'
+// Navigation and Messages
+import Navigation from '../../component/Navigation'
 import MessageAlert from '../../component/MessageAlert'
-
-
+// Contents 
 import Account from './account'
 import Category from './category'
-import Test from './test'
-
-
+import Search from './search'
+import Settings from './settings'
+import User from './users'
 // Dashboard
 class Dashboard extends Component {
-
-  // state
+  // constructor
   constructor(props) {
-
     super(props);
     // Page-Display Setting
     const pageDisplay = {
       accountPage: false,
-      labelPage: false,
+      categoryPage: false,
       searchPage: false,
       settingPage: false,
       userPage: false
     };
     this.state = {
-      pageDisplay: pageDisplay,
-      lolMesg: "0"
+      pageDisplay: pageDisplay
     };
   }
-
-  active = (aaa) => {
+  // Pages
+  // - Account | Category | Search | Settings | Users
+  // - 3 Depth - Props -> nav > navBar
+  // 
+  // activeAccount 
+  activeAccount = () => {
     this.setState({
       pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: false,
-        labelPage: true,
-        searchPage: false,
-        settingPage: false,
-        userPage: false
-      } 
+        accountPage: true, categoryPage: false, searchPage: false, settingPage: false, userPage: false
+      }
     })
-    this.setState({ lolMesg: aaa})
   }
-
-  // blaze
+  // activeCategory 
+  activeCategory = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: true, searchPage: false, settingPage: false, userPage: false
+      }
+    })
+  }
+  // activeSearch 
+  activeSearch = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: true, settingPage: false, userPage: false
+      }
+    })
+  }
+  // activeSettings 
+  activeSettings = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: false, settingPage: true, userPage: false
+      }
+    })
+  }
+  // activeUsers
+  activeUsers = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: false, settingPage: false, userPage: true
+      }
+    })
+  }
+  //
+  // blaze contents
   render() {
-
+    // Which content to show
     let showPage, pageName;
     if (this.state.pageDisplay.accountPage === true) {
       // Account page
-      showPage = <Account
-        active={this.active}
-        pageDisplay={this.state.pageDisplay}
-      />;
       pageName = "Account page";
-    } else if (this.state.pageDisplay.labelPage === true) {
+      showPage = <Account
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.categoryPage === true) {
       // Category page
+      pageName = "Labels and Category page";
       showPage = <Category
-        active={this.active}
-        pageDisplay={this.state.pageDisplay}
-      />;
-      pageName = "Category page";
-
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.searchPage === true) {
+      // Search page
+      pageName = "Search page";
+      showPage = <Search
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.settingPage === true) {
+      // Settings page
+      pageName = "Settings page";
+      showPage = <Settings
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.userPage === true) {
+      // User page
+      pageName = "User page";
+      showPage = <User
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
     } else {
-      // Test page
-      showPage = <Test
-        active={this.active}
-        pageDisplay={this.state.pageDisplay}
-      />;
-      pageName = "Test page";
+      // Account page
+      pageName = "Account page";
+      showPage = <Account
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
     }
-
+    // 
+    // #brrrrrom
     return (
       <div className="h-100 w-100">
+        {/* Navigation */}
+        <Navigation 
+          activeAccount={this.activeAccount}
+          activeCategory={this.activeCategory}
+          activeSearch={this.activeSearch}
+          activeSettings={this.activeSettings}
+          activeUsers={this.activeUsers}
+          pageName={pageName} />
 
-        <Navigation pageName={pageName} />
-        <MessageAlert pageDisplay={this.state.pageDisplay} />
+        {/* Alert Message */}
+        <MessageAlert 
+          pageDisplay={this.state.pageDisplay} />
+
+        {/* Page content */}
         {showPage}
 
         {/* Init Materializecss */}

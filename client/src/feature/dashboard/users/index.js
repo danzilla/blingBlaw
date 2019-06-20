@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-// Category
-// Category Content
+// User
+// User Content
 import Content from './content'
-class Category extends Component {
+class User extends Component {
   // state
   constructor(props) {
     super(props);
@@ -42,4 +42,4 @@ class Category extends Component {
   }
 }
 // Bling
-export default Category;
+export default User;
