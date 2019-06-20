@@ -6,18 +6,12 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 import * as serviceWorker from './util/serviceWorker';
 // Routers
 import Login from './feature/authentication';
-import Profile from './feature/profile';
 import Dashboard from './feature/dashboard';
-import errorPages from './feature/errorPages';
-import Account from './feature/accounts';
 // zzz
 const routing = (
     <Router>
         <Switch>
             <Route path="/login" component={Login} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/accounts" component={Account} />
-            <Route path='/404' component={errorPages} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Redirect from='*' to='/login' />
         </Switch>

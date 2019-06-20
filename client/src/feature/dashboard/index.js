@@ -1,43 +1,148 @@
-import React, { Component } from 'react';
-import { emojify } from 'react-emojione';
-// Navigation
-import TopNav from '../../component/Navigation/topNav/topNav';
+// Dashboard 
+// Page-Redirect
+import React, { Component } from 'react'
 // Global-Style Materialize
-import Materialize from '../../util/Materialize';
-// Content 
-import Content from './content';
+import Materialize from '../../util/Materialize'
+// Navigation and Messages
+import Navigation from '../../component/Navigation'
+import MessageAlert from '../../component/MessageAlert'
+// Contents 
+import Account from './account'
+import Category from './category'
+import Search from './search'
+import Settings from './settings'
+import User from './users'
 // Dashboard
 class Dashboard extends Component {
-  // state
+  // constructor
   constructor(props) {
     super(props);
-    this.state = { 
-      width: 0, 
-      height: 0 
+    // Page-Display Setting
+    const pageDisplay = {
+      accountPage: false,
+      categoryPage: false,
+      searchPage: false,
+      settingPage: false,
+      userPage: false
+    };
+    this.state = {
+      pageDisplay: pageDisplay
     };
   }
-  // Rrrr
+  // Pages
+  // - Account | Category | Search | Settings | Users
+  // - 3 Depth - Props -> nav > navBar
+  // 
+  // activeAccount 
+  activeAccount = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: true, categoryPage: false, searchPage: false, settingPage: false, userPage: false
+      }
+    })
+  }
+  // activeCategory 
+  activeCategory = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: true, searchPage: false, settingPage: false, userPage: false
+      }
+    })
+  }
+  // activeSearch 
+  activeSearch = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: true, settingPage: false, userPage: false
+      }
+    })
+  }
+  // activeSettings 
+  activeSettings = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: false, settingPage: true, userPage: false
+      }
+    })
+  }
+  // activeUsers
+  activeUsers = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        accountPage: false, categoryPage: false, searchPage: false, settingPage: false, userPage: true
+      }
+    })
+  }
+  //
+  // blaze contents
   render() {
+    // Which content to show
+    let showPage, pageName;
+    if (this.state.pageDisplay.accountPage === true) {
+      // Account page
+      pageName = "Account page";
+      showPage = <Account
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.categoryPage === true) {
+      // Category page
+      pageName = "Labels and Category page";
+      showPage = <Category
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.searchPage === true) {
+      // Search page
+      pageName = "Search page";
+      showPage = <Search
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.settingPage === true) {
+      // Settings page
+      pageName = "Settings page";
+      showPage = <Settings
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else if (this.state.pageDisplay.userPage === true) {
+      // User page
+      pageName = "User page";
+      showPage = <User
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    } else {
+      // Account page
+      pageName = "Account page";
+      showPage = <Account
+        pageName={pageName}
+        pageDisplay={this.state.pageDisplay} />;
+    }
+    // 
+    // #brrrrrom
     return (
-      <div className="row w-100 h-100">
-        <div className="h-10 col l12 m12 s12 black">
-          <div className="container">
-            <TopNav />
-          </div>
-        </div>
-        {/* Content */}
-        <div className="h-90 col l12 m12 s12 overflowY grey darken-4">
-          <div className="container">
-            <div className="card card-1 z-depth-4 p-1">
-              <Content />
-            </div>
-          </div>
-        </div>
+      <div className="h-100 w-100">
+        {/* Navigation */}
+        <Navigation 
+          activeAccount={this.activeAccount}
+          activeCategory={this.activeCategory}
+          activeSearch={this.activeSearch}
+          activeSettings={this.activeSettings}
+          activeUsers={this.activeUsers}
+          pageName={pageName} />
+
+        {/* Alert Message */}
+        <MessageAlert 
+          pageDisplay={this.state.pageDisplay} />
+
+        {/* Page content */}
+        {showPage}
+
         {/* Init Materializecss */}
         <Materialize />
       </div>
     );
   }
 }
-// Dashboard
+// Bling
 export default Dashboard;
+
+
+

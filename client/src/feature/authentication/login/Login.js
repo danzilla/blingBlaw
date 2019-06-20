@@ -17,8 +17,10 @@ class LoginForm extends Component {
         userName: "",
         password: ""
       },
-      pageMesage: "",
-      pageGood: false
+      pageInfo: {
+        pageMessage: "",
+        pageCode: ""
+      }
     }
   }
   // onChange - get and set state for Login form
@@ -32,25 +34,23 @@ class LoginForm extends Component {
     // If the input are empty
     if (!this.state.login.userName || !this.state.login.password){
       // setState to = False
-      this.setState({ pageMesage: "Credentials required ", pageGood: false });
+      this.setState({ pageMesage: "Credentials required "});
     } else { // validate against server:5000
       // Post | query
-      axios.post('http://localhost:5000/login', {
+      axios
+      .post('http://localhost:5000/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
       })
       .then((response) => { // set local state
         // If login is good
-        if (response.data.pageGood && response.data.pageGood === true){
-          console.log("Logged in!");
-          this.props.history.push('/profile');
-        } else { // if login is bad
-          console.log("Failed Logged in");
-          this.setState({
-            pageMesage: response.data.pageMesage,
-            pageGood: response.data.pageGood
-          });
+        if (response.data.pageInfo.pageCode === true){
+          this.props.history.push('/dashboard');
+        } // if login is bad
+        else {
+          this.setState({pageInfo: response.data.pageInfo});
         }
+        console.log(response.data.pageInfo);
       })
       .catch((error) => { // get and set props - Login state
         this.props.isLogged(false)
@@ -98,10 +98,14 @@ class LoginForm extends Component {
                             className="validate" required />
                           <label htmlFor="password">Password</label>
                         </div>
+
+
                         {/* err */}
                         <div className="center-align col s12 pink-text text-lighten-2">
-                          {this.state.pageMesage}
+                          {this.state.pageInfo.pageMessage}
                         </div>
+
+
                       </div>
                       {/* Login Form - Sub button */}
                       <div className="row center-align">
