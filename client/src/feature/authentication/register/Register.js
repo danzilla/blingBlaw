@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 import axios from 'axios';
-
-// RegisterForm
+// Register Form
 class Register extends Component {
   // states
   constructor(props) {

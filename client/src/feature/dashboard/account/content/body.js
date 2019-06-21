@@ -8,7 +8,7 @@ class Content extends Component {
   // Raaar
   render() {
     return (
-      <div className="row">
+      <div className="container">
         <div className="col s12 m12">
             <div className="row valign-wrapper grey lighten-5 ">
               <div className="col s2 card-1 p-2">

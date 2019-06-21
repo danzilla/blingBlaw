@@ -35,8 +35,11 @@ app.use(cors());
 // Routes - API
 const indexRouter = require('./src/router/authentication');
 const firstrun = require('./src/router/firstrun');
+const userRouter = require('./src/router/user');
+
 app.use('/', indexRouter); // Authentication - /
 app.use('/firstrun', firstrun); // Firstrun - /firstrun
+app.use('/user', userRouter); // user - /user
 
 // Wicked
 module.exports = app;

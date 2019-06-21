@@ -31,8 +31,11 @@ module.exports = {
         if (err) {
           // if err
           pageInfo.pageMessage = err;
-          if (err.code == "ECONNREFUSED" || err.code == "ENOTFOUND") {
-            pageInfo.pageMessage = "Trouble connecting to database - Is it [prod or dev?] - " + err.code;
+          if (err.code == "ENOTFOUND") {
+            pageInfo.pageMessage = "Trouble connecting to database - Is it [prod or dev?] - configure in app.db.js in server" + err.code;
+          }
+          if (err.code == "ECONNREFUSED") {
+            pageInfo.pageMessage = "Trouble connecting to database - Restart Docker or DB is not avilable - " + err.code;
           }
           else if (err.code == "3D000" || err.code == "42P01") {
             pageInfo.pageMessage = "Database not inintialize " + err.code;
