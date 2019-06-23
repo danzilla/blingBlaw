@@ -34,11 +34,11 @@ class addNewUsersForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
-                this.props.updateAlertMessage(response.data.pageInfo.pageMessage)
+                this.props.updateAlertMessage({pageMessage: response.data.pageInfo.pageMessage})
             })
             .catch((error) => {
-                this.props.updateAlertMessage(error.message)
-                console.log("message: " + error.message);
+                this.props.updateAlertMessage({pageMessage: error.message})
+                console.log("Message: " + error.message);
             });
         }
         // default prevent-refresh Form dawg

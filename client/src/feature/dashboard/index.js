@@ -138,7 +138,8 @@ class Dashboard extends Component {
     return (
       <div className="h-100 w-100">
         {/* Navigation */}
-        <Navigation 
+        <Navigation
+          alertMessage={this.state.alertMessage}
           activeAccount={this.activeAccount}
           activeCategory={this.activeCategory}
           activeSearch={this.activeSearch}

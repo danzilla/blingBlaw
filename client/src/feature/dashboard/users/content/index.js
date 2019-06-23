@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 // Head and Body
 import Head from './head'
 import Body from './body'
@@ -7,23 +8,54 @@ class Content extends Component {
   // constructor
   constructor(props) {
     super(props)
-    this.state = { showAddUser: false }
+    this.state = {
+      refreshBody: false,
+      fetchUsersResponse: ["fetchUsersResponse"]
+    }
+  }
+  // 
+  // Fetch user List
+  fetchUsers = () => {
+    axios
+    .post('http://localhost:5000/user/view', {
+        uname: "this.state.login.userName",
+        pwd: "this.state.login.password"
+    })
+    .then((response) => {
+        this.setState({ fetchUsersResponse: response.data.pageInfo.pageMessage})
+        this.props.updateAlertMessage({pageMessage: "Users been loaded!"})
+        console.log(JSON.stringify("Fetch: " + response.data.pageInfo));
+    })
+    .catch((error) => {
+        this.props.updateAlertMessage({pageMessage: "Error!"})
+        console.log(error);
+    });
+  }
+  // 
+  // componentDidMount
+  componentDidMount() {
+    this.fetchUsers()
   }
   // Raaar
   render() {
     return (
-      <div className="row h-100 overflowN">
+      <div className="container h-100 overflowN">
         <div className="col m12 s12 h-100 overflowY">
           {/* Add User */}
-          <div className="row card-1">
-            <Head 
+          <div className="row">
+          {this.state.refreshBody}
+            <Head
+              fetchUsers={this.fetchUsers}
               updateAlertMessage={this.props.updateAlertMessage}
               pageName={this.props.pageName} />
           </div>
           {/* User Body */}
           <div className="row">
-            <div className="container z-depth-4">
-              <Body updateAlertMessage={this.props.updateAlertMessage} />
+            <div className="col s12 m12 l12 z-depth-4">
+            <Body 
+              fetchUsersResponse={this.state.fetchUsersResponse}
+              updateAlertMessage={this.props.updateAlertMessage}
+              pageName={this.props.pageName} />
             </div>
           </div>
          </div>

@@ -6,7 +6,6 @@ import M from "materialize-css";
 class Materialize extends Component {
 
     componentDidMount() {
-
         const optionsL = {
             inDuration: 250,
             outDuration: 200,

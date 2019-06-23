@@ -1,38 +1,42 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // User Table
 class Table extends Component {
     // constructor
     constructor(props) {
         super(props)
-        this.state = { response: ["response"] }
+        this.state = { 
+            isHide: true,
+            isHideSerial: null,
+            isHideSerialPrev: null
+        }
     }
-    // 
-    // componentDidMount
-    componentDidMount() {
-        axios
-        .post('http://localhost:5000/user/view', {
-            uname: "this.state.login.userName",
-            pwd: "this.state.login.password"
-        })
-        .then((response) => {
-            this.setState({ response: response.data.pageInfo.pageMessage})
-            this.props.updateAlertMessage("Users been loaded!")
-            console.log(response.data.pageInfo);
-        })
-        .catch((error) => {
-            this.props.updateAlertMessage("error")
-            console.log(error);
-        });
+    //isHide to show user more
+    //
+    isHide (serial) {
+        // Hide all First 
+        let elemToHide = document.getElementById(serial);
+        elemToHide.className = "hide"
+        this.setState({isHide: true, isHideSerial: null, isHideSerialPrev: null})
+    }
+    isShow (serial) {
+        // Hide Prev Action
+        if(this.state.isHideSerialPrev){
+            let elemToHidePrev = document.getElementById(this.state.isHideSerialPrev);
+            elemToHidePrev.className = "hide"
+        }
+        // Show the Selected 
+        let elemToShow =  document.getElementById(serial);
+        elemToShow.className = ""
+        this.setState({isHide: true, isHideSerial: serial, isHideSerialPrev: serial})
     }
     // 
     // Data
     render() {
         return (
-            <div>
+            <div className="col s12 m12 l12">
                 <table className="highlight responsive-table">
                     <thead>
-                        <tr>
+                        <tr id="elemHeading">
                             <th>Serial</th>
                             <th>User</th>
                             <th>Edit</th>
@@ -40,20 +44,34 @@ class Table extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.response.map(item => {
+                            this.props.fetchUsersResponse.map((item) => {
                                 return (
+                                    <React.Fragment>
                                     <tr key={item.user_serial}>
                                         <td>{item.user_serial}</td>
                                         <td>{item.user_name}</td>
-                                        <td><button className="btn waves-effect waves-dark"><i class="material-icons">settings</i></button></td>
+                                    {this.state.isHideSerial === item.user_serial && this.state.isHide === true ?
+                                        <td><button onClick={() => {this.isHide(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">clear</i></button></td>
+                                        :
+                                        <td><button onClick={() => {this.isShow(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">add</i></button></td>
+                                    }
                                     </tr>
+                                    <tr id={item.user_serial} className="hide">
+                                        <td colspan="3">
+                                            <div class="container">
+                                                <p>
+                                                    {JSON.stringify(item)}
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                  </React.Fragment>
                                 );
                             })
                         }
                     </tbody>
                 </table>
             </div>
-            
         );
     }
 }

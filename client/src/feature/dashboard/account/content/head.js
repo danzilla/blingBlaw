@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // NewStatement
-import NewStatement from '../../../../component/addAccount'
+import NewStatement from './addAccount'
 // Head
 class Head extends Component {
     constructor(props) {

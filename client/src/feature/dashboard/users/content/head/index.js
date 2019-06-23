@@ -15,6 +15,7 @@ class Head extends Component {
   hideUserAddButton = () => {
     this.setState({ showAddUser: false })
   }
+
   // Raaar
   render() {
     return (
@@ -32,11 +33,15 @@ class Head extends Component {
               <i className="material-icons">add</i>
             </button>
           }
-          <button className="blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4"><i class="material-icons">sync</i></button>
+          <button onClick={this.props.fetchUsers} 
+            className="blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4">
+              <i class="material-icons">sync</i>
+          </button>
         </h3>
         {this.state.showAddUser === true &&
           <div className="container"> 
-            <NewUser 
+            <NewUser
+              fetchUsers={this.props.fetchUsers}
               updateAlertMessage={this.props.updateAlertMessage} /> 
           </div>
         }

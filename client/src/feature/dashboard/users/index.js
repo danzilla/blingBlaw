@@ -15,10 +15,10 @@ class User extends Component {
     return (
       <div className="row w-100 h-85">
         {/* Contents */}
-        <div className="container h-100 overflowN">
-          <div className="row h-100 p-2">
+        <div className="col s12 m12 l12 h-100 overflowN">
+          <div className="row h-100">
             {/* Feature - Profile */}
-            <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
+            <div className="col s12 m12 l12 h-100 overflowN">
               <Content 
                 updateAlertMessage={this.props.updateAlertMessage}
                 pageName={this.props.pageName}/>
