@@ -19,11 +19,11 @@ class Dashboard extends Component {
     super(props);
     // Page-Display Setting
     const pageDisplay = {
-      accountPage: false,
+      accountPage: true,
       categoryPage: false,
       searchPage: false,
       settingPage: false,
-      userPage: true
+      userPage: false
     };
     const alertMessage = { accountPage: "accountPage"};
     this.state = {

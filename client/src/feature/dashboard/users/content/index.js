@@ -9,7 +9,6 @@ class Content extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      refreshBody: false,
       fetchUsersResponse: ["fetchUsersResponse"]
     }
   }
@@ -23,11 +22,10 @@ class Content extends Component {
     })
     .then((response) => {
         this.setState({ fetchUsersResponse: response.data.pageInfo.pageMessage})
-        this.props.updateAlertMessage({pageMessage: "Users been loaded!"})
-        console.log(JSON.stringify("Fetch: " + response.data.pageInfo));
+        this.props.updateAlertMessage({pageMessage: "Users been Fetched!"})
     })
     .catch((error) => {
-        this.props.updateAlertMessage({pageMessage: "Error!"})
+        this.props.updateAlertMessage({pageMessage: "Error! " + error})
         console.log(error);
     });
   }
@@ -35,6 +33,7 @@ class Content extends Component {
   // componentDidMount
   componentDidMount() {
     this.fetchUsers()
+    this.props.updateAlertMessage({ pageMessage: "Users page loaded" })
   }
   // Raaar
   render() {
@@ -43,7 +42,6 @@ class Content extends Component {
         <div className="col m12 s12 h-100 overflowY">
           {/* Add User */}
           <div className="row">
-          {this.state.refreshBody}
             <Head
               fetchUsers={this.fetchUsers}
               updateAlertMessage={this.props.updateAlertMessage}
@@ -51,7 +49,7 @@ class Content extends Component {
           </div>
           {/* User Body */}
           <div className="row">
-            <div className="col s12 m12 l12 z-depth-4">
+            <div className="col s12 m12 l12 z-depth-2">
             <Body 
               fetchUsersResponse={this.state.fetchUsersResponse}
               updateAlertMessage={this.props.updateAlertMessage}

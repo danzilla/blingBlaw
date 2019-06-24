@@ -28,7 +28,7 @@ class addNewUsersForm extends Component {
         } else {
             // submit to server
             axios
-            .post('http://localhost:5000/register', {
+            .post('http://localhost:5000/user/add', {
                 userName: this.state.register.userName,
                 password: this.state.register.password,
                 fannyPack: this.state.register.fannyPack

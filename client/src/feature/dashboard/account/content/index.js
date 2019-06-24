@@ -11,14 +11,7 @@ class Content extends Component {
       showAddAccount: false
     }
   }
-  // show AddAccount button
-  showAccountAddButton = () => {
-    this.setState({ showAddAccount: true })
-  }
-  // Hide AddAccount button
-  hideAccountAddButton = () => {
-    this.setState({ showAddAccount: false })
-  }
+
   // Raaar
   render() {
     return (
@@ -27,10 +20,7 @@ class Content extends Component {
           {/* Add User */}
           <div className="row card-1">
             <HeadContent
-              pageName={this.props.pageName}
-              hideAccountAddButton={this.hideAccountAddButton}
-              showAccountAddButton={this.showAccountAddButton}
-              showAddAccount={this.state.showAddAccount} />
+              pageName={this.props.pageName} />
           </div>
           {/* User Body */}
           <div className="row">

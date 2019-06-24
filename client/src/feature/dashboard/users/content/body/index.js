@@ -33,7 +33,7 @@ class Table extends Component {
     // Data
     render() {
         return (
-            <div className="col s12 m12 l12">
+            <div className="row">
                 <table className="highlight responsive-table">
                     <thead>
                         <tr id="elemHeading">

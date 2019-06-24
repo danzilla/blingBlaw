@@ -10,6 +10,11 @@ class Account extends Component {
     super(props);
     this.state = { pageDisplay: "pageDisplay" };
   }
+  // 
+  // componentDidMount
+  componentDidMount() {
+    this.props.updateAlertMessage({ pageMessage: "Account page loaded" })
+  }
   // Rrrr
   render() {
     // Bling

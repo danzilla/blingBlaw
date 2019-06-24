@@ -33,7 +33,7 @@ class Register extends Component {
       this.setState({ pageMesage: "Credentials required"});
     } else {
         // submit to server
-        axios.post('http://localhost:5000/register', {
+        axios.post('http://localhost:5000/user/add', {
           userName: this.state.register.userName,
           password: this.state.register.password,
           fannyPack: this.state.register.fannyPack
