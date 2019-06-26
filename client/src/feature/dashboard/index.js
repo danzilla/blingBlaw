@@ -135,7 +135,7 @@ class Dashboard extends Component {
     }
     // 
     // #brrrrrom
-    return (
+    return ( 
       <div className="h-100 w-100">
         {/* Navigation */}
         <Navigation

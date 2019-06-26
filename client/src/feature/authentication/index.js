@@ -1,66 +1,126 @@
-import React, { Component } from 'react';
-// Form FirstRun
-import FirstRun from './firstrun/FirstRun'
-// Form Login
-import LoginForm from './login/Login'
-// Form Register
-import RegForm from './register/Register'
-// Login - page
-class Login extends Component {
-    // States
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLogForm: true,
-            isRegFrom: false,
-            isInitalConfig: false
-        }
+// Authentication
+// Page-Redirect
+import React, { Component } from 'react'
+// Global-Style Materialize
+import Materialize from '../../util/Materialize'
+// Navigation and Messages
+import Navigation from '../../component/Navigation'
+import MessageAlert from '../../component/MessageAlert'
+// Contents 
+import LoginPage from './login'
+import RegisterPage from './register'
+import FirstRunPage from './firstrun'
+// Dashboard
+class Dashboard extends Component {
+  // constructor
+  constructor(props) { 
+    super(props);
+    // Page-Display Setting
+    const pageDisplay = {
+      isLogin: true,
+      isRegister: false,
+      isFirstrun: false
+    };
+    const alertMessage = { pageMessage: "" };
+    this.state = { pageDisplay: pageDisplay, alertMessage: alertMessage };
+  }
+  // Alert Message 
+  // updateAlertMessage
+  updateAlertMessage = (msg) => {
+    this.setState({
+      alertMessage: msg
+    })
+  }
+  //
+  // Pages
+  // - Login | Register | FirstRun
+  // - 3 Depth - Props -> nav > navBar
+  // 
+  // activeLoginPage
+  activeLoginPage = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        isLogin: true, isRegister: false, isFirstrun: false
+      }
+    })
+  }
+  // activeRegisterPage
+  activeRegisterPage = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        isLogin: false, isRegister: true, isFirstrun: false
+      }
+    })
+  }
+  // activFirstRunPage
+  activFirstRunPage = () => {
+    this.setState({
+      pageDisplay: { ...this.state.pageDisplay, 
+        isLogin: false, isRegister: false, isFirstrun: true
+      }
+    })
+  }
+  //
+  // blaze contents
+  render() {
+    // Which content to show
+    let showPage, pageName;
+    if (this.state.pageDisplay.isLogin === true) {
+      // Login page
+      pageName = "Login page";
+      showPage = <LoginPage
+        pageName={pageName}
+        activeLoginPage={this.activeLoginPage}
+        activeRegisterPage={this.activeRegisterPage}
+        activFirstRunPage={this.activFirstRunPage}
+        updateAlertMessage={this.updateAlertMessage} />;
+    } else if (this.state.pageDisplay.isRegister === true) {
+      // Register page
+      pageName = "Register page";
+      showPage = <RegisterPage
+        pageName={pageName}
+        activeLoginPage={this.activeLoginPage}
+        activeRegisterPage={this.activeRegisterPage}
+        activFirstRunPage={this.activFirstRunPage}
+        updateAlertMessage={this.updateAlertMessage} />;
+    } else if (this.state.pageDisplay.isFirstrun === true) {
+      // First-run page
+      pageName = "First-run page";
+      showPage = <FirstRunPage
+        pageName={pageName}
+        activeLoginPage={this.activeLoginPage}
+        activeRegisterPage={this.activeRegisterPage}
+        activFirstRunPage={this.activFirstRunPage}
+        updateAlertMessage={this.updateAlertMessage} />;
+    } else {
+      // Login page
+      pageName = "Login page";
+      showPage = <LoginPage
+        pageName={pageName}
+        activeLoginPage={this.activeLoginPage}
+        activeRegisterPage={this.activeRegisterPage}
+        activFirstRunPage={this.activFirstRunPage}
+        updateAlertMessage={this.updateAlertMessage} />;
     }
-    // isLoginForm
-    // Get isLoginForm - From Login
-    isLoginForm = (isLoginFormState) => {
-        this.setState({ isLogForm: isLoginFormState })
-    }
-    // isRegisterForm
-    // Get isRegisterForm - From Register
-    isRegisterForm = (isRegisterFormState) => {
-      this.setState({ isRegFrom: isRegisterFormState })
-    }
-    // isInitalConfig
-    // Get isInitalConfig - From DB
-    isInitalConfig = (isInialDBState) => {
-      this.setState({ isInitalConfig: isInialDBState })
-    }
-    // blaze
-    render() {
-        if (this.state.isRegFrom === true) {
-            // Register form
-            return ( 
-                <RegForm
-                    isLoginForm={this.isLoginForm}
-                    isRegisterForm={this.isRegisterForm} 
-                    isInitalConfig={this.isInitalConfig}
-                 />
-            )
-        } else if (this.state.isInitalConfig === true) {
-            // First Run
-            return ( 
-                <FirstRun 
-                    isLoginForm={this.isLoginForm}
-                    isRegisterForm={this.isRegisterForm} 
-                    isInitalConfig={this.isInitalConfig}
-                />
-            )
-        } else {
-            // Login Page
-            return (
-                <LoginForm 
-                    isLoginForm={this.isLoginForm}
-                    isRegisterForm={this.isRegisterForm} 
-                    isInitalConfig={this.isInitalConfig}
-                />
-            )
-        }
-    }
+    // #brrrrrom
+    return (
+      <div className="h-100 w-100">
+        {/* Alert Message */}
+        <MessageAlert 
+          alertMessage={this.state.alertMessage}
+          pageDisplay={this.state.pageDisplay} />
+
+        {/* Page content */}
+        {showPage}
+
+        {/* Init Materializecss */}
+        <Materialize />
+      </div>
+    );
+  }
 }
-export default Login;
+// Bling
+export default Dashboard;
+
+
+

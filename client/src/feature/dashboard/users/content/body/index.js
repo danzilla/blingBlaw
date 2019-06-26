@@ -43,32 +43,32 @@ class Table extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            this.props.fetchUsersResponse.map((item) => {
-                                return (
-                                    <React.Fragment>
-                                    <tr key={item.user_serial}>
-                                        <td>{item.user_serial}</td>
-                                        <td>{item.user_name}</td>
-                                    {this.state.isHideSerial === item.user_serial && this.state.isHide === true ?
-                                        <td><button onClick={() => {this.isHide(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">clear</i></button></td>
-                                        :
-                                        <td><button onClick={() => {this.isShow(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">add</i></button></td>
-                                    }
-                                    </tr>
-                                    <tr id={item.user_serial} className="hide">
-                                        <td colspan="3">
-                                            <div class="container">
-                                                <p>
-                                                    {JSON.stringify(item)}
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                  </React.Fragment>
-                                );
-                            })
-                        }
+                    {
+                        this.props.fetchUsersResponse.map((item) => {
+                            return (
+                                <React.Fragment>
+                                <tr key={item.user_serial}>
+                                    <td>{item.user_serial}</td>
+                                    <td>{item.user_name}</td>
+                                {this.state.isHideSerial === item.user_serial && this.state.isHide === true ?
+                                    <td><button onClick={() => {this.isHide(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">clear</i></button></td>
+                                    :
+                                    <td><button onClick={() => {this.isShow(item.user_serial)}} className="btn waves-effect waves-dark"><i class="material-icons">add</i></button></td>
+                                }
+                                </tr>
+                                <tr id={item.user_serial} className="hide">
+                                    <td colspan="3">
+                                        <div class="container">
+                                            <p>
+                                                {JSON.stringify(item)}
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </React.Fragment>
+                            );
+                        })
+                    }
                     </tbody>
                 </table>
             </div>

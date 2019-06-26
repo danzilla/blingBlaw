@@ -42,7 +42,7 @@ class Nav extends Component {
             <div className="row w-100">
                 <nav className="light-blue darken-3">
                     <div className="nav-wrapper">
-                        <a href="#!" className="brand-logo px-2 left">{emojify(':rocket:', emojifyOptions)}</a>
+                        <a href="/" className="brand-logo px-2 left">{emojify(':rocket:', emojifyOptions)}</a>
                         <ul class="right">
                             <li>
                                 <a className="btn waves-effect waves-light tooltipped dropdown-trigger transparent"

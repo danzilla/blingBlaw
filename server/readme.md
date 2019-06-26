@@ -28,3 +28,11 @@ database_Name - blingblaw_fannypack
 │   │   Table - wallet - wallet_id -  wallet_name - wallet_change_info
 │   │   Table - wallet_details - wallet_id
 ```
+
+
+
+
+
+
+
+

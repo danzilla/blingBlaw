@@ -2,16 +2,13 @@
  * Keep it minimal
  */
 const async = require('async');
-
+// #r
 module.exports = {
     // POST
     // POST - add user module
     register: function (req, res, next) {
         // Register user - pageMessage
-        let pageInfo = {
-            pageCode: "",
-            pageMessage: ""
-          };
+        let pageInfo = {pageCode: "", pageMessage: ""};
         if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
             pageInfo.pageMesage = "Error! cannot be empty fields";
             console.log(pageInfo.pageMesage);
@@ -50,8 +47,7 @@ module.exports = {
                 createTableWalletRecord: false
             }
 
-            const addUserToAuth = require("./util");
-
+            const registerAuser = require("./util");
 
             // Async Waterfall 
             async.waterfall([
