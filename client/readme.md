@@ -1,13 +1,14 @@
 # BlingBlaw - client :lips: :boom: :star2:
 A minimalist budget app (**React**)
 
-## Client - React
-#### UIKit - https://materializecss.co
+### Client - React
+- UIKit
+- https://materializecss.co
 
 ### Launch client :boom:
-> npm start
-> http://localhost:3000
+- npm start
+- http://localhost:3000
 
-# New Simple - Plain Style 
-## TO-DO
+
+### To-Do
 > Parallax
