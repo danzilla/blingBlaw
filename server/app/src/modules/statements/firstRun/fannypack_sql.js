@@ -61,6 +61,8 @@ const fannypack_database = {
    db_name: appConfig.fannypacks_db_config.db_name,
    create_db: create_DB_fannyPack,
    // Each Account should have own Schema and Tables inside
+   // Schema - FannyPack - serial
+   // Table - 
    create_schema_fannyPack: create_schema_fannyPack,
    create_table_fannypacks_category: create_table_fannypacks_category,
    create_table_fannypacks_wallet: create_table_fannypacks_wallet

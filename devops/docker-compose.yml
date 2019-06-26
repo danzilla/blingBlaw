@@ -7,7 +7,7 @@ version: '3'
 services:
   # PostgreSQL - postgres_db
   postgres_db:
-    build: ./postgreSQL_DB
+    build: ./postgresql_db
     ports:
       - "5432:5432"
   # PGAdmin

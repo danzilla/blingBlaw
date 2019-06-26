@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+// addNewUsers Form
 class addNewUsersForm extends Component {
     // states
     constructor(props) {
@@ -10,8 +10,7 @@ class addNewUsersForm extends Component {
                 userName: "",
                 password: "",
                 fannyPack: ""
-            },
-            pageMesage: ""
+            }
         }
     }
     // handleChange - get and set state for register form
@@ -25,32 +24,26 @@ class addNewUsersForm extends Component {
         if (!this.state.register.userName || !this.state.register.password || !this.state.register.fannyPack) {
             // If the input are empty 
             // setState to = False
-            this.setState({ pageMesage: "Credentials required ", pageGood: false });
+            this.props.updateAlertMessage("Credentials required ")
         } else {
             // submit to server
-            axios.post('http://localhost:5000/users/add', {
+            axios
+            .post('http://localhost:5000/user/add', {
                 userName: this.state.register.userName,
                 password: this.state.register.password,
                 fannyPack: this.state.register.fannyPack
             })
-                .then((response) => {
-                    if ((!response.data) || (response.data.pageGood === false)) {
-                        // if response.data = empty or bad
-                        // set local state
-                        this.setState({ pageMesage: response.data.pageMesage });
-                    } else {
-                        // if response.data = good
-                        // set local state
-                        this.setState({ pageMesage: response.data.pageMesage });
-                    }
-                })
-                .catch((error) => {
-                    // get and set props - register state
-                    console.log("message: " + error.message);
-                });
+            .then((response) => {
+                this.props.updateAlertMessage({pageMessage: response.data.pageInfo.pageMessage});
+                this.props.fetchUsers();
+            })
+            .catch((error) => {
+                this.props.updateAlertMessage({pageMessage: error.message})
+                console.log("Message: " + error.message);
+            });
         }
         // default prevent-refresh Form dawg
-         event.preventDefault();
+        event.preventDefault();
     }
     // Render
     render() {
@@ -59,7 +52,7 @@ class addNewUsersForm extends Component {
                 {/* Register Form - input */}
                 <div className="row">
                     {/* FannyPack Name */}
-                    <div className="input-field col s4 m4">
+                    <div className="input-field col s4 m3">
                         <input name="fannyPack" id="fannyPack" type="text"
                             onChange={this.handleChange.bind(this, 'fannyPack')}
                             value={this.state.register.fannyPack}
@@ -82,18 +75,15 @@ class addNewUsersForm extends Component {
                             className="validate" required />
                         <label htmlFor="password">Password</label>
                     </div>
-                    {/* err */}
-                    <div className="center-align col s12 pink-text text-lighten-2">
-                        {this.state.pageMesage}
+                    {/* Form - Sub button */}
+                    <div className="input-field col s1 m1">
+                        <div className="row center-align">
+                            <button className="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons">how_to_reg</i></button>
+                        </div>
                     </div>
-                </div>
-                {/* Form - Sub button */}
-                <div className="row center-align">
-                    <button className="btn waves-effect waves-light" type="submit" name="action"> Add user </button>
                 </div>
             </form>
         );
     }
 }
-
 export default addNewUsersForm;

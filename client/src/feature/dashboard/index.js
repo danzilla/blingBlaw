@@ -19,16 +19,28 @@ class Dashboard extends Component {
     super(props);
     // Page-Display Setting
     const pageDisplay = {
-      accountPage: false,
+      accountPage: true,
       categoryPage: false,
       searchPage: false,
       settingPage: false,
       userPage: false
     };
+    const alertMessage = { accountPage: "accountPage"};
     this.state = {
-      pageDisplay: pageDisplay
+      pageDisplay: pageDisplay,
+      alertMessage: alertMessage
     };
   }
+
+  // Alert Message 
+  // updateAlertMessage
+  updateAlertMessage = (msg) => {
+    this.setState({
+      alertMessage: msg
+    })
+  }
+
+
   // Pages
   // - Account | Category | Search | Settings | Users
   // - 3 Depth - Props -> nav > navBar
@@ -83,44 +95,51 @@ class Dashboard extends Component {
       pageName = "Account page";
       showPage = <Account
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else if (this.state.pageDisplay.categoryPage === true) {
       // Category page
       pageName = "Labels and Category page";
       showPage = <Category
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else if (this.state.pageDisplay.searchPage === true) {
       // Search page
       pageName = "Search page";
       showPage = <Search
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else if (this.state.pageDisplay.settingPage === true) {
       // Settings page
       pageName = "Settings page";
       showPage = <Settings
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else if (this.state.pageDisplay.userPage === true) {
       // User page
       pageName = "User page";
       showPage = <User
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else {
       // Account page
       pageName = "Account page";
       showPage = <Account
         pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     }
     // 
     // #brrrrrom
-    return (
+    return ( 
       <div className="h-100 w-100">
         {/* Navigation */}
-        <Navigation 
+        <Navigation
+          alertMessage={this.state.alertMessage}
           activeAccount={this.activeAccount}
           activeCategory={this.activeCategory}
           activeSearch={this.activeSearch}
@@ -130,6 +149,7 @@ class Dashboard extends Component {
 
         {/* Alert Message */}
         <MessageAlert 
+          alertMessage={this.state.alertMessage}
           pageDisplay={this.state.pageDisplay} />
 
         {/* Page content */}

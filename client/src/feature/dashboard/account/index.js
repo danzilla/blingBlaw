@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-
+// Charts 
 import Chart from '../../../component/Charts/chart'
 import Bubble from '../../../component/Charts/bubble'
-
 // Account
 import Content from './content'
 class Account extends Component {
@@ -10,6 +9,11 @@ class Account extends Component {
   constructor(props) {
     super(props);
     this.state = { pageDisplay: "pageDisplay" };
+  }
+  // 
+  // componentDidMount
+  componentDidMount() {
+    this.props.updateAlertMessage({ pageMessage: "Account page loaded" })
   }
   // Rrrr
   render() {
@@ -22,7 +26,7 @@ class Account extends Component {
           <div className="row h-100 p-1">
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-50 card-1 z-depth-3 overflowN my-1">
-              <h1>{this.props.pageName}</h1>
+              <h1 className="center-align">{this.props.pageName}</h1>
               <Bubble />
             </div>
             {/* Feature - Most spended */}
@@ -36,7 +40,7 @@ class Account extends Component {
           <div className="row h-100 p-2">
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
-              <Content pageName={this.props.pageName}/>
+              <Content pageName={this.props.pageName} />
             </div>
           </div>
         </div>

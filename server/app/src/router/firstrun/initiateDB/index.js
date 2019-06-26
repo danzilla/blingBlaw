@@ -87,10 +87,10 @@ module.exports = {
             console.log("\n firstRunCheck.database: ");
             console.log(firstRunCheck.database);
             // Schema
-            console.log("\n firstRunCheck.database: ");
+            console.log("\n firstRunCheck.Schema: ");
             console.log(firstRunCheck.schema);
             // Table 
-            console.log("\n firstRunCheck.database: ");
+            console.log("\n firstRunCheck.Table: ");
             console.log(firstRunCheck.table);
 
             res.send({

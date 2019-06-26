@@ -1,5 +1,9 @@
 /* SQL statementz - Assets || BlingBlaw - Database configuration
- * 
+ * Inital Table - Setup
+ * In-Order
+ * - user_auth -> user_details -> user_record -> user_group
+ * - fannyPacks -> fannyPack -> fannyPackRecord 
+ *
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -25,6 +29,7 @@ const create_schema_users = "CREATE SCHEMA IF NOT EXISTS " +
    dbConfig.assets_db_config.schema_users.schema_name + 
    " AUTHORIZATION " + DB_user + ";";
 
+// GROUP_USER_TABLE
 // Table - users.user_group
 const create_table_userGroup = "CREATE TABLE IF NOT EXISTS " +
    dbConfig.assets_db_config.schema_users.schema_name + "." +
@@ -37,6 +42,7 @@ const create_table_userGroup = "CREATE TABLE IF NOT EXISTS " +
       user_group_updated TIMESTAMP
    );`;
 
+// USER_TABLES
 // Table - users.user_auth
 const create_table_userAuth = "CREATE TABLE IF NOT EXISTS " + 
    dbConfig.assets_db_config.schema_users.schema_name + "." +

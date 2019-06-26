@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import M from "materialize-css";
+
 // Content
 class Content extends Component {
     constructor(props) {
@@ -7,16 +9,31 @@ class Content extends Component {
             Content: "Content"
         }
     }
-
+    componentWillReceiveProps (newProps) {
+        M.toast({html: newProps.alertMessage.pageMessage})
+    }
     // Raaar
     render() {
         return (
-            <div className="m-0">
-                <h5 class="center-align m-0">
-                    This should be center aligned {JSON.stringify(this.props.pageDisplay)}
-                </h5>
+            <div className="">
+
             </div>
         );
     }
 }
 export default Content;
+
+/*
+                <div className="container center-align">
+                    {this.props.pageDisplay &&
+                        <span class="blue-text text-darken-2">
+                            {JSON.stringify(this.props.pageDisplay)}
+                        </span>
+                    }
+                    {this.props.alertMessage &&
+                        <span class="blue-text text-darken-2">
+                            {JSON.stringify(this.props.alertMessage.pageMessage)}
+                        </span>
+                    }
+                </div>
+*/

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // User
 // User Content
 import Content from './content'
+// Users 
 class User extends Component {
   // state
   constructor(props) {
@@ -10,30 +11,18 @@ class User extends Component {
   }
   // Rrrr
   render() {
+    
     // Bling
     return (
-      // Accounts
       <div className="row w-100 h-85">
-        {/* Logs and Category - hide-on-med-and-down */}
-        <div className="col s12 m12 l4 h-100 overflowN hide-on-med-and-down">
-          <div className="row h-100 p-1">
-            {/* Feature - Profile */}
-            <div className="col s12 m12 l12 h-50 card-1 z-depth-3 overflowN my-1">
-              <h1>Account</h1>
-              <h1>{this.props.pageName}</h1>
-            </div>
-            {/* Feature - Most spended */}
-            <div className="col s12 m12 l12 h-45 card-1 z-depth-3 overflowN">
-              <h1>Logs</h1>
-            </div>
-          </div>
-        </div>
         {/* Contents */}
-        <div className="col s12 m12 l8 h-100 overflowN">
-          <div className="row h-100 p-2">
+        <div className="col s12 m12 l12 h-100 overflowN">
+          <div className="row h-100">
             {/* Feature - Profile */}
-            <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
-              <Content pageName={this.props.pageName}/>
+            <div className="col s12 m12 l12 h-100 overflowN">
+              <Content 
+                updateAlertMessage={this.props.updateAlertMessage}
+                pageName={this.props.pageName}/>
             </div>
           </div>
         </div>
