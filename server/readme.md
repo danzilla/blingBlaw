@@ -19,17 +19,19 @@ database_Name - blingblaw_assets
 |   │   Table - user_details - user_id
 │   │   Table - fannypacks - fannypacks_id
 └───Schema - fannypack_userID_fannypacks_serial
-|   │   Table - category- category_id
+|   │   Table - category - category_id
 │   │   Table - wallet_record - wallet_id
 │   │   Table - wallet_One - wallet_id
+│   │   Table - wallet_Two - wallet_id
 |   |
 - User - Contains FannyPacks
 - FannyPacks - Contains Wallets and category
 - Wallets - Contains Account Statemetn information
 ```
-
 # Feature - ADD 
+
 #### FirstRun - Initial Running
+###### Create Database 
 - Requirement
     - > No-input require 
 - Create Database 
@@ -41,37 +43,48 @@ database_Name - blingblaw_assets
     - create users_assets.user_details_table
     - create users_assets.fannypacks_table
 
-#### User Register - Register/Add user
+#### Accounts and Wallets and Category 
+###### User Register - Register/Add user
 - Requirement
-    - > User, Password, Email
+    - > User, Password, fannyPackName
 - userAdd 
     - Add user to users_assets.user_auth_table
     - Add user to users_assets.user_details_table
-
-#### Accounts and Wallets and Category 
-##### 1 - Add - FannyPacks
+- Create - FannyPacks
+##### Create - FannyPacks
 - Requirement
     - > FannyPack_Name
 - Create Schema
     - create fannypack_userID_fannypacks_serial
 - Create Table 
     - create fannypack_userID_fannypacks_serial.category_table
+    - create fannypack_userID_fannypacks_serial.wallet_types
     - create fannypack_userID_fannypacks_serial.wallet_record_table
 - Add
     - Add FannyPack_Name to users_assets.fannypacks_table
+    - Add CatNameRoot to fannypack_userID_fannypacks_serial.category_table
 
-##### 2 -  Add - Accounts and statemet 
+##### Add - Wallet Type
 - Requirement
-    - > AccountActivity.csv, Dates, Name, Type
-- Create Table 
-    - create fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
+    - > wallet_type name
 - Add
-    - Add wallet_UNO_SERIAL to fannypack_userID_fannypacks_serial.wallet_record_table
-    - Add AccountActivity to fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
-
-##### 3 -  Add - Category
+    - Add wallet_Type to fannypack_userID_fannypacks_serial.wallet_types
+##### Add - Category
 - Requirement
     - > CatName
 - Add
     - Add CatName to fannypack_userID_fannypacks_serial.category_table
+##### Add - Accounts
+- Requirement
+    - > Wallet_type, account_name, dates
+- Create Table 
+    - create fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
+- Add
+    - Add wallet_UNO_SERIAL to fannypack_userID_fannypacks_serial.wallet_record_table
 
+##### Uplolad - Statemet
+- Requirement
+    - > AccountActivity.csv, dates
+- Add
+    - Add AccountActivity to fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
+    - Add lastModify to fannypack_userID_fannypacks_serial.wallet_record_table
