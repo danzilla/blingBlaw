@@ -10,7 +10,9 @@
 # Database - Design
 Revised 
  - <s>May 26, 2019</s>
- - June 27, 2019
+ - <s>June 27, 2019</s>
+ - July 02, 2019
+
 ```
 database_Name - blingblaw_assets
 │
@@ -19,72 +21,76 @@ database_Name - blingblaw_assets
 |   │   Table - user_details - user_id
 │   │   Table - fannypacks - fannypacks_id
 └───Schema - fannypack_userID_fannypacks_serial
-|   │   Table - category - category_id
-│   │   Table - wallet_record - wallet_id
-│   │   Table - wallet_One - wallet_id
-│   │   Table - wallet_Two - wallet_id
+|   │   Table - account_category - account_category_id
+│   │   Table - account_type - account_type_id
+│   │   Table - account_record - account_id
+│   │   Table - account_One - account_id
 |   |
 - User - Contains FannyPacks
-- FannyPacks - Contains Wallets and category
-- Wallets - Contains Account Statemetn information
+- FannyPacks - Contains Account, Account Types and category
+- accounts - Contains Account Statemetn information
 ```
-# Feature - ADD 
+# Feature - ADD
 
-#### FirstRun - Initial Running
-###### Create Database 
+#### Create - FirstRun
 - Requirement
-    - > No-input require 
-- Create Database 
+    - > No-input require
+- Create Database
     - create blingBlaw
 - Create Schema
     - create users_assets
-- Create Table 
+- Create Table
     - create users_assets.user_auth_table
     - create users_assets.user_details_table
     - create users_assets.fannypacks_table
 
-#### Accounts and Wallets and Category 
-###### User Register - Register/Add user
+#### Create - User
 - Requirement
     - > User, Password, fannyPackName
-- userAdd 
+- userAdd
     - Add user to users_assets.user_auth_table
     - Add user to users_assets.user_details_table
 - Create - FannyPacks
-##### Create - FannyPacks
+
+#### Create - FannyPack
 - Requirement
-    - > FannyPack_Name
+    - > fannyPackName
 - Create Schema
     - create fannypack_userID_fannypacks_serial
-- Create Table 
-    - create fannypack_userID_fannypacks_serial.category_table
-    - create fannypack_userID_fannypacks_serial.wallet_types
-    - create fannypack_userID_fannypacks_serial.wallet_record_table
+- Create Table
+    - create fannypack_userID_fannypacks_serial.account_types_table
+    - create fannypack_userID_fannypacks_serial.account_category_table
+    - create fannypack_userID_fannypacks_serial.account_record_table
 - Add
-    - Add FannyPack_Name to users_assets.fannypacks_table
-    - Add CatNameRoot to fannypack_userID_fannypacks_serial.category_table
+    - Add FannyPack_info to users_assets.fannypacks_table
+    - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
+    - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
 
-##### Add - Wallet Type
+
+#### Create - Account
 - Requirement
-    - > wallet_type name
+    - > account_type, account_info, dates
+- Create Table 
+    - create fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
 - Add
-    - Add wallet_Type to fannypack_userID_fannypacks_serial.wallet_types
-##### Add - Category
+    - Add account_UNO_SERIAL to fannypack_userID_fannypacks_serial.account_record_table
+
+
+#### Add - account_Type
+- Requirement
+    - > account_type_name
+- Add
+    - Add account_Type to fannypack_userID_fannypacks_serial.account_types_table
+
+#### Add - account_Category
 - Requirement
     - > CatName
 - Add
-    - Add CatName to fannypack_userID_fannypacks_serial.category_table
-##### Add - Accounts
-- Requirement
-    - > Wallet_type, account_name, dates
-- Create Table 
-    - create fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
-- Add
-    - Add wallet_UNO_SERIAL to fannypack_userID_fannypacks_serial.wallet_record_table
+    - Add CatName to fannypack_userID_fannypacks_serial.account_category_table
 
-##### Uplolad - Statemet
+#### Add - account_Statemet
 - Requirement
     - > AccountActivity.csv, dates
 - Add
-    - Add AccountActivity to fannypack_userID_fannypacks_serial.wallet_UNO_SERIAL
-    - Add lastModify to fannypack_userID_fannypacks_serial.wallet_record_table
+    - Add AccountActivity to fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
+    - Add lastModify to fannypack_userID_fannypacks_serial.account_record_table
