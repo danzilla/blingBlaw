@@ -28,7 +28,7 @@ const database = {
     blingblaw: {
         user: db_User,
         password: db_Pwd,
-        database: assets_db_config.db_name,
+        database: app_PRIMARY_DB_config.db_name,
         port: db_Port,
         host: db_Host
     },
@@ -41,8 +41,9 @@ const database = {
         host: db_Host
     }
 }
+
 // Export - Labels for Database - Schema - Tables
-module.exports.app_DB_config = app_PRIMARY_DB_config;
+module.exports.db_config = app_PRIMARY_DB_config;
 // Export - Databases settings 
 module.exports.blingBlaw = database.blingblaw;
 module.exports.postgres = database.default_postgres_db;
