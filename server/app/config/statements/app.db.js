@@ -1,6 +1,5 @@
 // Databases - labels
 // App Database configuration - Labels
-
 // App Primary_DB Labels 
 const app_PRIMARY_DB_config = {
     db_name: "blingblaw_assets",
@@ -9,7 +8,6 @@ const app_PRIMARY_DB_config = {
     table_users_details: "user_details",
     table_users_fannyPack: "user_fannyPackz"
 }
-
 // Dev environment for docker_compose and npm
 // If Docker - SET (PROD)
 let db_Host_PROD = "postgres_db";
@@ -41,7 +39,6 @@ const database = {
         host: db_Host
     }
 }
-
 // Export - Labels for Database - Schema - Tables
 module.exports.db_config = app_PRIMARY_DB_config;
 // Export - Databases settings 
