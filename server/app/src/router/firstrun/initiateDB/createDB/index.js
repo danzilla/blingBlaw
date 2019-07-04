@@ -48,6 +48,6 @@ const create_db_fannyPacks = function (callback, firstRunCheck) {
 // Export Database Create
 const createDatabase = {
   createAssetsDB: create_db_assets,
-  createFannyPacksDB: create_db_fannyPacks
+  createFannyPacksDB: "acreate_db_fannyPacks"
 }
 module.exports = createDatabase;

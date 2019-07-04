@@ -28,15 +28,13 @@
  */
 
 
-const create_schema_user_fannyPack = require("./create_schema_user_fannyPack");
+const create_schema_user_fannyPack = require("./utli/create_schema_user_fannyPack");
 
-const table_account_types = require("./create_table_account_types");
+const table_account_types = require("./utli/create_table_account_types");
+const table_account_category = require("./utli/create_table_account_category");
+const create_table_account_record = require("./utli/create_table_account_record");
 
-const table_account_category = require("./create_table_account_category");
-
-const create_table_account_record = require("./create_table_account_record");
-
-const add_newFannyPack_to_fannypacks_table = require("./add_newFannyPack_to_fannypacks_record");
+const add_newFannyPack_to_fannypacks_table = require("./utli/add_newFannyPack_to_fannypacks_record");
 
 const createFannyPack = {
     create_schema_fannyPack: create_schema_user_fannyPack,

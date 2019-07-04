@@ -22,11 +22,5 @@
  */
 
 const create_table_account = "";
-const add_account_info_to_account_record= "";
 
-
-const CreateAccount= {
-    create_table_account: "",
-    add_account_info_to_account_record: ""
-}
-module.exports = CreateAccount;
+module.exports.create_table_account = create_table_account;

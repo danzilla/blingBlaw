@@ -8,18 +8,19 @@ const app_PRIMARY_DB_config = {
     table_users_details: "user_details",
     table_users_fannyPack: "user_fannyPackz"
 }
-// Dev environment for docker_compose and npm
+
 // If Docker - SET (PROD)
 let db_Host_PROD = "postgres_db";
 // If Local - SET (DEV)
 let db_Host_Dev = "0.0.0.0";
+
 // Default-Database connection configuration
 const db_User = "danzilla";
 const db_Pwd = "1035621";
 const db_Port = "5432";
 const default_DB = "public";
+// Dev environment for docker_compose and npm
 const db_Host = db_Host_Dev;
-
 // Databases settings and configurations
 const database = {
     // App - Assets

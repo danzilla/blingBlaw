@@ -24,8 +24,8 @@ add_user_to_userAuth(userName, userPassword)
 add_user_to_userDetails(user_serial, userData)
 */
 
-const add_user_to_userAuth = require("./add_user_to_userAuth");
-const add_user_to_userDetails = require("./add_user_to_userDetails");
+const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
+const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
 
 const createUser = {
     add_user_to_userAuth: add_user_to_userAuth,
