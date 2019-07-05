@@ -17,9 +17,9 @@ class Dashboard extends Component {
     super(props);
     // Page-Display Setting
     const pageDisplay = {
-      isLogin: true,
+      isLogin: false,
       isRegister: false,
-      isFirstrun: false
+      isFirstrun: true
     };
     const alertMessage = { pageMessage: "" };
     this.state = { pageDisplay: pageDisplay, alertMessage: alertMessage };

@@ -26,24 +26,43 @@
  */
 
 // App Global config
-// DB Labels 
+// DB db_config
 const db_config = require('../../../../modules/app.db');
+const danzillaDB = require("../../../../modules/danzillaDB");
 
-// create_table_fannyPackz
-const create_table_fannyPackz = function (callback, firstRunCheck) {
-    // Table - users.fannyPackz
-    const sql_statement = "CREATE TABLE IF NOT EXISTS " +
+// Message
+let pushD = { title: "Create Table - " + db_config.database_labels.table_users_fannyPack, checked: "", results: "" }
+
+// Create Schema - users - using -  danzillaDB.pool
+const create_table_fannyPackz = function (callback, FirstRunCheck) {
+
+    // Create Table - table_users_fannyPack
+    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
         db_config.database_labels.schema_name + "." +
         db_config.database_labels.table_users_fannyPack +
         `(
-        fannyPack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-        fannyPack_name VARCHAR(254),
-        fannyPack_created TIMESTAMP,
-        fannyPack_lastmodify TIMESTAMP,
-        fannyPack_lastUpdated TIMESTAMP,
-        user_auth_serial VARCHAR(36) UNIQUE NOT NULL
-    );`;
-    console.log(sql_statement);
-    callback(null, sql_statement);
+            fannyPack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            fannyPack_name VARCHAR(254),
+            fannyPack_created TIMESTAMP,
+            fannyPack_lastmodify TIMESTAMP,
+            fannyPack_lastUpdated TIMESTAMP,
+            user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+        );`;
+    // SQL Query - Fire
+    danzillaDB.pool.query(sql_statement,
+    // err catch
+    function (err, Results) {
+        if (!err && Results) { // If no errors and Results == Good
+            pushD.checked = "checked";
+            pushD.results = Results;
+            FirstRunCheck.create_table_fannyPackRecord = pushD;
+        } else if (err) { // if any errors
+            pushD.checked = "";
+            pushD.results = err;
+            FirstRunCheck.create_table_fannyPackRecord = pushD;
+        }
+        callback(null, pushD);
+    });
+    
 }
 module.exports = create_table_fannyPackz;

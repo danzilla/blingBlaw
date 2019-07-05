@@ -26,24 +26,43 @@
  */
 
 // App Global config
-// DB Labels 
+// DB db_config
 const db_config = require('../../../../modules/app.db');
+const danzillaDB = require("../../../../modules/danzillaDB");
 
-// create_table_userDetails
-const create_table_userDetails = function (callback, firstRunCheck) {
-    // Table - users.create_table_userDetails
-    const sql_statement = "CREATE TABLE IF NOT EXISTS " +
+// Message
+let pushD = { title: "Create Table - " + db_config.database_labels.table_users_details, checked: "", results: "" }
+
+// Create Schema - users - using -  danzillaDB.pool
+const create_table_userDetails = function (callback, FirstRunCheck) {
+
+    // Create Table - table_users_details
+    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
         db_config.database_labels.schema_name + "." +
         db_config.database_labels.table_users_details +
         `(
-        user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-        user_serial VARCHAR(36) UNIQUE NOT NULL,
-        user_name VARCHAR(12) UNIQUE NOT NULL,
-        user_pwd_salt VARCHAR(254) NOT NULL,
-        user_pwd_hash VARCHAR(254) NOT NULL,
-        user_auth_token VARCHAR(36)
-    );`;
-    console.log(sql_statement);
-    callback(null, sql_statement);
+            user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            user_serial VARCHAR(36) UNIQUE NOT NULL,
+            user_name VARCHAR(12) UNIQUE NOT NULL,
+            user_pwd_salt VARCHAR(254) NOT NULL,
+            user_pwd_hash VARCHAR(254) NOT NULL,
+            user_auth_token VARCHAR(36)
+        );`;
+    // SQL Query - Fire
+    danzillaDB.pool.query(sql_statement,
+    // err catch
+    function (err, Results) {
+        if (!err && Results) { // If no errors and Results == Good
+            pushD.checked = "checked";
+            pushD.results = Results;
+            FirstRunCheck.create_table_userDetails = pushD;
+        } else if (err) { // if any errors
+            pushD.checked = "";
+            pushD.results = err;
+            FirstRunCheck.create_table_userDetails = pushD;
+        }
+        callback(null, pushD);
+    });
+    
 }
 module.exports = create_table_userDetails;

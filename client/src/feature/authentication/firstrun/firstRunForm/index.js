@@ -24,6 +24,7 @@ class FirstRunCheck extends Component {
     }
     super(props)
     this.state = {
+      FirstRunCheck: "Hi",
       firstRunCheck: firstRunCheck,
       pageMesage: "",
       databaseStatus: "",
@@ -43,32 +44,31 @@ class FirstRunCheck extends Component {
     // onClick
     this.props.updateAlertMessage({ pageMessage: "Hold on... initializing DBz" });
     // submit to server
-    axios.post('http://localhost:5000/firstrun', {
-      code: "this.state.code"
-    })
+    axios.post('http://localhost:5000/firstrun')
     .then((response) => {
-      console.log("response : " + JSON.stringify(response.data));
-      this.setState({
-        firstRunCheck: response.data.firstRunCheck, pageMesage: response.data.pageMesage, databaseStatus: response.data.firstRun
-      });
+      console.log("response : " + response.data);
+      this.setState({ FirstRunCheck: response.data})
       this.props.updateAlertMessage({ pageMessage: response.data.pageMesage });
     })
     .catch((error) => {
       let errMsg = error.response.statusText + " - " + error.response.status;
-      let databaseStatus = { assets: '', fannyPack: ''};
       console.log("error: " + errMsg);
-      this.setState({ pageMesage: errMsg, databaseStatus: databaseStatus });
       this.props.updateAlertMessage({ pageMessage: errMsg });
     });
   }
     render() {
+
+        if (this.state.FirstRunCheck){
+            { JSON.stringify(this.state.FirstRunCheck) }
+        }
+        
         return (
             <div className="App">
+                
                 <ul>
                     <li>
                         <label>
-                            <input type="checkbox"
-                                checked={this.state.firstRunCheck.database.usersDB.checked} />
+                            <input type="checkbox" checked={this.state.firstRunCheck.database.usersDB.checked} />
                             <span>Initial assets (Database)</span>
                         </label>
                     </li>
@@ -164,3 +164,9 @@ class FirstRunCheck extends Component {
     }
 }
 export default FirstRunCheck;
+
+
+/*
+
+
+*/

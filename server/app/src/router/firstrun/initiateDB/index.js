@@ -34,14 +34,6 @@ const async = require('async');
 
 // initial Database 
 const initiateDB = function (req, res, next) {
-    // Check list for firstRunCheck
-    const firstRunCheck = {
-        create_Database_assets: "",
-        create_schema_user: "",
-        create_table_userAuth: "",
-        create_table_userDetails: "",
-        create_table_userRecord: ""
-    }
     // Import FirstRun
     const FirstRun = {
         create_Database: require("./utli/create_database"),
@@ -50,24 +42,32 @@ const initiateDB = function (req, res, next) {
         create_Table_UserDetails: require("./utli/create_table_userDetails"),
         create_Table_fannyPackz: require("./utli/create_table_fannyPackz")
     }
-
-    // Async Waterfall 
+    // Check list for FirstRunCheck
+    // {status: "", result: ""}
+    const FirstRunCheck = {
+        create_Database_assets: "",
+        create_schema_user: "",
+        create_table_userAuth: "",
+        create_table_userDetails: "",
+        create_table_fannyPackRecord: ""
+    }
+    // Async Waterfall
     async.waterfall([
             // Create Database
         function (callback) {
-            FirstRun.create_Database(callback, firstRunCheck)
+            FirstRun.create_Database(callback, FirstRunCheck)
         },  // Create Schema - create_Schema
         function (result_create_Database, callback) {
-            FirstRun.create_Schema(callback, firstRunCheck)
+            FirstRun.create_Schema(callback, FirstRunCheck)
         }, // Create Table - create_Table_UserAuth
         function (result_create_Schema, callback) {
-            FirstRun.create_Table_UserAuth(callback, firstRunCheck)
+            FirstRun.create_Table_UserAuth(callback, FirstRunCheck)
         }, // Create Table - create_Table_UserDetails
         function (result_create_Table_UserAuth, callback) {
-            FirstRun.create_Table_UserDetails(callback, firstRunCheck)
+            FirstRun.create_Table_UserDetails(callback, FirstRunCheck)
         }, // Create Table - create_Table_fannyPackz
         function (result_create_Table_UserDetails, callback) {
-            FirstRun.create_Table_fannyPackz(callback, firstRunCheck)
+            FirstRun.create_Table_fannyPackz(callback, FirstRunCheck)
         }
     ], function (err, result) {
 
@@ -76,11 +76,19 @@ const initiateDB = function (req, res, next) {
 
         if (result) { pageMesage = "Result: " + JSON.stringify(result); } 
         else { pageMesage = "Error: " + err; } 
-        console.log("\n \n" + pageMesage);
+        
+            console.log(" \n \n \n \n" + pageMesage);
+         
+            console.log("\n" + JSON.stringify(FirstRunCheck.create_Database_assets));
+            console.log("\n" + JSON.stringify(FirstRunCheck.create_schema_user));
+            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_userAuth));
+            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_userDetails));
+            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_fannyPackRecord));
+            console.log("\n \n \n");
 
         res.send({
             pageMesage: pageMesage,
-            firstRunCheck: firstRunCheck,
+            firstRunCheck: FirstRunCheck,
         })
     });
 }
