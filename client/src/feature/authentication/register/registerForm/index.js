@@ -11,10 +11,7 @@ class RegisterForm extends Component {
                 password: "",
                 fannyPack: ""
             },
-            pageInfo: {
-                pageCode: "",
-                pageMessage: ""
-            },
+            pageMessage: "",
             isRegFrom: true
         }
     }
@@ -45,16 +42,19 @@ class RegisterForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
-
-                console.log(JSON.stringify(response.data));
+                if (response.data.addUserResult[0].checked == "3D000" || 
+                    response.data.addUserResult[0].checked == "42P01"  ) {
+                    // if no DB or Table
+                    this.props.activFirstRunPage();
+                } 
                 this.props.updateAlertMessage({ pageMessage: response.data.pageMesage })
-
+                this.setState({ pageMessage: response.data.pageMesage });
+                console.log(JSON.stringify(response.data));
             })
             .catch((error) => {
                 // get and set props - register state
                 this.setState({ pageInfo: { ...this.state.pageInfo, pageMessage: error } });
                 console.log("message: " + error);
-
             });
         }
         // default prevent-refresh Form dawg
@@ -93,7 +93,7 @@ class RegisterForm extends Component {
                     </div>
                     {/* err */}
                     <div className="center-align col m12 s12 pink-text text-lighten-2">
-                        {this.state.pageInfo.pageMessage}
+                        {this.state.pageMessage}
                     </div>
                 </div>
                 {/* Form - Sub button */}

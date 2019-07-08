@@ -61,7 +61,7 @@ const add_user_to_userAuth = function (callback, userData, add_user_result) {
         } else if (err.code == "3D000") { // No database exists
           pushD.checked = "3D000";
           pushD.results = "No database exist";
-          FirstRunCheck.push(pushD);
+          add_user_result.push(pushD);
         } else if (err.code == "42P01") { // if record exists
           pushD.checked = "42P01";
           pushD.results = "No Tables exists";
