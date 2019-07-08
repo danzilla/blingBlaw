@@ -28,10 +28,8 @@
         - create users_assets.user_details_table
         - create users_assets.fannypacks_table
 */
-
 // Async Waterfall
 const async = require('async');
-
 // initial Database 
 const initiateDB = function (req, res, next) {
     // Import FirstRun
@@ -43,14 +41,8 @@ const initiateDB = function (req, res, next) {
         create_Table_fannyPackz: require("./utli/create_table_fannyPackz")
     }
     // Check list for FirstRunCheck
-    // {status: "", result: ""}
-    const FirstRunCheck = {
-        create_Database_assets: "",
-        create_schema_user: "",
-        create_table_userAuth: "",
-        create_table_userDetails: "",
-        create_table_fannyPackRecord: ""
-    }
+    // {title: "", status: "", result: ""}
+    const FirstRunCheck = []
     // Async Waterfall
     async.waterfall([
             // Create Database
@@ -69,27 +61,18 @@ const initiateDB = function (req, res, next) {
         function (result_create_Table_UserDetails, callback) {
             FirstRun.create_Table_fannyPackz(callback, FirstRunCheck)
         }
-    ], function (err, result) {
+    ], function (err, Results) {
 
-        // PageMessage
-        let pageMesage = ""
-
-        if (result) { pageMesage = "Result: " + JSON.stringify(result); } 
-        else { pageMesage = "Error: " + err; } 
-        
-            console.log(" \n \n \n \n" + pageMesage);
-         
-            console.log("\n" + JSON.stringify(FirstRunCheck.create_Database_assets));
-            console.log("\n" + JSON.stringify(FirstRunCheck.create_schema_user));
-            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_userAuth));
-            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_userDetails));
-            console.log("\n" + JSON.stringify(FirstRunCheck.create_table_fannyPackRecord));
-            console.log("\n \n \n");
-
+        let pageMesage = "lalalala~ Initial DB"
+        if (Results){
+            pageMesage = "Initiated first run!"
+        } else if (err) { pageMesage = "Error, while, Initiating first run!" }
+       
         res.send({
             pageMesage: pageMesage,
             firstRunCheck: FirstRunCheck,
         })
+
     });
 }
 module.exports.initiateDB = initiateDB;

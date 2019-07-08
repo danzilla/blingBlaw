@@ -24,18 +24,18 @@
         - create users_assets.user_details_table
         - create users_assets.fannypacks_table
  */
-
 // App Global config
 // DB db_config
 const db_config = require('../../../../modules/app.db');
 const danzillaDB = require("../../../../modules/danzillaDB");
-
 // Message
-let pushD = { title: "Create Schema - " + db_config.database_labels.schema_name, checked: "", results: "" }
-
+let pushD = { 
+    title: "Create Schema - " + db_config.database_labels.schema_name, 
+    checked: "", 
+    results: "" 
+}
 // Create Schema - users - using -  danzillaDB.pool
 const create_Schema = function (callback, FirstRunCheck) {
-
     // Create Schema - create_Schema_users
     let sql_statement = "CREATE SCHEMA IF NOT EXISTS " + db_config.database_labels.schema_name + " AUTHORIZATION " + db_config.database_connection.user + ";";
     // SQL Query - Fire
@@ -45,14 +45,13 @@ const create_Schema = function (callback, FirstRunCheck) {
         if (!err && Results) { // If no errors and Results == Good
             pushD.checked = "checked";
             pushD.results = Results;
-            FirstRunCheck.create_schema_user = pushD;
+            FirstRunCheck.push(pushD);
         } else if (err) { // if any errors
             pushD.checked = "";
             pushD.results = err;
-            FirstRunCheck.create_schema_user = pushD;
+            FirstRunCheck.push(pushD);
         }
-        callback(null, pushD);
+        callback(null, FirstRunCheck);
     });
-    
 }
 module.exports = create_Schema;

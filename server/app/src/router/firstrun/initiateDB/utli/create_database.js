@@ -24,18 +24,18 @@
         - create users_assets.user_details_table
         - create users_assets.fannypacks_table
  */
-
 // App Global config
 // DB db_config
 const db_config = require('../../../../modules/app.db');
 const danzillaDB = require("../../../../modules/danzillaDB");
-
 // Message
-let pushD = { title: "Create database - " + db_config.database_labels.db_name, checked: "", results: "" }
-
+let pushD = { 
+    title: "Create Database - " + db_config.database_labels.db_name, 
+    checked: "", 
+    results: "" 
+}
 // Create Database UserAssets - using -  danzillaDB.postgresDefault
 const create_Database = function (callback, FirstRunCheck) {
-
     // Create Database - create_Database_assets
     let sql_statement = 'CREATE DATABASE ' + db_config.database_labels.db_name;
     // SQL Query - Fire
@@ -45,18 +45,17 @@ const create_Database = function (callback, FirstRunCheck) {
         if (!err && Results) { // If no errors and Results == Good
             pushD.checked = "checked"; 
             pushD.results = Results;
-            FirstRunCheck.create_Database_assets = pushD;
+            FirstRunCheck.push(pushD);
         } else if (err.code == "42P04") { // if database alredy exists
             pushD.checked = "checked"; 
             pushD.results = "Database alredy exists";
-            FirstRunCheck.create_Database_assets = pushD;
+            FirstRunCheck.push(pushD);
         } else if (err) { // if any errors
             pushD.checked = "";
             pushD.results = err;
-            FirstRunCheck.create_Database_assets = pushD;
+            FirstRunCheck.push(pushD);
         }
-        callback(null, pushD);
+        callback(null, FirstRunCheck);
     });
-    
 }
 module.exports = create_Database;

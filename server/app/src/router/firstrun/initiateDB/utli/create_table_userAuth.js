@@ -24,18 +24,18 @@
         - create users_assets.user_details_table
         - create users_assets.fannypacks_table
  */
-
 // App Global config
 // DB db_config
 const db_config = require('../../../../modules/app.db');
 const danzillaDB = require("../../../../modules/danzillaDB");
-
 // Message
-let pushD = { title: "Create Table - " + db_config.database_labels.table_users_auth, checked: "", results: "" }
-
+let pushD = { 
+    title: "Create Table - " + db_config.database_labels.table_users_auth, 
+    checked: "", 
+    results: "" 
+}
 // Create Schema - users - using -  danzillaDB.pool
 const create_table_userAuth = function (callback, FirstRunCheck) {
-
     // Create Table - table_users_auth
     let sql_statement = "CREATE TABLE IF NOT EXISTS " +
         db_config.database_labels.schema_name + "." +
@@ -55,14 +55,13 @@ const create_table_userAuth = function (callback, FirstRunCheck) {
         if (!err && Results) { // If no errors and Results == Good
             pushD.checked = "checked";
             pushD.results = Results;
-            FirstRunCheck.create_table_userAuth = pushD;
+            FirstRunCheck.push(pushD);
         } else if (err) { // if any errors
             pushD.checked = "";
             pushD.results = err;
-            FirstRunCheck.create_table_userAuth = pushD;
+            FirstRunCheck.push(pushD);
         }
-        callback(null, pushD);
+        callback(null, FirstRunCheck);
     });
-    
 }
 module.exports = create_table_userAuth;
