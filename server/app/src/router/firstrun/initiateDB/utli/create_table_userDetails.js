@@ -41,12 +41,13 @@ const create_table_userDetails = function (callback, FirstRunCheck) {
         db_config.database_labels.schema_name + "." +
         db_config.database_labels.table_users_details +
         `(
-            user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-            user_serial VARCHAR(36) UNIQUE NOT NULL,
-            user_name VARCHAR(12) UNIQUE NOT NULL,
-            user_pwd_salt VARCHAR(254) NOT NULL,
-            user_pwd_hash VARCHAR(254) NOT NULL,
-            user_auth_token VARCHAR(36)
+            user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            user_full_name VARCHAR(254),
+            user_email VARCHAR(254),
+            user_created TIMESTAMP,
+            user_modify TIMESTAMP,
+            user_lastLogged TIMESTAMP,
+            user_auth_serial VARCHAR(36) UNIQUE NOT NULL
         );`;
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,

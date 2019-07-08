@@ -18,7 +18,7 @@ router.route('/view').post(viewUser.viewUser);
 
 // POST -  /user/add
 // Register or Add user
-const addUser = require('./addUser/index.1');
-router.route('/add').post(addUser.register);
+const addUser = require('./addUser');
+router.route('/add').post(addUser);
 
 module.exports = router;

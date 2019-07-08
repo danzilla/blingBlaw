@@ -45,26 +45,16 @@ class RegisterForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
-                // code - 3D000 - No Databases
-                // code - 42P01 - No Tables 
-                // code - ECONNREFUSED - Database - not being configured in Settings 
-                //      - Change /server/app/config/app.db [ Dev or Prod ]
-                // Else - Show Good/Bad Message 
-                if (response.data.pageInfo.pageCode === "3D000" || response.data.pageInfo.pageCode === "42P01") {
-                    this.props.updateAlertMessage({ pageMessage: response.data.pageInfo.pageMessage })
-                    // Set to activFirstRunPage == True | show first-run
-                    this.props.activFirstRunPage();
-                } else {
-                    this.props.updateAlertMessage({ pageMessage: response.data.pageInfo.pageMessage })
-                    // set local state
-                    this.setState({ pageInfo: response.data.pageInfo });
-                }
-                console.log(JSON.stringify(response.data.pageInfo));
+
+                console.log(JSON.stringify(response.data));
+                this.props.updateAlertMessage({ pageMessage: response.data.pageMesage })
+
             })
             .catch((error) => {
                 // get and set props - register state
                 this.setState({ pageInfo: { ...this.state.pageInfo, pageMessage: error } });
                 console.log("message: " + error);
+
             });
         }
         // default prevent-refresh Form dawg
