@@ -48,4 +48,5 @@ const database = {
 // Export Database config settings
 module.exports = db_config;
 // Export Database connection settings
-module.exports.database = database;
+module.exports.blingblaw = database.blingblaw;
+module.exports.default_postgres_db = database.default_postgres_db;

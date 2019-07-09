@@ -20,7 +20,7 @@ Once, you are done with the above requirements.
 - Change directory to blingBlaw
 	- > `cd ./blingBlaw`
 - **Run** the app
-	- > `docker-compose up`
+	- > `docker-compose up --build`
 - Containerized services for
 	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
 
@@ -34,5 +34,3 @@ Once, you are done with the above requirements.
 - Containerized services for
 	- > PostgreSQL + PGAdmin
 	- > Hot-reload issue with Node
-
-

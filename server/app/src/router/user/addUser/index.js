@@ -33,20 +33,17 @@ const moment = require('moment'); // Time
 const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
 const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
 
-/* Register user
- * Keep it minimal
- */
+/* Register user | Keep it minimal */
 const async = require('async');
 // #r
 // POST - add user module
 const register = function (req, res, next) {
     // Register user - pageMessage
-    let pageInfo = { pageCode: "", pageMessage: "" };
+    let pageMesage = "Register user - pageMessage ~"
     if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
-        pageInfo.pageMesage = "Error! cannot be empty fields";
-        res.send({ pageInfo: pageInfo });
+        pageMesage = "Error! cannot be empty fields";
+        res.send({ pageMesage: pageMesage });
     } else {
-
         // prepare userData
         let userData = {
             userSerial: uuidv5(req.body.userName, uuidv1()),
@@ -56,9 +53,10 @@ const register = function (req, res, next) {
             userFannyPack: req.body.fannyPack,
             userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
         }
-
+        // Collect add_user_results 
+        // {title: "", status: "", result: ""}
         let add_user_result = []
-
+        // Async Action #fire
         async.waterfall([
             function (callback) { // Add to user_auth
                 add_user_to_userAuth(callback, userData, add_user_result)
@@ -68,22 +66,22 @@ const register = function (req, res, next) {
             }
         ], function (err, Results) {
 
-            let pageMesage = "Add user~"
-            if (Results){
-                pageMesage = "User added!"
-            } else if (err) { pageMesage = "Error, while, Initiating first run!" }
-            
+            if (Results[0].checked == "checked"){
+                pageMesage = "User added! " + req.body.userName
+            } else if (Results[0].checked == "") {
+                pageMesage = "Internal Error! " + Results[0].checked
+            } else if (err) {
+                pageMesage = "Error! Error! - " + err
+            } else {
+                pageMesage = "Internal Error! - " + Results[0].results
+            }
 
-            console.log("\n\n\n\n Test");
-            console.log(JSON.stringify(add_user_result));
-            
             res.send({
                 pageMesage: pageMesage,
                 addUserResult: add_user_result
             })
 
         });
-
     }
 }
 module.exports = register;

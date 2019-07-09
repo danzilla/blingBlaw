@@ -64,9 +64,8 @@ const initiateDB = function (req, res, next) {
     ], function (err, Results) {
 
         let pageMesage = "lalalala~ Initial DB"
-        if (Results){
-            pageMesage = "Initiated first run!"
-        } else if (err) { pageMesage = "Error, while, Initiating first run!" }
+        if (Results) { pageMesage = "Initiated first run!"} 
+        else if (err) { pageMesage = "Error, while, Initiating first run!" }
        
         res.send({
             pageMesage: pageMesage,

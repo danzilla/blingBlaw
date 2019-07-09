@@ -11,11 +11,6 @@ const router = express.Router();
 // Update user
 // Remove user
 
-// POST -  /user/view
-// View user
-const viewUser = require('./viewUser');
-router.route('/view').post(viewUser.viewUser);
-
 // POST -  /user/add
 // Register or Add user
 const addUser = require('./addUser');

@@ -116,8 +116,8 @@ const database = {
 module.exports.assets_db_config = assets_db_config;
 module.exports.fannypacks_db_config = fannypacks_db_config;
 // Export - Databases settings 
-module.exports.blingBlaw = database.blingblaw;
-module.exports.fannyPack = database.fannypack;
+module.exports.blingblaw = database.blingblaw;
+module.exports.fannypack = database.fannypack;
 module.exports.postgres = database.default_postgres_db;
 // Danzilla
 module.exports.Home = database.danzilla_db;
