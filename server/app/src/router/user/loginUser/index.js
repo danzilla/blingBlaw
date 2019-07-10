@@ -22,8 +22,10 @@
 validate_user_auth(userData)
 update_user_to_userDetails(userData)
 */
+// Register user | Keep it minimal
+const async = require('async');
 // Time and Date
-const moment = require('moment'); // Time
+const moment = require('moment');
 // bling
 const validate_user_auth = require("./utli/validate_user_to_userAuth");
 const update_user_userDetails = require("./utli/update_user_to_userDetails");
@@ -32,67 +34,64 @@ const update_user_userDetails = require("./utli/update_user_to_userDetails");
 // login module
 const login = function(req, res, next) {
 
-
-  console.log("req.body" + JSON.stringify(req.body));
-
+  // Collect login_validation_results 
+  let login_validation_results = []
+  // pageMessage
+  let pageMessage = { title: "Update_User_Details", checked: "", message: "", results: "" }
+  // Prep userData
   let userData = {
     userName: req.body.uname,
     password: req.body.pwd,
     userSerial: "nada",
     userLastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
   }
-  // collect login_validation_results 
-  let login_validation_results = []
-  
 
-  
-  // Login User - pageMessage
-  let pageInfo = {
-    pageCode: "",
-    pageMessage: ""
-  };
   // If req.body == Empty 
   if (!req.body.uname || !req.body.pwd) {
-    pageInfo.pageMessage = "Error! cannot be empty fields";
-    pageInfo.pageGood = false;
-  } // if fields are good
+    pageMessage.checked = "";
+    pageMessage.message = "Error! cannot be empty fields";
+  } // If fields are good
   else if (req.body.uname && req.body.pwd) {
-    // Request DB conections
-    const danzillaDB = require("../../../modules/danzillaDB");
-    // TO DO - LIMIT search collumn - * - testing
-    let query = 'SELECT * FROM users.user_auth ' +
-      'WHERE user_name = $1 AND user_pwd_hash = $2 LIMIT 1;';
-    // NEED TO Validate and Optimize 
-    let loginPayLoad = [
-      req.body.uname,
-      req.body.pwd
-    ]
-    // Blaaaaze #yee
-    danzillaDB.pool.query(query, loginPayLoad, function (err, result) {
-      if (err) {
-        // if err
-        pageInfo.pageMessage = err;
-        if (err.code == "ENOTFOUND") {
-          pageInfo.pageMessage = "Trouble connecting to database - Is it [prod or dev?] - configure in app.db.js in server" + err.code;
-        } else if (err.code == "ECONNREFUSED") {
-          pageInfo.pageMessage = "Trouble connecting to database - Restart Docker or DB is not avilable - " + err.code;
-        } else if (err.code == "3D000" || err.code == "42P01") {
-          pageInfo.pageMessage = "Database not inintialize " + err.code;
+    // Async Action #Fire
+    async.waterfall([
+            // Add to user_auth
+        function (callback) {
+            // Add to user_auth
+          validate_user_auth(callback, userData, login_validation_results, pageMessage)
+        },  // Add to user_details
+        function (validate_userAuth_result, callback) {
+          // If Auth is good | upate user record
+          if (validate_userAuth_result[0].checked === "checked"){
+            // Set user_serial and run update
+            // update user with user_details
+            userData.userSerial = validate_userAuth_result[0].results.user_serial
+            update_user_userDetails(callback, userData, login_validation_results, pageMessage)
+          } else {
+            // if Update not proceed
+            pageMessage.checked = validate_userAuth_result[0].checked;
+            pageMessage.message = validate_userAuth_result[0].message;
+            login_validation_results.push(pageMessage)
+            callback(null, pageMessage);
+          }
         }
-        pageInfo.pageCode = err.code;
-      } else if (result) {
-        // if result = 1 and pwd match // Credentials are matched
-        if (result.rowCount == 1 && result.rows[0].user_pwd_hash == req.body.pwd) {
-          pageInfo.pageMessage = "Logged in! " + result.rows[0].user_name;
-          pageInfo.pageCode = true;
-        } else {  // if password and row count is NOT one
-          pageInfo.pageMessage = "Incorrect password";
-          pageInfo.pageCode = false;
+    ], function (err, Results) {
+        // prepare - pageMessage
+        if (login_validation_results[0].checked == "checked" && 
+            login_validation_results[1].checked == "checked" ) {
+            // if Validation and Update is good
+            pageMessage.checked = Results[0].checked;
+            pageMessage.message = Results[0].message;
+            pageMessage.results = Results[0].results;
+        } else {
+          // if Validation and Update is bad
+          pageMessage.checked = Results.checked;
+          pageMessage.message = Results.message;
+          pageMessage.results = Results.results;
         }
-      }
-      // fire
-      res.send({ pageInfo: pageInfo });
-      console.log(JSON.stringify(pageInfo));
+        res.send({
+          pageMessage: pageMessage,
+          login_validation_results: login_validation_results
+        })
     });
   }
 }

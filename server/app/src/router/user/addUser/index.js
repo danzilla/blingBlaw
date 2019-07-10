@@ -23,6 +23,8 @@
 add_user_to_userAuth(userName, userPassword)
 add_user_to_userDetails(user_serial, userData)
 */
+/* Register user | Keep it minimal */
+const async = require('async');
 
 // Generate - unique_id 
 // https://www.npmjs.com/package/uuid
@@ -33,8 +35,6 @@ const moment = require('moment'); // Time
 const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
 const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
 
-/* Register user | Keep it minimal */
-const async = require('async');
 // #r
 // POST - add user module
 const register = function (req, res, next) {
@@ -54,7 +54,7 @@ const register = function (req, res, next) {
             userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
         }
         // Collect add_user_results 
-        // {title: "", status: "", result: ""}
+        // {title: "", checked: "", result: ""}
         let add_user_result = []
         // Async Action #fire
         async.waterfall([

@@ -15,10 +15,7 @@ class LoginForm extends Component {
         userName: "",
         password: ""
       },
-      pageInfo: {
-        pageMessage: "",
-        pageCode: ""
-      }
+      pageMessage: ""
     }
   }
   // onClick show RegisterForm
@@ -47,34 +44,28 @@ class LoginForm extends Component {
         pwd: this.state.login.password
       })
       .then((response) => {
-        // code - 3D000 - No Databases
-        // code - 42P01 - No Tables 
-        // code - ECONNREFUSED - Database - not being configured in Settings 
-        //      - Change /server/app/config/app.db [ Dev or Prod ]
-        // else - Show Good/Bad Message 
-        if (response.data.pageInfo.pageCode === "3D000" || response.data.pageInfo.pageCode === "42P01") {
+        // Err check
+        if (response.data.login_validation_results[0].checked == "checked"){
+          this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
+          this.props.history.push('/dashboard');
+        } else if (response.data.login_validation_results[0].checked == "3D000") {
           // Go to - inital page - Set to isInitalConfig == True
-          this.props.updateAlertMessage({ pageMessage: response.data.pageInfo.pageMessage })
+          this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
           this.props.activFirstRunPage();
-        } else { // else no errors
-            if (response.data.pageInfo.pageCode === true) { // If login is good
-              // Goto dashboard
-              this.props.history.push('/dashboard');
-            } else {  // if login is bad - show msg
-              this.setState({ pageInfo: response.data.pageInfo });
-            }
+        } else {
+          this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
+          this.setState({ pageMessage: response.data.pageMessage.message });
         }
-        console.log(JSON.stringify(response.data.pageInfo));
       })
       .catch((error) => { // get and set props - Login state
-        this.setState({ pageInfo: { ...this.state.pageInfo, pageMessage: error } });
-        console.log(error);
+        this.setState({ pageMessage: JSON.stringify(error)});
+        this.props.updateAlertMessage({ pageMessage: JSON.stringify(error) })
+        console.log("error" + error);
       });
     }
     // default prevent-refresh form dawg
     event.preventDefault();
   }
-
   // validation
   render() {
     return (
@@ -99,7 +90,7 @@ class LoginForm extends Component {
             </div>
             {/* err */}
             <div className="center-align col s12 pink-text text-lighten-2">
-                {this.state.pageInfo.pageMessage}
+                {this.state.pageMessage}
             </div>
         </div>
         {/* Login Form - Sub button */}

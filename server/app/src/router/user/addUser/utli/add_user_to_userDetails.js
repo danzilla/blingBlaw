@@ -28,7 +28,7 @@ const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
 // pageInfo
-let pushD = { title: "User_Details", status: "", result: "" };
+let pushD = { title: "User_Details", checked: "", results: "" };
 // User Details
 // Function - Insert user to userDetails Table
 const add_user_to_userDetails = function (callback, userData, add_user_result) {
