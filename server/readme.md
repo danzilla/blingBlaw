@@ -1,71 +1,96 @@
 # BlingBlaw - API :heartbeat: :sparkles: :fire:
 
-## Express - REST
+### Express - REST
 - http://localhost:5000
 
 ### Launch server :fire: 
-> npm start
-> http://localhost:5000
+- npm start
+- http://localhost:5000
 
-#### Database - Design - Draft - May 26, 2019
+# Database - Design
+Revised 
+ - <s>May 26, 2019</s>
+ - <s>June 27, 2019</s>
+ - July 02, 2019
+
 ```
 database_Name - blingblaw_assets
 │
-└───Schema - users
+└───Schema - users_assets
 |   │   Table - user_auth - user_id
 |   │   Table - user_details - user_id
-|   │   Table - user_record - user_id
-└───Schema - fannypacks
-│   │   Table - fannypacks - fannypacks_id 
-│   │   Table - fannypack_Record - fannypacks_id
-└───Schema - fannypack_userID_fannypacks_id
-|   │   Table - category - category_id - category_details - category_change_info
-│   │   Table - wallet_record - wallet_id - wallet_change_info
-│   │   Table - wallet_ - wallet_id -  wallet_name
+│   │   Table - fannypacks - fannypacks_id
+└───Schema - fannypack_userID_fannypacks_serial
+|   │   Table - account_category - account_category_id
+│   │   Table - account_type - account_type_id
+│   │   Table - account_record - account_id
+│   │   Table - account_One - account_id
+|   |
+- User - Contains FannyPacks
+- FannyPacks - Contains Account, Account Types and category
+- accounts - Contains Account Statemetn information
 ```
-### Feature 
+# Feature - ADD
 
-#### FirstRun 
-##### Initial Running
-- Create Database 
-    > create blingBlaw 
+#### Create - FirstRun
+- Requirement
+    - > No-input require
+- Create Database
+    - create blingBlaw
 - Create Schema
-    > create users_assets
-    > create fannyPacks_assets
-- Create Table 
-    > create users_assets.user_auth_table
-    > create users_assets.user_details_table
-    > create users_assets.user_record_table
-    > create fannypacks.fannypacks
-    > create fannypacks.fannypack_Record
-    
-#### Users Register 
-##### Register users
+    - create users_assets
+- Create Table
+    - create users_assets.user_auth_table
+    - create users_assets.user_details_table
+    - create users_assets.fannypacks_table
+
+#### Create - User
+- Requirement
+    - > User, Password, fannyPackName
+- userAdd
+    - Add user to users_assets.user_auth_table
+    - Add user to users_assets.user_details_table
+- Create - FannyPacks
+
+#### Create - FannyPack
+- Requirement
+    - > fannyPackName
 - Create Schema
-    > create fannyPackz_user_serial_fannyPack_serial
-- Create Table 
-    > create category
-    > create wallet_record
-    > create wallet_serial
-- Add 
-    > Add user to users_assets.user_auth_table
-    > Add user to users_assets.user_details_table
-    > Add user to users_assets.user_record_table
-    > Add userFannyPack to fannypacks.fannypacks
-    > Add userFannyPack to fannypacks.fannypack_Record
+    - create fannypack_userID_fannypacks_serial
+- Create Table
+    - create fannypack_userID_fannypacks_serial.account_types_table
+    - create fannypack_userID_fannypacks_serial.account_category_table
+    - create fannypack_userID_fannypacks_serial.account_record_table
 - Add
-    > Add sampleCategory to fannyPackz_user_serial_fannyPack_serial.category
-    > Add sampleWalletRecord to fannyPackz_user_serial_fannyPack_serial.wallet_record
-    > Add sampleWallet_serial to fannyPackz_user_serial_fannyPack_serial.wallet_serial
-    
-#### Accounts Add
-##### FannyPacks and Wallets
+    - Add FannyPack_info to users_assets.fannypacks_table
+    - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
+    - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
+
+
+#### Create - Account
+- Requirement
+    - > account_type, account_info, dates
 - Create Table 
-    > Add newWallet to wallet_record
-    > create newWallet_wallet_serial
+    - create fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
 - Add
-    > Add sampleCategory to fannyPackz_user_serial_fannyPack_serial.category
-    > Add sampleWalletRecord to fannyPackz_user_serial_fannyPack_serial.wallet_record
-    > Add sampleWallet_serial to fannyPackz_user_serial_fannyPack_serial.wallet_serial
-    
-    
+    - Add account_UNO_SERIAL to fannypack_userID_fannypacks_serial.account_record_table
+
+
+#### Add - account_Type
+- Requirement
+    - > account_type_name
+- Add
+    - Add account_Type to fannypack_userID_fannypacks_serial.account_types_table
+
+#### Add - account_Category
+- Requirement
+    - > CatName
+- Add
+    - Add CatName to fannypack_userID_fannypacks_serial.account_category_table
+
+#### Add - account_Statemet
+- Requirement
+    - > AccountActivity.csv, dates
+- Add
+    - Add AccountActivity to fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
+    - Add lastModify to fannypack_userID_fannypacks_serial.account_record_table

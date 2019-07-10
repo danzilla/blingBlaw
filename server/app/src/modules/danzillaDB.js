@@ -6,34 +6,24 @@ const app = express()
 app.use(cors())
 
 // Databases 
-const dbName = require('../../config/app.db');
+const databases = require('./app.db');
 
 // App - blingBlaw
 // init - DB connection
-const pool = new Pool(dbName.blingBlaw)
+const pool = new Pool(databases.blingblaw)
 pool.on('error', (err, client) => {
   console.error("Unexpected error on idle client", err)
   process.exit(-1)
 })
 
-// App - blingBlaw - FannyPack
+// Default - postgres - public
 // init - DB connection
-const fannyPack = new Pool(dbName.fannyPack)
-fannyPack.on('error', (err, client) => {
-  console.error("Unexpected error on idle client", err)
-  process.exit(-1)
-})
-
-// Default - postgres
-// init - DB connection
-const postgresDefault = new Pool(dbName.postgres)
+const postgresDefault = new Pool(databases.default_postgres_db)
 postgresDefault.on('error', (err, client) => {
   console.error("Unexpected error on idle client", err)
   process.exit(-1)
 })
 
-
 // Export databases
 module.exports.pool = pool;
-module.exports.fannyPack = fannyPack;
 module.exports.postgresDefault = postgresDefault;

@@ -11,10 +11,7 @@ class RegisterForm extends Component {
                 password: "",
                 fannyPack: ""
             },
-            pageInfo: {
-                pageCode: "",
-                pageMessage: ""
-            },
+            pageMessage: "",
             isRegFrom: true
         }
     }
@@ -45,21 +42,14 @@ class RegisterForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
-                // code - 3D000 - No Databases
-                // code - 42P01 - No Tables 
-                // code - ECONNREFUSED - Database - not being configured in Settings 
-                //      - Change /server/app/config/app.db [ Dev or Prod ]
-                // Else - Show Good/Bad Message 
-                if (response.data.pageInfo.pageCode === "3D000" || response.data.pageInfo.pageCode === "42P01") {
-                    this.props.updateAlertMessage({ pageMessage: response.data.pageInfo.pageMessage })
-                    // Set to activFirstRunPage == True | show first-run
+                if (response.data.addUserResult[0].checked == "3D000" || 
+                    response.data.addUserResult[0].checked == "42P01"  ) {
+                    // if no DB or Table
                     this.props.activFirstRunPage();
-                } else {
-                    this.props.updateAlertMessage({ pageMessage: response.data.pageInfo.pageMessage })
-                    // set local state
-                    this.setState({ pageInfo: response.data.pageInfo });
-                }
-                console.log(JSON.stringify(response.data.pageInfo));
+                } 
+                this.props.updateAlertMessage({ pageMessage: response.data.pageMesage })
+                this.setState({ pageMessage: response.data.pageMesage });
+                console.log(JSON.stringify(response.data));
             })
             .catch((error) => {
                 // get and set props - register state
@@ -103,7 +93,7 @@ class RegisterForm extends Component {
                     </div>
                     {/* err */}
                     <div className="center-align col m12 s12 pink-text text-lighten-2">
-                        {this.state.pageInfo.pageMessage}
+                        {this.state.pageMessage}
                     </div>
                 </div>
                 {/* Form - Sub button */}
