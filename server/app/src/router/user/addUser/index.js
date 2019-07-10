@@ -69,7 +69,7 @@ const register = function (req, res, next) {
             if (Results[0].checked == "checked"){
                 pageMesage = "User added! " + req.body.userName
             } else if (Results[0].checked == "") {
-                pageMesage = "Internal Error! " + Results[0].checked
+                pageMesage = "Internal Error! " + Results[0].results
             } else if (err) {
                 pageMesage = "Error! Error! - " + err
             } else {

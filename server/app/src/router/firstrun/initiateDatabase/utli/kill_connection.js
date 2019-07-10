@@ -30,32 +30,32 @@ const db_config = require('../../../../modules/app.db');
 const danzillaDB = require("../../../../modules/danzillaDB");
 // Message
 let pushD = { 
-    title: "Create Database - " + db_config.database_labels.db_name, 
+    title: "Drop Database - " + db_config.database_labels.db_name, 
     checked: "", 
     results: "" 
 }
-// Create Database UserAssets - using -  danzillaDB.postgresDefault
-const create_Database = function (callback, FirstRunCheck) {
-    // Create Database - create_Database_assets
-    let sql_statement = 'CREATE DATABASE ' + db_config.database_labels.db_name;
+// Drop Database - using -  danzillaDB.postgresDefault
+const kill_connection = function (FirstRunCheck) {
+    // Kill Connection
+    let sql_kill_connection_query = `
+        SELECT *, pg_terminate_backend(pid)
+        FROM pg_stat_activity 
+        WHERE pid <> pg_backend_pid()
+        AND datname = ` + db_config.database_labels.db_name
     // SQL Query - Fire
-    danzillaDB.postgresDefault.query(sql_statement,
+    danzillaDB.postgresDefault.query(sql_kill_connection_query,
     // err catch
     function (err, Results) {
         if (!err && Results) { // If no errors and Results == Good
             pushD.checked = "checked"; 
             pushD.results = Results;
             FirstRunCheck.push(pushD);
-        } else if (err.code == "42P04") { // if database alredy exists
-            pushD.checked = "";
-            pushD.results = "Database need to be rebuild";
-            FirstRunCheck.push(pushD);
         } else if (err) { // if any errors
             pushD.checked = "";
             pushD.results = err;
             FirstRunCheck.push(pushD);
         }
-        callback(null, FirstRunCheck);
+        console.log("\n\n Kill-connection: " + JSON.stringify(pushD));
     });
 }
-module.exports = create_Database;
+module.exports = kill_connection;

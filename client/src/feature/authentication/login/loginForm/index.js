@@ -42,7 +42,7 @@ class LoginForm extends Component {
     } else { // validate against server:5000
       // Post | query
       axios
-      .post('http://localhost:5000/login', {
+      .post('http://localhost:5000/user/login', {
         uname: this.state.login.userName,
         pwd: this.state.login.password
       })

@@ -34,6 +34,8 @@ const async = require('async');
 const initiateDB = function (req, res, next) {
     // Import FirstRun
     const FirstRun = {
+        kill_connection:  require("./utli/kill_connection"),
+        drop_Database: require("./utli/drop_database"),
         create_Database: require("./utli/create_database"),
         create_Schema: require("./utli/create_schema"),
         create_Table_UserAuth: require("./utli/create_table_userAuth"),
@@ -45,9 +47,15 @@ const initiateDB = function (req, res, next) {
     const FirstRunCheck = []
     // Async Waterfall
     async.waterfall([
-            // Create Database
+            // Drop Database
         function (callback) {
-            FirstRun.create_Database(callback, FirstRunCheck)
+            FirstRun.drop_Database(callback, FirstRunCheck)
+        },  // Create Database
+        function (result_drop_Database, callback) {
+            // If any active session - Kill
+            if (result_drop_Database[0].results.code == "55006"){
+                FirstRun.kill_connection(FirstRunCheck);
+            } FirstRun.create_Database(callback, FirstRunCheck)
         },  // Create Schema - create_Schema
         function (result_create_Database, callback) {
             FirstRun.create_Schema(callback, FirstRunCheck)
@@ -66,7 +74,7 @@ const initiateDB = function (req, res, next) {
         let pageMesage = "lalalala~ Initial DB"
         if (Results) { pageMesage = "Initiated first run!"} 
         else if (err) { pageMesage = "Error, while, Initiating first run!" }
-       
+
         res.send({
             pageMesage: pageMesage,
             firstRunCheck: FirstRunCheck,
