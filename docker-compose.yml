@@ -7,7 +7,7 @@ version: '3'
 services:
   # PostgreSQL - postgres_db
   postgres_db:
-    build: ./devops/postgreSQL_DB
+    build: ./devops/postgresql_db
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
   # API - server
