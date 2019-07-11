@@ -45,10 +45,10 @@ class LoginForm extends Component {
       })
       .then((response) => {
         // Err check
-        if (response.data.login_validation_results[0].checked == "checked"){
+        if (response.data.loginValidationResults[0].checked == "checked"){
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
           this.props.history.push('/dashboard');
-        } else if (response.data.login_validation_results[0].checked == "3D000") {
+        } else if (response.data.loginValidationResults[0].checked == "3D000") {
           // Go to - inital page - Set to isInitalConfig == True
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
           this.props.activFirstRunPage();

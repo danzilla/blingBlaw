@@ -27,51 +27,49 @@ add_user_to_userDetails(user_serial, userData)
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
-// pageInfo
-let pushD = { title: "User_Details", checked: "", results: "" };
 // User Details
 // Function - Insert user to userDetails Table
-const add_user_to_userDetails = function (callback, userData, add_user_result) {
-    `
-      user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-      user_full_name VARCHAR(254),
-      user_email VARCHAR(254),
-      user_created TIMESTAMP,
-      user_modify TIMESTAMP,
-      user_lastLogged TIMESTAMP,
-      user_auth_serial VARCHAR(36) UNIQUE NOT NULL
-    `
-    // Insert Query 
-    let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details +
-                    "( user_created, user_auth_serial )" + 
-                    "VALUES($1, $2) RETURNING *";
-    // Insert Data
-    const userAddData = [
-      userData.userCreated,
-      userData.userSerial 
-    ];
-    // Add to user_details
-    if (add_user_result[0].checked == "checked") {  // If NO issue with user_auth
-      // SQL Query - Fire
-      danzillaDB.pool.query(userAddQuery, userAddData,
-        // err catch
-        function (err, Results) {
-          if (!err && Results) { // If no errors and Results == Good
-            pushD.checked = "checked";
-            pushD.results = Results;
-            add_user_result.push(pushD);
-          } else if (err) { // if any errors
-            pushD.checked = "";
-            pushD.results = err;
-            add_user_result.push(pushD);
-          }
-        callback(null, add_user_result);
-      });
-    } else { //if Error adding to user_auth
-      pushD.checked = "";
-      pushD.results = "Error - Didn't procced with adding user_details";
-      add_user_result.push(pushD);
+const add_user_to_userDetails = function (callback, userData, add_user_result, pageMessage) {
+  `
+    user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+    user_full_name VARCHAR(254),
+    user_email VARCHAR(254),
+    user_created TIMESTAMP,
+    user_modify TIMESTAMP,
+    user_lastLogged TIMESTAMP,
+    user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+  `
+  // Insert Query 
+  let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details +
+                  "( user_created, user_auth_serial )" + 
+                  "VALUES($1, $2) RETURNING *";
+  // Insert Data
+  const userAddData = [
+    userData.userCreated,
+    userData.userSerial 
+  ];
+  // SQL Query - Fire
+  danzillaDB.pool.query(userAddQuery, userAddData,
+    // err catch
+    function (err, Results) {
+        // If no errors and Results == Good
+      if (!err && Results) { 
+        pageMessage.checked = "checked";
+        pageMessage.message = "Added to user_details!";
+        pageMessage.results = Results;
+      } // if any errors
+      else if (err) {
+        pageMessage.checked = err.code;
+        pageMessage.message = "Error adding to user_details";
+        pageMessage.results = err;
+      } // if any else
+      else {
+        pageMessage.checked = "";
+        pageMessage.message = "Internal Error";
+        pageMessage.results = "Internal Error";
+      }
+      add_user_result.push(pageMessage);
       callback(null, add_user_result);
-    }
+  });
 }
 module.exports = add_user_to_userDetails;

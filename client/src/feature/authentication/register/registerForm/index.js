@@ -11,8 +11,7 @@ class RegisterForm extends Component {
                 password: "",
                 fannyPack: ""
             },
-            pageMessage: "",
-            isRegFrom: true
+            pageMessage: ""
         }
     }
     // onClick show LoginForm
@@ -42,19 +41,24 @@ class RegisterForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
-                if (response.data.addUserResult[0].checked == "3D000" || 
-                    response.data.addUserResult[0].checked == "42P01"  ) {
-                    // if no DB or Table
+                // Err check
+                if (response.data.addUserResult[0].checked == "checked"){
+                    this.setState({ pageMessage: response.data.pageMessage.message })
+                    this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
+                } else if (response.data.addUserResult[0].checked == "3D000" || 
+                           response.data.addUserResult[0].checked == "42P01" ) {
+                    // Go to - inital page - Set to isInitalConfig == True
+                    this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
                     this.props.activFirstRunPage();
-                } 
-                this.props.updateAlertMessage({ pageMessage: response.data.pageMesage })
-                this.setState({ pageMessage: response.data.pageMesage });
-                console.log(JSON.stringify(response.data));
+                } else {
+                    this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
+                    this.setState({ pageMessage: response.data.pageMessage.message });
+                }
             })
             .catch((error) => {
                 // get and set props - register state
-                this.setState({ pageInfo: { ...this.state.pageInfo, pageMessage: error } });
-                console.log("message: " + error);
+                this.setState({ pageMessage: JSON.stringify(error)});
+                this.props.updateAlertMessage({ pageMessage: JSON.stringify(error) })
             });
         }
         // default prevent-refresh Form dawg

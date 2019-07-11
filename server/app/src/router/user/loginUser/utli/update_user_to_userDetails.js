@@ -26,8 +26,8 @@ const db_config = require('../../../../modules/app.db');
 const danzillaDB = require("../../../../modules/danzillaDB");
 // User Auth
 // Function - Insert user to userAuth Table
-const update_user_userDetails = function (callback, userData, add_user_result) {
-  pageMessage = { title: "update_user_userDetails", checked: "", message: "", results: "" };
+const update_user_userDetails = function (callback, userData, add_user_result, pageMessage) {
+  pageMessage.title = "update_user_userDetails";
   `
       user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
       user_full_name VARCHAR(254),
@@ -54,7 +54,7 @@ const update_user_userDetails = function (callback, userData, add_user_result) {
           pageMessage.results = Results;
           add_user_result.push(pageMessage);
         } else if (err) { // if any errors
-          pageMessage.checked = "";
+          pageMessage.checked = err.code;
           pageMessage.message = "Error updating record!";
           pageMessage.results = err;
           add_user_result.push(pageMessage);
