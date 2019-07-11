@@ -27,9 +27,11 @@ add_user_to_userDetails(user_serial, userData)
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "add_user_to_userDetails", checked: "", message: "", results: "" };
 // User Details
 // Function - Insert user to userDetails Table
-const add_user_to_userDetails = function (callback, userData, add_user_result, pageMessage) {
+const add_user_to_userDetails = function (callback, userData, add_user_result) {
   `
     user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     user_full_name VARCHAR(254),
@@ -41,8 +43,7 @@ const add_user_to_userDetails = function (callback, userData, add_user_result, p
   `
   // Insert Query 
   let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details +
-                  "( user_created, user_auth_serial )" + 
-                  "VALUES($1, $2) RETURNING *";
+                  "(user_created, user_auth_serial) VALUES($1, $2) RETURNING *";
   // Insert Data
   const userAddData = [
     userData.userCreated,
@@ -64,12 +65,12 @@ const add_user_to_userDetails = function (callback, userData, add_user_result, p
         pageMessage.results = err;
       } // if any else
       else {
-        pageMessage.checked = "";
+        pageMessage.checked = "Internal_Error";
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      add_user_result.push(pageMessage);
-      callback(null, add_user_result);
+      add_user_result.add_user_to_userDetails = pageMessage;
+      callback(null, pageMessage);
   });
 }
 module.exports = add_user_to_userDetails;

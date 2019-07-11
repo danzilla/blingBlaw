@@ -42,11 +42,11 @@ class RegisterForm extends Component {
             })
             .then((response) => {
                 // Err check
-                if (response.data.addUserResult[0].checked == "checked"){
+                if (response.data.addUserResult.add_user_to_userAuth.checked == "checked"){
                     this.setState({ pageMessage: response.data.pageMessage.message })
                     this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
-                } else if (response.data.addUserResult[0].checked == "3D000" || 
-                           response.data.addUserResult[0].checked == "42P01" ) {
+                } else if (response.data.addUserResult.add_user_to_userAuth.checked == "3D000" || 
+                           response.data.addUserResult.add_user_to_userAuth.checked == "42P01" ) {
                     // Go to - inital page - Set to isInitalConfig == True
                     this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
                     this.props.activFirstRunPage();

@@ -1,4 +1,4 @@
-/* SQL statementz - Create user
+/* SQL statementz - Login user
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -23,19 +23,27 @@ validate_user_auth(userData)
 update_user_to_userDetails(userData)
 */
 // Login user | Keep it minimal
-const async = require('async')
+const async = require('async');
 // Time and Date
-const moment = require('moment')
+const moment = require('moment');
 // bling
-const validate_user_auth = require("./utli/validate_user_to_userAuth")
-const update_user_userDetails = require("./utli/update_user_to_userDetails")
+const validate_user_auth = require("./utli/validate_user_to_userAuth");
+const update_user_userDetails = require("./utli/update_user_to_userDetails");
+// Login user - pageMessage
+let pageMessage = {
+  title: "login_user", 
+  checked: "", 
+  message: "", 
+  results: "" 
+};
+// Collect login_validation_results 
+let login_validation_results = {
+  validate_user_auth: "",
+  update_user_userDetails: ""
+};
 // POST
-// login module
+// login Dawg
 const login = function(req, res, next) {
-  // Collect login_validation_results 
-  let login_validation_results = []
-  // Login user - pageMessage
-  let pageMessage = { title: "login_user", checked: "", message: "", results: "" }
   // Prep userData
   let userData = {
     userName: req.body.uname,
@@ -45,53 +53,61 @@ const login = function(req, res, next) {
   }
   // If req.body == Empty 
   if (!req.body.uname || !req.body.pwd) {
-    pageMessage.checked = "";
-    pageMessage.message = "Error! cannot be empty fields";
-    res.send({ pageMesage: pageMesage, loginValidationResults: "nada" });
+      // pageMessage
+      pageMessage = {
+        checked: "Empty-field",
+        message: "Cannot be empty fields",
+        results: "nada"
+      }; res.send({ pageMessage: pageMessage, loginValidationResults: "nada" });
   } // If fields are good
   else if (req.body.uname && req.body.pwd) {
-    // Async Action #Fire
+    // Async Action #Fire #brrr
     async.waterfall([
-           // Login Auth
+          // Login Auth
       function (callback) {
           // Validate user login
-        validate_user_auth(callback, userData, login_validation_results, pageMessage)
+        validate_user_auth(callback, userData, login_validation_results)
       },  // Add to user_details
-      function (validate_userAuth_result, callback) {  
+      function (validate_userAuth_result, callback) {
           // If Auth is good | upate user record
-        if (validate_userAuth_result[0].checked === "checked"){
+        if (validate_userAuth_result.checked === "checked"){
           // Set user_serial
-          userData.userSerial = validate_userAuth_result[0].results.user_serial
+          userData.userSerial = validate_userAuth_result.results.user_serial;
           // Update user with user_details
-          update_user_userDetails(callback, userData, login_validation_results, pageMessage)
+          update_user_userDetails(callback, userData, login_validation_results)
         } else { // If update not proceed
-          pageMessage.checked = validate_userAuth_result[0].checked
-          pageMessage.message = validate_userAuth_result[0].message
-          login_validation_results.push(pageMessage)
-          callback(null, pageMessage)
+          // pageMessage
+          pageMessage = {
+            title: "update_user_userDetails",
+            checked: validate_userAuth_result.checked,
+            message: validate_userAuth_result.message + " - Didn't proceed with update",
+            results: "Error - Did not procced with user_add_to_userDetails"
+          }; login_validation_results.update_user_userDetails = pageMessage;
+          callback(null, pageMessage);
         }
       }
     ], function (err, Results) {
         // prepare - pageMessage
-        if (login_validation_results[0].checked == "checked" && 
-            login_validation_results[1].checked == "checked" ) {
-            // if Validation and Update is good
-            pageMessage.checked = Results[0].checked
-            pageMessage.message = Results[0].message
-            pageMessage.results = Results[0].results
-        } else {
-          // if Validation and Update is bad
+        if (err) {
+          // if err
+          pageMessage.title = pageMessage.title;
+          pageMessage.checked = "Internal-error " + pageMessage.title;
+          pageMessage.message = "Internal-error " + pageMessage.title;
+          pageMessage.results = "Internal-error " + pageMessage.title;
+        } else if (Results) {
+          // if Validation and Update is good
           // Get the First-Obj message
-          pageMessage.checked = Results.checked
-          pageMessage.message = Results.message
-          pageMessage.results = Results.results
+          pageMessage.title = login_validation_results.validate_user_auth.title;
+          pageMessage.checked = login_validation_results.validate_user_auth.checked;
+          pageMessage.message = login_validation_results.validate_user_auth.message;
+          pageMessage.results = login_validation_results.validate_user_auth.results;
         }
         // blaze
         res.send({
           pageMessage: pageMessage,
           loginValidationResults: login_validation_results
-        })
+        });
     });
   }
 }
-module.exports = login
+module.exports = login;

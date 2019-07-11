@@ -23,10 +23,11 @@
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "Validate_user_auth", checked: "", message: "", results: "" };
 // User Auth
 // Function - Insert user to userAuth Table
-const validate_user_auth = function (callback, userData, login_validation_results, pageMessage) {
-    pageMessage.title = "Validate_user_auth";
+const validate_user_auth = function (callback, userData, login_validation_results) {
     `
       user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
       user_serial VARCHAR(36) UNIQUE NOT NULL,
@@ -51,39 +52,34 @@ const validate_user_auth = function (callback, userData, login_validation_result
           pageMessage.checked = "checked";
           pageMessage.message = "User logged in! " + Results.rows[0].user_name;
           pageMessage.results = Results.rows[0];
-          login_validation_results.push(pageMessage);
         }  // If 0 records
         else if (!err && Results.rowCount === 0) {
           pageMessage.checked = "";
           pageMessage.message = "Incorrect credentials";
           pageMessage.results = Results;
-          login_validation_results.push(pageMessage);
         }  // No database exists
         else if (err.code == "3D000") {
           pageMessage.checked = err.code;
           pageMessage.message = "No database exist";
           pageMessage.results = err;
-          login_validation_results.push(pageMessage);
         }  // if No Tables exists
         else if (err.code == "42P01") {
           pageMessage.checked = err.code;
           pageMessage.message = "No Tables exists or Messy database";
           pageMessage.results = err;
-          login_validation_results.push(pageMessage);
         }  // if err 
         else if (err) {
           pageMessage.checked = err.code;
-          pageMessage.message = "Error: " + JSON.stringify(err);
+          pageMessage.message = "Err: " + JSON.stringify(err);
           pageMessage.results = err;
-          login_validation_results.push(pageMessage);
         }  // if any else
         else {
-          pageMessage.checked = "";
+          pageMessage.checked = "Internal_Error";
           pageMessage.message = "Internal Error";
           pageMessage.results = "Internal Error";
-          login_validation_results.push(pageMessage);
         }
-        callback(null, login_validation_results);
+        login_validation_results.validate_user_auth = pageMessage;
+        callback(null, pageMessage);
     });
 }
 module.exports = validate_user_auth;

@@ -27,10 +27,11 @@ add_user_to_userDetails(user_serial, userData)
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "add_user_to_userAuth", checked: "", message: "", results: "" };
 // User Auth
 // Function - Insert user to userAuth Table
-const add_user_to_userAuth = function (callback, userData, add_user_result, pageMessage) {
-  pageMessage.title = "add_user_to_userAuth";
+const add_user_to_userAuth = function (callback, userData, add_user_result) {
   `
     user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     user_serial VARCHAR(36) UNIQUE NOT NULL,
@@ -56,12 +57,12 @@ const add_user_to_userAuth = function (callback, userData, add_user_result, page
         // If no errors and Results == Good
       if (!err && Results) {
         pageMessage.checked = "checked";
-        pageMessage.message = "User Added! " + JSON.stringify(Results);
+        pageMessage.message = "User Added! " + Results.rows[0].user_name;
         pageMessage.results = Results.rows[0];
       }  // if record exists
       else if (err.code == "23505") {
         pageMessage.checked = err.code;
-        pageMessage.message = "Record alredy exists";
+        pageMessage.message = "User alredy exists";
         pageMessage.results = err;
       }  // No database exists
       else if (err.code == "3D000") {
@@ -80,13 +81,12 @@ const add_user_to_userAuth = function (callback, userData, add_user_result, page
         pageMessage.results = err;
       }  // if any else
       else {
-        pageMessage.checked = "";
+        pageMessage.checked = "Internal_Error";
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      console.log("add_user_result 1 : " + JSON.stringify(pageMessage));
-      add_user_result.push(pageMessage);
-      callback(null, add_user_result);
+      add_user_result.add_user_to_userAuth = pageMessage;
+      callback(null, pageMessage);
   });
 }
 module.exports = add_user_to_userAuth;

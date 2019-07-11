@@ -27,21 +27,15 @@
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
  */
 
-const create_schema_user_fannyPack = require("./utli/create_schema_user_fannyPack");
-
-const table_account_types = require("./utli/create_table_account_types");
-const table_account_category = require("./utli/create_table_account_category");
-const create_table_account_record = require("./utli/create_table_account_record");
-
-const add_newFannyPack_to_fannypacks_table = require("./utli/add_newFannyPack_to_fannypacks_record");
-
-const createFannyPack = {
-    create_schema_fannyPack: create_schema_user_fannyPack,
-    create_table_account_types: table_account_types.create_table_account_types,
-    create_table_account_category: table_account_category.create_Category_Table,
-    create_table_account_record: create_table_account_record,
-    add_SampleCategory_account_category_table: table_account_category.add_Sample_Category,
-    add_SampleAccountType_account_types_table: table_account_types.add_Sample_Category,
-    add_newFannyPack_to_fannypacks_table: add_newFannyPack_to_fannypacks_table
+// Create Table - create_table_account_types
+// Function - Create Table - account_types
+const create_table_account_types = function (fannyPackSerial) {
+  console.log("create_table_account_types");
 }
-module.exports = createFannyPack;
+
+const add_SampleAccountType_account_types_table = function (sampleData) {
+  console.log("add_SampleAccountType_account_types_table");
+}
+
+module.exports.create_table_account_types = create_table_account_types;
+module.exports.add_SampleAccountType_account_types_table = add_SampleAccountType_account_types_table;

@@ -8,15 +8,20 @@ class Account extends Component {
   // state
   constructor(props) {
     super(props);
-    this.state = { pageDisplay: "pageDisplay" };
+    this.state = { 
+      pageDisplay: "pageDisplay",
+      lola: ""
+    };
   }
   // 
   // componentDidMount
   componentDidMount() {
-    this.props.updateAlertMessage({ pageMessage: "Account page loaded" })
+    this.props.updateAlertMessage({ pageMessage: "Account page loaded" });
+    this.setState({ lola: JSON.parse(localStorage.getItem('sessionData'))})
   }
   // Rrrr
   render() {
+    let lol = this.state.lola;
     // Bling
     return (
       // Account
@@ -27,6 +32,7 @@ class Account extends Component {
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-50 card-1 z-depth-3 overflowN my-1">
               <h1 className="center-align">{this.props.pageName}</h1>
+              {JSON.stringify(lol)}
               <Bubble />
             </div>
             {/* Feature - Most spended */}

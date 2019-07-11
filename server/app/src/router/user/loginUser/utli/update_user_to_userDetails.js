@@ -19,24 +19,24 @@
     - Add userData to user_details_table
         - Add user to users_assets.user_details_table
 */
-
 // DB Labels
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "update_user_userDetails", checked: "", message: "", results: "" };
 // User Auth
 // Function - Insert user to userAuth Table
-const update_user_userDetails = function (callback, userData, add_user_result, pageMessage) {
-  pageMessage.title = "update_user_userDetails";
+const update_user_userDetails = function (callback, userData, login_validation_results) {
   `
-      user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-      user_full_name VARCHAR(254),
-      user_email VARCHAR(254),
-      user_created TIMESTAMP,
-      user_modify TIMESTAMP,
-      user_lastLogged TIMESTAMP,
-      user_auth_serial VARCHAR(36) UNIQUE NOT NULL
-    `
+    user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+    user_full_name VARCHAR(254),
+    user_email VARCHAR(254),
+    user_created TIMESTAMP,
+    user_modify TIMESTAMP,
+    user_lastLogged TIMESTAMP,
+    user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+  `
   let update_user_login_query = "UPDATE " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details
             + " SET " + "user_lastLogged='" + userData.userLastLogged + "'"
             + " WHERE user_auth_serial='" + userData.userSerial + "'";
@@ -47,19 +47,17 @@ const update_user_userDetails = function (callback, userData, add_user_result, p
           pageMessage.checked = "checked";
           pageMessage.message = "Record updated!";
           pageMessage.results = Results;
-          add_user_result.push(pageMessage);
         } else if (!err && Results.rowCount === 0) { // If no errors and Results == Good
           pageMessage.checked = "";
-          pageMessage.message = "Record not found";
+          pageMessage.message = "Record not been updated";
           pageMessage.results = Results;
-          add_user_result.push(pageMessage);
         } else if (err) { // if any errors
           pageMessage.checked = err.code;
           pageMessage.message = "Error updating record!";
           pageMessage.results = err;
-          add_user_result.push(pageMessage);
         }
-        callback(null, add_user_result);
+        login_validation_results.update_user_userDetails = pageMessage;
+        callback(null, pageMessage);
     });
 }
 module.exports = update_user_userDetails;
