@@ -1,4 +1,4 @@
-/* SQL statementz - Create user
+/* SQL statementz - Login user
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -22,77 +22,91 @@
 validate_user_auth(userData)
 update_user_to_userDetails(userData)
 */
+// Login user | Keep it minimal
+const async = require('async');
 // Time and Date
-const moment = require('moment'); // Time
+const moment = require('moment');
 // bling
 const validate_user_auth = require("./utli/validate_user_to_userAuth");
 const update_user_userDetails = require("./utli/update_user_to_userDetails");
-
+// Login user - pageMessage
+let pageMessage = {
+  title: "login_user", 
+  checked: "", 
+  message: "", 
+  results: "" 
+};
+// Collect login_validation_results 
+let login_validation_results = {
+  validate_user_auth: "",
+  update_user_userDetails: ""
+};
 // POST
-// login module
+// login Dawg
 const login = function(req, res, next) {
-
-
-  console.log("req.body" + JSON.stringify(req.body));
-
+  // Prep userData
   let userData = {
     userName: req.body.uname,
     password: req.body.pwd,
     userSerial: "nada",
     userLastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
   }
-  // collect login_validation_results 
-  let login_validation_results = []
-  
-
-  
-  // Login User - pageMessage
-  let pageInfo = {
-    pageCode: "",
-    pageMessage: ""
-  };
   // If req.body == Empty 
   if (!req.body.uname || !req.body.pwd) {
-    pageInfo.pageMessage = "Error! cannot be empty fields";
-    pageInfo.pageGood = false;
-  } // if fields are good
+      // pageMessage
+      pageMessage = {
+        checked: "Empty-field",
+        message: "Cannot be empty fields",
+        results: "nada"
+      }; res.send({ pageMessage: pageMessage, loginValidationResults: "nada" });
+  } // If fields are good
   else if (req.body.uname && req.body.pwd) {
-    // Request DB conections
-    const danzillaDB = require("../../../modules/danzillaDB");
-    // TO DO - LIMIT search collumn - * - testing
-    let query = 'SELECT * FROM users.user_auth ' +
-      'WHERE user_name = $1 AND user_pwd_hash = $2 LIMIT 1;';
-    // NEED TO Validate and Optimize 
-    let loginPayLoad = [
-      req.body.uname,
-      req.body.pwd
-    ]
-    // Blaaaaze #yee
-    danzillaDB.pool.query(query, loginPayLoad, function (err, result) {
-      if (err) {
-        // if err
-        pageInfo.pageMessage = err;
-        if (err.code == "ENOTFOUND") {
-          pageInfo.pageMessage = "Trouble connecting to database - Is it [prod or dev?] - configure in app.db.js in server" + err.code;
-        } else if (err.code == "ECONNREFUSED") {
-          pageInfo.pageMessage = "Trouble connecting to database - Restart Docker or DB is not avilable - " + err.code;
-        } else if (err.code == "3D000" || err.code == "42P01") {
-          pageInfo.pageMessage = "Database not inintialize " + err.code;
-        }
-        pageInfo.pageCode = err.code;
-      } else if (result) {
-        // if result = 1 and pwd match // Credentials are matched
-        if (result.rowCount == 1 && result.rows[0].user_pwd_hash == req.body.pwd) {
-          pageInfo.pageMessage = "Logged in! " + result.rows[0].user_name;
-          pageInfo.pageCode = true;
-        } else {  // if password and row count is NOT one
-          pageInfo.pageMessage = "Incorrect password";
-          pageInfo.pageCode = false;
+    // Async Action #Fire #brrr
+    async.waterfall([
+          // Login Auth
+      function (callback) {
+          // Validate user login
+        validate_user_auth(callback, userData, login_validation_results)
+      },  // Add to user_details
+      function (validate_userAuth_result, callback) {
+          // If Auth is good | upate user record
+        if (validate_userAuth_result.checked === "checked"){
+          // Set user_serial
+          userData.userSerial = validate_userAuth_result.results.user_serial;
+          // Update user with user_details
+          update_user_userDetails(callback, userData, login_validation_results)
+        } else { // If update not proceed
+          // pageMessage
+          pageMessage = {
+            title: "update_user_userDetails",
+            checked: validate_userAuth_result.checked,
+            message: validate_userAuth_result.message + " - Didn't proceed with update",
+            results: "Error - Did not procced with user_add_to_userDetails"
+          }; login_validation_results.update_user_userDetails = pageMessage;
+          callback(null, pageMessage);
         }
       }
-      // fire
-      res.send({ pageInfo: pageInfo });
-      console.log(JSON.stringify(pageInfo));
+    ], function (err, Results) {
+        // prepare - pageMessage
+        if (err) {
+          // if err
+          pageMessage.title = pageMessage.title;
+          pageMessage.checked = "Internal-error " + pageMessage.title;
+          pageMessage.message = "Internal-error " + pageMessage.title;
+          pageMessage.results = "Internal-error " + pageMessage.title;
+        } else if (Results) {
+          // if Validation and Update is good
+          // Get the First-Obj message
+          pageMessage.title = login_validation_results.validate_user_auth.title;
+          pageMessage.checked = login_validation_results.validate_user_auth.checked;
+          pageMessage.message = login_validation_results.validate_user_auth.message;
+          pageMessage.results = login_validation_results.validate_user_auth.results;
+        }
+        // blaze
+        res.send({
+          pageMessage: pageMessage,
+          loginValidationResults: login_validation_results
+        });
     });
   }
 }

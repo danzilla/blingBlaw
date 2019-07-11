@@ -23,8 +23,8 @@
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
-// pageInfo
-let pushD = { title: "Validate_user_auth", status: "", result: "" };
+// pageMessage
+let pageMessage = { title: "Validate_user_auth", checked: "", message: "", results: "" };
 // User Auth
 // Function - Insert user to userAuth Table
 const validate_user_auth = function (callback, userData, login_validation_results) {
@@ -47,24 +47,39 @@ const validate_user_auth = function (callback, userData, login_validation_result
     // blaze
     danzillaDB.pool.query(loginValidateQuery, loginPayLoad, 
       function (err, Results) {
-        if (!err && Results) { // If no errors and Results == Good
-          pushD.checked = "checked";
-          pushD.results = Results;
-          login_validation_results.push(pushD);
-        } else if (err.code == "3D000") { // No database exists
-          pushD.checked = "3D000";
-          pushD.results = "No database exist";
-          login_validation_results.push(pushD);
-        } else if (err.code == "42P01") { // if No Tables exists
-          pushD.checked = "42P01";
-          pushD.results = "No Tables exists or Messy database";
-          login_validation_results.push(pushD);
-        } else if (err) { // if any errors
-          pushD.checked = "";
-          pushD.results = err;
-          login_validation_results.push(pushD);
+            // If no errors and Results == Good
+        if (!err && Results.rowCount === 1 && Results.rows[0].user_serial) { 
+          pageMessage.checked = "checked";
+          pageMessage.message = "User logged in! " + Results.rows[0].user_name;
+          pageMessage.results = Results.rows[0];
+        }  // If 0 records
+        else if (!err && Results.rowCount === 0) {
+          pageMessage.checked = "";
+          pageMessage.message = "Incorrect credentials";
+          pageMessage.results = Results;
+        }  // No database exists
+        else if (err.code == "3D000") {
+          pageMessage.checked = err.code;
+          pageMessage.message = "No database exist";
+          pageMessage.results = err;
+        }  // if No Tables exists
+        else if (err.code == "42P01") {
+          pageMessage.checked = err.code;
+          pageMessage.message = "No Tables exists or Messy database";
+          pageMessage.results = err;
+        }  // if err 
+        else if (err) {
+          pageMessage.checked = err.code;
+          pageMessage.message = "Err: " + JSON.stringify(err);
+          pageMessage.results = err;
+        }  // if any else
+        else {
+          pageMessage.checked = "Internal_Error";
+          pageMessage.message = "Internal Error";
+          pageMessage.results = "Internal Error";
         }
-        callback(null, login_validation_results);
+        login_validation_results.validate_user_auth = pageMessage;
+        callback(null, pageMessage);
     });
 }
 module.exports = validate_user_auth;

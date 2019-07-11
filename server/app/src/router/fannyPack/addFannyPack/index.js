@@ -1,4 +1,4 @@
-/* SQL statementz - Create user
+/* SQL statementz - FannyPack
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -11,85 +11,81 @@
  * │   │   Table - account_record - account_id
  * │   │   Table - account_One - account_id
  * 
-    Create - User
+    Create - FannyPack
     - Requirement
-        - > User, Password, fannyPackName
-    - userAdd
-        - Add user to users_assets.user_auth_table
-        - Add user to users_assets.user_details_table
+        - > fannyPackName, userSerialID, fannyPackSerial
     - Create Schema
-        - Create FannyPacks(fannyPackName, userSerialID)
-
-add_user_to_userAuth(userName, userPassword)
-add_user_to_userDetails(user_serial, userData)
-*/
-// Register user | Keep it minimal
+        - create fannypack_userID_fannypacks_serial
+    - Create Table
+        - create fannypack_userID_fannypacks_serial.account_types_table
+        - create fannypack_userID_fannypacks_serial.account_category_table
+        - create fannypack_userID_fannypacks_serial.account_record_table
+    - Add
+        - Add FannyPack_info to users_assets.fannypacks_table
+        - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
+        - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
+ */
+// Register a FannyPack | Keep it minimal
 const async = require('async');
 // Generate - unique_id 
 // https://www.npmjs.com/package/uuid
 const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
-// bling
-const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
-const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
+// blingBlaw
+const create_schema_user_fannyPack = require("./utli/create_schema_user_fannyPack");
+const table_account_types = require("./utli/create_table_account_types");
+const table_account_category = require("./utli/create_table_account_category");
+const create_table_account_record = require("./utli/create_table_account_record");
+const add_newFannyPack_to_fannypacks_table = require("./utli/add_newFannyPack_to_fannypacks_record");
+// Sample Data
+
 // pageMessage
 let pageMessage = {
-    title: "add_user",
+    title: "add_fannyPack",
     checked: "",
     message: "",
     results: ""
 };
-// Collect add_user_results 
-let add_user_result = {
-    add_user_to_userAuth: [],
-    add_user_to_userDetails: [],
-    create_fannyPack: [],
-    add_fannyPack_to_fannyPackRecord: []
+// Collect add_fannyPack_results
+let add_fannyPack_results = {
+    create_schema_fannyPack: [],
+    create_table_account_types: [],
+    create_table_account_category: [],
+    create_table_account_record: [],
+    add_newFannyPack_to_fannypacks_table:[],
+    add_SampleCategory_account_category_table: [],
+    add_SampleAccountType_account_types_table: []
 };
-// POST - add user module
-// #r
-const register = function (req, res, next) {
+// POST - add FannyPack module
+// #raaaawr
+const addNewFannyPack = function (req, res, next) {
     // prepare userData
     let userData = {
-        userSerial: uuidv5(req.body.userName, uuidv1()),
-        userName: req.body.userName,
-        userPwdHash: req.body.password,
-        userPwdSalt: req.body.fannyPack + req.body.userName,
-        userFannyPack: req.body.fannyPack,
-        userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        userSerial: req.body.userSerial,
+        fannyPackName: req.body.fannyPack,
+        fannyPackSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     };
     // If req.body == Empty 
-    if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
+    if (!req.body.userSerial || !req.body.fannyPack || !req.body.userName) {
         // pageMessage
         pageMessage = {
             checked: "Empty-field",
             message: "Cannot be empty fields",
             results: "nada"
-        }; res.send({ pageMessage: pageMessage, addUserResult: "nada" });
+        }; res.send({ pageMessage: pageMessage, addFannyPackResult: "nada" });
     } else {
-        // Async Action #fire
+        // Async Action #Fire
         async.waterfall([
-                // Add user | Register user
+            // Add New FannyPack | Register New FannyPack 
             function (callback) {
                 // Add to user_auth
                 add_user_to_userAuth(callback, userData, add_user_result);
             },  // Add to user_details
             function (userAuth_result, callback) {
-                   // if add to user_auth == good
-                if (userAuth_result.checked == "checked") {
-                    // Added to user_details
-                    add_user_to_userDetails(callback, userData, add_user_result);
-                } else { // if error with validation
-                    // pageMessage
-                    pageMessage = {
-                        title: "add_user_to_userDetails", 
-                        checked: userAuth_result.checked, 
-                        message: userAuth_result.checked, 
-                        results: "Error - Did not procced with user_add_to_userDetails" 
-                    }; add_user_result.add_user_to_userDetails = pageMessage;
-                    callback(null, pageMessage);
-                }
+                add_user_to_userDetails(callback, userData, add_user_result);
             }
         ], function (err, Results) {
             // prepare - pageMessage
@@ -111,9 +107,17 @@ const register = function (req, res, next) {
             // #brrrr
             res.send({
                 pageMessage: pageMessage,
-                addUserResult: add_user_result
+                addFannyPackResult: add_user_result
             })
         });
+
+
+
     }
 }
-module.exports = register;
+module.exports = addNewFannyPack;
+
+
+
+
+

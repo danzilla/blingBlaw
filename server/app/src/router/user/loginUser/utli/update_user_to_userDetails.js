@@ -19,49 +19,45 @@
     - Add userData to user_details_table
         - Add user to users_assets.user_details_table
 */
-
 // DB Labels
 const db_config = require('../../../../modules/app.db');
 // DB Connections
 const danzillaDB = require("../../../../modules/danzillaDB");
-// pageInfo
-let pushD = { title: "User_Details", status: "", result: "" };
+// pageMessage
+let pageMessage = { title: "update_user_userDetails", checked: "", message: "", results: "" };
 // User Auth
 // Function - Insert user to userAuth Table
-const update_user_userDetails = function (callback, userData, add_user_result) {
-    `
-      user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-      user_full_name VARCHAR(254),
-      user_email VARCHAR(254),
-      user_created TIMESTAMP,
-      user_modify TIMESTAMP,
-      user_lastLogged TIMESTAMP,
-      user_auth_serial VARCHAR(36) UNIQUE NOT NULL
-    `
-    // Insert Query 
-    let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details +
-                    "( user_serial, user_name, user_pwd_salt, user_pwd_hash )" + 
-                    "VALUES($1, $2, $3, $4) RETURNING *";
-    // prepare Insert Data
-    const userAddData = [ 
-      userData.userSerial,
-      userData.userName,
-      userData.userPwdSalt,
-      userData.userPwdHash
-    ];
+const update_user_userDetails = function (callback, userData, login_validation_results) {
+  `
+    user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+    user_full_name VARCHAR(254),
+    user_email VARCHAR(254),
+    user_created TIMESTAMP,
+    user_modify TIMESTAMP,
+    user_lastLogged TIMESTAMP,
+    user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+  `
+  let update_user_login_query = "UPDATE " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details
+            + " SET " + "user_lastLogged='" + userData.userLastLogged + "'"
+            + " WHERE user_auth_serial='" + userData.userSerial + "'";
     // blaze
-    danzillaDB.pool.query(userAddQuery, userAddData, 
+    danzillaDB.pool.query(update_user_login_query,
       function (err, Results) {
-        if (!err && Results) { // If no errors and Results == Good
-          pushD.checked = "checked";
-          pushD.results = Results;
-          add_user_result.push(pushD);
+        if (!err && Results.rowCount === 1) { // If no errors and Results == Good
+          pageMessage.checked = "checked";
+          pageMessage.message = "Record updated!";
+          pageMessage.results = Results;
+        } else if (!err && Results.rowCount === 0) { // If no errors and Results == Good
+          pageMessage.checked = "";
+          pageMessage.message = "Record not been updated";
+          pageMessage.results = Results;
         } else if (err) { // if any errors
-          pushD.checked = "";
-          pushD.results = err;
-          add_user_result.push(pushD);
+          pageMessage.checked = err.code;
+          pageMessage.message = "Error updating record!";
+          pageMessage.results = err;
         }
-        callback(null, add_user_result);
+        login_validation_results.update_user_userDetails = pageMessage;
+        callback(null, pageMessage);
     });
 }
 module.exports = update_user_userDetails;
