@@ -31,8 +31,11 @@ const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
 // bling
-const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
-const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
+const add_user_to_userAuth = require("../../../modules/statements/user/addUser/add_user_to_userAuth");
+const add_user_to_userDetails = require("../../../modules/statements/user/addUser/add_user_to_userDetails");
+
+const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
 // pageMessage
 let pageMessage = {
     title: "add_user",
@@ -56,8 +59,9 @@ const register = function (req, res, next) {
         userName: req.body.userName,
         userPwdHash: req.body.password,
         userPwdSalt: req.body.fannyPack + req.body.userName,
+        userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         userFannyPack: req.body.fannyPack,
-        userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        userFannyPackSerial: uuidv5(req.body.fannyPack, uuidv1()),
     };
     // If req.body == Empty 
     if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
@@ -92,6 +96,11 @@ const register = function (req, res, next) {
                 }
             }
         ], function (err, Results) {
+            
+            // eeeeee
+            create_schema_user_fannyPack(userData.userFannyPackSerial, userData.userSerial);
+            add_newFannyPack_to_fannypacks_table(userData.userFannyPack, userData.userSerial, userData.userFannyPackSerial);
+
             // prepare - pageMessage
             if (err) {
                 // if err

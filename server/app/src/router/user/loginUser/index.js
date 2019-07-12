@@ -27,8 +27,10 @@ const async = require('async');
 // Time and Date
 const moment = require('moment');
 // bling
-const validate_user_auth = require("./utli/validate_user_to_userAuth");
-const update_user_userDetails = require("./utli/update_user_to_userDetails");
+const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+
+const validate_user_auth = require("../../../modules/statements/user/loginUser/validate_user_to_userAuth");
+const update_user_userDetails = require("../../../modules/statements/user/loginUser/update_user_to_userDetails");
 // Login user - pageMessage
 let pageMessage = {
   title: "login_user", 
@@ -66,15 +68,15 @@ const login = function(req, res, next) {
           // Login Auth
       function (callback) {
           // Validate user login
-        validate_user_auth(callback, userData, login_validation_results)
+        validate_user_auth(callback, userData, login_validation_results);
       },  // Add to user_details
       function (validate_userAuth_result, callback) {
           // If Auth is good | upate user record
-        if (validate_userAuth_result.checked === "checked"){
+        if (validate_userAuth_result.checked === "checked") {
           // Set user_serial
           userData.userSerial = validate_userAuth_result.results.user_serial;
           // Update user with user_details
-          update_user_userDetails(callback, userData, login_validation_results)
+          update_user_userDetails(callback, userData, login_validation_results);
         } else { // If update not proceed
           // pageMessage
           pageMessage = {

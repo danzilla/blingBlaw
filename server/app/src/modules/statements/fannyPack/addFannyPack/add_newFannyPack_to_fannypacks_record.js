@@ -1,5 +1,4 @@
 /* SQL statementz - FannyPack
- * 
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -25,8 +24,13 @@
         - Add FannyPack_info to users_assets.fannypacks_table
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
- */
-
+*/
+// DB Labels
+const db_config = require('../../../../modules/app.db');
+// DB Connections
+const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "add_newFannyPack_to_fannypacks_table", checked: "", message: "", results: "" };
 // FannyPack Record
 // Function - Insert user FannyPack to FannyPack record
 const add_newFannyPack_to_fannypacks_table = function(fannyPackName, userSerialID, fannyPackSerial) {
@@ -44,7 +48,7 @@ const add_newFannyPack_to_fannypacks_table = function(fannyPackName, userSerialI
   let user_auth_serial = userSerialID;
   let fannyPack_serial = fannyPackSerial;
   let fannyPack_created = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-  // Insert Query 
+  // Insert Query
   let userAddQuery = "INSERT INTO " + app_db.db_config.schema_name + "." + app_db.db_config.table_users_fannyPack +
                   "( fannyPack_serial, fannyPack_name, fannyPack_created, user_auth_serial )" + 
                   "VALUES($1, $2, $3, $4) RETURNING *";
@@ -52,13 +56,13 @@ const add_newFannyPack_to_fannypacks_table = function(fannyPackName, userSerialI
   const userAddData = [ fannyPack_serial, fannyPack_name, fannyPack_created, user_auth_serial ];
   // blaze
   danzillaDB.pool.query(userAddQuery, userAddData, 
-      function (err, Results) {
-        if (!err && Results) { // If no errors and Results == Good
-          pushD = { checked: "\n checked", results: Results }
-        } else if (err) { // if any errors
-          pushD = { checked: "\n ", results: err }
-        }
-        console.log(JSON.stringify(pushD));
+    function (err, Results) {
+      if (!err && Results) { // If no errors and Results == Good
+        pushD = { checked: "checked", results: Results }
+      } else if (err) { // if any errors
+        pushD = { checked: "nada", results: err }
+      }
+      console.log(JSON.stringify(pushD));
   });
 }
 module.exports = add_newFannyPack_to_fannypacks_table;

@@ -1,5 +1,4 @@
 /* SQL statementz - FannyPack
- * 
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -26,16 +25,15 @@
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
  */
-
-// Create Table - create_table_account_types
-// Function - Create Table - account_types
-const create_table_account_types = function (fannyPackSerial) {
-  console.log("create_table_account_types");
+// DB Labels
+const db_config = require('../../../../modules/app.db');
+// DB Connections
+const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "create_Category_Table", checked: "", message: "", results: "" };
+// Create Table - create_table_account_category
+// Function - Create Table - account_category
+const create_Category_Table = function (fannyPackSerial) {
+  console.log("create_table_account_category");
 }
-
-const add_SampleAccountType_account_types_table = function (sampleData) {
-  console.log("add_SampleAccountType_account_types_table");
-}
-
-module.exports.create_table_account_types = create_table_account_types;
-module.exports.add_SampleAccountType_account_types_table = add_SampleAccountType_account_types_table;
+module.exports = create_Category_Table;

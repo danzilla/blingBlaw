@@ -24,6 +24,11 @@
         - Add FannyPack_info to users_assets.fannypacks_table
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
+
+add_user_to_userAuth(userName, userPassword)
+add_user_to_userDetails(user_serial, userData)
+
+create_schema_fannyPack(fannyPackName, userSerial, )
  */
 // Register a FannyPack | Keep it minimal
 const async = require('async');
@@ -33,11 +38,11 @@ const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
 // blingBlaw
-const create_schema_user_fannyPack = require("./utli/create_schema_user_fannyPack");
-const table_account_types = require("./utli/create_table_account_types");
-const table_account_category = require("./utli/create_table_account_category");
-const create_table_account_record = require("./utli/create_table_account_record");
-const add_newFannyPack_to_fannypacks_table = require("./utli/add_newFannyPack_to_fannypacks_record");
+const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
+const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
+const create_table_account_record = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_record");
+const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
 // Sample Data
 
 // pageMessage
@@ -68,52 +73,16 @@ const addNewFannyPack = function (req, res, next) {
         fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     };
-    // If req.body == Empty 
-    if (!req.body.userSerial || !req.body.fannyPack || !req.body.userName) {
-        // pageMessage
-        pageMessage = {
-            checked: "Empty-field",
-            message: "Cannot be empty fields",
-            results: "nada"
-        }; res.send({ pageMessage: pageMessage, addFannyPackResult: "nada" });
-    } else {
-        // Async Action #Fire
-        async.waterfall([
-            // Add New FannyPack | Register New FannyPack 
-            function (callback) {
-                // Add to user_auth
-                add_user_to_userAuth(callback, userData, add_user_result);
-            },  // Add to user_details
-            function (userAuth_result, callback) {
-                add_user_to_userDetails(callback, userData, add_user_result);
-            }
-        ], function (err, Results) {
-            // prepare - pageMessage
-            if (err) {
-                // if err
-                pageMessage.title = pageMessage.title;
-                pageMessage.checked = "Internal-error " + pageMessage.title;
-                pageMessage.message = "Internal-error " + pageMessage.title;
-                pageMessage.results = "Internal-error " + pageMessage.title;
-            } else if (Results) {
-                // if Validation and Update is good
-                // Get the First-Obj message
-                pageMessage.title = add_user_result.add_user_to_userAuth.title;
-                pageMessage.checked = add_user_result.add_user_to_userAuth.checked;
-                pageMessage.message = add_user_result.add_user_to_userAuth.message;
-                pageMessage.results = add_user_result.add_user_to_userAuth.results;
-            }
-            console.log("\n\npageMessage Final" + JSON.stringify(pageMessage));
-            // #brrrr
-            res.send({
-                pageMessage: pageMessage,
-                addFannyPackResult: add_user_result
-            })
-        });
+    
+    console.log(create_schema_user_fannyPack("adsadasdasdasdasd"));
 
-
-
-    }
+    // pageMessage
+    pageMessage = {
+        checked: "Empty-field",
+        message: "Cannot be empty fields",
+        results: "nada"
+    }; 
+    res.send({ pageMessage: pageMessage, addFannyPackResult: userData });
 }
 module.exports = addNewFannyPack;
 
