@@ -31,8 +31,8 @@ const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
 // bling
-const add_user_to_userAuth = require("./utli/add_user_to_userAuth");
-const add_user_to_userDetails = require("./utli/add_user_to_userDetails");
+const add_user_to_userAuth = require("../../../modules/statements/user/addUser/add_user_to_userAuth");
+const add_user_to_userDetails = require("../../../modules/statements/user/addUser/add_user_to_userDetails");
 // pageMessage
 let pageMessage = {
     title: "add_user",
