@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import M from "materialize-css";
-
 // Content
 class Content extends Component {
     constructor(props) {
@@ -14,15 +13,10 @@ class Content extends Component {
     }
     // Raaar
     render() {
-        return (
-            <div className="">
-
-            </div>
-        );
+        return ( <div className=""> </div> );
     }
 }
 export default Content;
-
 /*
                 <div className="container center-align">
                     {this.props.pageDisplay &&

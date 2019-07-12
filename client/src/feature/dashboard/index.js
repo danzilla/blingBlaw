@@ -40,7 +40,6 @@ class Dashboard extends Component {
     })
   }
 
-
   // Pages
   // - Account | Category | Search | Settings | Users
   // - 3 Depth - Props -> nav > navBar
@@ -148,9 +147,7 @@ class Dashboard extends Component {
           pageName={pageName} />
 
         {/* Alert Message */}
-        <MessageAlert 
-          alertMessage={this.state.alertMessage}
-          pageDisplay={this.state.pageDisplay} />
+        <MessageAlert alertMessage={this.state.alertMessage} />
 
         {/* Page content */}
         {showPage}
