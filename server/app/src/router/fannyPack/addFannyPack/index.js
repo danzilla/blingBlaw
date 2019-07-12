@@ -38,11 +38,11 @@ const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const moment = require('moment'); // Time
 // blingBlaw
-const create_schema_user_fannyPack = require("./utli/create_schema_user_fannyPack");
-const table_account_types = require("./utli/create_table_account_types");
-const table_account_category = require("./utli/create_table_account_category");
-const create_table_account_record = require("./utli/create_table_account_record");
-const add_newFannyPack_to_fannypacks_table = require("./utli/add_newFannyPack_to_fannypacks_record");
+const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
+const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
+const create_table_account_record = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_record");
+const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
 // Sample Data
 
 // pageMessage

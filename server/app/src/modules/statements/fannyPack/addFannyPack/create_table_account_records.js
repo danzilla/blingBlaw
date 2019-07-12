@@ -1,5 +1,4 @@
 /* SQL statementz - FannyPack
- * 
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -11,7 +10,7 @@
  * │   │   Table - account_type - account_type_id
  * │   │   Table - account_record - account_id
  * │   │   Table - account_One - account_id
- *  
+ * 
     Create - FannyPack
     - Requirement
         - > fannyPackName, userSerialID, fannyPackSerial
@@ -26,10 +25,15 @@
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
  */
-
-// Create Schema - create_schema_fannyPack
-// Function - Insert user FannyPack to FannyPack record
-const create_schema_fannyPack = function(fannyPackSerial) {
-  console.log("LOOOOL: " + fannyPackSerial);
+// DB Labels
+const db_config = require('../../../../modules/app.db');
+// DB Connections
+const danzillaDB = require("../../../../modules/danzillaDB");
+// pageMessage
+let pageMessage = { title: "create_table_account_records", checked: "", message: "", results: "" };
+// Create Table - create_table_account_records
+// Function - Create Table - create_table_account_records
+const create_table_account_records = function (fannyPackSerial) {
+  console.log("create_table_account_records");
 }
-module.exports = create_schema_fannyPack;
+module.exports = create_table_account_records;

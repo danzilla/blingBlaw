@@ -27,6 +27,8 @@ const async = require('async');
 // Time and Date
 const moment = require('moment');
 // bling
+const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+
 const validate_user_auth = require("../../../modules/statements/user/loginUser/validate_user_to_userAuth");
 const update_user_userDetails = require("../../../modules/statements/user/loginUser/update_user_to_userDetails");
 // Login user - pageMessage
