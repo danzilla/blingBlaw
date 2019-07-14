@@ -46,7 +46,7 @@ const create_table_fannyPackz = function (callback, FirstRunCheck) {
             fannyPack_created TIMESTAMP,
             fannyPack_lastmodify TIMESTAMP,
             fannyPack_lastUpdated TIMESTAMP,
-            user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+            fannyPack_owner_serial VARCHAR(36) UNIQUE NOT NULL
         );`;
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,

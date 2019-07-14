@@ -18,6 +18,9 @@
         - Validate user to users_assets.user_auth_table
     - Add userData to user_details_table
         - Add user to users_assets.user_details_table
+
+validate_user_auth(userData)
+update_user_userDetails(userData)
 */
 // DB Labels
 const db_config = require('../../../../modules/app.db');

@@ -36,6 +36,10 @@ const add_user_to_userDetails = require("../../../modules/statements/user/addUse
 
 const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
 const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
+const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
+const create_table_account_records = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
+const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
+
 // pageMessage
 let pageMessage = {
     title: "add_user",
@@ -60,8 +64,10 @@ const register = function (req, res, next) {
         userPwdHash: req.body.password,
         userPwdSalt: req.body.fannyPack + req.body.userName,
         userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-        userFannyPack: req.body.fannyPack,
-        userFannyPackSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        fannyPack: req.body.fannyPack,
+        fannyPackSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     };
     // If req.body == Empty 
     if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
@@ -98,8 +104,12 @@ const register = function (req, res, next) {
         ], function (err, Results) {
             
             // eeeeee
-            create_schema_user_fannyPack(userData.userFannyPackSerial, userData.userSerial);
-            add_newFannyPack_to_fannypacks_table(userData.userFannyPack, userData.userSerial, userData.userFannyPackSerial);
+            create_schema_user_fannyPack(userData);
+            create_table_account_category();
+            create_table_account_records();
+            create_table_account_types();
+            add_newFannyPack_to_fannypacks_table(userData);
+
 
             // prepare - pageMessage
             if (err) {

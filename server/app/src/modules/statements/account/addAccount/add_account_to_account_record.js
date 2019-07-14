@@ -13,44 +13,33 @@
  * 
     Create - FannyPack
     - Requirement
-        - > fannyPackName, userSerialID, fannyPackSerial
-    - Create Schema
-        - create fannypack_userID_fannypacks_serial
+        - > accountName, accountType, userSerial
     - Create Table
-        - create fannypack_userID_fannypacks_serial.account_types_table
-        - create fannypack_userID_fannypacks_serial.account_category_table
-        - create fannypack_userID_fannypacks_serial.account_record_table
+        - create fannypacks_serial.account_serial
     - Add
-        - Add FannyPack_info to users_assets.fannypacks_table
-        - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
-        - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
-
-create_schema_user_fannyPack(userData)
-create_table_account_category
-create_table_account_records()
-create_table_account_types()
-add_newFannyPack_to_fannypacks_table()
+        - Add accountInfo to fannypacks_serial.account_record
+    
+create_table_account()
+add_account_to_account_record()
  */
 // DB Labels
-const db_config = require('../../../../modules/app.db');
+const db_config = require('../../../app.db');
 // DB Connections
-const danzillaDB = require("../../../../modules/danzillaDB");
+const danzillaDB = require("../../../danzillaDB");
 // pageMessage
-let pageMessage = { title: "create_table_account_types", checked: "", message: "", results: "" };
-// Create Table - create_table_account_types
+let pageMessage = { title: "create_table_account", checked: "", message: "", results: "" };
+// Create Table - create_table_account
 // Function - Create Table - account_types
-const create_table_account_types = function () {
-
+const add_account_to_account_record = function () {
+    `
+        accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+        account_type_id VARCHAR(36) NOT NULL,
+        account_serial VARCHAR(36) NOT NULL,
+        account_lastmodify TIMESTAMP,
+        account_owner_serial VARCHAR(36) NOT NULL
+    `
     // Create Table - create_Category_Table
-    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
-    db_config.database_labels.schema_name + "." +
-    db_config.database_labels.table_fannyPack_type +
-    `(
-        account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-        account_type_name VARCHAR(254) UNIQUE NOT NULL,
-        account_type_created TIMESTAMP,
-        account_type_lastmodify TIMESTAMP
-    );`;
+    let sql_statement = "CREATE TABLE IF NOT EXISTS " + db_config.database_labels.schema_name + "." +  db_config.database_labels.table_fannyPack_type;
 
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,
@@ -79,4 +68,4 @@ const create_table_account_types = function () {
 
 
 }
-module.exports = create_table_account_types;
+module.exports = add_account_to_account_record;

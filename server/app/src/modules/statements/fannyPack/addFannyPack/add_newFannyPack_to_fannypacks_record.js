@@ -24,7 +24,13 @@
         - Add FannyPack_info to users_assets.fannypacks_table
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
-*/
+
+create_schema_user_fannyPack(userData)
+create_table_account_category
+create_table_account_records()
+create_table_account_types()
+add_newFannyPack_to_fannypacks_table()
+ */
 // DB Labels
 const db_config = require('../../../../modules/app.db');
 // DB Connections
@@ -33,36 +39,28 @@ const danzillaDB = require("../../../../modules/danzillaDB");
 let pageMessage = { title: "add_newFannyPack_to_fannypacks_table", checked: "", message: "", results: "" };
 // FannyPack Record
 // Function - Insert user FannyPack to FannyPack record
-const add_newFannyPack_to_fannypacks_table = function(fannyPackName, userSerialID, fannyPackSerial) {
+const add_newFannyPack_to_fannypacks_table = function(userData) {
   `
     fannyPack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
     fannyPack_name VARCHAR(254),
     fannyPack_created TIMESTAMP,
     fannyPack_lastUpdated TIMESTAMP,
-    user_auth_serial VARCHAR(36) UNIQUE NOT NULL
+    fannyPack_owner_serial VARCHAR(36) UNIQUE NOT NULL
   `
-  // prepare data
-  // random Salt from Time
-  let fannyPack_name = fannyPackName;
-  let user_auth_serial = userSerialID;
-  let fannyPack_serial = fannyPackSerial;
-  let fannyPack_created = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
   // Insert Query
-  let userAddQuery = "INSERT INTO " + app_db.db_config.schema_name + "." + app_db.db_config.table_users_fannyPack +
-                  "( fannyPack_serial, fannyPack_name, fannyPack_created, user_auth_serial )" + 
-                  "VALUES($1, $2, $3, $4) RETURNING *";
+  let sql_statement = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_fannyPack +
+                  "( fannyPack_serial, fannyPack_name, fannyPack_created, fannyPack_lastUpdated, fannyPack_owner_serial )" + 
+                  "VALUES($1, $2, $3, $4, $5) RETURNING *";
   // Insert Data
-  const userAddData = [ fannyPack_serial, fannyPack_name, fannyPack_created, user_auth_serial ];
-  // blaze
-  danzillaDB.pool.query(userAddQuery, userAddData, 
-    function (err, Results) {
-      if (!err && Results) { // If no errors and Results == Good
-        pushD = { checked: "checked", results: Results }
-      } else if (err) { // if any errors
-        pushD = { checked: "nada", results: err }
-      }
-      console.log(JSON.stringify(pushD));
-  });
+  const userAddData = [
+    userData.fannyPackSerial, 
+    userData.fannyPack, 
+    userData.fannyPack_created, 
+    userData.fannyPack_lastUpdated,
+    userData.userSerial
+  ];
+  console.log("\n\n\nadd_newFannyPack_to_fannypacks_table" + JSON.stringify(sql_statement));
+
 }
 module.exports = add_newFannyPack_to_fannypacks_table;
