@@ -41,8 +41,8 @@ let pageMessage = { title: "create_table_account_types", checked: "", message: "
 // Function - Create Table - account_types
 const create_table_account_types = function (callback, userData, createTableAccountTypesResults) {
     // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-` + userData.fannyPackSerial + "." + db_config.database_labels.table_fannyPack_type +
-    `(
+    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_type}
+    (
         account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
         account_type_name VARCHAR(254) UNIQUE NOT NULL,
         account_type_created TIMESTAMP,
@@ -68,9 +68,8 @@ const create_table_account_types = function (callback, userData, createTableAcco
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        createTableAccountTypesResults = pageMessage;
+        createTableAccountTypesResults.create_table_account_types = pageMessage;
         callback(null, pageMessage);
-        console.log("\n\n" + JSON.stringify(pageMessage));
     });
 }
 module.exports = create_table_account_types;

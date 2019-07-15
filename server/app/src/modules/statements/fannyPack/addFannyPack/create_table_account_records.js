@@ -69,9 +69,8 @@ const create_table_account_records = function (callback, userData, createTableAc
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        createTableAccountRecordsResults = pageMessage;
+        createTableAccountRecordsResults.create_table_account_records = pageMessage;
         callback(null, pageMessage);
-        console.log("\n\n" + JSON.stringify(pageMessage));
     });
 }
 module.exports = create_table_account_records;

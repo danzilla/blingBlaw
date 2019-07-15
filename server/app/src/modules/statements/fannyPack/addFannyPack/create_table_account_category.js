@@ -69,9 +69,8 @@ const create_Category_Table = function (callback, userData, createCategoryTableR
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        createCategoryTableResult = pageMessage;
+        createCategoryTableResult.create_table_account_category = pageMessage;
         callback(null, pageMessage);
-        console.log("\n\n" + JSON.stringify(pageMessage));
     });
 }
 module.exports = create_Category_Table;

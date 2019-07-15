@@ -41,15 +41,15 @@ let pageMessage = { title: "create_schema_fannyPack", checked: "", message: "", 
 // Function - Insert user FannyPack to FannyPack record
 const create_schema_fannyPack = function(callback, userData, createSchemaFannyPackResult) {
   // name = "fanny-"userSerial + fannySerial
-  let sql_statement = `CREATE SCHEMA IF NOT EXISTS fannyPack-${userData.fannyPackSerial} AUTHORIZATION ${db_config.database_connection.user};`;
+  let sql_statement = `CREATE SCHEMA IF NOT EXISTS fannyPack_${userData.fannyPackSerial} AUTHORIZATION ${db_config.database_connection.user};`;
   // blaze
   danzillaDB.pool.query(sql_statement, 
     function (err, Results) {
         // If no errors and Results == Good
       if (!err && Results) {
         pageMessage.checked = "checked";
-        pageMessage.message = "Account Added! " + Results.rows[0];
-        pageMessage.results = Results.rows[0];
+        pageMessage.message = "FannyPack Added! " + JSON.stringify(Results);
+        pageMessage.results = Results;
       }  // if record exists
       else if (err.code == "23505") {
         pageMessage.checked = err.code;
@@ -76,9 +76,8 @@ const create_schema_fannyPack = function(callback, userData, createSchemaFannyPa
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      createSchemaFannyPackResult = pageMessage;
+      createSchemaFannyPackResult.create_schema_fannyPack = pageMessage;
       callback(null, pageMessage);
-      console.log("\n\n" + JSON.stringify(pageMessage));
   });
 }
 module.exports = create_schema_fannyPack;
