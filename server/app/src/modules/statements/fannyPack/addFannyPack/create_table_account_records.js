@@ -24,6 +24,12 @@
         - Add FannyPack_info to users_assets.fannypacks_table
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
+ 
+create_schema_user_fannyPack(userData)
+create_table_account_category(userData)
+create_table_account_records(userData)
+create_table_account_types(userData)
+add_newFannyPack_to_fannypacks_table(userData)
  */
 // DB Labels
 const db_config = require('../../../../modules/app.db');
@@ -33,7 +39,39 @@ const danzillaDB = require("../../../../modules/danzillaDB");
 let pageMessage = { title: "create_table_account_records", checked: "", message: "", results: "" };
 // Create Table - create_table_account_records
 // Function - Create Table - create_table_account_records
-const create_table_account_records = function (fannyPackSerial) {
-  console.log("create_table_account_records");
+const create_table_account_records = function (callback, userData, createTableAccountRecordsResults) {
+    // Create Table - create_Category_Table
+    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_record}
+        (
+            accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            account_type_id VARCHAR(36) NOT NULL,
+            account_serial VARCHAR(36) NOT NULL,
+            account_lastmodify TIMESTAMP,
+            account_owner_serial VARCHAR(36) NOT NULL
+        );`;
+    // SQL Query - Fire
+    danzillaDB.pool.query(sql_statement,
+        // err catch
+        function (err, Results) {
+            // If no errors and Results == Good
+        if (!err && Results) { 
+            pageMessage.checked = "checked";
+            pageMessage.message = "Added to user_details!";
+            pageMessage.results = Results;
+        } // if any errors
+        else if (err) {
+            pageMessage.checked = err.code;
+            pageMessage.message = "Error adding to user_details";
+            pageMessage.results = err;
+        } // if any else
+        else {
+            pageMessage.checked = "Internal_Error";
+            pageMessage.message = "Internal Error";
+            pageMessage.results = "Internal Error";
+        }
+        createTableAccountRecordsResults = pageMessage;
+        callback(null, pageMessage);
+        console.log("\n\n" + JSON.stringify(pageMessage));
+    });
 }
 module.exports = create_table_account_records;

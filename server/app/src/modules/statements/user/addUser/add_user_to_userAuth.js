@@ -17,11 +17,10 @@
     - userAdd
         - Add user to users_assets.user_auth_table
         - Add user to users_assets.user_details_table
-    - Create Schema
-        - Create FannyPacks(fannyPackName, userSerialID)
+    - Create FannyPack(userData)
 
-add_user_to_userAuth(userName, userPassword)
-add_user_to_userDetails(user_serial, userData)
+add_user_to_userAuth(userData)
+add_user_to_userDetails(userData)
 */
 // DB Labels
 const db_config = require('../../../../modules/app.db');
@@ -85,7 +84,7 @@ const add_user_to_userAuth = function (callback, userData, add_user_result) {
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      add_user_result.add_user_to_userAuth = pageMessage;
+      add_user_result = pageMessage;
       callback(null, pageMessage);
   });
 }

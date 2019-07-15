@@ -7,7 +7,10 @@ const db_config = {
         schema_name: "users",
         table_users_auth: "user_auth",
         table_users_details: "user_details",
-        table_users_fannyPack: "user_fannyPackz"
+        table_users_fannyPack: "user_fannyPackz",
+        table_fannyPack_category: "account_category",
+        table_fannyPack_type: "account_type",
+        table_fannyPack_record: "account_record"
     },
     database_connection: {
         user: "danzilla",
@@ -20,12 +23,10 @@ const db_config = {
         prod: "postgres_db"
     }
 }
-
 // If Docker - SET (PROD) - db_config.database_host_dev_prod.prod
 // If Local and Development - SET (DEV) - db_config.database_host_dev_prod.dev
 // Dev environment for docker_compose and npm
 const db_Host = db_config.database_host_dev_prod.dev;
-
 // Databases settings and configurations
 const database = {
     // App - Assets
