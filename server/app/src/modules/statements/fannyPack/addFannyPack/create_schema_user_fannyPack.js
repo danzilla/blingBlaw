@@ -26,10 +26,10 @@
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
  
 create_schema_user_fannyPack(userData)
-create_table_account_category
-create_table_account_records()
-create_table_account_types()
-add_newFannyPack_to_fannypacks_table()
+create_table_account_category(userData)
+create_table_account_records(userData)
+create_table_account_types(userData)
+add_newFannyPack_to_fannypacks_table(userData)
  */
 // DB Labels
 const db_config = require('../../../../modules/app.db');
@@ -39,25 +39,21 @@ const danzillaDB = require("../../../../modules/danzillaDB");
 let pageMessage = { title: "create_schema_fannyPack", checked: "", message: "", results: "" };
 // Create Schema - create_schema_fannyPack
 // Function - Insert user FannyPack to FannyPack record
-const create_schema_fannyPack = function(userData) {
-
-    // name = "fanny-"userSerial + fannySerial
-    let user_fannyPack_name = "fannyPack-" + userData.fannyPackSerial;
-    let sql_statement_fannyPack = "CREATE SCHEMA IF NOT EXISTS " + userData.fannyPack
-        + " AUTHORIZATION " + db_config.database_connection.user + ";";
-
-      // blaze
-  danzillaDB.pool.query(sql_statement_fannyPack, 
+const create_schema_fannyPack = function(callback, userData, createSchemaFannyPackResult) {
+  // name = "fanny-"userSerial + fannySerial
+  let sql_statement = `CREATE SCHEMA IF NOT EXISTS fannyPack-${userData.fannyPackSerial} AUTHORIZATION ${db_config.database_connection.user};`;
+  // blaze
+  danzillaDB.pool.query(sql_statement, 
     function (err, Results) {
         // If no errors and Results == Good
       if (!err && Results) {
         pageMessage.checked = "checked";
-        pageMessage.message = "User Added! " + Results.rows[0].user_name;
+        pageMessage.message = "Account Added! " + Results.rows[0];
         pageMessage.results = Results.rows[0];
       }  // if record exists
       else if (err.code == "23505") {
         pageMessage.checked = err.code;
-        pageMessage.message = "User alredy exists";
+        pageMessage.message = "Fanny already exists";
         pageMessage.results = err;
       }  // No database exists
       else if (err.code == "3D000") {
@@ -80,13 +76,9 @@ const create_schema_fannyPack = function(userData) {
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      add_user_result.add_user_to_userAuth = pageMessage;
-      console.log(JSON.stringify(pageMessage));
+      createSchemaFannyPackResult = pageMessage;
+      callback(null, pageMessage);
+      console.log("\n\n" + JSON.stringify(pageMessage));
   });
-
-
-
-
-
 }
 module.exports = create_schema_fannyPack;

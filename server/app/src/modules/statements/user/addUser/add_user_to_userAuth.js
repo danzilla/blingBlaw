@@ -84,7 +84,7 @@ const add_user_to_userAuth = function (callback, userData, add_user_result) {
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      add_user_result.add_user_to_userAuth = pageMessage;
+      add_user_result = pageMessage;
       callback(null, pageMessage);
   });
 }

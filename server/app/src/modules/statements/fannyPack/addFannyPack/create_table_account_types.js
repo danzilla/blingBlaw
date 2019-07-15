@@ -26,10 +26,10 @@
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
 
 create_schema_user_fannyPack(userData)
-create_table_account_category
-create_table_account_records()
-create_table_account_types()
-add_newFannyPack_to_fannypacks_table()
+create_table_account_category(userData)
+create_table_account_records(userData)
+create_table_account_types(userData)
+add_newFannyPack_to_fannypacks_table(userData)
  */
 // DB Labels
 const db_config = require('../../../../modules/app.db');
@@ -39,19 +39,15 @@ const danzillaDB = require("../../../../modules/danzillaDB");
 let pageMessage = { title: "create_table_account_types", checked: "", message: "", results: "" };
 // Create Table - create_table_account_types
 // Function - Create Table - account_types
-const create_table_account_types = function () {
-
+const create_table_account_types = function (callback, userData, createTableAccountTypesResults) {
     // Create Table - create_Category_Table
-    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
-    db_config.database_labels.schema_name + "." +
-    db_config.database_labels.table_fannyPack_type +
+    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-` + userData.fannyPackSerial + "." + db_config.database_labels.table_fannyPack_type +
     `(
         account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
         account_type_name VARCHAR(254) UNIQUE NOT NULL,
         account_type_created TIMESTAMP,
         account_type_lastmodify TIMESTAMP
     );`;
-
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,
         // err catch
@@ -72,11 +68,9 @@ const create_table_account_types = function () {
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        add_user_result.add_user_to_userDetails = pageMessage;
+        createTableAccountTypesResults = pageMessage;
         callback(null, pageMessage);
+        console.log("\n\n" + JSON.stringify(pageMessage));
     });
-
-
-
 }
 module.exports = create_table_account_types;
