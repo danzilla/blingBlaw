@@ -9,7 +9,9 @@ class Content extends Component {
         }
     }
     componentWillReceiveProps (newProps) {
-        M.toast({html: newProps.alertMessage.pageMessage})
+        if (newProps.alertMessage.pageMessage){
+            M.toast({ html: newProps.alertMessage.pageMessage })
+        }
     }
     // Raaar
     render() {

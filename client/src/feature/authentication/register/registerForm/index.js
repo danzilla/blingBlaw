@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { log } from 'util';
 // Register Form
 class RegisterForm extends Component {
     // states
@@ -42,7 +43,8 @@ class RegisterForm extends Component {
             })
             .then((response) => {
                 // Err check
-                if (response.data.addUserResult.add_user_to_userAuth.checked == "checked"){
+                if (response.data.addUserResult.add_user_to_userAuth.checked == "checked" || 
+                    response.data.addUserResult.add_user_to_userAuth.checked == "23505" ){
                     this.setState({ pageMessage: response.data.pageMessage.message })
                     this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
                 } else if (response.data.addUserResult.add_user_to_userAuth.checked == "3D000" || 
@@ -50,7 +52,10 @@ class RegisterForm extends Component {
                     // Go to - inital page - Set to isInitalConfig == True
                     this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
                     this.props.activFirstRunPage();
-                } else {
+                } else if (response.data.loginValidationResults.validate_user_auth.checked == "ECONNREFUSED") {
+                    // If there is no connection - ECONNREFUSED
+                    this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
+                } else { // if any other issue
                     this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message })
                     this.setState({ pageMessage: response.data.pageMessage.message });
                 }

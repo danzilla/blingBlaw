@@ -30,7 +30,7 @@ create_table_account_category(userData)
 create_table_account_records(userData)
 create_table_account_types(userData)
 add_newFannyPack_to_fannypacks_table(userData)
- */
+*/
 // DB Labels
 const db_config = require('../../../../modules/app.db');
 // DB Connections
@@ -61,18 +61,18 @@ const add_newFannyPack_to_fannypacks_table = function(callback, userData, addFan
                       (fannyPack_serial, fannyPack_name, fannyPack_created, fannyPack_lastUpdated, fannyPack_owner_serial) 
                       VALUES($1, $2, $3, $4, $5) RETURNING *;`;
   // Query
-  danzillaDB.pool.query(sql_statement, userAddData, 
+  danzillaDB.pool.query(sql_statement, userAddData,
     // err catch
     function (err, Results) {
         // If no errors and Results == Good
     if (!err && Results) { 
         pageMessage.checked = "checked";
-        pageMessage.message = "Added to add_newFannyPack_to_fannypacks_table!";
+        pageMessage.message = "Added to fannypacks_table!";
         pageMessage.results = Results;
     } // if any errors
     else if (err) {
         pageMessage.checked = err.code;
-        pageMessage.message = "Error adding to add_newFannyPack_to_fannypacks_table";
+        pageMessage.message = "Error adding to fannypacks_table";
         pageMessage.results = err;
     } // if any else
     else {
@@ -80,11 +80,8 @@ const add_newFannyPack_to_fannypacks_table = function(callback, userData, addFan
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
     }
-    addFannyPackToFannyPacksTableResults = pageMessage;
+    addFannyPackToFannyPacksTableResults.add_newFannyPack_to_fannypacks_table = pageMessage;
     callback(null, pageMessage);
-
-    console.log("\n\n" + JSON.stringify(pageMessage));
-    
   });
 }
 module.exports = add_newFannyPack_to_fannypacks_table;

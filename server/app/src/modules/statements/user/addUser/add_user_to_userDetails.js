@@ -30,7 +30,7 @@ const danzillaDB = require("../../../../modules/danzillaDB");
 let pageMessage = { title: "add_user_to_userDetails", checked: "", message: "", results: "" };
 // User Details
 // Function - Insert user to userDetails Table
-const add_user_to_userDetails = function (callback, userData, add_user_result) {
+const add_user_to_userDetails = function (callback, userData, addUserDetailsResult) {
   `
     user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     user_full_name VARCHAR(254),
@@ -68,7 +68,7 @@ const add_user_to_userDetails = function (callback, userData, add_user_result) {
         pageMessage.message = "Internal Error";
         pageMessage.results = "Internal Error";
       }
-      add_user_result.add_user_to_userDetails = pageMessage;
+      addUserDetailsResult.add_user_to_userDetails = pageMessage;
       callback(null, pageMessage);
   });
 }
