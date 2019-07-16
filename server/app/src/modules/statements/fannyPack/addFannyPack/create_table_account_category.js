@@ -41,14 +41,15 @@ let pageMessage = { title: "create_Category_Table", checked: "", message: "", re
 // Function - Create Table - account_category
 const create_Category_Table = function (callback, userData, createCategoryTableResult) {
     // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
-            (
-                category_id VARCHAR(254) UNIQUE NOT NULL,
-                category_name VARCHAR(254) UNIQUE NOT NULL,
-                category_parent VARCHAR(36) NOT NULL,
-                category_created TIMESTAMP,
-                category_lastmodify TIMESTAMP
-            );`;
+    let sql_statement = `CREATE TABLE IF NOT EXISTS 
+                fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
+                (
+                    category_id VARCHAR(254) UNIQUE NOT NULL,
+                    category_name VARCHAR(254) UNIQUE NOT NULL,
+                    category_parent VARCHAR(36) NOT NULL,
+                    category_created TIMESTAMP,
+                    category_lastmodify TIMESTAMP
+                );`;
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,
         // err catch

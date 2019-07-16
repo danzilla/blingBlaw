@@ -37,10 +37,9 @@ let pushD = {
 // Create Schema - users - using -  danzillaDB.pool
 const create_table_fannyPackz = function (callback, FirstRunCheck) {
     // Create Table - table_users_fannyPack
-    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
-        db_config.database_labels.schema_name + "." +
-        db_config.database_labels.table_users_fannyPack +
-        `(
+    let sql_statement = `CREATE TABLE IF NOT EXISTS 
+        ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_fannyPack}
+        (
             fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
             fannyPack_name VARCHAR(254),
             fannyPack_created TIMESTAMP,

@@ -44,8 +44,8 @@ let pushD = {
 // Create Schema - users - using -  danzillaDB.pool
 const create_Schema = function (callback, FirstRunCheck) {
     // Create Schema - create_Schema_users
-    let sql_statement = "CREATE SCHEMA IF NOT EXISTS " + db_config.database_labels.schema_name 
-                        + " AUTHORIZATION " + db_config.database_connection.user + ";";
+    let sql_statement = `CREATE SCHEMA IF NOT EXISTS ${db_config.database_labels.schema_name}  
+                         AUTHORIZATION ${db_config.database_connection.user};`;
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,
     // err catch

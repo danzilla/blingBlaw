@@ -44,7 +44,7 @@ let pushD = {
 // Create Database UserAssets - using -  danzillaDB.postgresDefault
 const create_Database = function (callback, FirstRunCheck) {
     // Create Database - create_Database_assets
-    let sql_statement = 'CREATE DATABASE ' + db_config.database_labels.db_name;
+    let sql_statement = `CREATE DATABASE ${db_config.database_labels.db_name};`;
     // SQL Query - Fire
     danzillaDB.postgresDefault.query(sql_statement,
     // err catch

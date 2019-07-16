@@ -46,8 +46,9 @@ class LoginForm extends Component {
       .then((response) => {
         // Err check
         if (response.data.loginValidationResults.validate_user_auth.checked == "checked"){
-          // Set localstorage with {sessionData} and redirect to /dashboard
+          // Set localstorage with {sessionData}
           localStorage.setItem('sessionData', JSON.stringify(response.data.pageMessage.results));
+          // Send pageMessage and Redirect to /dashboard
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
           this.props.history.push('/dashboard');
         } else if (response.data.loginValidationResults.validate_user_auth.checked == "3D000") {

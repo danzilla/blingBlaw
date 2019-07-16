@@ -44,7 +44,7 @@ let pushD = {
 // Drop Database - using -  danzillaDB.postgresDefault
 const drop_database = function (callback, FirstRunCheck) {
     // Drop Database
-    let sql_drop_db_query = "DROP DATABASE " + db_config.database_labels.db_name;
+    let sql_drop_db_query = `DROP DATABASE ${db_config.database_labels.db_name};`;
     // SQL Query - Fire
     danzillaDB.postgresDefault.query(sql_drop_db_query,
     // err catch

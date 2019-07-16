@@ -40,9 +40,8 @@ const add_user_to_userAuth = function (callback, userData, addUserAuthResult) {
     user_auth_token VARCHAR(36)
   `
   // Insert Query 
-  let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_auth +
-                  "( user_serial, user_name, user_pwd_salt, user_pwd_hash )" + 
-                  "VALUES($1, $2, $3, $4) RETURNING *";
+  let userAddQuery = `INSERT INTO ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_auth}
+                      (user_serial, user_name, user_pwd_salt, user_pwd_hash) VALUES($1, $2, $3, $4) RETURNING *;`;
   // prepare Insert Data
   const userAddData = [ 
     userData.userSerial,

@@ -41,8 +41,8 @@ const add_user_to_userDetails = function (callback, userData, addUserDetailsResu
     user_auth_serial VARCHAR(36) UNIQUE NOT NULL
   `
   // Insert Query 
-  let userAddQuery = "INSERT INTO " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details +
-                  "(user_created, user_auth_serial) VALUES($1, $2) RETURNING *";
+  let userAddQuery = `INSERT INTO ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_details}
+                     (user_created, user_auth_serial) VALUES($1, $2) RETURNING *;`;
   // Insert Data
   const userAddData = [
     userData.userCreated,
