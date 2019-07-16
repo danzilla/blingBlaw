@@ -41,7 +41,7 @@ const create_table_fannyPackz = function (callback, FirstRunCheck) {
         db_config.database_labels.schema_name + "." +
         db_config.database_labels.table_users_fannyPack +
         `(
-            fannyPack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
             fannyPack_name VARCHAR(254),
             fannyPack_created TIMESTAMP,
             fannyPack_lastmodify TIMESTAMP,

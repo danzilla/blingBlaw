@@ -41,7 +41,7 @@ let pageMessage = { title: "create_Category_Table", checked: "", message: "", re
 // Function - Create Table - account_category
 const create_Category_Table = function (callback, userData, createCategoryTableResult) {
     // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
+    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
             (
                 category_id VARCHAR(254) UNIQUE NOT NULL,
                 category_name VARCHAR(254) UNIQUE NOT NULL,
@@ -56,12 +56,12 @@ const create_Category_Table = function (callback, userData, createCategoryTableR
             // If no errors and Results == Good
         if (!err && Results) { 
             pageMessage.checked = "checked";
-            pageMessage.message = "Added to user_details!";
+            pageMessage.message = "Created Category_Table!";
             pageMessage.results = Results;
         } // if any errors
         else if (err) {
             pageMessage.checked = err.code;
-            pageMessage.message = "Error adding to user_details";
+            pageMessage.message = "Error creating Category_Table";
             pageMessage.results = err;
         } // if any else
         else {

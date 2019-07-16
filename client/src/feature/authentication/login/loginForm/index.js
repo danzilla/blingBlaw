@@ -54,7 +54,10 @@ class LoginForm extends Component {
           // Go to - inital page - Set to isInitalConfig == True
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
           this.props.activFirstRunPage();
-        } else {
+        } else if (response.data.loginValidationResults.validate_user_auth.checked == "ECONNREFUSED") {
+          // If there is no connection - ECONNREFUSED
+          this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
+        } else { // if any other issue
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
           this.setState({ pageMessage: response.data.pageMessage.message });
         }

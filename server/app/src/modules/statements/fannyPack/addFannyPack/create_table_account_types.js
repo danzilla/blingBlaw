@@ -41,7 +41,7 @@ let pageMessage = { title: "create_table_account_types", checked: "", message: "
 // Function - Create Table - account_types
 const create_table_account_types = function (callback, userData, createTableAccountTypesResults) {
     // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack-${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_type}
+    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_type}
     (
         account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
         account_type_name VARCHAR(254) UNIQUE NOT NULL,
@@ -55,12 +55,12 @@ const create_table_account_types = function (callback, userData, createTableAcco
             // If no errors and Results == Good
         if (!err && Results) { 
             pageMessage.checked = "checked";
-            pageMessage.message = "Added to user_details!";
+            pageMessage.message = "Created account_types_table!";
             pageMessage.results = Results;
         } // if any errors
         else if (err) {
             pageMessage.checked = err.code;
-            pageMessage.message = "Error adding to user_details";
+            pageMessage.message = "Error creating to account_types_table";
             pageMessage.results = err;
         } // if any else
         else {

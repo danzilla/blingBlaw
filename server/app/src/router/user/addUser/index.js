@@ -20,7 +20,7 @@
     - Create Schema
         - Create FannyPacks(fannyPackName, userSerialID)
 
-add_user_to_userAuth(userName, userPassword)
+add_user_to_userAuth(userData)
 add_user_to_userDetails(userData)
 
 create_schema_user_fannyPack(userData)
@@ -28,7 +28,6 @@ create_table_account_category(userData)
 create_table_account_records(userData)
 create_table_account_types(userData)
 add_newFannyPack_to_fannypacks_table(userData)
-
 */
 // Register user | Keep it minimal
 const async = require('async');
@@ -49,7 +48,6 @@ const create_table_account_category = require("../../../modules/statements/fanny
 const create_table_account_records = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
 const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
 const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
-
 // pageMessage
 let pageMessage = {
     title: "add_user",
@@ -94,162 +92,89 @@ const register = function (req, res, next) {
         // Function 1 - Add to user_Auth and User_details
         // Function 2 - Create and add FannyPackz
         function FinalResult(callback) {
-            async.parallel({
-                // Create User
-                userCreate: function (callback) {
+            async.waterfall([
+                function (callback_user) {
                     async.waterfall([
                         function (callbackOne) {
                             add_user_to_userAuth(callbackOne, userData, add_user_result);
                         },
                         function (prev, callbackOne) {
-                            add_user_to_userDetails(callbackOne, userData, add_user_result);
+                            if (prev.checked != "checked"){ callbackOne(null, "nada") } else {
+                                add_user_to_userDetails(callbackOne, userData, add_user_result);
+                            }
                         }
                     ], function (err, result) {
-                        callback(err, result); 
+                        callback_user(err, result);
                     });
-                }, // Create FannyPack
-                fannyPackCreate: function (callback) {
-                    async.waterfall([
-                        function (callbackTwo) {
-                            create_schema_user_fannyPack(callbackTwo, userData, add_user_result);
-                        },
-                        function (prev, callbackTwo) {
-                            create_table_account_records(callbackTwo, userData, add_user_result);
-                        },
-                        function (prev, callbackTwo) {
-                            create_table_account_category(callbackTwo, userData, add_user_result);
-                        },
-                        function (prev, callbackTwo) {
-                            create_table_account_types(callbackTwo, userData, add_user_result);
-                        },
-                        function (prev, callbackTwo) {
-                            add_newFannyPack_to_fannypacks_table(callbackTwo, userData, add_user_result);
-                        }
-                    ], function (err, result) {
-                        callback(err, result);
-                    });
+                },
+                function (prev, callback_fannyPack) {
+                    if (prev.checked == "checked") {
+                        // Second Waterfall - FannyPackz
+                        // Create Fanny
+                        async.waterfall([
+                            function (callbackTwo) {
+                                create_schema_user_fannyPack(callbackTwo, userData, add_user_result);
+                            },
+                            function (prev, callbackTwo) {
+                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
+                                    create_table_account_records(callbackTwo, userData, add_user_result);
+                                }
+                            },
+                            function (prev, callbackTwo) {
+                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
+                                    create_table_account_category(callbackTwo, userData, add_user_result);
+                                }
+                            },
+                            function (prev, callbackTwo) {
+                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
+                                    create_table_account_types(callbackTwo, userData, add_user_result);
+                                }
+                            },
+                            function (prev, callbackTwo) {
+                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
+                                    add_newFannyPack_to_fannypacks_table(callbackTwo, userData, add_user_result);
+                                }
+                            }
+                        ], function (err, result) {
+                            callback_fannyPack(err, result);
+                        });
+                    }// if there is any error other than CHECKED
+                    else {
+                        // if Validation and Update is good
+                        // Get the First-Obj message
+                        pageMessage.title = add_user_result.add_user_to_userAuth.title;
+                        pageMessage.checked = add_user_result.add_user_to_userAuth.checked;
+                        pageMessage.message = add_user_result.add_user_to_userAuth.message;
+                        pageMessage.results = add_user_result.add_user_to_userAuth.results;
+                        callback_fannyPack(null, pageMessage)
+                    }
                 }
-            }, function (err, results) {
-                callback(err, results);
+            ], function (err, result) {
+                callback(err, result);
             });
         }
         // FinalResultz
         FinalResult (function (err, result) {
-
-            if (add_user_result.add_user_to_userAuth.checked != "checked" || 
-                add_user_result.add_user_to_userDetails.checked != "checked" || 
-                add_user_result.create_schema_fannyPack.checked != "checked" || 
-                add_user_result.create_table_account_category.checked != "checked" || 
-                add_user_result.create_table_account_records.checked != "checked" || 
-                add_user_result.create_table_account_types.checked != "checked" || 
-                add_user_result.add_newFannyPack_to_fannypacks_table.checked != "checked" ){
-                console.log("RECOLLA");
-                console.log('\n\nerr FINAL:' + JSON.stringify(err));
-                console.log('\n\nresult FINAL:' + JSON.stringify(result));
-                console.log("\n\nFINAL: " + JSON.stringify(add_user_result));
-            }
-
-            /*
-            add_user_result = {
-                add_user_to_userAuth: "",
-                add_user_to_userDetails: "",
-                create_schema_fannyPack: "",
-                create_table_account_category: "",
-                create_table_account_records: "",
-                create_table_account_types: "",
-                add_newFannyPack_to_fannypacks_table: ""
-            };
-            */
-
-
-           
-        });
-
-        /*
-
-        // Async Action #fire
-        async.waterfall([
-                // Add user | Register user
-            function (callback) {
-                // Add to user_auth
-                add_user_to_userAuth(callback, userData, add_user_result.add_user_to_userAuth);
-            },
-            function (userAuth_result, callback) {
-                // Add to user_details
-                add_user_to_userDetails(callback, userData, add_user_result.add_user_to_userDetails);
-                console.log("\nadd_user_result.add_user_to_userDetails" + JSON.stringify(add_user_result));
-            }, 
-            function (userDetails_result, callback) {
-                // if add to user_auth == good
-                if (userDetails_result.checked == "checked") {
-                    // Added to user_details
-                    create_schema_user_fannyPack(callback, userData, add_user_result.create_schema_fannyPack);
-                } else { // if error with validation
-                    // pageMessage
-                    pageMessage = {
-                        title: "Create_schema_user_fannyPack", 
-                        checked: userDetails_result.checked, 
-                        message: userDetails_result.checked, 
-                        results: "Error - Did not procced with user_add_to_userDetails" 
-                    }; add_user_result.create_schema_fannyPack = pageMessage;
-                    callback(null, pageMessage);
-                }
-            },
-            function (userFannySchema_result, callback) {
-                // if add to user_auth == good
-                if (userFannySchema_result.checked == "checked") {
-                    // Added to user_details
-                    create_table_account_category(callback, userData, add_user_result.create_schema_fannyPack);
-                } else { // if error with validation
-                    // pageMessage
-                    pageMessage = {
-                        title: "create_table_account_category", 
-                        checked: userFannySchema_result.checked, 
-                        message: userFannySchema_result.checked, 
-                        results: "Error - Did not procced with user_add_to_userDetails" 
-                    }; add_user_result.create_schema_fannyPack = pageMessage;
-                    callback(null, pageMessage);
-                }
-            },
-            function (createTableAccountCategory_result, callback) {
-                // Added to user_details
-                create_table_account_records(callback, userData, add_user_result.create_table_account_category);
-            },
-            function (createTableAccountRecord_result, callback) {
-                // Added to user_details
-                create_table_account_types(callback, userData, add_user_result.create_table_account_records);
-            },
-            function (createTableAccountType_result, callback) {
-                // Added to user_details
-                add_newFannyPack_to_fannypacks_table(callback, userData, add_user_result.create_table_account_types);
-            },
-        ], function (err, Results) {
-            // prepare - pageMessage
-            if (err) {
-                // if err
-                pageMessage.title = pageMessage.title;
-                pageMessage.checked = "Internal-error " + pageMessage.title;
-                pageMessage.message = "Internal-error " + pageMessage.title;
-                pageMessage.results = "Internal-error " + pageMessage.title;
-            } else if (Results) {
+           if (result){
                 // if Validation and Update is good
                 // Get the First-Obj message
                 pageMessage.title = add_user_result.add_user_to_userAuth.title;
                 pageMessage.checked = add_user_result.add_user_to_userAuth.checked;
                 pageMessage.message = add_user_result.add_user_to_userAuth.message;
                 pageMessage.results = add_user_result.add_user_to_userAuth.results;
+            } else if (err || add_user_result.add_user_to_userAuth.checked != "checked") {
+                // if err
+                pageMessage.title = pageMessage.title;
+                pageMessage.checked = "Internal-error " + pageMessage.title;
+                pageMessage.message = "Internal-error " + pageMessage.title;
+                pageMessage.results = "Internal-error " + pageMessage.title;
             }
-            console.log("\n\npageMessage Final" + JSON.stringify(pageMessage));
             // #brrrr
             res.send({
                 pageMessage: pageMessage,
                 addUserResult: add_user_result
             })
         });
-
-        */
-
-
     }
 }
 module.exports = register;

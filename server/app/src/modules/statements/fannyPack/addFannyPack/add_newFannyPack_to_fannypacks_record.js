@@ -67,12 +67,12 @@ const add_newFannyPack_to_fannypacks_table = function(callback, userData, addFan
         // If no errors and Results == Good
     if (!err && Results) { 
         pageMessage.checked = "checked";
-        pageMessage.message = "Added to add_newFannyPack_to_fannypacks_table!";
+        pageMessage.message = "Added to fannypacks_table!";
         pageMessage.results = Results;
     } // if any errors
     else if (err) {
         pageMessage.checked = err.code;
-        pageMessage.message = "Error adding to add_newFannyPack_to_fannypacks_table";
+        pageMessage.message = "Error adding to fannypacks_table";
         pageMessage.results = err;
     } // if any else
     else {
