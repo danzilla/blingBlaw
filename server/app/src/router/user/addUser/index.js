@@ -155,7 +155,7 @@ const register = function (req, res, next) {
         }
         // FinalResultz
         FinalResult (function (err, result) {
-           if (result){
+           if (result) {
                 // if Validation and Update is good
                 // Get the First-Obj message
                 pageMessage.title = add_user_result.add_user_to_userAuth.title;

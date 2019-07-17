@@ -5,30 +5,18 @@ class Content extends Component {
   // props
   constructor(props) {
     super(props)
-    this.state = { 
-      accountPage: {
-        overViewPage: true,
-        accountOverview: false,
-        accountSerial: "",
-        pageLayout: "container"
-      }
+    this.state = {
+      accountPage: ""
     }
-  }
-  // activeUsers
-  activePage = (serial) => {
-    this.setState({
-      accountPage: {
-        ...this.state.accountPage,
-        overViewPage: false, accountOverview: false, 
-        accountSerial: serial, pageLayout: "col s12 m12"
-      }
-    })
   }
   // Raaar
   render() {
     return (
-      <div id="Content" className={this.state.accountPage.pageLayout}>
-        {JSON.stringify(this.state.accountPage)}
+      <div id="Content" className="container">
+        {this.props.userSerial}
+        {this.props.pageName}
+        {this.props.activeFannyPackSerial}
+
         <ViewAccount />
         <ViewAccount />
         <ViewAccount />

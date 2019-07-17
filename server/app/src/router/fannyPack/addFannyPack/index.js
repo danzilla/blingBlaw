@@ -25,10 +25,11 @@
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
 
-add_user_to_userAuth(userName, userPassword)
-add_user_to_userDetails(user_serial, userData)
-
-create_schema_fannyPack(fannyPackName, userSerial, )
+create_schema_user_fannyPack(userData)
+create_table_account_types(userData)
+create_table_account_category(userData)
+create_table_account_records(userData)
+add_newFannyPack_to_fannypacks_table(userData)
  */
 // Register a FannyPack | Keep it minimal
 const async = require('async');
@@ -36,15 +37,15 @@ const async = require('async');
 // https://www.npmjs.com/package/uuid
 const uuidv5 = require('uuid/v5'); //string + salt
 const uuidv1 = require('uuid/v1'); //Time_based - saltTime
+const TokenGenerator = require('uuid-token-generator');
+const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 // blingBlaw
 const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
 const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
 const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
-const create_table_account_record = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_record");
+const create_table_account_record = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
 const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
-// Sample Data
-
 // pageMessage
 let pageMessage = {
     title: "add_fannyPack",
@@ -54,37 +55,44 @@ let pageMessage = {
 };
 // Collect add_fannyPack_results
 let add_fannyPack_results = {
-    create_schema_fannyPack: [],
+    create_schema_user_fannyPack: [],
     create_table_account_types: [],
     create_table_account_category: [],
     create_table_account_record: [],
-    add_newFannyPack_to_fannypacks_table:[],
-    add_SampleCategory_account_category_table: [],
-    add_SampleAccountType_account_types_table: []
+    add_newFannyPack_to_fannypacks_table:[]
 };
 // POST - add FannyPack module
 // #raaaawr
-const addNewFannyPack = function (req, res, next) {
+const add_New_FannyPack = function (req, res, next) {
     // prepare userData
+    // req = user_serial and FannyPack_name
     let userData = {
-        userSerial: req.body.userSerial,
-        fannyPackName: req.body.fannyPack,
-        fannyPackSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        userSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        fannyPack: req.body.fannyPack,
+        fannyPackSerial: Token.generate(),
         fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     };
-    
-    console.log(create_schema_user_fannyPack("adsadasdasdasdasd"));
-
-    // pageMessage
-    pageMessage = {
-        checked: "Empty-field",
-        message: "Cannot be empty fields",
-        results: "nada"
-    }; 
-    res.send({ pageMessage: pageMessage, addFannyPackResult: userData });
+    // If req.body == Empty 
+    if (!req.body.userSerial || !req.body.fannyPack) {
+        // pageMessage
+        pageMessage = {
+            checked: "Empty-field",
+            message: "Cannot be empty fields",
+            results: "nada"
+        }; 
+        res.send({ pageMessage: pageMessage, addUserResult: "nada" });
+    } else {
+        // pageMessage
+        pageMessage = {
+            checked: "Not-Empty-field",
+            message: "Not-Cannot be empty fields",
+            results: "Yeeea"
+        }; 
+        res.send({ pageMessage: pageMessage, addFannyPackResult: userData });
+    }
 }
-module.exports = addNewFannyPack;
+module.exports = add_New_FannyPack;
 
 
 
