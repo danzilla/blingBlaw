@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // NewStatement
-import AddWallet from './addWallet'
+import AddFannyPack from './addFannyPack'
 // Head
 class Head extends Component {
     constructor(props) {
@@ -19,6 +19,7 @@ class Head extends Component {
   render() {
     return (
       <div className="">
+
         <h3 className="container center-align py-1"> {this.props.pageName}
           {this.state.showAddAccount ?
             <button onClick={this.hideAccountAddButton}
@@ -38,7 +39,7 @@ class Head extends Component {
         </h3>
         {this.state.showAddAccount === true &&
           <div className="container center-align"> 
-            <AddWallet />
+            <AddFannyPack />
           </div>
         }
       </div>

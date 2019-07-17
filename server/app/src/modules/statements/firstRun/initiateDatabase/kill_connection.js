@@ -44,11 +44,10 @@ let pushD = {
 // Drop Database - using -  danzillaDB.postgresDefault
 const kill_connection = function (FirstRunCheck) {
     // Kill Connection
-    let sql_kill_connection_query = `
-        SELECT *, pg_terminate_backend(pid)
-        FROM pg_stat_activity 
-        WHERE pid <> pg_backend_pid()
-        AND datname = ` + db_config.database_labels.db_name
+    let sql_kill_connection_query = `SELECT *, pg_terminate_backend(pid)
+                                    FROM pg_stat_activity 
+                                    WHERE pid <> pg_backend_pid()
+                                    AND datname = ` + db_config.database_labels.db_name
     // SQL Query - Fire
     danzillaDB.postgresDefault.query(sql_kill_connection_query,
     // err catch

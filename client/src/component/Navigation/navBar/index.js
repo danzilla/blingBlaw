@@ -63,12 +63,9 @@ class Nav extends Component {
                     activeUsers
                 */}
                 <ul id="dropdown1" className="dropdown-content">
-                    <li><a onClick={this.props.activeAccount}>Accounts</a></li>
+                    <li><a onClick={this.props.activeFannyPack}>Accounts</a></li>
                     <li><a onClick={this.props.activeCategory}>Labels</a></li>
                     <li className="divider"></li>
-                    <li><a onClick={this.props.activeSearch}>Search</a></li>
-                    <li className="divider"></li>
-                    <li><a onClick={this.props.activeSettings}>Settings</a></li>
                     <li><a onClick={this.props.activeUsers}>Users</a></li>
                 </ul>
             </div>

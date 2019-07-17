@@ -40,9 +40,9 @@ const update_user_userDetails = function (callback, userData, login_validation_r
     user_lastLogged TIMESTAMP,
     user_auth_serial VARCHAR(36) UNIQUE NOT NULL
   `
-  let update_user_login_query = "UPDATE " + db_config.database_labels.schema_name + "." + db_config.database_labels.table_users_details
-            + " SET " + "user_lastLogged='" + userData.userLastLogged + "'"
-            + " WHERE user_auth_serial='" + userData.userSerial + "'";
+  let update_user_login_query =  `UPDATE ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_details}
+                                  SET user_lastLogged='${userData.userLastLogged}' 
+                                  WHERE user_auth_serial='${userData.userSerial}';`;
     // blaze
     danzillaDB.pool.query(update_user_login_query,
       function (err, Results) {

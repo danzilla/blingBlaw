@@ -7,10 +7,8 @@ import Materialize from '../../util/Materialize'
 import Navigation from '../../component/Navigation'
 import MessageAlert from '../../component/MessageAlert'
 // Contents 
-import Account from './account'
+import FannyPack from './fannyPack'
 import Category from './category'
-import Search from './search'
-import Settings from './settings'
 import User from './users'
 // Dashboard
 class Dashboard extends Component {
@@ -19,19 +17,16 @@ class Dashboard extends Component {
     super(props);
     // Page-Display Setting
     const pageDisplay = {
-      accountPage: true,
+      fannyPackPage: true,
       categoryPage: false,
-      searchPage: false,
-      settingPage: false,
       userPage: false
     };
-    const alertMessage = { accountPage: "accountPage"};
+    const alertMessage = { fannyPackPage: "fannyPackPage"};
     this.state = {
       pageDisplay: pageDisplay,
       alertMessage: alertMessage
     };
   }
-
   // Alert Message 
   // updateAlertMessage
   updateAlertMessage = (msg) => {
@@ -39,16 +34,15 @@ class Dashboard extends Component {
       alertMessage: msg
     })
   }
-
   // Pages
-  // - Account | Category | Search | Settings | Users
+  // - FannyPack | Category | Users
   // - 3 Depth - Props -> nav > navBar
   // 
-  // activeAccount 
-  activeAccount = () => {
+  // activeFannyPack 
+  activeFannyPack = () => {
     this.setState({
       pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: true, categoryPage: false, searchPage: false, settingPage: false, userPage: false
+        fannyPackPage: true, categoryPage: false, userPage: false
       }
     })
   }
@@ -56,23 +50,7 @@ class Dashboard extends Component {
   activeCategory = () => {
     this.setState({
       pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: false, categoryPage: true, searchPage: false, settingPage: false, userPage: false
-      }
-    })
-  }
-  // activeSearch 
-  activeSearch = () => {
-    this.setState({
-      pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: false, categoryPage: false, searchPage: true, settingPage: false, userPage: false
-      }
-    })
-  }
-  // activeSettings 
-  activeSettings = () => {
-    this.setState({
-      pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: false, categoryPage: false, searchPage: false, settingPage: true, userPage: false
+        fannyPackPage: false, categoryPage: true, userPage: false
       }
     })
   }
@@ -80,7 +58,7 @@ class Dashboard extends Component {
   activeUsers = () => {
     this.setState({
       pageDisplay: { ...this.state.pageDisplay, 
-        accountPage: false, categoryPage: false, searchPage: false, settingPage: false, userPage: true
+        fannyPackPage: false, categoryPage: false, userPage: true
       }
     })
   }
@@ -89,10 +67,10 @@ class Dashboard extends Component {
   render() {
     // Which content to show
     let showPage, pageName;
-    if (this.state.pageDisplay.accountPage === true) {
-      // Account page
-      pageName = "Account page";
-      showPage = <Account
+    if (this.state.pageDisplay.fannyPackPage === true) {
+      // FannyPack page
+      pageName = "FannyPack page";
+      showPage = <FannyPack
         pageName={pageName}
         updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
@@ -100,20 +78,6 @@ class Dashboard extends Component {
       // Category page
       pageName = "Labels and Category page";
       showPage = <Category
-        pageName={pageName}
-        updateAlertMessage={this.updateAlertMessage}
-        pageDisplay={this.state.pageDisplay} />;
-    } else if (this.state.pageDisplay.searchPage === true) {
-      // Search page
-      pageName = "Search page";
-      showPage = <Search
-        pageName={pageName}
-        updateAlertMessage={this.updateAlertMessage}
-        pageDisplay={this.state.pageDisplay} />;
-    } else if (this.state.pageDisplay.settingPage === true) {
-      // Settings page
-      pageName = "Settings page";
-      showPage = <Settings
         pageName={pageName}
         updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
@@ -125,9 +89,9 @@ class Dashboard extends Component {
         updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
     } else {
-      // Account page
-      pageName = "Account page";
-      showPage = <Account
+      // FannyPack page
+      pageName = "FannyPack page";
+      showPage = <FannyPack
         pageName={pageName}
         updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
@@ -139,10 +103,8 @@ class Dashboard extends Component {
         {/* Navigation */}
         <Navigation
           alertMessage={this.state.alertMessage}
-          activeAccount={this.activeAccount}
+          activeFannyPack={this.activeFannyPack}
           activeCategory={this.activeCategory}
-          activeSearch={this.activeSearch}
-          activeSettings={this.activeSettings}
           activeUsers={this.activeUsers}
           pageName={pageName} />
 

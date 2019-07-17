@@ -44,10 +44,9 @@ let pushD = {
 // Create Schema - users - using -  danzillaDB.pool
 const create_table_userDetails = function (callback, FirstRunCheck) {
     // Create Table - table_users_details
-    let sql_statement = "CREATE TABLE IF NOT EXISTS " +
-        db_config.database_labels.schema_name + "." +
-        db_config.database_labels.table_users_details +
-        `(
+    let sql_statement = `CREATE TABLE IF NOT EXISTS 
+        ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_details}
+        (
             user_details_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
             user_full_name VARCHAR(254),
             user_email VARCHAR(254),
