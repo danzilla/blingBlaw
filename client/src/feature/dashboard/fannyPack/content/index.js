@@ -18,8 +18,7 @@ class Content extends Component {
         <div className="col m12 s12 h-100 overflowY">
           {/* Heading - Add FannyPack and Select FannyPack */}
           <div className="row card-1">
-            <HeadContent
-              pageName={this.props.pageName} />
+            <HeadContent pageName={this.props.pageName} />
           </div>
           {/* Body - Add and View Fanny's Accounts */}
           <div className="row">

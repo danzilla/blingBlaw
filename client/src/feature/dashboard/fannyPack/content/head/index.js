@@ -19,6 +19,7 @@ class Head extends Component {
   render() {
     return (
       <div className="">
+
         <h3 className="container center-align py-1"> {this.props.pageName}
           {this.state.showAddAccount ?
             <button onClick={this.hideAccountAddButton}
