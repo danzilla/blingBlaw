@@ -9,19 +9,24 @@ class FannyPackz extends Component {
   // state
   constructor(props) {
     super(props);
-    this.state = { 
-      pageDisplay: "pageDisplay",
-      lola: ""
+    this.state = {
+      userSerial: "nada"
     };
   }
   // componentDidMount
   componentDidMount() {
+    // Get and Parse - sessionData
+    let sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    // If(serial) good - Set state for user_serial
+    if (sessionData == null || !sessionData.user_serial || !sessionData) {
+      this.setState({ userSerial: "No user info from sessionData" })
+    } else if (sessionData.user_serial) {
+      this.setState({ userSerial: sessionData.user_serial })
+    }
     this.props.updateAlertMessage({ pageMessage: "FannyPackz page loaded" });
-    this.setState({ lola: JSON.parse(localStorage.getItem('sessionData'))})
   }
   // Rrrr
   render() {
-    let lol = this.state.lola;
     // Bling
     return (
       // FannyPackz
@@ -31,8 +36,6 @@ class FannyPackz extends Component {
           <div className="row h-100 p-1">
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-50 card-1 z-depth-3 overflowN my-1">
-              <h1 className="center-align">{this.props.pageName}</h1>
-              {JSON.stringify(lol)}
               <Bubble />
             </div>
             {/* Feature - Most spended */}
@@ -46,7 +49,9 @@ class FannyPackz extends Component {
           <div className="row h-100 p-2">
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
-              <Content pageName={this.props.pageName} />
+              <Content
+                userSerial={this.state.userSerial}
+                pageName={this.props.pageName} />
             </div>
           </div>
         </div>

@@ -6,45 +6,38 @@ class addNewUsersForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            wallet: {
-                name: ""
-            }
+            fannyPackData: ""
         }
-    }
-    // handleChange - get and set state for wallet form
-    handleChange = (propertyName, event) => {
-        const wallet = this.state.wallet;
-        wallet[propertyName] = event.target.value;
-        this.setState({ wallet: wallet });
     }
     // onSubmit
-    submitWallet = () => {
-        if (this.state.wallet.name){
-            alert(this.state.wallet.name);
-        }
+    getFannyPackForUser = () => {
+        // Axios - POST - fannypack/view
+        axios.post('http://localhost:5000/fannypack/view', {
+            userSerial: this.props.userSerial
+        })
+        // if any response
+        .then((response) => {
+            alert(JSON.stringify(response));
+            this.setState({ fannyPackData: response.data})
+        })
+        // catch error
+        .catch((error) => {
+            // get and set props - register state
+            alert(JSON.stringify(error));
+            this.setState({ fannyPackData: error })
+        });
     }
     // Render
     render() {
         return (
-            /* Wallet Form - input */
+            /* vieFannyPack-user - input */
             <div className="container">
-                {/* walletName */}
-                <div className="input-field col s11 m11">
-                    <input name="walletName" id="walletName" type="text"
-                        onChange={this.handleChange.bind(this, 'name')}
-                        value={this.state.wallet.name}
-                        className="validate" required />
-                    <label htmlFor="walletName">Wallet name</label>
-                </div>
-                {/* Form - Sub button */}
-                <div className="input-field col s1 m1">
-                    <div className="row">
-                        <button onClick={this.submitWallet} name="action"
-                            className="btn waves-effect waves-light">
-                            <i className="material-icons">create_new_folder</i>
-                        </button>
-                    </div>
-                </div>
+                <button onClick={this.getFannyPackForUser} name="action" className="btn waves-effect waves-light">
+                    <i className="material-icons">create_new_folder</i>
+                </button>
+                <p>
+                    {JSON.stringify(this.state.fannyPackData)}
+                </p>
             </div>
         );
     }
