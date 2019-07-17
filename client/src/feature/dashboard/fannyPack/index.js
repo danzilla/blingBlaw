@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 // Charts 
-import Chart from '../../../component/Charts/chart'
-import Bubble from '../../../component/Charts/bubble'
-// Account
-import Content from './content'
-class Account extends Component {
+import Chart from '../../../component/Charts/chart';
+import Bubble from '../../../component/Charts/bubble';
+// Content
+import Content from './content';
+// FannyPackz
+class FannyPackz extends Component {
   // state
   constructor(props) {
     super(props);
@@ -13,10 +14,9 @@ class Account extends Component {
       lola: ""
     };
   }
-  // 
   // componentDidMount
   componentDidMount() {
-    this.props.updateAlertMessage({ pageMessage: "Account page loaded" });
+    this.props.updateAlertMessage({ pageMessage: "FannyPackz page loaded" });
     this.setState({ lola: JSON.parse(localStorage.getItem('sessionData'))})
   }
   // Rrrr
@@ -24,7 +24,7 @@ class Account extends Component {
     let lol = this.state.lola;
     // Bling
     return (
-      // Account
+      // FannyPackz
       <div className="row w-100 h-85">
         {/* Logs and Category - hide-on-med-and-down */}
         <div className="col s12 m12 l4 h-100 overflowN hide-on-med-and-down">
@@ -55,7 +55,7 @@ class Account extends Component {
   }
 }
 // Bling
-export default Account;
+export default FannyPackz;
 
 
 

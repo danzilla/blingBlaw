@@ -12,10 +12,8 @@ class Nav extends Component {
         <div className="container"> 
           <NavBar 
             alertMessage={this.props.alertMessage}
-            activeAccount={this.props.activeAccount}
+            activeFannyPack={this.props.activeFannyPack}
             activeCategory={this.props.activeCategory}
-            activeSearch={this.props.activeSearch}
-            activeSettings={this.props.activeSettings}
             activeUsers={this.props.activeUsers} />
         </div>
       </div>

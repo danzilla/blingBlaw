@@ -11,18 +11,17 @@ class Content extends Component {
       showAddAccount: false
     }
   }
-
   // Raaar
   render() {
     return (
       <div className="row h-100 overflowN">
         <div className="col m12 s12 h-100 overflowY">
-          {/* Add User */}
+          {/* Heading - Add FannyPack and Select FannyPack */}
           <div className="row card-1">
             <HeadContent
               pageName={this.props.pageName} />
           </div>
-          {/* User Body */}
+          {/* Body - Add and View Fanny's Accounts */}
           <div className="row">
             <BodyContent pageName={this.props.pageName} />
           </div>
