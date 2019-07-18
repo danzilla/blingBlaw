@@ -25,7 +25,7 @@ const async = require('async');
 const view_fannyPackz_by_user_serial = require("../../../modules/statements/fannyPack/viewFannyPack/view_fannyPackz_by_user_serial");
 // pageMessage
 let pageMessage = {
-    title: "add_fannyPack",
+    title: "view_fannyPack",
     checked: "",
     message: "",
     results: ""
@@ -54,9 +54,9 @@ const view_fannyPackz = function (req, res, next) {
         };
         // Async Actionz
         async.parallel([
-            function (callback) { 
+            function(callback) {
                 view_fannyPackz_by_user_serial(callback, userData, view_fannyPack_results);
-             }], 
+             }],
             function(err, results) {
                 // prepare - pageMessage
                 if (err) {

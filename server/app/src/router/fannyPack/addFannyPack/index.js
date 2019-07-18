@@ -67,7 +67,7 @@ const add_New_FannyPack = function (req, res, next) {
     // prepare userData
     // req = user_serial and FannyPack_name
     let userData = {
-        userSerial: uuidv5(req.body.fannyPack, uuidv1()),
+        userSerial: req.body.userSerial,
         fannyPack: req.body.fannyPack,
         fannyPackSerial: Token.generate(),
         fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),

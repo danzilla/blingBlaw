@@ -1,67 +1,47 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react';
 // NewFannyPack
-import AddFannyPack from './addFannyPack'
-// ViewFannyPack
-import ViewFannyPack from './viewFannyPack'
-
-
+import AddFannyPack from './addFannyPack';
 // Head
 class Head extends Component {
     constructor(props) {
       super(props)
       this.state = { showAddAccount: false}
     }
-  // show AddAccount button
-  showAccountAddButton = () => {
-    this.setState({ showAddAccount: true })
-  }
-  // Hide AddAccount button
-  hideAccountAddButton = () => {
-    this.setState({ showAddAccount: false })
-  }
-
-
-
-
   // Raaar
   render() {
+    let fannyData = [];
+    let data = this.props.userFannyPackz;
+    for (let i = 0; i < data.length; i++) {
+      let pushD = {
+        fannypack_name: data[i].fannypack_name,
+        fannypack_serial: data[i].fannypack_serial
+      }; fannyData.push(pushD);
+    }
+    // brrrrrr
     return (
-      <div className="">
-
-        <ViewFannyPack userSerial={this.props.userSerial} />
-
-        <h3 className="container center-align py-1"> 
-          {this.props.userSerial}
-          {this.props.pageName}
-          <button onClick={() => this.props.changeFannyPackSerial("asdaddasda12313")}
-            className="mx-1 blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4">
-            <i className="material-icons">clear</i>
-          </button>
-
-          {this.state.showAddAccount ?
-            <button onClick={this.hideAccountAddButton}
-              className="mx-1 blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4">
-              <i className="material-icons">clear</i>
-            </button>
-            :
-            <button onClick={this.showAccountAddButton}
-              className="mx-1 blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4">
-              <i className="material-icons">add</i>
-            </button>
-          }
-          <button onClick={"this.props.fetchUsers"}
-            className="blue-text text-darken-2 transparent btn waves-effect waves-dark z-depth-4">
-            <i class="material-icons">sync</i>
-          </button>
-        </h3>
-
-        {this.state.showAddAccount === true &&
-          <div className="container center-align"> 
-            <AddFannyPack />
-          </div>
-        }
-
-      </div>
+      <Fragment>
+        <div className="container center-align py-3">
+          <a class="dropdown-trigger btn-large" data-target="DropDrip1">
+            {this.props.activeFannyPackName} - {this.props.activeFannyPack}
+          </a>
+          {/* FannyPack list */}
+          <ul id="DropDrip1" className="dropdown-content">
+            {fannyData.map(data => (
+            <li key={data.fannypack_serial}>
+              <a onClick={() => this.props.changeActiveFannyPack(data.fannypack_serial, data.fannypack_name)}>
+                {data.fannypack_name} - {data.fannypack_serial}
+              </a> 
+            </li>
+            ))}
+          </ul>
+          <AddFannyPack 
+            changeActiveFannyPack={this.props.changeActiveFannyPack}
+            userFannyPackz={this.props.userFannyPackz}
+            activeFannyPack={this.props.activeFannyPack}
+            activeUser={this.props.activeUser}
+            pageName={this.props.pageName} />
+        </div>
+      </Fragment>
     );
   }
 }

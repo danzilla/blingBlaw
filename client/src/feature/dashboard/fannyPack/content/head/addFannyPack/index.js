@@ -1,52 +1,44 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-// addNewWallet Form
-class addNewUsersForm extends Component {
-    // states
+import React, { Component, Fragment } from 'react'
+// AddFannyPackFrom
+import FannyPackForm from './FannyPackForm'
+// AddFannyPack
+class AddFannyPack extends Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            wallet: {
-                name: ""
-            }
+      super(props)
+      this.state = { showAddAccount: false}
+    }
+  // show AddAccount button
+  showAccountAddButton = () => {
+    this.setState({ showAddAccount: true })
+  }
+  // Hide AddAccount button
+  hideAccountAddButton = () => {
+    this.setState({ showAddAccount: false })
+  }
+  // Raaar
+  render() {
+    return (
+      <Fragment>
+          {this.state.showAddAccount ?
+            <button onClick={this.hideAccountAddButton}
+              className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-4">
+              <i className="material-icons">clear</i>
+            </button>
+            :
+            <button onClick={this.showAccountAddButton}
+              data-position="bottom"
+              data-tooltip="New FannyPack"
+              className="tooltipped blue-text text-darken-1 transparent btn-large waves-effect waves-dark z-depth-4">
+              <i className="material-icons">add</i>
+            </button>
+          }
+        {this.state.showAddAccount === true &&
+          <FannyPackForm
+            activeUser={this.props.activeUser}
+            activeFannyPack={this.props.activeFannyPack} />
         }
-    }
-    // handleChange - get and set state for wallet form
-    handleChange = (propertyName, event) => {
-        const wallet = this.state.wallet;
-        wallet[propertyName] = event.target.value;
-        this.setState({ wallet: wallet });
-    }
-    // onSubmit
-    submitWallet = () => {
-        if (this.state.wallet.name){
-            alert(this.state.wallet.name);
-        }
-    }
-    // Render
-    render() {
-        return (
-            /* Wallet Form - input */
-            <div className="container">
-                {/* walletName */}
-                <div className="input-field col s11 m11">
-                    <input name="walletName" id="walletName" type="text"
-                        onChange={this.handleChange.bind(this, 'name')}
-                        value={this.state.wallet.name}
-                        className="validate" required />
-                    <label htmlFor="walletName">Wallet name</label>
-                </div>
-                {/* Form - Sub button */}
-                <div className="input-field col s1 m1">
-                    <div className="row">
-                        <button onClick={this.submitWallet} name="action"
-                            className="btn waves-effect waves-light">
-                            <i className="material-icons">create_new_folder</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+      </Fragment>
+    );
+  }
 }
-export default addNewUsersForm;
+export default AddFannyPack;

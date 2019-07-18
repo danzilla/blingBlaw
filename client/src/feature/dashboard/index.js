@@ -1,15 +1,13 @@
 // Dashboard 
 // Page-Redirect
-import React, { Component } from 'react'
-// Global-Style Materialize
-import Materialize from '../../util/Materialize'
+import React, { Component } from 'react';
 // Navigation and Messages
-import Navigation from '../../component/Navigation'
-import MessageAlert from '../../component/MessageAlert'
+import Navigation from '../../component/Navigation';
+import MessageAlert from '../../component/MessageAlert';
 // Contents 
-import FannyPack from './fannyPack'
-import Category from './category'
-import User from './users'
+import FannyPack from './fannyPack';
+import Category from './category';
+import User from './users';
 // Dashboard
 class Dashboard extends Component {
   // constructor
@@ -21,7 +19,9 @@ class Dashboard extends Component {
       categoryPage: false,
       userPage: false
     };
-    const alertMessage = { fannyPackPage: "fannyPackPage"};
+    const alertMessage = { 
+      fannyPackPage: "fannyPackPage - Alert Message"
+    };
     this.state = {
       pageDisplay: pageDisplay,
       alertMessage: alertMessage
@@ -30,9 +30,7 @@ class Dashboard extends Component {
   // Alert Message 
   // updateAlertMessage
   updateAlertMessage = (msg) => {
-    this.setState({
-      alertMessage: msg
-    })
+    this.setState({ alertMessage: msg })
   }
   // Pages
   // - FannyPack | Category | Users
@@ -107,15 +105,10 @@ class Dashboard extends Component {
           activeCategory={this.activeCategory}
           activeUsers={this.activeUsers}
           pageName={pageName} />
-
         {/* Alert Message */}
         <MessageAlert alertMessage={this.state.alertMessage} />
-
         {/* Page content */}
         {showPage}
-
-        {/* Init Materializecss */}
-        <Materialize />
       </div>
     );
   }

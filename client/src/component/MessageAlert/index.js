@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+// Global-Style Materialize
+import Materialize from '../../util/Materialize';
 import M from "materialize-css";
 // Content
 class Content extends Component {
@@ -15,7 +17,11 @@ class Content extends Component {
     }
     // Raaar
     render() {
-        return ( <div className=""> </div> );
+        return ( 
+            <div className=""> 
+                <Materialize />
+            </div> 
+        );
     }
 }
 export default Content;
