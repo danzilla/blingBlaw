@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+// Category
+import React, { Component } from 'react';
+// Global-Style Materialize
+import Materialize from '../../../util/Materialize';
 // Category
 // Category Content
 import Content from './content'
@@ -37,6 +40,7 @@ class Category extends Component {
             </div>
           </div>
         </div>
+        <Materialize />
       </div>
     );
   }

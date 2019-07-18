@@ -1,43 +1,24 @@
 /*  
-    Head - FannyPack info 
-    Body - Account Info 
-    FannyPack contains Multiple Accounts
-    Pass userSerial on change from Head to Body
+  Head - FannyPack info 
+  Body - Account Info 
+  FannyPack contains Multiple Accounts
+  Pass userSerial on change from Head to Body
 */
 // React
 import React, { Component } from 'react'
 // Head and Body
-import BodyContent from './body'
 import HeadContent from './head'
+import BodyContent from './body'
 // Content
 class Content extends Component {
   // constructor
   constructor(props) {
     super(props)
     this.state = {
-      activeFannyPackData: ""
+      activeFannyPackUser: "",
+      activeFannyPack: "",
+      userFannyPackz: ""
     }
-  }
-  // Change FannyPack - callback
-  changeFannyPackData = (fannyPackSerial) => {
-    this.setState({ activeFannyPackSerial: fannyPackSerial })
-  }
-  // componentDidMount
-  componentDidMount() {
-
-
-    // Use - user_serial to get FannyPack info
-    // fannyPack - user_fannyRecord 
-
-
-    // If(serial) good - Set state for user_serial
-    if (!this.props.userSerial) {
-      this.setState({ activeFannyPackData: "No user info from sessionData" })
-    } else if (this.props.userSerial) {
-      this.setState({ activeFannyPackData: this.props.userSerial })
-    }
-  
-  
   }
   // Raaar
   render() {
@@ -47,16 +28,20 @@ class Content extends Component {
           {/* Head - Add FannyPack and Select FannyPack */}
           <div className="row card-1">
             <HeadContent
-              changeFannyPackData={this.changeFannyPackData}
-              activeFannyPackData={this.state.activeFannyPackData}
-              userSerial={this.props.userSerial}
+              changeActiveFannyPack={this.props.changeActiveFannyPack}
+              userFannyPackz={this.props.userFannyPackz}
+              activeFannyPackName={this.props.activeFannyPackName}
+              activeFannyPack={this.props.activeFannyPack}
+              activeUser={this.props.activeUser}
               pageName={this.props.pageName} />
           </div>
           {/* Body - Add and View Fanny's Accounts */}
           <div className="row">
             <BodyContent
-              activeFannyPackData={this.state.activeFannyPackData}
-              userSerial={this.props.userSerial}
+              activeFannyPackName={this.props.activeFannyPackName}
+              userFannyPackz={this.props.userFannyPackz}
+              activeFannyPack={this.props.activeFannyPack}
+              activeUser={this.props.activeUser}
               pageName={this.props.pageName} />
           </div>
         </div>

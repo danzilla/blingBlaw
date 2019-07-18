@@ -13,9 +13,18 @@ class Content extends Component {
   render() {
     return (
       <div id="Content" className="container">
-        {this.props.userSerial}
-        {this.props.pageName}
-        {this.props.activeFannyPackSerial}
+
+
+      <p>
+        {this.props.activeUser}
+      </p> 
+
+      <p>
+        {this.props.activeFannyPackName} - {this.props.activeFannyPack}
+      </p> 
+        
+
+
 
         <ViewAccount />
         <ViewAccount />
