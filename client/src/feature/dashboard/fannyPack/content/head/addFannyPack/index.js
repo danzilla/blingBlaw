@@ -34,6 +34,9 @@ class AddFannyPack extends Component {
           }
         {this.state.showAddAccount === true &&
           <FannyPackForm
+            hideAccountAddButton={this.hideAccountAddButton}
+            getUserFannyPack={this.props.getUserFannyPack}
+            updateAlertMessage={this.props.updateAlertMessage}
             activeUser={this.props.activeUser}
             activeFannyPack={this.props.activeFannyPack} />
         }

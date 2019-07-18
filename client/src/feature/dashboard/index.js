@@ -19,12 +19,9 @@ class Dashboard extends Component {
       categoryPage: false,
       userPage: false
     };
-    const alertMessage = { 
-      fannyPackPage: "fannyPackPage - Alert Message"
-    };
     this.state = {
       pageDisplay: pageDisplay,
-      alertMessage: alertMessage
+      alertMessage: "fannyPackPage - Alert Message"
     };
   }
   // Alert Message 

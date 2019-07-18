@@ -34,7 +34,9 @@ class Head extends Component {
             </li>
             ))}
           </ul>
-          <AddFannyPack 
+          <AddFannyPack
+            getUserFannyPack={this.props.getUserFannyPack}
+            updateAlertMessage={this.props.updateAlertMessage}
             changeActiveFannyPack={this.props.changeActiveFannyPack}
             userFannyPackz={this.props.userFannyPackz}
             activeFannyPack={this.props.activeFannyPack}

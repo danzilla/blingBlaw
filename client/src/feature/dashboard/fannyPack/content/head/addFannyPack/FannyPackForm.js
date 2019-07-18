@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 // addNewFannyPackForm
 class addNewFannyPackForm extends Component {
@@ -18,11 +18,7 @@ class addNewFannyPackForm extends Component {
         this.setState({ wallet: wallet });
     }
     // onSubmit
-    submitNewAccount = () => {
-
-        if (this.state.wallet.name){
-            alert(this.state.wallet.name);
-        }
+    submitNewFannyPack = () => {
         // Axios - POST - fannypack/view
         axios.post('http://localhost:5000/fannypack/add', {
             fannyPack: this.state.wallet.name,
@@ -30,36 +26,40 @@ class addNewFannyPackForm extends Component {
         })
         // if any response
         .then((response) => {
-            alert(JSON.stringify(response));
+            let msg = `${response.data.pageMessage.results.rows[0].fannypack_name} - ${response.data.pageMessage.message}`
+            this.props.updateAlertMessage({ pageMessage: msg })
+            this.props.hideAccountAddButton()
+            this.props.getUserFannyPack()
         })
         // catch error
         .catch((error) => {
-            alert(JSON.stringify(error));
+            this.props.updateAlertMessage(JSON.stringify(error));
         });
     }
     // Render
     render() {
         return (
-            /* Account Form - input */
+        <Fragment>
             <div className="container py-1">
-                {/* AccountName */}
+                {/* FannyPackName */}
                 <div className="input-field col s11 m11">
-                    <input name="AccountName" id="AccountName" type="text"
+                    <input name="FannyPackName" id="FannyPackName" type="text"
                         onChange={this.handleChange.bind(this, 'name')}
                         value={this.state.wallet.name}
                         className="validate" required />
-                    <label htmlFor="AccountName">Account name</label>
+                    <label htmlFor="FannyPackName">FannyPack name</label>
                 </div>
                 {/* Form - Sub button */}
                 <div className="input-field col s1 m1">
                     <div className="row">
-                        <button onClick={this.submitNewAccount} name="action"
+                        <button onClick={this.submitNewFannyPack} name="action"
                             className="btn waves-effect waves-light">
                             <i className="material-icons">create_new_folder</i>
                         </button>
                     </div>
                 </div>
             </div>
+        </Fragment>
         );
     }
 }

@@ -46,7 +46,7 @@ const add_newFannyPack_to_fannypacks_table = function(callback, userData, addFan
     fannyPack_name VARCHAR(254),
     fannyPack_created TIMESTAMP,
     fannyPack_lastUpdated TIMESTAMP,
-    fannyPack_owner_serial VARCHAR(36) UNIQUE NOT NULL
+    fannyPack_owner_serial VARCHAR(36) NOT NULL
   `
   // Insert Data
   const userAddData = [
