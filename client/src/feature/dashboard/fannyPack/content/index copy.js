@@ -63,8 +63,6 @@ class Content extends Component {
       <div className="container h-100">
         <button className="btn" onClick={this.activeViewFannyPackPage}>activeViewFannyPackPage</button>
         <button className="btn" onClick={this.activeViewAccountPage}>activeViewAccountPage</button>
-
-        
         {showPage}
         {showPage}
         {showPage}
