@@ -21,7 +21,7 @@ class Head extends Component {
     return (
       <Fragment>
         <div className="container center-align py-3">
-          <a class="dropdown-trigger btn-large" data-target="DropDrip1">
+          <a className="dropdown-trigger btn-large" data-target="DropDrip1">
             {this.props.activeFannyPackName} - {this.props.activeFannyPack}
           </a>
           {/* FannyPack list */}
@@ -30,7 +30,7 @@ class Head extends Component {
             <li key={data.fannypack_serial}>
               <a onClick={() => this.props.changeActiveFannyPack(data.fannypack_serial, data.fannypack_name)}>
                 {data.fannypack_name} - {data.fannypack_serial}
-              </a> 
+              </a>
             </li>
             ))}
           </ul>

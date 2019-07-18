@@ -16,6 +16,7 @@ class viewAccounts extends Component {
               </div>
               <div className="col s10 card-1 p-2">
                   Account #1
+              <p> {this.props.activeUser} _ {this.props.activeFannyPackName} _ {this.props.activeFannyPack} </p>
               </div>
             </div>
           </div>
