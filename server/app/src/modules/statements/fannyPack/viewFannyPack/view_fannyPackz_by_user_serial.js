@@ -38,7 +38,9 @@ const view_fannyPackz_by_user_serial = function (callback, userData, viewFannyPa
   `
   console.log(JSON.stringify(userData));
   
-  let sql_statement = `SELECT * FROM ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_fannyPack};`;
+  let sql_statement = `SELECT * FROM 
+                        ${db_config.database_labels.schema_name}.${db_config.database_labels.table_users_fannyPack}
+                      WHERE fannyPack_owner_serial='${userData.userSerial}';`;
   // Query
   danzillaDB.pool.query(sql_statement,
     // err catch

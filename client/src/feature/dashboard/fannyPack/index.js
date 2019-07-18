@@ -26,13 +26,14 @@ class FannyPackz extends Component {
       activeFannyPackName: fannyPackName
     });
   }
-  // componentDidMount
-  componentDidMount() {
-    // Get and Parse - sessionData
+  // Fetch FannyPacks
+  getUserFannyPack = () => {
+ // Get and Parse - sessionData
     let sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // If(serial) good - Set state for user_serial
     if (sessionData == null || !sessionData.user_serial || !sessionData) {
-      this.setState({ activeUser: "No user info from sessionData" })
+      this.setState({ activeUser: "No user info from sessionData" });
+      this.props.updateAlertMessage({ pageMessage: "No user info from sessionData" });
     } else if (sessionData.user_serial) {
       // Set ActiveUser
       // Get View_User_fannyPack
@@ -48,13 +49,19 @@ class FannyPackz extends Component {
           activeUser: sessionData.user_serial,
           userFannyPackz: response.data.pageMessage.results,
         })
+        this.props.updateAlertMessage({ pageMessage: "FannyPackz fetched!"});
       })
       // catch error
       .catch((error) => {
         this.setState({ userFannyPackz: error.message })
+        this.props.updateAlertMessage({ pageMessage: "Errr: " + error.message });
       });
     }
-    this.props.updateAlertMessage({ pageMessage: "FannyPackz page loaded" });
+  }
+  // componentDidMount
+  componentDidMount() {
+    // Fetch userFannyPack
+    this.getUserFannyPack()
   }
   // Rrrr
   render() {
@@ -72,6 +79,8 @@ class FannyPackz extends Component {
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
               <Content
+                getUserFannyPack={this.getUserFannyPack}
+                updateAlertMessage={this.props.updateAlertMessage}
                 changeActiveFannyPack={this.changeActiveFannyPack}
                 userFannyPackz={this.state.userFannyPackz}
                 activeFannyPack={this.state.activeFannyPack}

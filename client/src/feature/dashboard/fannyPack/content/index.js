@@ -28,6 +28,8 @@ class Content extends Component {
           {/* Head - Add FannyPack and Select FannyPack */}
           <div className="row card-1">
             <HeadContent
+              getUserFannyPack={this.props.getUserFannyPack}
+              updateAlertMessage={this.props.updateAlertMessage}
               changeActiveFannyPack={this.props.changeActiveFannyPack}
               userFannyPackz={this.props.userFannyPackz}
               activeFannyPackName={this.props.activeFannyPackName}

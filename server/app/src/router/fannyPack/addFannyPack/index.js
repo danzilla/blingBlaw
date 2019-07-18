@@ -44,7 +44,7 @@ const moment = require('moment'); // Time
 const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
 const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
 const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
-const create_table_account_record = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
+const create_table_account_records = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
 const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
 // pageMessage
 let pageMessage = {
@@ -58,7 +58,7 @@ let add_fannyPack_results = {
     create_schema_user_fannyPack: [],
     create_table_account_types: [],
     create_table_account_category: [],
-    create_table_account_record: [],
+    create_table_account_records: [],
     add_newFannyPack_to_fannypacks_table:[]
 };
 // POST - add FannyPack module
@@ -83,13 +83,53 @@ const add_New_FannyPack = function (req, res, next) {
         }; 
         res.send({ pageMessage: pageMessage, addUserResult: "nada" });
     } else {
-        // pageMessage
-        pageMessage = {
-            checked: "Not-Empty-field",
-            message: "Not-Cannot be empty fields",
-            results: "Yeeea"
-        }; 
-        res.send({ pageMessage: pageMessage, addFannyPackResult: userData });
+        // Create FannyPack
+        async.waterfall([
+            function (callbackTwo) {
+                create_schema_user_fannyPack(callbackTwo, userData, add_fannyPack_results);
+            },
+            function (prev, callbackTwo) {
+                if (prev.checked != "checked") { callbackTwo(null, "nada") } else {
+                    create_table_account_records(callbackTwo, userData, add_fannyPack_results);
+                }
+            },
+            function (prev, callbackTwo) {
+                if (prev.checked != "checked") { callbackTwo(null, "nada") } else {
+                    create_table_account_category(callbackTwo, userData, add_fannyPack_results);
+                }
+            },
+            function (prev, callbackTwo) {
+                if (prev.checked != "checked") { callbackTwo(null, "nada") } else {
+                    create_table_account_types(callbackTwo, userData, add_fannyPack_results);
+                }
+            },
+            function (prev, callbackTwo) {
+                if (prev.checked != "checked") { callbackTwo(null, "nada") } else {
+                    add_newFannyPack_to_fannypacks_table(callbackTwo, userData, add_fannyPack_results);
+                }
+            }
+        ], function (err, result) {
+            if (result) {
+                // if Validation and Update is good
+                // Get the First-Obj message
+                pageMessage.title = result.title;
+                pageMessage.checked = result.checked;
+                pageMessage.message = result.message;
+                pageMessage.results = result.results;
+            } else if (err) {
+                // if err
+                pageMessage.title = pageMessage.title;
+                pageMessage.checked = "Internal-error " + pageMessage.title;
+                pageMessage.message = "Internal-error " + pageMessage.title;
+                pageMessage.results = "Internal-error " + pageMessage.title;
+            }
+            console.log(JSON.stringify(pageMessage));
+            // #brrrr
+            res.send({
+                pageMessage: pageMessage,
+                addFannyPackResult: add_fannyPack_results
+            })
+        });
     }
 }
 module.exports = add_New_FannyPack;
