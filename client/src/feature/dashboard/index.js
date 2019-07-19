@@ -1,4 +1,20 @@
-// Dashboard 
+/*
+Dashboard Page
+
+- Users_Page
+- FannyPack_page
+- Category_page
+
+- FannyPack_page:
+  - FannyPacks -> Contains user's Accounts
+  - Accounts -> Contains user's Account's Transcations 
+*/ 
+
+
+
+
+
+
 // Page-Redirect
 import React, { Component } from 'react';
 // Navigation and Messages

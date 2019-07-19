@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 // NewFannyPack
-import AddFannyPack from './addFannyPack';
+import AddFannyPackForm from './addFannyPackForm';
+import Materialize from '../../../../../../util/Materialize';
 // Head
 class Head extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class Head extends Component {
             </li>
             ))}
           </ul>
-          <AddFannyPack
+          <AddFannyPackForm
             getUserFannyPack={this.props.getUserFannyPack}
             updateAlertMessage={this.props.updateAlertMessage}
             changeActiveFannyPack={this.props.changeActiveFannyPack}
@@ -43,6 +44,7 @@ class Head extends Component {
             activeUser={this.props.activeUser}
             pageName={this.props.pageName} />
         </div>
+        <Materialize/>
       </Fragment>
     );
   }
