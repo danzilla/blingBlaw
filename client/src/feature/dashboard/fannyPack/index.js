@@ -28,7 +28,7 @@ class FannyPackz extends Component {
   }
   // Fetch FannyPacks
   getUserFannyPack = () => {
- // Get and Parse - sessionData
+    // Get and Parse - sessionData
     let sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // If(serial) good - Set state for user_serial
     if (sessionData == null || !sessionData.user_serial || !sessionData) {
@@ -80,12 +80,12 @@ class FannyPackz extends Component {
             <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
               <Content
                 getUserFannyPack={this.getUserFannyPack}
-                updateAlertMessage={this.props.updateAlertMessage}
                 changeActiveFannyPack={this.changeActiveFannyPack}
                 userFannyPackz={this.state.userFannyPackz}
                 activeFannyPack={this.state.activeFannyPack}
                 activeFannyPackName={this.state.activeFannyPackName}
                 activeUser={this.state.activeUser}
+                updateAlertMessage={this.props.updateAlertMessage}
                 pageName={this.props.pageName} />
             </div>
           </div>
