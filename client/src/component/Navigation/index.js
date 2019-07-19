@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// Global-Style Materialize
+import Materialize from '../../util/Materialize';
 // Nav barz
 import NavBar from './navBar';
 import SearchBar from './searchBar';
@@ -16,6 +18,7 @@ class Nav extends Component {
             activeCategory={this.props.activeCategory}
             activeUsers={this.props.activeUsers} />
         </div>
+        <Materialize />
       </div>
     );
   }

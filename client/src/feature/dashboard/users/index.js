@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+// User
+import React, { Component } from 'react';
+// Global-Style Materialize
+import Materialize from '../../../util/Materialize';
 // User
 // User Content
-import Content from './content'
+import Content from './content';
 // Users 
 class User extends Component {
   // state
@@ -26,6 +29,7 @@ class User extends Component {
             </div>
           </div>
         </div>
+        <Materialize />
       </div>
     );
   }

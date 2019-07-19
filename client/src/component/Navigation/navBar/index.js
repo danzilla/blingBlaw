@@ -48,7 +48,7 @@ class Nav extends Component {
                                 <a className="btn waves-effect waves-light tooltipped dropdown-trigger transparent"
                                     data-position="bottom"
                                     data-tooltip="FannyPackz"
-                                    data-target="dropdown1">
+                                    data-target="DropDrip">
                                     {emojify(this.state.randomCategoryEmoji)}
                                 </a>
                             </li>
@@ -62,7 +62,7 @@ class Nav extends Component {
                     activeSettings
                     activeUsers
                 */}
-                <ul id="dropdown1" className="dropdown-content">
+                <ul id="DropDrip" className="dropdown-content">
                     <li><a onClick={this.props.activeFannyPack}>Accounts</a></li>
                     <li><a onClick={this.props.activeCategory}>Labels</a></li>
                     <li className="divider"></li>
