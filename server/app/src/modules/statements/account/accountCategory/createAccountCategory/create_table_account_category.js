@@ -32,9 +32,9 @@ create_table_account_types(userData)
 add_newFannyPack_to_fannypacks_table(userData)
  */
 // DB Labels
-const db_config = require('../../../../modules/app.db');
+const db_config = require('../../../../app.db');
 // DB Connections
-const danzillaDB = require("../../../../modules/danzillaDB");
+const danzillaDB = require("../../../../danzillaDB");
 // pageMessage
 let pageMessage = { title: "create_Category_Table", checked: "", message: "", results: "" };
 // Create Table - create_table_account_category

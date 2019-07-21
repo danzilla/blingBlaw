@@ -24,7 +24,7 @@
         - Add FannyPack_info to users_assets.fannypacks_table
         - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
         - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
- 
+
 create_schema_user_fannyPack(userData)
 create_table_account_category(userData)
 create_table_account_records(userData)
@@ -32,23 +32,24 @@ create_table_account_types(userData)
 add_newFannyPack_to_fannypacks_table(userData)
  */
 // DB Labels
-const db_config = require('../../../../modules/app.db');
+const db_config = require('../../../../app.db');
 // DB Connections
-const danzillaDB = require("../../../../modules/danzillaDB");
+const danzillaDB = require("../../../../danzillaDB");
 // pageMessage
-let pageMessage = { title: "create_table_account_records", checked: "", message: "", results: "" };
-// Create Table - create_table_account_records
-// Function - Create Table - create_table_account_records
-const create_table_account_records = function (callback, userData, createTableAccountRecordsResults) {
+let pageMessage = { title: "create_Category_Table", checked: "", message: "", results: "" };
+// Create Table - create_table_account_category
+// Function - Create Table - account_category
+const create_Category_Table = function (callback, userData, createCategoryTableResult) {
     // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_record}
-        (
-            accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-            account_type_id VARCHAR(36) NOT NULL,
-            account_serial VARCHAR(36) NOT NULL,
-            account_lastmodify TIMESTAMP,
-            account_owner_serial VARCHAR(36) NOT NULL
-        );`;
+    let sql_statement = `CREATE TABLE IF NOT EXISTS 
+                fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
+                (
+                    category_id VARCHAR(254) UNIQUE NOT NULL,
+                    category_name VARCHAR(254) UNIQUE NOT NULL,
+                    category_parent VARCHAR(36) NOT NULL,
+                    category_created TIMESTAMP,
+                    category_lastmodify TIMESTAMP
+                );`;
     // SQL Query - Fire
     danzillaDB.pool.query(sql_statement,
         // err catch
@@ -56,12 +57,12 @@ const create_table_account_records = function (callback, userData, createTableAc
             // If no errors and Results == Good
         if (!err && Results) { 
             pageMessage.checked = "checked";
-            pageMessage.message = "Create account_record_table!";
+            pageMessage.message = "Created Category_Table!";
             pageMessage.results = Results;
         } // if any errors
         else if (err) {
             pageMessage.checked = err.code;
-            pageMessage.message = "Error creating account_record_table";
+            pageMessage.message = "Error creating Category_Table";
             pageMessage.results = err;
         } // if any else
         else {
@@ -69,8 +70,8 @@ const create_table_account_records = function (callback, userData, createTableAc
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        createTableAccountRecordsResults.create_table_account_records = pageMessage;
+        createCategoryTableResult.create_table_account_category = pageMessage;
         callback(null, pageMessage);
     });
 }
-module.exports = create_table_account_records;
+module.exports = create_Category_Table;
