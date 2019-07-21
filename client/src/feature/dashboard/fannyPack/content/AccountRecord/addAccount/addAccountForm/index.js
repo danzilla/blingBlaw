@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
 import Papa from './papaCSVReader'
@@ -74,8 +74,8 @@ class NewStatement extends Component {
     render() {
         return (
         // Content
-        <div className="row">
-            <div className="col s12">
+        <Fragment>
+            <div className="col s12 red">
                 <div className="row">
                     <div className="input-field col m3 s12">
                         <Papa
@@ -127,7 +127,7 @@ class NewStatement extends Component {
                     </div>
                 </div>
             </div>
-        </div>
+        </Fragment>
         );
     }
 }
