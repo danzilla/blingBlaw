@@ -22,7 +22,7 @@ class addNewFannyPackForm extends Component {
         // Axios - POST - fannypack/view
         axios.post('http://localhost:5000/fannypack/add', {
             fannyPack: this.state.wallet.name,
-            userSerial: this.props.activeUser
+            userSerial: this.props.fannyPack.activeUser
         })
         // if any response
         .then((response) => {
@@ -40,7 +40,7 @@ class addNewFannyPackForm extends Component {
     render() {
         return (
         <Fragment>
-            <div className="container py-1">
+            <div className="col s12 m12">
                 {/* FannyPackName */}
                 <div className="input-field col s11 m11">
                     <input name="FannyPackName" id="FannyPackName" type="text"

@@ -12,19 +12,26 @@ class FannyPackz extends Component {
   // state
   constructor(props) {
     super(props);
-    this.state = {
+    // FannyPack Display
+    const fannyPack = {
       activeUser: "",
-      activeFannyPack: "",
+      activeUserData: "",
       activeFannyPackName: "",
-      userFannyPackz: ""
+      activeFannyPackSerial: "",
+      activeFannyPackData: ""
     };
+    // States
+    this.state = { fannyPack: fannyPack };
   }
   // Change FannyPack - callback
   changeActiveFannyPack = (fannyPackSerial, fannyPackName) => {
-    this.setState({ 
-      activeFannyPack: fannyPackSerial,
-      activeFannyPackName: fannyPackName
-    });
+    this.setState({
+      fannyPack: {
+        ...this.state.fannyPack, 
+        activeFannyPackName: fannyPackName,
+        activeFannyPackSerial: fannyPackSerial
+      }
+    })
   }
   // Fetch FannyPacks
   getUserFannyPack = () => {
@@ -32,7 +39,15 @@ class FannyPackz extends Component {
     let sessionData = JSON.parse(localStorage.getItem('sessionData'));
     // If(serial) good - Set state for user_serial
     if (sessionData == null || !sessionData.user_serial || !sessionData) {
-      this.setState({ activeUser: "No user info from sessionData" });
+      this.setState({
+        fannyPack: {
+          ...this.state.fannyPack, 
+          activeUser: "No user info from sessionData",
+          activeUserData: "",
+          activeFannyPackSerial: "No user info from sessionData",
+          activeFannyPackData: ""
+        }
+      })
       this.props.updateAlertMessage({ pageMessage: "No user info from sessionData" });
     } else if (sessionData.user_serial) {
       // Set ActiveUser
@@ -44,16 +59,28 @@ class FannyPackz extends Component {
       // if any response
       .then((response) => {
         this.setState({
-          activeFannyPackName: response.data.pageMessage.results[0].fannypack_name,
-          activeFannyPack: response.data.pageMessage.results[0].fannypack_serial,
-          activeUser: sessionData.user_serial,
-          userFannyPackz: response.data.pageMessage.results,
+          fannyPack: {
+            ...this.state.fannyPack, 
+            activeUser: sessionData.user_serial,
+            activeUserData: sessionData,
+            activeFannyPackName: response.data.pageMessage.results[0].fannypack_name,
+            activeFannyPackSerial: response.data.pageMessage.results[0].fannypack_serial,
+            activeFannyPackData: response.data.pageMessage.results
+          }
         })
-        this.props.updateAlertMessage({ pageMessage: "FannyPackz fetched!"});
+        this.props.updateAlertMessage({ pageMessage: "FannyPackz fetched!" });
       })
       // catch error
       .catch((error) => {
-        this.setState({ userFannyPackz: error.message })
+        this.setState({
+          fannyPack: {
+            ...this.state.fannyPack, 
+            activeUser: sessionData.user_serial,
+            activeUserData: sessionData,
+            activeFannyPack: error.message,
+            activeFannyPackData: error
+          }
+        })
         this.props.updateAlertMessage({ pageMessage: "Errr: " + error.message });
       });
     }
@@ -65,28 +92,27 @@ class FannyPackz extends Component {
   }
   // Rrrr
   render() {
+    let pageChart = <Charts
+        fannyPack={this.state.fannyPack} />;
+    let pageContent = <Content
+        fannyPack={this.state.fannyPack}
+        getUserFannyPack={this.getUserFannyPack}
+        changeActiveFannyPack={this.changeActiveFannyPack}
+        updateAlertMessage={this.props.updateAlertMessage} />
     // Bling
     return (
       // FannyPackz
       <div className="row w-100 h-85">
         {/* Logs and Category - hide-on-med-and-down */}
         <div className="col s12 m12 l4 h-100 overflowN hide-on-med-and-down">
-          <Charts />
+          {pageChart}
         </div>
         {/* Contents */}
         <div className="col s12 m12 l8 h-100 overflowN">
           <div className="row h-100 p-2">
             {/* Feature - Profile */}
             <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
-              <Content
-                getUserFannyPack={this.getUserFannyPack}
-                changeActiveFannyPack={this.changeActiveFannyPack}
-                userFannyPackz={this.state.userFannyPackz}
-                activeFannyPack={this.state.activeFannyPack}
-                activeFannyPackName={this.state.activeFannyPackName}
-                activeUser={this.state.activeUser}
-                updateAlertMessage={this.props.updateAlertMessage}
-                pageName={this.props.pageName} />
+              {pageContent}
             </div>
           </div>
         </div>
