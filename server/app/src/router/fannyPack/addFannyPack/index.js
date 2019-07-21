@@ -42,10 +42,10 @@ const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 // blingBlaw
 const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
-const create_table_account_types = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_types");
-const create_table_account_category = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_category");
-const create_table_account_records = require("../../../modules/statements/fannyPack/addFannyPack/create_table_account_records");
 const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
+const create_table_account_types = require("../../../modules/statements/account/accountType/createAccountType/create_table_account_types");
+const create_table_account_category = require("../../../modules/statements/account/accountCategory/createAccountCategory/create_table_account_category");
+const create_table_account_records = require("../../../modules/statements/account/accountRecord/createAccountRecord/create_table_account_records");
 // pageMessage
 let pageMessage = {
     title: "add_fannyPack",

@@ -32,6 +32,9 @@ let pageMessage = { title: "create_table_account", checked: "", message: "", res
 // Function - Create Table - account_types
 const create_table_account = function () {
 
+
+    let account_serial = "table name";
+
     // Create Table - create_Category_Table
     let sql_statement = "CREATE TABLE IF NOT EXISTS " +
     db_config.database_labels.schema_name + "." +
