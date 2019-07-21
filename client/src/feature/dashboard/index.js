@@ -1,11 +1,5 @@
 /*
-Dashboard Page
-
--- PageMessage_Alert
--- pageDisplay
-  - FannyPack_page
-  - Users_Page
-  
+  Dashboard Page
 */ 
 // Page-Redirect
 import React, { Component } from 'react';
@@ -46,9 +40,7 @@ class Dashboard extends Component {
     console.log("updateAlertMessage: " + JSON.stringify(msg));
     this.setState({ alertMessage: msg })
   }
-  // Pages
-  // - FannyPack | Users
-  // 
+
   // activeFannyPack 
   activeFannyPack = () => {
     this.setState({
@@ -65,34 +57,31 @@ class Dashboard extends Component {
       }
     })
   }
-  //
   // blaze contents
   render() {
+    let FannyPackPage = <FannyPack
+        pageName={this.pageName}
+        updateAlertMessage={this.updateAlertMessage}
+        pageDisplay={this.state.pageDisplay} />;
+    let UserPage = <User
+        pageName={pageName}
+        updateAlertMessage={this.updateAlertMessage}
+        pageDisplay={this.state.pageDisplay} />;
     // Which content to show
     let showPage, pageName;
     if (this.state.pageDisplay.fannyPackPage === true) {
       // FannyPack page
       pageName = "FannyPack page";
-      showPage = <FannyPack
-        pageName={pageName}
-        updateAlertMessage={this.updateAlertMessage}
-        pageDisplay={this.state.pageDisplay} />;
+      showPage = FannyPackPage;
     } else if (this.state.pageDisplay.userPage === true) {
       // User page
       pageName = "User page";
-      showPage = <User
-        pageName={pageName}
-        updateAlertMessage={this.updateAlertMessage}
-        pageDisplay={this.state.pageDisplay} />;
+      showPage = UserPage;
     } else {
       // FannyPack page
       pageName = "FannyPack page";
-      showPage = <FannyPack
-        pageName={pageName}
-        updateAlertMessage={this.updateAlertMessage}
-        pageDisplay={this.state.pageDisplay} />;
+      showPage = FannyPackPage;
     }
-    // 
     // #brrrrrom
     return ( 
       <div className="h-100 w-100">
