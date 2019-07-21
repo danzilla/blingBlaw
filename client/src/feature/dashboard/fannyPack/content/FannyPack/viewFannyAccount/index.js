@@ -1,38 +1,53 @@
-import React, { Component } from 'react';
-
-import ViewFannyPack from './viewFannyPack';
-// Content
-class Content extends Component {
-  // props
-  constructor(props) {
-    super(props)
-    const pageDisplay = {
-      viewAccountPage: true,
-      viewFannyPackPage: false
+import React, { Component } from 'react'
+import { emojify } from 'react-emojione';
+// viewAccounts
+class viewAccounts extends Component {
+    constructor(props) {
+      super(props)
+      this.state = { Content: "Content"}
     }
-    this.state = {
-      pageDisplay: pageDisplay
-    }
-  }
   // Raaar
   render() {
     return (
-      <div className="container">
-        <ViewFannyPack
-          activeShowAccount={this.props.activeShowAccount}
-          activeShowFannyPack={this.props.activeShowFannyPack}
+      <div class="container">
           
-          getUserFannyPack={this.props.getUserFannyPack}
-          updateAlertMessage={this.props.updateAlertMessage}
-          changeActiveFannyPack={this.props.changeActiveFannyPack}
-          userFannyPackz={this.props.userFannyPackz}
-          activeFannyPackName={this.props.activeFannyPackName}
-          activeFannyPack={this.props.activeFannyPack}
-          activeUser={this.props.activeUser}
-          pageName={this.props.pageName} />    
+          <nav className="transparent">
+            <div class="nav-wrapper ">
+              <a href="#"
+                className="right blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-4">
+                <i className="material-icons">add</i>
+              </a>
+              <a href="#" 
+                class="brand-logo left blue-text text-darken-2">
+                {this.props.fannyPack.activeFannyPackName} - {this.props.fannyPack.activeFannyPackSerial}
+              </a>
+            </div>
+          </nav>
 
+
+            <h1> ADD Accounts </h1>
+            FannyPacks - Account - Record - 
+
+            POST - Send with - user and fanny serial
+          <div class="row valign-wrapper light-blue accent-3 z-depth-1">
+            <div class="col s2 center-align">
+              Account Type
+            </div>
+            <div class="col s8 center-align">
+              <span class="black-text">
+                <p> Account Name </p>
+              </span>
+            </div>
+            <div class="col s2 center-align">
+              <button onClick={this.props.activeShowAccount} name="action"
+                className="btn waves-effect waves-light light-blue accent-2">
+                {emojify(':purse:')}
+              </button>
+            </div>
+          </div>
+        
       </div>
     );
   }
 }
-export default Content;
+export default viewAccounts;

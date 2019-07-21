@@ -37,8 +37,8 @@ class AddFannyPack extends Component {
             hideAccountAddButton={this.hideAccountAddButton}
             getUserFannyPack={this.props.getUserFannyPack}
             updateAlertMessage={this.props.updateAlertMessage}
-            activeUser={this.props.activeUser}
-            activeFannyPack={this.props.activeFannyPack} />
+            changeActiveFannyPack={this.props.changeActiveFannyPack}
+            fannyPack={this.props.fannyPack} />
         }
       </Fragment>
     );

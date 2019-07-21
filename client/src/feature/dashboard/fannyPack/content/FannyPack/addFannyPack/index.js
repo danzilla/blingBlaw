@@ -10,8 +10,9 @@ class Head extends Component {
     }
   // Raaar
   render() {
+    // FannyPack DropDown and Add FannyForm
     let fannyData = [];
-    let data = this.props.userFannyPackz;
+    let data = this.props.fannyPack.activeFannyPackData;
     for (let i = 0; i < data.length; i++) {
       let pushD = {
         fannypack_name: data[i].fannypack_name,
@@ -21,28 +22,26 @@ class Head extends Component {
     // brrrrrr
     return (
       <Fragment>
-        <div className="container center-align py-3">
+        <div className="container center-align">
           <a className="dropdown-trigger btn-large" data-target="DropDrip1">
-            {this.props.activeFannyPackName} - {this.props.activeFannyPack}
+            {this.props.fannyPack.activeFannyPackName} - {this.props.fannyPack.activeFannyPackSerial}
           </a>
           {/* FannyPack list */}
           <ul id="DropDrip1" className="dropdown-content">
             {fannyData.map(data => (
             <li key={data.fannypack_serial}>
               <a onClick={() => this.props.changeActiveFannyPack(data.fannypack_serial, data.fannypack_name)}>
-                {data.fannypack_name} - {data.fannypack_serial}
+                {data.fannypack_serial} - {data.fannypack_name}
               </a>
             </li>
             ))}
           </ul>
+          {/* DropDown */}
           <AddFannyPackForm
             getUserFannyPack={this.props.getUserFannyPack}
             updateAlertMessage={this.props.updateAlertMessage}
             changeActiveFannyPack={this.props.changeActiveFannyPack}
-            userFannyPackz={this.props.userFannyPackz}
-            activeFannyPack={this.props.activeFannyPack}
-            activeUser={this.props.activeUser}
-            pageName={this.props.pageName} />
+            fannyPack={this.props.fannyPack} />
         </div>
         <Materialize/>
       </Fragment>
