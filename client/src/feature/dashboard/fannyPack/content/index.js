@@ -10,8 +10,8 @@ class Content extends Component {
     super(props)
     // pageDisplay
     const pages = {
-      showFannyPack: false,
-      showAccountRecord: true,
+      showFannyPack: true,
+      showAccountRecord: false,
       showAccountCategory: false,
       showAccountType: false,
     };
@@ -38,7 +38,8 @@ class Content extends Component {
   }
   // Raaar
   render() {
-    // FannyPackPage 
+
+    // FannyPackPage
     let FannyPackPage = <FannyPack
         activeShowAccount={this.activeShowAccount}
         activeShowFannyPack={this.activeShowFannyPack}
@@ -47,7 +48,7 @@ class Content extends Component {
         updateAlertMessage={this.props.updateAlertMessage}
         changeActiveFannyPack={this.props.changeActiveFannyPack}
         fannyPack={this.props.fannyPack} />;
-    // AccountPage 
+    // AccountPage
     let AccountPage = <AccountRecord    
         activeShowAccount={this.activeShowAccount}
         activeShowFannyPack={this.activeShowFannyPack}
@@ -56,6 +57,8 @@ class Content extends Component {
         updateAlertMessage={this.props.updateAlertMessage}
         changeActiveFannyPack={this.props.changeActiveFannyPack}
         fannyPack={this.props.fannyPack} />;
+
+
     // Which content to show
     let showPage;
     if (this.state.pages.showFannyPack === true) {

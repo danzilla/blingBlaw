@@ -9,7 +9,6 @@ import Charts from './charts';
 import Content from './content';
 // FannyPackz
 class FannyPackz extends Component {
-  // state
   constructor(props) {
     super(props);
     // FannyPack Display

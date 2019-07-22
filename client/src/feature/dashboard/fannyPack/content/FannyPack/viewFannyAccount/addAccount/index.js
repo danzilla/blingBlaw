@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { emojify } from 'react-emojione';
 // viewAccounts
-class viewAccounts extends Component {
+class addAccounts extends Component {
     constructor(props) {
       super(props)
       this.state = { Content: "Content"}
@@ -24,8 +24,11 @@ class viewAccounts extends Component {
           </button>
         </div>
 
+        <p>Create Fanny_{this.props.fannyPack.activeFannyPackSerial}.account_UNO_SERIAL_table</p>
+        <p>INSERT INTO Fanny_{this.props.fannyPack.activeFannyPackSerial}.account_record_table</p>
+
       </Fragment>
     );
   }
 }
-export default viewAccounts;
+export default addAccounts;
