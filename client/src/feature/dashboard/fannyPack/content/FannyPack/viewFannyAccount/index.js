@@ -5,7 +5,7 @@ import AddAccount from './addAccount';
 import ViewAccount from './viewAccount';
 
 // viewAccounts
-class viewAccounts extends Component {
+class viewFannyPackAccounts extends Component {
     constructor(props) {
       super(props)
       this.state = { Content: "Content"}
@@ -37,4 +37,4 @@ class viewAccounts extends Component {
     );
   }
 }
-export default viewAccounts;
+export default viewFannyPackAccounts;

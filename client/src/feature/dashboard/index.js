@@ -1,6 +1,8 @@
 /*
   Dashboard Page
-*/ 
+  Two Pages | User and FannyPack
+  - messageAlert()
+*/
 // Page-Redirect
 import React, { Component } from 'react';
 // Navigation and Messages
