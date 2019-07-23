@@ -97,7 +97,8 @@ class FannyPackz extends Component {
         fannyPack={this.state.fannyPack}
         getUserFannyPack={this.getUserFannyPack}
         changeActiveFannyPack={this.changeActiveFannyPack}
-        updateAlertMessage={this.props.updateAlertMessage} />
+        updateAlertMessage={this.props.updateAlertMessage} />;
+      
     // Bling
     return (
       // FannyPackz

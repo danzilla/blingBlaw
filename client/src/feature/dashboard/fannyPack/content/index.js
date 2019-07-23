@@ -18,6 +18,8 @@ class Content extends Component {
     // State
     this.state = { pages: pages }
   }
+
+
   // activeShowFannyPack
   activeShowFannyPack = () => {
     this.setState({
@@ -36,6 +38,10 @@ class Content extends Component {
       }
     })
   }
+
+
+
+  
   // Raaar
   render() {
 
