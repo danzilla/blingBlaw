@@ -22,7 +22,7 @@ view_fannyPackz_by_user_serial(userData)
 // Register a FannyPack | Keep it minimal
 const async = require('async');
 // blingBlaw
-const view_fannyPackz_by_user_serial = require("../../../modules/statements/fannyPack/viewFannyPack/view_fannyPackz_by_user_serial");
+const view_fannyPackz_by_user_serial = require("../../../config/statements/fannyPack/viewFannyPack/view_fannyPackz_by_user_serial");
 // pageMessage
 let pageMessage = {
     title: "view_fannyPack",

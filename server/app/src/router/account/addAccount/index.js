@@ -36,8 +36,8 @@ const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 // blingBlaw
-const create_schema_user_fannyPack = require("../../../modules/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
-const add_newFannyPack_to_fannypacks_table = require("../../../modules/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
+const create_schema_user_fannyPack = require("../../../config/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
+const add_newFannyPack_to_fannypacks_table = require("../../../config/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
 // pageMessage
 let pageMessage = {
     title: "add_fannyPack",

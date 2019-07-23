@@ -30,13 +30,13 @@
 // Async Waterfall
 const async = require('async');
 // bling #build
-kill_connection = require("../../../modules/statements/firstRun/initiateDatabase/kill_connection");
-drop_Database = require("../../../modules/statements/firstRun/initiateDatabase/drop_database");
-create_Database = require("../../../modules/statements/firstRun/initiateDatabase/create_database");
-create_Schema = require("../../../modules/statements/firstRun/initiateDatabase/create_schema");
-create_Table_UserAuth = require("../../../modules/statements/firstRun/initiateDatabase/create_table_userAuth");
-create_Table_UserDetails = require("../../../modules/statements/firstRun/initiateDatabase/create_table_userDetails");
-create_Table_fannyPackz = require("../../../modules/statements/firstRun/initiateDatabase/create_table_fannyPackz");
+kill_connection = require("../../../config/statements/firstRun/initiateDatabase/kill_connection");
+drop_Database = require("../../../config/statements/firstRun/initiateDatabase/drop_database");
+create_Database = require("../../../config/statements/firstRun/initiateDatabase/create_database");
+create_Schema = require("../../../config/statements/firstRun/initiateDatabase/create_schema");
+create_Table_UserAuth = require("../../../config/statements/firstRun/initiateDatabase/create_table_userAuth");
+create_Table_UserDetails = require("../../../config/statements/firstRun/initiateDatabase/create_table_userDetails");
+create_Table_fannyPackz = require("../../../config/statements/firstRun/initiateDatabase/create_table_fannyPackz");
 // Collect FirstRunCheck
 const First_Run_Check_Result = []
 // Initiate Database 
