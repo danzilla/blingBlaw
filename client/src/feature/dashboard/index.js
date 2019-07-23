@@ -1,10 +1,7 @@
-/*
-  Dashboard Page
-  Two Pages | User and FannyPack
-  - messageAlert()
-*/
-// Page-Redirect
+// Dashboard Page
 import React, { Component } from 'react';
+// Global-Style Materialize
+import Materialize from '../../util/Materialize';
 // Navigation and Messages
 import Navigation from '../../component/Navigation';
 import MessageAlert from '../../component/MessageAlert';
@@ -42,7 +39,6 @@ class Dashboard extends Component {
     console.log("updateAlertMessage: " + JSON.stringify(msg));
     this.setState({ alertMessage: msg })
   }
-
   // activeFannyPack 
   activeFannyPack = () => {
     this.setState({
@@ -59,6 +55,14 @@ class Dashboard extends Component {
       }
     })
   }
+
+  
+  // componentDidMount
+  componentDidMount() {
+    // GET sessionData
+    let sessionData = JSON.parse(localStorage.getItem('sessionData'));
+    console.log("sessionData: " + JSON.stringify(sessionData));
+  }
   // blaze contents
   render() {
     let FannyPackPage = <FannyPack
@@ -69,6 +73,8 @@ class Dashboard extends Component {
         pageName={pageName}
         updateAlertMessage={this.updateAlertMessage}
         pageDisplay={this.state.pageDisplay} />;
+
+        
     // Which content to show
     let showPage, pageName;
     if (this.state.pageDisplay.fannyPackPage === true) {
@@ -93,10 +99,15 @@ class Dashboard extends Component {
           activeFannyPack={this.activeFannyPack}
           activeUsers={this.activeUsers}
           pageName={pageName} />
+
         {/* Alert Message */}
         <MessageAlert alertMessage={this.state.alertMessage} />
+
         {/* Page content */}
         {showPage}
+
+        {/* Init Materializecss */}
+        <Materialize />
       </div>
     );
   }

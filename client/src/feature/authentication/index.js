@@ -1,15 +1,13 @@
-// Authentication
-// Page-Redirect
-import React, { Component } from 'react'
+// Authentication Page
+import React, { Component } from 'react';
 // Global-Style Materialize
-import Materialize from '../../util/Materialize'
-// Navigation and Messages
-import Navigation from '../../component/Navigation'
-import MessageAlert from '../../component/MessageAlert'
+import Materialize from '../../util/Materialize';
+// Messages
+import MessageAlert from '../../component/MessageAlert';
 // Contents 
-import LoginPage from './login'
-import RegisterPage from './register'
-import FirstRunPage from './firstrun'
+import LoginPage from './login';
+import RegisterPage from './register';
+import FirstRunPage from './firstrun';
 // Dashboard
 class Dashboard extends Component {
   // constructor
