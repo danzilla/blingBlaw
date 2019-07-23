@@ -8,10 +8,32 @@ class viewAccounts extends Component {
     this.state = { Content: "Content"}
   }
 
+
   // Fetch FannyPacks's Accounts
   getUserFannyPackAccounts = () => {
-    axios.post('http://localhost:5000/fannypack/view', {
-      userSerial: "sessionData.user_serial"
+
+    console.log("account/props: \n" + JSON.stringify(this.props.fannyPack));
+
+    axios.post('http://localhost:5000/account/view', {
+      userSerial: this.props.fannyPack.activeUser,
+      fannyPackSerial: this.props.fannyPack.activeFannyPackSerial
+      })
+      // if any response
+      .then((response) => {
+        console.log("account/view: \n" + JSON.stringify(response));
+      })
+      // catch error
+      .catch((error) => {
+        console.log("account/view: \n" + JSON.stringify(error));
+      });
+  }
+
+
+  // Fetch FannyPacks's Accounts
+  addUserFannyPackAccounts = () => {
+    axios.post('http://localhost:5000/account/add', {
+      userSerial: "this.props.fannyPack.activeUser",
+      fannyPackSerial: "this.props.fannyPack.activeFannyPackSerial"
     })
     // if any response
     .then((response) => {
@@ -22,15 +44,23 @@ class viewAccounts extends Component {
       console.log("JSON-error: " + JSON.stringify(error));
     });
   }
+
   // componentDidMount
   componentDidMount() {
+
+    console.log(JSON.stringify(this.props.fannyPack));
+    
     // Fetch userFannyPackAccounts
-    this.getUserFannyPackAccounts();
+    this.getUserFannyPackAccounts()
   }
   // Raaar
   render() {
     return (
       <Fragment>
+
+        {JSON.stringify(this.props.fannyPack)}
+
+        <a className="btn-large" onClick={this.addUserFannyPackAccounts}>onClick add</a>
 
         <p>SELECT * FROM Fanny_{this.props.fannyPack.activeFannyPackSerial}.account_record_table</p>
         <p>activeFannyPack: {JSON.stringify(this.props.fannyPack.activeFannyPackSerial)}</p>

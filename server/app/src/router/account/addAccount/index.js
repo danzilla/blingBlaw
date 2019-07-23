@@ -15,16 +15,13 @@
     - Requirement
         - > account_type_id, account_serial, account_lastmodify, account_owner_serial
     - Create Table
-        - create fannypack-fannypacks_serial.account_serial_id
+        - create fannypack_fannypacks_serial.account_serial_id
     - Add
-        - Add newAccountTable to fannypack-fannypacks_serial.account_record_table
+        - Add newAccountTable to fannypack_fannypacks_serial.account_record_table
 
-create_table_new_account(userData)
-add_new_account_to_users_account_record_table(userData)
+    create_table_new_account(userData)
+    add_new_account_to_users_account_record_table(userData)
  */
-
-
-
 
 // Add a AccountTable | Keep it minimal
 const async = require('async');
@@ -36,23 +33,23 @@ const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 // blingBlaw
-const create_schema_user_fannyPack = require("../../../config/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
-const add_newFannyPack_to_fannypacks_table = require("../../../config/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
+const create_table_new_account = require("../../../config/statements/account/accountTransaction/createAccountTransaction/create_table_account_transaction_table");
+const add_new_account_to_users_account_record_table = require("../../../config/statements/account/accountRecord/addAccountRecord/add_newAccountTransactionTable_to_account_record");
 // pageMessage
 let pageMessage = {
-    title: "add_fannyPack",
+    title: "create_transactionTable_accountRecord",
     checked: "",
     message: "",
     results: ""
 };
-// Collect add_fannyPack_results
-let add_fannyPack_results = {
-    create_schema_user_fannyPack: [],
-    create_table_account_types: []
+// Collect create_new_account
+let create_account_results = {
+    create_table_new_account: [],
+    add_new_account_to_users_account_record_table: []
 };
 // POST - add FannyPack module
 // #raaaawr
-const add_New_FannyPack = function (req, res, next) {
+const create_new_account = function (req, res, next) {
     /*
         accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
         account_type_id VARCHAR(36) NOT NULL,
@@ -63,14 +60,14 @@ const add_New_FannyPack = function (req, res, next) {
     // prepare userData
     // req = user_serial and FannyPack_name
     let userData = {
-        userSerial: req.body.userSerial,
-        fannyPack: req.body.fannyPack,
-        fannyPackSerial: Token.generate(),
-        fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-        fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        userfannyPackSerial: req.body.fannyPackSerial,
+        account_type_id: Token.generate(),
+        account_serial: Token.generate(),
+        account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        account_owner_serial: req.body.userSerial
     };
     // If req.body == Empty 
-    if (!req.body.userSerial || !req.body.fannyPack) {
+    if (!req.body.userSerial) {
         // pageMessage
         pageMessage = {
             checked: "Empty-field",
@@ -81,12 +78,12 @@ const add_New_FannyPack = function (req, res, next) {
     } else {
         // Create FannyPack
         async.waterfall([
-            function (callbackTwo) {
-                create_schema_user_fannyPack(callbackTwo, userData, add_fannyPack_results);
+            function (callback) {
+                create_table_new_account(callback, userData, create_account_results);
             },
-            function (prev, callbackTwo) {
-                if (prev.checked != "checked") { callbackTwo(null, "nada") } else {
-                    create_table_account_records(callbackTwo, userData, add_fannyPack_results);
+            function (prev, callback) {
+                if (prev.checked != "checked") { callback(null, "nada") } else {
+                    add_new_account_to_users_account_record_table(callback, userData, create_account_results);
                 }
             }
         ], function (err, result) {
@@ -104,16 +101,16 @@ const add_New_FannyPack = function (req, res, next) {
                 pageMessage.message = "Internal-error " + pageMessage.title;
                 pageMessage.results = "Internal-error " + pageMessage.title;
             }
-            console.log(JSON.stringify(pageMessage));
+            console.log("create_account_results: \n" + JSON.stringify(create_account_results));
             // #brrrr
             res.send({
                 pageMessage: pageMessage,
-                addFannyPackResult: add_fannyPack_results
+                createNewAccount: create_account_results
             })
         });
     }
 }
-module.exports = add_New_FannyPack;
+module.exports = create_new_account;
 
 
 

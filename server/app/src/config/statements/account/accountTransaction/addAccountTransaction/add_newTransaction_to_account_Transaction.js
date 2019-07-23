@@ -1,4 +1,4 @@
-/* SQL statementz - FannyPack
+/* SQL statementz - Account
  * database_Name - blingblaw_assets
  * │
  * └───Schema - users
@@ -10,58 +10,56 @@
  * │   │   Table - account_type - account_type_id
  * │   │   Table - account_record - account_id
  * │   │   Table - account_One - account_id
- * 
-    Create - FannyPack
-    - Requirement
-        - > fannyPackName, userSerialID, fannyPackSerial
-    - Create Schema
-        - create fannypack_userID_fannypacks_serial
-    - Create Table
-        - create fannypack_userID_fannypacks_serial.account_types_table
-        - create fannypack_userID_fannypacks_serial.account_category_table
-        - create fannypack_userID_fannypacks_serial.account_record_table
-    - Add
-        - Add FannyPack_info to users_assets.fannypacks_table
-        - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
-        - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
 
-create_schema_user_fannyPack(userData)
-create_table_account_category(userData)
-create_table_account_records(userData)
-create_table_account_types(userData)
-add_newFannyPack_to_fannypacks_table(userData)
+    Create - Account
+    - Requirement
+        - > account_type_id, account_serial, account_lastmodify, account_owner_serial
+    - Create Table
+        - create fannypack_fannypacks_serial.account_serial_id
+    - Add
+        - Add newAccountTable to fannypack_fannypacks_serial.account_record_table
+
+    create_table_new_account(userData)
+    add_new_account_to_users_account_record_table(userData)
  */
 // DB Labels || DB Connections
 const db_config = require('../../../app.db');
 const danzillaDB = require("../../../danzillaDB");
 // pageMessage
-let pageMessage = { title: "create_Category_Table", checked: "", message: "", results: "" };
+let pageMessage = { title: "add_accountTransactionTable_to_userAccounrRecord", checked: "", message: "", results: "" };
 // Create Table - create_table_account_category
 // Function - Create Table - account_category
-const create_Category_Table = function (callback, userData, createCategoryTableResult) {
-    // Create Table - create_Category_Table
-    let sql_statement = `CREATE TABLE IF NOT EXISTS 
-                fannyPack_${userData.fannyPackSerial}.${db_config.database_labels.table_fannyPack_category} 
-                (
-                    category_id VARCHAR(254) UNIQUE NOT NULL,
-                    category_name VARCHAR(254) UNIQUE NOT NULL,
-                    category_parent VARCHAR(36) NOT NULL,
-                    category_created TIMESTAMP,
-                    category_lastmodify TIMESTAMP
-                );`;
+const add_accountTransactionTable_to_userAccounrRecord = function (callback, userData, create_account_results) {
+    /*
+        accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+        account_type_id VARCHAR(36) NOT NULL,
+        account_serial VARCHAR(36) NOT NULL,
+        account_lastmodify TIMESTAMP,
+        account_owner_serial VARCHAR(36) NOT NULL
+    */
+    // prepare Insert Data
+    const accountAddData = [
+        userData.account_type_id,
+        userData.account_serial,
+        userData.account_lastmodify,
+        userData.account_owner_serial
+    ];
+    // Insert Query 
+    let accountAddQuery = `INSERT INTO fannypack_${userData.userfannyPackSerial}.${db_config.database_labels.table_fannyPack_record}
+                      (account_type_id, account_serial, account_lastmodify, account_owner_serial) VALUES($1, $2, $3, $4) RETURNING *;`;
     // SQL Query - Fire
-    danzillaDB.pool.query(sql_statement,
+    danzillaDB.pool.query(accountAddQuery, accountAddData,
         // err catch
         function (err, Results) {
             // If no errors and Results == Good
         if (!err && Results) { 
             pageMessage.checked = "checked";
-            pageMessage.message = "Created Category_Table!";
+            pageMessage.message = "Account_table been added to Account_record!";
             pageMessage.results = Results;
         } // if any errors
         else if (err) {
             pageMessage.checked = err.code;
-            pageMessage.message = "Error creating Category_Table";
+            pageMessage.message = "Error adding Account_Table info to Account_record";
             pageMessage.results = err;
         } // if any else
         else {
@@ -69,8 +67,8 @@ const create_Category_Table = function (callback, userData, createCategoryTableR
             pageMessage.message = "Internal Error";
             pageMessage.results = "Internal Error";
         }
-        createCategoryTableResult.create_table_account_category = pageMessage;
+        create_account_results.add_new_account_to_users_account_record_table = pageMessage;
         callback(null, pageMessage);
     });
 }
-module.exports = create_Category_Table;
+module.exports = add_accountTransactionTable_to_userAccounrRecord;
