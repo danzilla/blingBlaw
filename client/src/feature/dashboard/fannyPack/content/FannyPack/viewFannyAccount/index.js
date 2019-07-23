@@ -15,6 +15,7 @@ class viewFannyPackAccounts extends Component {
     return (
       <div class="container">
 
+
         <ViewAccount 
           activeShowAccount={this.props.activeShowAccount}
           activeShowFannyPack={this.props.activeShowFannyPack}
