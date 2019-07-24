@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // Global-Style Materialize
 import Materialize from '../../util/Materialize';
-// Charts 
-import Charts from './charts';
 // Content
 import Content from './content';
 // FannyPackz
@@ -90,8 +88,6 @@ class FannyPackz extends Component {
     }
   }
 
-
-
   // componentDidMount
   componentDidMount() {
     // Fetch userFannyPack
@@ -99,8 +95,6 @@ class FannyPackz extends Component {
   }
   // Rrrr
   render() {
-    let pageChart = <Charts
-        fannyPack={this.state.fannyPack} />;
     let pageContent = <Content
         fannyPack={this.state.fannyPack}
         getUserFannyPack={this.getUserFannyPack}
@@ -111,16 +105,14 @@ class FannyPackz extends Component {
     return (
       // FannyPackz
       <div className="row w-100 h-85">
-        {/* Logs and Category - hide-on-med-and-down */}
-        <div className="col s12 m12 l4 h-100 overflowN hide-on-med-and-down">
-          {pageChart}
-        </div>
         {/* Contents */}
-        <div className="col s12 m12 l8 h-100 overflowN">
-          <div className="row h-100 p-2">
-            {/* Feature - Profile */}
-            <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
-              {pageContent}
+        <div className="container h-100">
+          <div className="col s12 m12 l12 h-100 overflowN">
+            <div className="row h-100 p-2">
+              {/* Feature - Profile */}
+              <div className="col s12 m12 l12 h-100 card-1 z-depth-3 overflowN">
+                {pageContent}
+              </div>
             </div>
           </div>
         </div>

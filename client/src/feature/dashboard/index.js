@@ -8,10 +8,6 @@ import MessageAlert from '../../component/MessageAlert';
 // Contents 
 import FannyPack from '../../pages/fannyPack_page';
 import User from '../../pages/users_page';
-
-// Pages
-import {PageStates} from '../../util/activePages';
-
 // Dashboard
 class Dashboard extends Component {
   // constructor
@@ -34,8 +30,7 @@ class Dashboard extends Component {
     this.state = {
       messageAlert: messageAlert,
       pageDisplay: pageDisplay,
-      alertMessage: "fannyPackPage - Alert Message",
-      PageStates: PageStates
+      alertMessage: "fannyPackPage - Alert Message"
     };
   }
   // Alert Message 
@@ -106,11 +101,6 @@ class Dashboard extends Component {
 
         {/* Alert Message */}
         <MessageAlert alertMessage={this.state.alertMessage} />
-
-        <div className="container">
-          <h1>ADASD</h1>
-          <p>{JSON.stringify(this.state.PageStates)}</p>
-        </div>
 
         {/* Page content */}
         {showPage}
