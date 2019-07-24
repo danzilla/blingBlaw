@@ -6,8 +6,12 @@ import Materialize from '../../util/Materialize';
 import Navigation from '../../component/Navigation';
 import MessageAlert from '../../component/MessageAlert';
 // Contents 
-import FannyPack from './fannyPack';
-import User from './users';
+import FannyPack from '../../pages/fannyPack_page';
+import User from '../../pages/users_page';
+
+// Pages
+import {PageStates} from '../../util/activePages';
+
 // Dashboard
 class Dashboard extends Component {
   // constructor
@@ -30,7 +34,8 @@ class Dashboard extends Component {
     this.state = {
       messageAlert: messageAlert,
       pageDisplay: pageDisplay,
-      alertMessage: "fannyPackPage - Alert Message"
+      alertMessage: "fannyPackPage - Alert Message",
+      PageStates: PageStates
     };
   }
   // Alert Message 
@@ -56,7 +61,6 @@ class Dashboard extends Component {
     })
   }
 
-  
   // componentDidMount
   componentDidMount() {
     // GET sessionData
@@ -102,6 +106,11 @@ class Dashboard extends Component {
 
         {/* Alert Message */}
         <MessageAlert alertMessage={this.state.alertMessage} />
+
+        <div className="container">
+          <h1>ADASD</h1>
+          <p>{JSON.stringify(this.state.PageStates)}</p>
+        </div>
 
         {/* Page content */}
         {showPage}

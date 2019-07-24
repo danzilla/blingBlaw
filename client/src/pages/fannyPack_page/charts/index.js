@@ -1,8 +1,8 @@
 // FannyPackz
 import React, { Component } from 'react';
 // Charts 
-import Chart from '../../../../component/Charts/chart';
-import Bubble from '../../../../component/Charts/bubble';
+import Chart from '../../../component/Charts/chart';
+import Bubble from '../../../component/Charts/bubble';
 // FannyPackz
 class Charts extends Component {
   // state

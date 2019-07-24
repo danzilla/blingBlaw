@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 // NewFannyPack
 import AddFannyPackForm from './addFannyPackForm';
-import Materialize from '../../../../../../util/Materialize';
+import Materialize from '../../../../../util/Materialize';
 // Head
 class Head extends Component {
     constructor(props) {

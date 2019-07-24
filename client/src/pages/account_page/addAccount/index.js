@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 // AddAccountForm
 import AddAccountForm from './addAccountForm';
-import Materialize from '../../../../../../util/Materialize';
+import Materialize from '../../../util/Materialize';
 // Head
 class Head extends Component {
     constructor(props) {
