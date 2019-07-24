@@ -44,8 +44,8 @@ let pageMessage = {
 };
 // Collect create_new_account
 let create_account_results = {
-    create_table_new_account: [],
-    add_new_account_to_users_account_record_table: []
+    create_table_new_account: "",
+    add_new_account_to_users_account_record_table: ""
 };
 // POST - add FannyPack module
 // #raaaawr
