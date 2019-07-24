@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // Head and Body
 import FannyPack from './FannyPack';
-import AccountRecord from './AccountRecord';
+import AccountRecord from '../../account_page';
 // Content
 class Content extends Component {
   // constructor

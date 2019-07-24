@@ -34,7 +34,7 @@ class viewAccounts extends Component {
       console.log("account/view: \n" + JSON.stringify(error));
     });
   }
-
+  // constructor and states -- What is a constructor?
   constructor(props) {
     super(props)
     this.state = { 
@@ -46,27 +46,34 @@ class viewAccounts extends Component {
     }
     this.getUserFannyPackAccounts()
   }
-
   // componentWillReceiveProps
   componentWillReceiveProps(prevProps) {
     console.log("prevPropsprevProps\n" + JSON.stringify(prevProps))
     // Fetch userFannyPackAccounts
     this.getUserFannyPackAccounts()
   }
-
   // Raaar
   render() {
     let accountData = this.state.accountData;
     // Raaa
     return (
       <Fragment>
-        <div className="col s12 m12 l12 right-align py-1">
-          <a className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-2" 
-              onClick={this.getUserFannyPackAccounts}>
-              <i class="material-icons">cached</i>
-          </a>
+        {/* Refresh FannyPack info */}
+        <div className="col s12 m12 l12 py-1">
+          <div className="row">
+            <div className="btn-large col l10 m10 s10 pink lighten-2">
+              <span> {this.props.fannyPack.activeUser} - {this.props.fannyPack.activeFannyPackSerial} </span>
+            </div>
+            <div className="col l2 m2 s2">
+              <button onClick={this.getUserFannyPackAccounts} name="action"
+                className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-4">
+                <i class="material-icons">cached</i>
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="row">
+        {/* View FannyPack Accounts info */}
+        <div className="col s12 m12 l12">
           {accountData.map((account) =>
             <div className="row" key={account.account_serial}>
               <div className="btn-large col m2 s2 pink lighten-3">

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 // Global-Style Materialize
-import Materialize from '../../../util/Materialize';
+import Materialize from '../../util/Materialize';
 // Charts 
 import Charts from './charts';
 // Content
@@ -17,7 +17,9 @@ class FannyPackz extends Component {
       activeUserData: "",
       activeFannyPackName: "",
       activeFannyPackSerial: "",
-      activeFannyPackData: ""
+      activeFannyPackData: "",
+      activeAccount: "",
+      activeAccountData: ""
     };
     // States
     this.state = { fannyPack: fannyPack };
@@ -30,8 +32,11 @@ class FannyPackz extends Component {
         activeFannyPackName: fannyPackName,
         activeFannyPackSerial: fannyPackSerial
       }
-    })
+    });
   }
+
+
+
   // Fetch FannyPacks
   getUserFannyPack = () => {
     // Get and Parse - sessionData
@@ -84,6 +89,9 @@ class FannyPackz extends Component {
       });
     }
   }
+
+
+
   // componentDidMount
   componentDidMount() {
     // Fetch userFannyPack

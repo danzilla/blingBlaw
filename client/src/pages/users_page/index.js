@@ -1,7 +1,7 @@
 // User
 import React, { Component } from 'react';
 // Global-Style Materialize
-import Materialize from '../../../util/Materialize';
+import Materialize from '../../util/Materialize';
 // User
 // User Content
 import Content from './content';
