@@ -3,92 +3,85 @@ import axios from 'axios';
 import { emojify } from 'react-emojione';
 // viewAccounts
 class viewAccounts extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { Content: "Content"}
-  }
-
 
   // Fetch FannyPacks's Accounts
   getUserFannyPackAccounts = () => {
-
-    console.log("account/props: \n" + JSON.stringify(this.props.fannyPack));
-
     axios.post('http://localhost:5000/account/view', {
       userSerial: this.props.fannyPack.activeUser,
       fannyPackSerial: this.props.fannyPack.activeFannyPackSerial
-      })
-      // if any response
-      .then((response) => {
-        console.log("account/view: \n" + JSON.stringify(response));
-      })
-      // catch error
-      .catch((error) => {
-        console.log("account/view: \n" + JSON.stringify(error));
-      });
-  }
-
-
-  // Fetch FannyPacks's Accounts
-  addUserFannyPackAccounts = () => {
-    axios.post('http://localhost:5000/account/add', {
-      userSerial: "this.props.fannyPack.activeUser",
-      fannyPackSerial: "this.props.fannyPack.activeFannyPackSerial"
     })
     // if any response
     .then((response) => {
-      console.log("JSON-response: " + JSON.stringify(response));
+      if(response.data.pageMessage.results == "nada" || response.data.pageMessage.results == ""){
+        this.setState({
+          accountData: [{
+            account_type_id: "Nada - Error",
+            account_serial: "Nada - Error! ",
+            account_lastmodify: "Nada - Error!!!"
+            }]
+        })
+      } else {
+        this.setState({
+          accountData: response.data.pageMessage.results
+        })
+      }
     })
     // catch error
     .catch((error) => {
-      console.log("JSON-error: " + JSON.stringify(error));
+      this.setState({
+        content: error
+      })
+      console.log("account/view: \n" + JSON.stringify(error));
     });
   }
 
-  // componentDidMount
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.state = { 
+      accountData: [{
+      account_type_id: "Nada - Error",
+      account_serial: "Nada - Error! ",
+      account_lastmodify: "Nada - Error!!!"
+      }]
+    }
+    this.getUserFannyPackAccounts()
+  }
 
-    console.log(JSON.stringify(this.props.fannyPack));
-    
+  // componentWillReceiveProps
+  componentWillReceiveProps(prevProps) {
+    console.log("prevPropsprevProps\n" + JSON.stringify(prevProps))
     // Fetch userFannyPackAccounts
     this.getUserFannyPackAccounts()
   }
+
   // Raaar
   render() {
+    let accountData = this.state.accountData;
+    // Raaa
     return (
       <Fragment>
-
-        {JSON.stringify(this.props.fannyPack)}
-
-        <a className="btn-large" onClick={this.addUserFannyPackAccounts}>onClick add</a>
-
-        <p>SELECT * FROM Fanny_{this.props.fannyPack.activeFannyPackSerial}.account_record_table</p>
-        <p>activeFannyPack: {JSON.stringify(this.props.fannyPack.activeFannyPackSerial)}</p>
-        <p>activeUserData-user_serial: {JSON.stringify(this.props.fannyPack.activeUserData.user_serial)}</p>
-        
-        
-        <div className="row">
-          <div className="btn-large col m2 s2 pink lighten-3">
-            <span id={this.props.fannyPack.activeFannyPackSerial}>
-              Type {this.props.fannyPack.activeFannyPackName}
-            </span>
-            
-          </div>
-          <div className="btn-large col m8 s8 pink lighten-3">
-
-            view_transaction_table get - account_serial
-            
-            <span id={this.props.fannyPack.activeFannyPackSerial}>
-              Add new account to 
-            </span>
-            {this.props.fannyPack.activeFannyPackName}
-          </div>
-          <button onClick={this.props.activeShowAccount} name="action"
-            className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-4">
-            {emojify(':purse:')}
-          </button>
+        <div className="col s12 m12 l12 right-align py-1">
+          <a className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-2" 
+              onClick={this.getUserFannyPackAccounts}>
+              <i class="material-icons">cached</i>
+          </a>
         </div>
-
+        <div className="row">
+          {accountData.map((account) =>
+            <div className="row" key={account.account_serial}>
+              <div className="btn-large col m2 s2 pink lighten-3">
+                <span> Type {account.account_type_id} </span>
+              </div>
+              <div className="btn-large col m8 s8 pink lighten-3">
+                <span> {account.account_serial} - {account.account_lastmodify} </span>
+              </div>
+              <button onClick={this.props.activeShowAccount} name="action"
+                className="blue-text text-darken-4 transparent btn-large waves-effect waves-dark z-depth-4">
+                {emojify(':purse:')}
+              </button>
+            </div>
+          )}
+        </div>
       </Fragment>
     );
   }
