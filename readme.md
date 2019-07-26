@@ -17,14 +17,15 @@ Once, you are done with the above requirements.
 	- > `git clone https://github.com/danzilla/blingBlaw.git`
 - Change app-database-host
 	```
-	// File: server/app/src/modules/app.db.js
+	// File: server/app/src/config/app.db.js
 	//
 	// If Production - SET (PROD) 
 	//	- db_config.database_host_dev_prod.prod
 	// If Local and Development - SET (DEV) 
 	//	- db_config.database_host_dev_prod.dev
+	// Default-setting (DEV)
 	// Dev environment for docker_compose and npm
-	const db_Host = db_config.database_host_dev_prod.dev;
+	   const db_Host = db_config.database_host_dev_prod.dev;
 	```
 
 ## :whale: Deploy using Docker (Prod-Master-Deploy)
