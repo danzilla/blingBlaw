@@ -18,11 +18,11 @@
         - View FannyPack_info FROM users_assets.fannypacks_table
 
 view_fannyPackz_by_user_serial(userData)
- */
+*/
 // Register a FannyPack | Keep it minimal
 const async = require('async');
 // blingBlaw
-const view_fannyPackz_by_user_serial = require("../../../config/statements/fannyPack/viewFannyPack/view_fannyPackz_by_user_serial");
+const view_fannyPackz_by_user_serial = require("../../../config/statements/account/accountRecord/viewAccountRecord/view_AccountTransactionTable_from_account_record");
 // pageMessage
 let pageMessage = {
     title: "view_fannyPack",
@@ -32,26 +32,28 @@ let pageMessage = {
 };
 // Collect add_fannyPack_results
 let view_fannyPack_results = {
-    view_fannyPackz_by_user_serial: []
+    view_fannyPackz_by_user_serial: ""
 };
 // POST - add FannyPack module
 // #raaaawr
 const view_fannyPackz = function (req, res, next) {
+    // prePare userData for submit
+    let userData = {
+        fannyPackSerial: req.body.fannyPackSerial,
+        userSerial: req.body.userSerial
+    };
     // prepare userData
     // If req.body == Empty 
-    if (!req.body.userSerial) {
+    if (!req.body.userSerial || !req.body.fannyPackSerial) {
         // pageMessage
         pageMessage = {
+            title: pageMessage.title,
             checked: "Empty-field",
             message: "Cannot be empty fields",
             results: "nada"
         }; 
-        res.send({ pageMessage: pageMessage, addUserResult: "nada" });
+        res.send({ pageMessage: pageMessage, view_fannyPack_results: "nada" });
     } else {
-        // req = user_serial and FannyPack_name
-        let userData = {
-            userSerial: req.body.userSerial
-        };
         // Async Actionz
         async.parallel([
             function(callback) {
@@ -72,7 +74,8 @@ const view_fannyPackz = function (req, res, next) {
                     pageMessage.checked = view_fannyPack_results.view_fannyPackz_by_user_serial.checked;
                     pageMessage.message = view_fannyPack_results.view_fannyPackz_by_user_serial.message;
                     pageMessage.results = view_fannyPack_results.view_fannyPackz_by_user_serial.results;
-                } res.send({ pageMessage: pageMessage});
+                }
+                res.send({ pageMessage: pageMessage});
             }
         );
     }

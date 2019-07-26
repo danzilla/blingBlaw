@@ -36,10 +36,12 @@ app.use(cors());
 const firstrun = require('./src/router/firstrun');
 const userRouter = require('./src/router/user');
 const fannyPack = require('./src/router/fannyPack');
+const account = require('./src/router/account');
 
 app.use('/firstrun', firstrun); // Firstrun - /firstrun
 app.use('/user', userRouter); // user - /user
 app.use('/fannypack', fannyPack); // fannyPack - /fannypack
+app.use('/account', account); // account - /account
 
 // Wicked
 module.exports = app;

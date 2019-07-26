@@ -1,8 +1,5 @@
 # BlingBlaw - API :heartbeat: :sparkles: :fire:
 
-### Express - REST
-- http://localhost:5000
-
 ### Launch server :fire: 
 - npm start
 - http://localhost:5000
@@ -11,7 +8,8 @@
 Revised 
  - <s>May 26, 2019</s>
  - <s>June 27, 2019</s>
- - July 02, 2019
+ - <s>July 02, 2019</s>
+ - July 26, 2019
 
 ```
 database_Name - blingblaw_assets
@@ -30,6 +28,12 @@ database_Name - blingblaw_assets
 - FannyPacks - Contains Account, Account Types and category
 - accounts - Contains Account Statemetn information
 ```
+
+### To-Do
+> REST to GraphQL
+
+
+
 # Feature - ADD
 
 #### Create - FirstRun
@@ -44,53 +48,49 @@ database_Name - blingblaw_assets
     - create users_assets.user_details_table
     - create users_assets.fannypacks_table
 
+
 #### Create - User
 - Requirement
     - > User, Password, fannyPackName
 - userAdd
     - Add user to users_assets.user_auth_table
     - Add user to users_assets.user_details_table
-- Create - FannyPacks
-
+- Create - FannyPacks()
 #### Create - FannyPack
 - Requirement
     - > fannyPackName
 - Create Schema
-    - create fannypack_userID_fannypacks_serial
+    - create fannypack_FannypackSerial
 - Create Table
-    - create fannypack_userID_fannypacks_serial.account_types_table
-    - create fannypack_userID_fannypacks_serial.account_category_table
-    - create fannypack_userID_fannypacks_serial.account_record_table
+    - create fannypack_FannypackSerial.account_types_table
+    - create fannypack_FannypackSerial.account_category_table
+    - create fannypack_FannypackSerial.account_record_table
 - Add
     - Add FannyPack_info to users_assets.fannypacks_table
-    - Add SampleAccountType to fannypack_userID_fannypacks_serial.account_types_table
-    - Add SampleCategory to fannypack_userID_fannypacks_serial.account_category_table
-
-
+    - Add SampleAccountType to fannypack_FannypackSerial.account_types_table
+    - Add SampleCategory to fannypack_FannypackSerial.account_category_table
 #### Create - Account
 - Requirement
     - > account_type, account_info, dates
 - Create Table 
-    - create fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
+    - create fannypack_FannypackSerial.account_UnoSERIAL_table
 - Add
-    - Add account_UNO_SERIAL to fannypack_userID_fannypacks_serial.account_record_table
+    - Add account_UnoSERIAL_table to fannypack_FannypackSerial.account_record_table
 
 
 #### Add - account_Type
 - Requirement
     - > account_type_name
 - Add
-    - Add account_Type to fannypack_userID_fannypacks_serial.account_types_table
-
+    - Add account_Type to fannypack_FannypackSerial.account_types_table
 #### Add - account_Category
 - Requirement
     - > CatName
 - Add
-    - Add CatName to fannypack_userID_fannypacks_serial.account_category_table
-
+    - Add CatName to fannypack_FannypackSerial.account_category_table
 #### Add - account_Statemet
 - Requirement
-    - > AccountActivity.csv, dates
+    - > AccountActivity.csv
 - Add
-    - Add AccountActivity to fannypack_userID_fannypacks_serial.account_UNO_SERIAL_table
-    - Add lastModify to fannypack_userID_fannypacks_serial.account_record_table
+    - Add AccountActivity to fannypack_FannypackSerial.account_UnoSERIAL_table
+    - Add lastModify to fannypack_FannypackSerial.account_record_table
