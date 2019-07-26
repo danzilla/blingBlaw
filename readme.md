@@ -15,6 +15,17 @@
 Once, you are done with the above requirements.
 - Use **git** to clone the repo
 	- > `git clone https://github.com/danzilla/blingBlaw.git`
+- Change app-database-host
+	```
+	// File: server/app/src/modules/app.db.js
+	//
+	// If Production - SET (PROD) 
+	//	- db_config.database_host_dev_prod.prod
+	// If Local and Development - SET (DEV) 
+	//	- db_config.database_host_dev_prod.dev
+	// Dev environment for docker_compose and npm
+	const db_Host = db_config.database_host_dev_prod.dev;
+	```
 
 ## :whale: Deploy using Docker (Prod-Master-Deploy)
 - Change directory to blingBlaw
@@ -29,8 +40,8 @@ Once, you are done with the above requirements.
 	- > `cd ./blingBlaw/devops`
 - Install app **dependecies** using npm or another package manger
 	- > `npm install`
-- **Launch ** the app
+- **Launch** the app
 	- > `npm start`
 - Containerized services for
 	- > PostgreSQL + PGAdmin
-	- > Hot-reload issue with Node
+
