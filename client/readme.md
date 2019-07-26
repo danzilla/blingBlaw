@@ -11,4 +11,9 @@ A minimalist budget app (**React**)
 
 
 ### To-Do
-> Parallax
+- Create Action List 
+    - Action-Request
+    - Action-ActivePages
+- Redux
+
+
