@@ -9,7 +9,7 @@ const logger = require('morgan');
 app.use(logger('dev'));
 app.locals.pretty = true;
 
-// Beautiy
+// Beauty
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
