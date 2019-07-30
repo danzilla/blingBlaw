@@ -1,5 +1,24 @@
-# BlingBlaw  :green_heart: :sparkles: :tada:
-### A minimalist budget app
+# BlingBlaw -  A minimalist budget app :green_heart: :sparkles: :tada:
+
+### Engine		 : Node.JS v8+
+### Database	 : PostgreSQL
+### Server	 	 : ExpressJS
+### API-Endpoint: REST (Migrating to GraphQL)
+
+#### Server   - Node.JS || Express -> GraphQL -> PostGraphile
+#### Client   - Node.JS || React -> Redux -> Apollo client
+
+#### To-Do | Edited: July 30, 2019
+- [ ] Client - Remove Local States and Redux
+	- [ ] Rebuild Client | No more States | Use React Hooks | New UI Library and Same layout (Minimal)
+	- [ ] Redux Implement
+	- [ ] Apollo Client Implement
+- [ ] Server - Remove REST and Implment GraphQL
+	- [ ] Rebuild Server | New folder structure
+	- [ ] Remove REST | REST for Authentication and ActiveToken | Query driven for FannyData
+	- [ ] PostGraphile Implement
+- [ ] DevOps
+	- [ ] Dray new overview of the app
 
 # App Requirement
 - PostgreSQL (Containerized)
