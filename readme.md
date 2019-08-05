@@ -51,17 +51,17 @@ Once, you are done with the above requirements.
 - Change directory to blingBlaw
 	- > `cd ./blingBlaw`
 - **Run** the app
-	- > `docker-compose up --build`
+	- > `npm run start-prod`
 - Containerized services for
 	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
 
 ## :whale2: Deploy using Docker (Dev-Master-Deploy)
-- Change directory to ./blingBlaw/devops
-	- > `cd ./blingBlaw/devops`
+- Change directory to ./blingBlaw
+	- > `cd ./blingBlaw`
 - Install app **dependecies** using npm or another package manger
 	- > `npm install`
 - **Launch** the app
-	- > `npm start`
+	- > `npm run start-dev`
 - Containerized services for
 	- > PostgreSQL + PGAdmin
 

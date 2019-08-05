@@ -1,47 +1,62 @@
 // App - BlingBlaw - Danzilla
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Dev - logs
 const logger = require('morgan');
 app.use(logger('dev'));
 app.locals.pretty = true;
 
-// Beauty
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/view/'));
-
-// Session - Express-session
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-app.use(cookieParser());
-app.use(session({
-  secret: 'Danzilla-Rawr',
-  proxy: true,
-  resave: true,
-  saveUninitialized: true
-}));
-
 // Cors - Cross-Origin Resource Sharing
 const cors = require('cors')
 app.use(cors());
 
-// Routes - API
+// BodyParser - req.body and Strip to JSON
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// REST
+
+// FirstRun
 const firstrun = require('./src/router/firstrun');
-const userRouter = require('./src/router/user');
+app.use('/firstrun', firstrun);
+// FannyPack
 const fannyPack = require('./src/router/fannyPack');
-const account = require('./src/router/account');
+app.use('/fannypack', fannyPack);
+// User
+const user = require('./src/router/user');
+app.use('/user', user);
 
-app.use('/firstrun', firstrun); // Firstrun - /firstrun
-app.use('/user', userRouter); // user - /user
-app.use('/fannypack', fannyPack); // fannyPack - /fannypack
-app.use('/account', account); // account - /account
+// End of REST Router
 
+// GraphQL 
+// Data driven - #Eeeeee
+// 1
+// GraphQL - Schema
+// Construct a schema, using GraphQL schema language
+const schemaBling = require('./src/graphql/schema');
+// 2
+// GraphQL - RootValue
+// The root provides a resolver function for each API endpoint
+// Resolver == Actions? with Function()
+const rootValueBling = require('./src/graphql/rootValue')
+// 3 -  GraphQL
 // Wicked
+// Fire GraphQL
+// Express-graphql
+const graphqlHTTP = require('express-graphql');
+app.use('/graphql', 
+  bodyParser.json(), 
+  graphqlHTTP({
+    schema: schemaBling,
+    rootValue: rootValueBling,
+    graphiql: true,
+}));
+console.log(process.env.npm_package_name  + '- Running a GraphQL API server at localhost:5000/graphql');
+// End of GraphQL
+
+// Export Blazzze
 module.exports = app;

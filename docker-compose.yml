@@ -1,4 +1,3 @@
-# BlingBlaw
 # PostgreSQL + PGAdmin + Node(React) + Node(Express)
 
 # Docker-compose
@@ -7,7 +6,9 @@ version: '3'
 services:
   # PostgreSQL - postgres_db
   postgres_db:
-    build: ./devops/postgresql_db
+    build:
+      context: ./
+      dockerfile: ./server/postgresql.Dockerfile
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
   # API - server

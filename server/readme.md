@@ -33,7 +33,6 @@ database_Name - blingblaw_assets
 > REST to GraphQL
 
 
-
 # Feature - ADD
 
 #### Create - FirstRun
