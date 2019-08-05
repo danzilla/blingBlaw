@@ -4,8 +4,9 @@
 - Database	 : PostgreSQL
 - Server	 : ExpressJS
 - API-Endpoint	 : REST (Migrating to GraphQL)
-- Server   - Node.JS || Express -> GraphQL -> PostGraphile
-- Client   - Node.JS || React -> Redux -> Apollo client
+
+#### Server   - Node.JS || Express -> GraphQL -> PostGraphile
+#### Client   - Node.JS || React -> Redux -> Apollo client
 
 #### To-Do | Edited: July 30, 2019
 - [ ] Client - Remove Local States and Redux
