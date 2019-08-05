@@ -2,11 +2,9 @@
 
 - Engine	 : Node.JS v8+
 - Database	 : PostgreSQL
-- Server	 : ExpressJS
+- Server	 : Node.js || Express -> GraphQL -> PostGraphile
+- Client	 : Node.js || React -> Redux -> Apollo client
 - API-Endpoint	 : REST (Migrating to GraphQL)
-
-#### Server   - Node.JS || Express -> GraphQL -> PostGraphile
-#### Client   - Node.JS || React -> Redux -> Apollo client
 
 #### To-Do | Edited: July 30, 2019
 - [ ] Client - Remove Local States and Redux
@@ -15,10 +13,13 @@
 	- [ ] Apollo Client Implement
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
-	- [ ] Remove REST | REST for Authentication and ActiveToken | Query driven for FannyData
+	- [ ] Remove REST | REST for Authentication and ActiveToken
+	- [ ] Graphql and postgresSQL - SQL
 	- [ ] PostGraphile Implement
 - [ ] DevOps
-	- [ ] Dray new overview of the app
+	- [ ] Draw map of client
+	- [ ] Draw map of server
+	- [ ] Draw map of the app overview
 
 # App Requirement
 - PostgreSQL (Containerized)
