@@ -1,5 +1,4 @@
 /*  Account category Table
-
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -28,7 +27,7 @@ const create_accountCategory_table = {
   title: "create_category_Table",
   sql: function (userData) {
       return `CREATE TABLE IF NOT EXISTS
-        fannypack_${userData.fannyPack_serial}.category
+        fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}
           (
             category_id VARCHAR(254) UNIQUE NOT NULL,
             category_name VARCHAR(254) UNIQUE NOT NULL,
