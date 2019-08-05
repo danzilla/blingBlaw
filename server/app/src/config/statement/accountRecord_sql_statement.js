@@ -1,5 +1,4 @@
 /*  Account Record Table
-
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -20,18 +19,15 @@ fanny_serialFanny.accountRecord
     account_owner_serial VARCHAR(36) NOT NULL
   `
 */
-
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
-
 // Magic
-
 // Account Record
 const create_accountRecords_table = {
-  title: "create_Table_UserAuth",
+  title: "create_accountRecords_table",
   sql: function (userData) {
       return `CREATE TABLE IF NOT EXISTS
-        fannypack_${userData.fannyPack_serial}.accountRecord
+        fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_record}
           (
             accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
             account_type_id VARCHAR(36) NOT NULL,

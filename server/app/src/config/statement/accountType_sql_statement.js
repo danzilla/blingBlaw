@@ -1,5 +1,4 @@
 /*  Account Type
-
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -27,7 +26,7 @@ const create_accounType_table = {
   title: "create_Table_UserAuth",
   sql: function (userData) {
       return `CREATE TABLE IF NOT EXISTS
-        fannypack_${userData.fannyPack_serial}.accountType
+        fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}
         (
           account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
           account_type_name VARCHAR(254) UNIQUE NOT NULL,
