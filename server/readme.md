@@ -1,7 +1,10 @@
 # BlingBlaw - API :heartbeat: :sparkles: :fire:
 
-### Launch server :fire: 
-- npm start
+### Server blaze
+- Install app dependecies using npm or another package manger
+  - > npm install
+- Launch server 
+  - > npm start
   - > http://localhost:5000
 
 # Database - Design
@@ -30,4 +33,4 @@ database_Name - blingblaw_assets
 ```
 
 ### To-Do
-> [ ] REST to GraphQL
+- [ ] REST to GraphQL
