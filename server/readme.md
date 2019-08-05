@@ -2,7 +2,7 @@
 
 ### Launch server :fire: 
 - npm start
-- http://localhost:5000
+  - > http://localhost:5000
 
 # Database - Design
 Revised 
@@ -30,66 +30,4 @@ database_Name - blingblaw_assets
 ```
 
 ### To-Do
-> REST to GraphQL
-
-
-# Feature - ADD
-
-#### Create - FirstRun
-- Requirement
-    - > No-input require
-- Create Database
-    - create blingBlaw
-- Create Schema
-    - create users_assets
-- Create Table
-    - create users_assets.user_auth_table
-    - create users_assets.user_details_table
-    - create users_assets.fannypacks_table
-
-
-#### Create - User
-- Requirement
-    - > User, Password, fannyPackName
-- userAdd
-    - Add user to users_assets.user_auth_table
-    - Add user to users_assets.user_details_table
-- Create - FannyPacks()
-#### Create - FannyPack
-- Requirement
-    - > fannyPackName
-- Create Schema
-    - create fannypack_FannypackSerial
-- Create Table
-    - create fannypack_FannypackSerial.account_types_table
-    - create fannypack_FannypackSerial.account_category_table
-    - create fannypack_FannypackSerial.account_record_table
-- Add
-    - Add FannyPack_info to users_assets.fannypacks_table
-    - Add SampleAccountType to fannypack_FannypackSerial.account_types_table
-    - Add SampleCategory to fannypack_FannypackSerial.account_category_table
-#### Create - Account
-- Requirement
-    - > account_type, account_info, dates
-- Create Table 
-    - create fannypack_FannypackSerial.account_UnoSERIAL_table
-- Add
-    - Add account_UnoSERIAL_table to fannypack_FannypackSerial.account_record_table
-
-
-#### Add - account_Type
-- Requirement
-    - > account_type_name
-- Add
-    - Add account_Type to fannypack_FannypackSerial.account_types_table
-#### Add - account_Category
-- Requirement
-    - > CatName
-- Add
-    - Add CatName to fannypack_FannypackSerial.account_category_table
-#### Add - account_Statemet
-- Requirement
-    - > AccountActivity.csv
-- Add
-    - Add AccountActivity to fannypack_FannypackSerial.account_UnoSERIAL_table
-    - Add lastModify to fannypack_FannypackSerial.account_record_table
+> [ ] REST to GraphQL
