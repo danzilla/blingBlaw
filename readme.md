@@ -1,10 +1,9 @@
 # BlingBlaw -  A minimalist budget app :green_heart: :sparkles: :tada:
 
-> Engine	 : Node.JS v8+
-> Database	 : PostgreSQL
-> Server	 : ExpressJS
-> API-Endpoint	 : REST (Migrating to GraphQL)
-
+- Engine	 : Node.JS v8+
+- Database	 : PostgreSQL
+- Server	 : ExpressJS
+- API-Endpoint	 : REST (Migrating to GraphQL)
 - Server   - Node.JS || Express -> GraphQL -> PostGraphile
 - Client   - Node.JS || React -> Redux -> Apollo client
 
