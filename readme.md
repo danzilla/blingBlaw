@@ -14,7 +14,7 @@
 	- [ ] Redux Implement
 	- [ ] Apollo Client Implement
 - [ ] Server - Remove REST and Implment GraphQL
-	- [ ] Rebuild Server | New folder structure
+	- [x] Rebuild Server | New folder structure
 	- [ ] Remove REST | REST for Authentication and ActiveToken | Query driven for FannyData
 	- [ ] PostGraphile Implement
 - [ ] DevOps
