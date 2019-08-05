@@ -1,5 +1,25 @@
-# BlingBlaw  :green_heart: :sparkles: :tada:
-### A minimalist budget app
+# BlingBlaw -  A minimalist budget app :green_heart: :sparkles: :tada:
+
+- Engine	 : Node.JS v8+
+- Database	 : PostgreSQL
+- Server	 : Node.js || Express -> GraphQL -> PostGraphile
+- Client	 : Node.js || React -> Redux -> Apollo client
+- API-Endpoint	 : REST (Migrating to GraphQL)
+
+#### To-Do | Edited: July 30, 2019
+- [ ] Client - Remove Local States and Redux
+	- [ ] Rebuild Client | No more States | Use React Hooks | New UI Library and Same layout (Minimal)
+	- [ ] Redux Implement
+	- [ ] Apollo Client Implement
+- [ ] Server - Remove REST and Implment GraphQL
+	- [x] Rebuild Server | New folder structure
+	- [ ] Remove REST | REST for Authentication and ActiveToken
+	- [ ] Graphql and postgresSQL - SQL
+	- [ ] PostGraphile Implement
+- [ ] DevOps
+	- [ ] Draw map of client
+	- [ ] Draw map of server
+	- [ ] Draw map of the app overview
 
 # App Requirement
 - PostgreSQL (Containerized)
@@ -32,17 +52,17 @@ Once, you are done with the above requirements.
 - Change directory to blingBlaw
 	- > `cd ./blingBlaw`
 - **Run** the app
-	- > `docker-compose up --build`
+	- > `npm run start-prod`
 - Containerized services for
 	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
 
 ## :whale2: Deploy using Docker (Dev-Master-Deploy)
-- Change directory to ./blingBlaw/devops
-	- > `cd ./blingBlaw/devops`
+- Change directory to ./blingBlaw
+	- > `cd ./blingBlaw`
 - Install app **dependecies** using npm or another package manger
 	- > `npm install`
 - **Launch** the app
-	- > `npm start`
+	- > `npm run start-dev`
 - Containerized services for
 	- > PostgreSQL + PGAdmin
 

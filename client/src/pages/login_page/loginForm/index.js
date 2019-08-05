@@ -40,8 +40,8 @@ class LoginForm extends Component {
       // Post | query
       axios
       .post('http://localhost:5000/user/login', {
-        uname: this.state.login.userName,
-        pwd: this.state.login.password
+        userName: this.state.login.userName,
+        userPassword: this.state.login.password
       })
       .then((response) => {
         // Err check

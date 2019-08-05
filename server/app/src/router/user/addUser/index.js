@@ -1,34 +1,25 @@
-/* SQL statementz - Create user
- * database_Name - blingblaw_assets
- * │
- * └───Schema - users
- * |   │   Table - user_auth - user_id
- * |   │   Table - user_details - user_id
- * │   │   Table - fannypacks - fannypacks_id
- * └───Schema - fannypacks
- * |   │   Table - account_category - account_category_id
- * │   │   Table - account_type - account_type_id
- * │   │   Table - account_record - account_id
- * │   │   Table - account_One - account_id
- * 
-    Create - User
-    - Requirement
-        - > User, Password, fannyPackName
-    - userAdd
-        - Add user to users_assets.user_auth_table
-        - Add user to users_assets.user_details_table
-    - Create Schema
-        - Create FannyPacks(fannyPackName, userSerialID)
-
-add_user_to_userAuth(userData)
-add_user_to_userDetails(userData)
-
-create_schema_user_fannyPack(userData)
-create_table_account_category(userData)
-create_table_account_records(userData)
-create_table_account_types(userData)
-add_newFannyPack_to_fannypacks_table(userData)
+// REST - Router - UserAdd
+/* 
+   Database - blingblaw
+   └───Schema - users
+    | │ Table - user_auth
+    | │ Table - user_details
+    │ │ Table - fannypacks
+    └───Schema - fannypacks_fanny_serial
+    | │ Table - account_category
+    │ │ Table - account_type 
+    │ │ Table - account_record
+    │ │ Table - account_account_serial
+     
+	add_user_to_userAuth
+	add_user_to_userDetails
+	create_schema_user_fannyPack
+	create_table_account_category
+	create_table_account_records
+	create_table_account_types
+	add_newFannyPack_to_fannypacks_table
 */
+
 // Register user | Keep it minimal
 const async = require('async');
 // Generate - unique_id 
@@ -39,142 +30,78 @@ const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
-// User
-const add_user_to_userAuth = require("../../../config/statements/user/addUser/add_user_to_userAuth");
-const add_user_to_userDetails = require("../../../config/statements/user/addUser/add_user_to_userDetails");
-// FannyPack
-const create_schema_user_fannyPack = require("../../../config/statements/fannyPack/addFannyPack/create_schema_user_fannyPack");
-const add_newFannyPack_to_fannypacks_table = require("../../../config/statements/fannyPack/addFannyPack/add_newFannyPack_to_fannypacks_record");
-const create_table_account_category = require("../../../config/statements/account/accountCategory/createAccountCategory/create_table_account_category");
-const create_table_account_records = require("../../../config/statements/account/accountRecord/createAccountRecord/create_table_account_records");
-const create_table_account_types = require("../../../config/statements/account/accountType/createAccountType/create_table_account_types");
-// pageMessage
-let pageMessage = {
-    title: "add_user",
-    checked: "",
-    message: "",
-    results: ""
-};
-// Collect add_user_results 
-let add_user_result = {
-    add_user_to_userAuth: "",
-    add_user_to_userDetails: "",
-    create_schema_fannyPack: "",
-    create_table_account_category: "",
-    create_table_account_records: "",
-    create_table_account_types: "",
-    add_newFannyPack_to_fannypacks_table: ""
-};
-// POST - add user module
-// #r
-const register = function (req, res, next) {
-    // prepare userData
-    let userData = {
-        userSerial: uuidv5(req.body.userName, uuidv1()),
-        userName: req.body.userName,
-        userPwdHash: req.body.password,
-        userPwdSalt: req.body.fannyPack + req.body.userName,
-        userCreated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-        fannyPack: req.body.fannyPack,
-        fannyPackSerial: Token.generate(),
-        fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-        fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-    };
-    // If req.body == Empty 
-    if (!req.body.userName || !req.body.password || !req.body.fannyPack) {
-        // pageMessage
-        pageMessage = {
-            checked: "Empty-field",
-            message: "Cannot be empty fields",
-            results: "nada"
-        }; res.send({ pageMessage: pageMessage, addUserResult: "nada" });
-    } else {
-        // Function 1 - Add to user_Auth and User_details
-        // Function 2 - Create and add FannyPackz
-        function FinalResult(callback) {
-            async.waterfall([
-                function (callback_user) {
-                    async.waterfall([
-                        function (callbackOne) {
-                            add_user_to_userAuth(callbackOne, userData, add_user_result);
-                        },
-                        function (prev, callbackOne) {
-                            if (prev.checked != "checked"){ callbackOne(null, "nada") } else {
-                                add_user_to_userDetails(callbackOne, userData, add_user_result);
-                            }
-                        }
-                    ], function (err, result) {
-                        callback_user(err, result);
-                    });
-                },
-                function (prev, callback_fannyPack) {
-                    if (prev.checked == "checked") {
-                        // Second Waterfall - FannyPackz
-                        // Create Fanny
-                        async.waterfall([
-                            function (callbackTwo) {
-                                create_schema_user_fannyPack(callbackTwo, userData, add_user_result);
-                            },
-                            function (prev, callbackTwo) {
-                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
-                                    create_table_account_records(callbackTwo, userData, add_user_result);
-                                }
-                            },
-                            function (prev, callbackTwo) {
-                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
-                                    create_table_account_category(callbackTwo, userData, add_user_result);
-                                }
-                            },
-                            function (prev, callbackTwo) {
-                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
-                                    create_table_account_types(callbackTwo, userData, add_user_result);
-                                }
-                            },
-                            function (prev, callbackTwo) {
-                                if (prev.checked != "checked"){ callbackTwo(null, "nada") } else {
-                                    add_newFannyPack_to_fannypacks_table(callbackTwo, userData, add_user_result);
-                                }
-                            }
-                        ], function (err, result) {
-                            callback_fannyPack(err, result);
-                        });
-                    }// if there is any error other than CHECKED
-                    else {
-                        // if Validation and Update is good
-                        // Get the First-Obj message
-                        pageMessage.title = add_user_result.add_user_to_userAuth.title;
-                        pageMessage.checked = add_user_result.add_user_to_userAuth.checked;
-                        pageMessage.message = add_user_result.add_user_to_userAuth.message;
-                        pageMessage.results = add_user_result.add_user_to_userAuth.results;
-                        callback_fannyPack(null, pageMessage)
-                    }
-                }
-            ], function (err, result) {
-                callback(err, result);
-            });
-        }
-        // FinalResultz
-        FinalResult (function (err, result) {
-           if (result) {
-                // if Validation and Update is good
-                // Get the First-Obj message
-                pageMessage.title = add_user_result.add_user_to_userAuth.title;
-                pageMessage.checked = add_user_result.add_user_to_userAuth.checked;
-                pageMessage.message = add_user_result.add_user_to_userAuth.message;
-                pageMessage.results = add_user_result.add_user_to_userAuth.results;
-            } else if (err || add_user_result.add_user_to_userAuth.checked != "checked") {
-                // if err
-                pageMessage.title = pageMessage.title;
-                pageMessage.checked = "Internal-error " + pageMessage.title;
-                pageMessage.message = "Internal-error " + pageMessage.title;
-                pageMessage.results = "Internal-error " + pageMessage.title;
-            }
-            // #brrrr
-            res.send({
-                pageMessage: pageMessage,
-                addUserResult: add_user_result
-            })
-        });
-    }
+
+const { using_blingblaw } = require('../../../config/util/process_sql_mutation');
+
+const { add_user_to_userAuth, 
+		add_user_to_userDetails } = require('../../../config/statement/user_sql_statement');
+
+const { create_schema_user_fannyPack, 
+		add_newFannyPack_to_fannypacks_table } = require('../../../config/statement/fannyPack_sql_statement');
+
+const { create_accountTransaction_table } = require('../../../config/statement/account_sql_statement');
+const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
+const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
+const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
+
+// addUser
+const addUser = function (req, res, next) {
+	// Collect Recults
+	const addUserResult = [];
+	// Payload bzz
+	const payLoad = {
+		user_serial: uuidv5("req.body.userName", uuidv1()),
+		user_name: "req.body.userName",
+		user_pwd_salt: Token.generate() + "uno",
+		user_pwd_hash: "req.body.password",
+		user_auth_token: Token.generate(),
+		user_full_name: "",
+		user_email: "",
+		user_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+		user_modify: "",
+		user_lastLogged: "",
+		get user_auth_serial(){ return this.user_serial },
+		fannyPack_serial: Token.generate(),
+		fannyPack_name: "fannyPack_namefannyPack_name",
+		fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+		fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+		fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+		get fannyPack_owner_serial(){ return this.user_serial }
+	}
+	// Async Waterfall
+    async.waterfall([
+            // add_user_to_userAuth
+        function (callback) {
+			using_blingblaw(callback, add_user_to_userAuth, payLoad, addUserResult)
+        },  // add_user_to_userDetails
+        function (res, callback) {
+			using_blingblaw(callback, add_user_to_userDetails, payLoad, addUserResult)
+		}, // create_schema_user_fannyPack
+        function (res, callback) {
+			using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addUserResult)
+        }, // add_newFannyPack_to_fannypacks_table
+        function (res, callback) {
+			using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addUserResult)
+		}, // create_accountCategory_table
+        function (res, callback) {
+			using_blingblaw(callback, create_accountCategory_table, payLoad, addUserResult)
+		}, // create_accounType_table
+		function (res, callback) {
+			using_blingblaw(callback, create_accounType_table, payLoad, addUserResult)
+		}, // create_accountRecords_table
+		function (res, callback) {
+			using_blingblaw(callback, create_accountRecords_table, payLoad, addUserResult)
+		}
+    ], function (err, Results) {
+
+		console.log("Results: " + JSON.stringify(Results));
+		console.log("err: " + JSON.stringify(err));
+		
+        res.send({ pageMesage: addUserResult });
+    });
+	
 }
-module.exports = register;
+module.exports = addUser;
+
+
+
