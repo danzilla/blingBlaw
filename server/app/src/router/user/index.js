@@ -5,7 +5,7 @@ const router = express.Router();
 // GET
 // add user
 const addUser = require('./addUser');
-router.route('/add').get(addUser);
+router.route('/add').post(addUser);
 // Login user
 const loginUser = require('./loginUser');
 router.route('/login').get(loginUser);
