@@ -1,7 +1,7 @@
 // Process query mutatation 
 const { blingblaw, postgresDefault } = require('../app.config');
 // Using - mutate_sql_blingblaw ('blingBlaw')
-// Export - mutate_sql(callback, sql_statement, Results)
+// Export - mutate_sql(callback, sql_statement, payLoad, Results)
 function mutate_sql_blingblaw(callback, sql_statement, payLoad, Results) {
     // PageMessage
     let pageMessage = { title:"Query_sql", message: "", checked: "", result: "" };

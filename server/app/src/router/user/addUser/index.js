@@ -19,7 +19,6 @@
 	create_table_account_types
 	add_newFannyPack_to_fannypacks_table
 */
-
 // Register user | Keep it minimal
 const async = require('async');
 // Generate - unique_id 
@@ -44,16 +43,23 @@ const { create_accountCategory_table } = require('../../../config/statement/acco
 const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
 const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
 
-// addUser
+// Register user
 const addUser = function (req, res, next) {
-	// Collect Recults
+	// addUser
+	let pageMessage = { 
+		title:"addUser", 
+		message: "", 
+		checked: "", 
+		result: "" 
+	};
+	// Collect Results
 	const addUserResult = [];
 	// Payload bzz
 	const payLoad = {
-		user_serial: uuidv5("req.body.userName", uuidv1()),
-		user_name: "req.body.userName",
-		user_pwd_salt: Token.generate() + "uno",
-		user_pwd_hash: "req.body.password",
+		user_serial: uuidv5(req.body.userName, uuidv1()),
+		user_name: req.body.userName,
+		user_pwd_salt: Token.generate(),
+		user_pwd_hash: req.body.password,
 		user_auth_token: Token.generate(),
 		user_full_name: "",
 		user_email: "",
@@ -62,28 +68,36 @@ const addUser = function (req, res, next) {
 		user_lastLogged: "",
 		get user_auth_serial(){ return this.user_serial },
 		fannyPack_serial: Token.generate(),
-		fannyPack_name: "fannyPack_namefannyPack_name",
+		fannyPack_name: req.body.fannyPack,
 		fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 		fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 		fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 		get fannyPack_owner_serial(){ return this.user_serial }
 	}
-	// Async Waterfall
-    async.waterfall([
-            // add_user_to_userAuth
-        function (callback) {
+	// Get FannyPack name
+	if (!req.body.fannyPack || !req.body.userName  || !req.body.password) {
+		// pageMessage
+		pageMessage.checked = "errr";
+		pageMessage.result = "Inintial information are require";
+		pageMessage.message = "All inputs are required";
+		res.send({ pageMesage: pageMessage });
+	} else if(req.body.fannyPack && req.body.userName && req.body.password){
+		// Async Waterfall
+		async.waterfall([
+		// add_user_to_userAuth
+		function (callback) {
 			using_blingblaw(callback, add_user_to_userAuth, payLoad, addUserResult)
-        },  // add_user_to_userDetails
-        function (res, callback) {
+		},  // add_user_to_userDetails
+		function (res, callback) {
 			using_blingblaw(callback, add_user_to_userDetails, payLoad, addUserResult)
 		}, // create_schema_user_fannyPack
-        function (res, callback) {
+		function (res, callback) {
 			using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addUserResult)
-        }, // add_newFannyPack_to_fannypacks_table
-        function (res, callback) {
+		}, // add_newFannyPack_to_fannypacks_table
+		function (res, callback) {
 			using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addUserResult)
 		}, // create_accountCategory_table
-        function (res, callback) {
+		function (res, callback) {
 			using_blingblaw(callback, create_accountCategory_table, payLoad, addUserResult)
 		}, // create_accounType_table
 		function (res, callback) {
@@ -91,15 +105,12 @@ const addUser = function (req, res, next) {
 		}, // create_accountRecords_table
 		function (res, callback) {
 			using_blingblaw(callback, create_accountRecords_table, payLoad, addUserResult)
-		}
-    ], function (err, Results) {
-
-		console.log("Results: " + JSON.stringify(Results));
-		console.log("err: " + JSON.stringify(err));
-		
-        res.send({ pageMesage: addUserResult });
-    });
-	
+		}], function (err, Results) {
+			console.log("Results: " + JSON.stringify(Results));
+			console.log("err: " + JSON.stringify(err));
+			res.send({ pageMesage: addUserResult });
+		});
+	}
 }
 module.exports = addUser;
 

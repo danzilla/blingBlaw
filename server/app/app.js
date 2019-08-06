@@ -23,12 +23,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // FirstRun
 const firstrun = require('./src/router/firstrun');
 app.use('/firstrun', firstrun);
-// FannyPack
-const fannyPack = require('./src/router/fannyPack');
-app.use('/fannypack', fannyPack);
 // User
 const user = require('./src/router/user');
 app.use('/user', user);
+// FannyPack
+const fannyPack = require('./src/router/fannyPack');
+app.use('/fannypack', fannyPack);
+// Account
+const account = require('./src/router/account');
+app.use('/account', account);
 
 // End of REST Router
 

@@ -37,8 +37,19 @@ const create_accountRecords_table = {
           );`;
   }
 }
+// Add
+// Require - account_type_id | account_serial | account_lastmodify | account_owner_serial
+const add_newAccount_to_accountRecord = {
+    title: "add_newAccount_to_accountRecord",
+    sql: function (userData) {
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_record}
+        (account_type_id, account_serial, account_lastmodify, account_owner_serial) 
+        VALUES ('${userData.account_type_id}', '${userData.account_serial}', '${userData.account_lastmodify}', '${userData.account_owner_serial}');`;
+  }
+}
 // Export 
 const statements = {
-  create_accountRecords_table: create_accountRecords_table
+  create_accountRecords_table: create_accountRecords_table,
+  add_newAccount_to_accountRecord: add_newAccount_to_accountRecord
 }
 module.exports = statements;
