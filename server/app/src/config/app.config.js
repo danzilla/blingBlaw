@@ -34,7 +34,6 @@ const database_connection = {
     defaultDB: "public",
     blingblawDB: database_labels.db_name
 }
-
 // If Docker - SET (PROD) - db_config.database_host_dev_prod.prod
 // If Local and Development - SET (DEV) - db_config.database_host_dev_prod.dev
 // Dev environment for docker_compose and npm
