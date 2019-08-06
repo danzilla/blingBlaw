@@ -25,23 +25,23 @@ const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 
-const { using_blingblaw } = require('../../../config/util/process_sql_mutation');
+const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
-const { create_accountTransaction_table } = require('../../../config/statement/account_sql_statement');
-const { add_newAccount_to_accountRecord } = require('../../../config/statement/accountRecord_sql_statement');
+const { create_accountTransaction_table } = require('../../../../config/statement/account_sql_statement');
+const { add_newAccount_to_accountRecord } = require('../../../../config/statement/accountRecord_sql_statement');
 
-// addAccount
-// Require - 
-const addAccount = function (req, res, next) {
-	// addAccount
+// addAccountTransaction
+// Require
+const addAccountTransaction = function (req, res, next) {
+	// addAccountTransaction
 	let pageMessage = { 
-		title:"addAccount", 
+		title:"addAccountTransaction", 
 		message: "", 
 		checked: "", 
 		result: "" 
 	};
 	// Collect Results
-	const addAccountResult = [];
+	const addAccountTransactionResult = [];
 	// Payload bzz
 	const payLoad = {
 		account_type_id: req.body.accountType,
@@ -63,19 +63,19 @@ const addAccount = function (req, res, next) {
 		async.waterfall([
 				// create_schema_user_fannyPack
 			function (callback) {
-				using_blingblaw(callback, create_accountTransaction_table, payLoad, addAccountResult)
+				using_blingblaw(callback, create_accountTransaction_table, payLoad, addAccountTransactionResult)
 			}, // add_newFannyPack_to_fannypacks_table
 			function (res, callback) {
-				using_blingblaw(callback, add_newAccount_to_accountRecord, payLoad, addAccountResult)
+				using_blingblaw(callback, add_newAccount_to_accountRecord, payLoad, addAccountTransactionResult)
 			}
 		], function (err, Results) {
 			console.log("Results: " + JSON.stringify(Results));
 			console.log("err: " + JSON.stringify(err));
-			res.send({ pageMesage: addAccountResult });
+			res.send({ pageMesage: addAccountTransactionResult });
 		});
 	}
 }
-module.exports = addAccount;
+module.exports = addAccountTransaction;
 
 
 
