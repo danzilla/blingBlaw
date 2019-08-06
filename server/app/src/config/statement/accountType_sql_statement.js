@@ -49,6 +49,7 @@ const add_newAccountType_to_accountType = {
 
 // Export 
 const statements = {
-  create_accounType_table: create_accounType_table
+  create_accounType_table: create_accounType_table,
+  add_newAccountType_to_accountType: add_newAccountType_to_accountType
 }
 module.exports = statements;
