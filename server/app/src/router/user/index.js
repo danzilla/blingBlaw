@@ -2,8 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-// GET
-// add user
+// Add user
 const addUser = require('./addUser');
 router.route('/add').post(addUser);
 // Login user
