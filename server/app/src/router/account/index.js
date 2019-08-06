@@ -10,13 +10,10 @@
     │ │ Table - account_type 
     │ │ Table - account_record
     │ │ Table - account_account_serial
-     
-	add_newAccountCategory_to_accountCategory
 */
 
 const express = require('express');
 const router = express.Router();
-
 
 // add to AccountCategory
 const addAccountCategory = require('./accountCateogry/addAccountCategory');
@@ -29,6 +26,5 @@ router.route('/type/add').post(addAccountType);
 // create accountTransaction_table
 const addAccountTransaction = require('./accounTransaction/addAccountTransaction');
 router.route('/transaction/add').post(addAccountTransaction);
-
 
 module.exports = router;
