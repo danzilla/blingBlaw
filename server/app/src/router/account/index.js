@@ -6,4 +6,8 @@ const router = express.Router();
 const addAccountTransaction = require('./accounTransaction/addAccountTransaction');
 router.route('/transaction/add').post(addAccountTransaction);
 
+// add to AccountCategory
+const addAccountCategory = require('./accountCateogry/addAccountCategory');
+router.route('/category/add').post(addAccountCategory);
+
 module.exports = router;

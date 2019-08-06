@@ -35,6 +35,18 @@ const create_accounType_table = {
         );`;
   }
 }
+
+// Add
+// Require - account_type_name | account_type_created | account_type_lastmodify
+const add_newAccountType_to_accountType = {
+    title: "add_newAccountType_to_accountType",
+    sql: function (userData) {
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}
+        (account_type_name, account_type_created, account_type_lastmodify)
+        VALUES ('${userData.account_type_name}', '${userData.account_type_created}', '${userData.account_type_lastmodify}');`;
+  }
+}
+
 // Export 
 const statements = {
   create_accounType_table: create_accounType_table

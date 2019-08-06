@@ -37,8 +37,20 @@ const create_accountCategory_table = {
           );`;
   }
 }
+
+// Add
+// Require - category_name | category_parent | category_created | category_lastmodify
+const add_newAccountCategory_to_accountCategory = {
+    title: "add_newAccountCategory_to_accountCategory",
+    sql: function (userData) {
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}
+        (category_id, category_name, category_parent, category_created, category_lastmodify) VALUES
+        ('${userData.category_id}', '${userData.category_name}', '${userData.category_parent}', '${userData.category_created}', '${userData.category_lastmodify}');`;
+  }
+}
 // Export 
 const statements = {
-  create_accountCategory_table: create_accountCategory_table
+  create_accountCategory_table: create_accountCategory_table,
+  add_newAccountCategory_to_accountCategory: add_newAccountCategory_to_accountCategory
 }
 module.exports = statements;

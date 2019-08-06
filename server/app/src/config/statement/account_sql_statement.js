@@ -50,6 +50,21 @@ const create_accountTransaction_table = {
         );`;
   }
 }
+
+// Add
+// Require - ***
+const add_newAccountTransaction_to_accounTransaction = {
+    title: "add_newAccountCategory_to_accountCategory",
+    sql: function (userData) {
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.account_${userData.account_serial}
+        ( transaction_serial, transaction_Date, transaction_Desc, transaction_Withdrawls, transaction_Deposits,
+          transaction_Balance, transaction_Category, transaction_Comments, transaction_Updated, transaction_UpdateUser) VALUES 
+        ('${userData.transaction_serial}', '${userData.transaction_Date}', '${userData.transaction_Desc}', '${userData.transaction_Withdrawls}',
+        '${userData.transaction_Deposits}', '${userData.transaction_Balance}', '${userData.transaction_Category}', '${userData.transaction_Comments}',
+        '${userData.transaction_Updated}', '${userData.transaction_UpdateUser}');`;
+  }
+}
+
 // Export 
 const statements = {
   create_accountTransaction_table: create_accountTransaction_table
