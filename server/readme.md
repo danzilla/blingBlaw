@@ -32,5 +32,15 @@ database_Name - blingblaw_assets
 - accounts - Contains Account Statemetn information
 ```
 
+| End-points                |  Method   | Request    | Response   |
+|:--------------------------|:---------:|:----------:|:-----------|
+| /                         | ALL       |    none    |   none     |
+| /firstrun                 | GET       |    none    |   Drop and Create Database     |
+| /user/add                 | POST      |    Yes     |   Add User and Add FannyPack   |
+| /fannypack/add            | POST      |    Yes     |   Add FannyPack   |
+| /account/category/add     | POST      |    Yes     |   Add accountCategory   |
+| /account/type/add         | POST      |    Yes     |   Add accountTyp   |
+| /account/transaction/add  | POST      |    Yes     |   Add accountTransaction   |
+
 ### To-Do
 - [ ] REST to GraphQL
