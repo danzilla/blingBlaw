@@ -1,19 +1,12 @@
-# BlingBlaw - client :lips: :boom: :star2:
-A minimalist budget app (**React**)
+# BlingBlaw - client :lips: :lipstick: :gift_heart:
 
-### Client - React
-- UIKit
-- https://materializecss.co
+# To-Do
+- [ ] Create Action List 
+- [ ] Redux Integration 
 
-### Launch client :boom:
-- npm start
-- http://localhost:3000
-
-
-### To-Do
-- Create Action List 
-    - Action-Request
-    - Action-ActivePages
-- Redux
-
-
+# :tropical_drink: Deploy Client 
+- Install app dependecies using npm or another package manger
+  - > npm install
+- Launch client 
+  - > npm start
+  - > http://localhost:3000

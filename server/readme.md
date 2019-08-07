@@ -1,18 +1,20 @@
-# BlingBlaw - API :heartbeat: :sparkles: :fire:
+# BlingBlaw - API :heartbeat: :volcano: :fire:
 
-### Server blaze
-- Install app dependecies using npm or another package manger
-  - > npm install
-- Launch server 
-  - > npm start
-  - > http://localhost:5000
+Node.js API-server
+- REST and GraphQL
+
+# To-Do
+- [ ] REST - Login and Set Session
+- [x] REST - Add | firtRun, user, fannyPack, account
+- [x] GraphQL - Integration 
+- [ ] GraphQL - PostGraphile Integration
 
 # Database - Design
-Revised 
- - <s>May 26, 2019</s>
- - <s>June 27, 2019</s>
- - <s>July 02, 2019</s>
- - July 26, 2019
+ - Revised
+    - <s>May 26, 2019</s>
+    - <s>June 27, 2019</s>
+    - <s>July 02, 2019</s>
+    - July 26, 2019
 
 ```
 database_Name - blingblaw_assets
@@ -29,9 +31,10 @@ database_Name - blingblaw_assets
 |   |
 - User - Contains FannyPacks
 - FannyPacks - Contains Account, Account Types and category
-- accounts - Contains Account Statemetn information
+- Account - Contains Account Statement information
 ```
 
+# :fireworks: End-points
 | End-points                |  Method   | Request    | Response   |
 |:--------------------------|:---------:|:----------:|:-----------|
 | /                         | ALL       |    none    |   none     |
@@ -39,8 +42,13 @@ database_Name - blingblaw_assets
 | /user/add                 | POST      |    Yes     |   Add User and Add FannyPack   |
 | /fannypack/add            | POST      |    Yes     |   Add FannyPack   |
 | /account/category/add     | POST      |    Yes     |   Add accountCategory   |
-| /account/type/add         | POST      |    Yes     |   Add accountTyp   |
+| /account/type/add         | POST      |    Yes     |   Add accountType   |
 | /account/transaction/add  | POST      |    Yes     |   Add accountTransaction   |
 
-### To-Do
-- [ ] REST to GraphQL
+# :bomb: Deploy Server 
+- Install app dependecies using npm or another package manger
+  - > npm install
+- Launch server 
+  - > npm start
+  - > http://localhost:5000
+

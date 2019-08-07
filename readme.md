@@ -1,19 +1,18 @@
-# BlingBlaw -  A minimalist budget app :green_heart: :sparkles: :tada:
+# BlingBlaw -  A minimalist budget app :sparkling_heart: :sparkles: :tada:
+- **Engine**		 : Node.js v8+
+- **Database**	 	 : PostgreSQL
+- **Server**	 	 : Node.js - Express -> GraphQL -> PostGraphile
+- **Client**	 	 : Node.js - React -> Redux -> Apollo client
+- **API-Endpoint**	 : REST (Migrating to GraphQL)
 
-- Engine	 : Node.JS v8+
-- Database	 : PostgreSQL
-- Server	 : Node.js || Express -> GraphQL -> PostGraphile
-- Client	 : Node.js || React -> Redux -> Apollo client
-- API-Endpoint	 : REST (Migrating to GraphQL)
-
-#### To-Do | Edited: July 30, 2019
+# To-Do | Edited: Aug 7th, 2019
 - [ ] Client - Remove Local States and Redux
 	- [ ] Rebuild Client | No more States | Use React Hooks | New UI Library and Same layout (Minimal)
 	- [ ] Redux Implement
 	- [ ] Apollo Client Implement
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
-	- [ ] Remove REST | REST for Authentication and ActiveToken
+	- [ ] REST for Authentication and ActiveToken
 	- [ ] Graphql and postgresSQL - SQL
 	- [ ] PostGraphile Implement
 - [ ] DevOps
@@ -32,7 +31,7 @@
 	- https://docs.docker.com/compose/install/
 
 # Deploy 
-Once, you are done with the above requirements.
+- Once, you are done with the above requirements
 - Use **git** to clone the repo
 	- > `git clone https://github.com/danzilla/blingBlaw.git`
 - Change app-database-host
