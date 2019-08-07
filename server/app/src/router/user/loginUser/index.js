@@ -1,4 +1,4 @@
-// REST - Router - Authentication
+// Authentication - Router 
 /* 
    Database - blingblaw
    └───Schema - users
@@ -14,7 +14,6 @@
 	validate_user_login
 	update_userDetails
 */
-
 // Register user | Keep it minimal
 const async = require('async');
 // Generate - unique_id 
@@ -31,35 +30,50 @@ const { using_blingblaw } = require('../../../config/util/process_sql_mutation')
 const { validate_user_login, 
 		update_userDetails } = require('../../../config/statement/user_sql_statement');
 
-// addUser
-const userLogin = function (req, res, next) {
-	// Collect Recults
-	const addUserResult = [];
-	// Payload bzz
-	const payLoad = {
-		userName: "req.body.userName",
-		userPassword: Token.generate(),
-        user_auth_token: Token.generate(),
-        user_auth_serial: Token.generate(),
-		user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-    }
-	// Async Waterfall
-    async.waterfall([
-            // validate_user_login
+// loginUser
+const loginUser = function (req, res, next) {
+    // loginUser
+	let pageMessage = { 
+		title:"loginUser", 
+		message: "", 
+		checked: "", 
+		result: "" 
+	};
+    // Get Login requirement
+	if(!req.body.userName || !req.body.password || !req.body.userSerial) {
+		// pageMessage
+		pageMessage.checked = "errr";
+		pageMessage.result = "Credentials are require";
+		pageMessage.message = "User inputs are require";
+		res.send({ pageMesage: pageMessage });
+	} else if (req.body.userName && req.body.password && req.body.userSerial) {
+        // Collect Results
+        const loginUserResult = [];
+        // Payload bzz
+        const payLoad = {
+            userName: req.body.userName,
+            userPassword: req.body.password,
+            user_auth_serial: req.body.userSerial,
+            user_auth_token: Token.generate(),
+            user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        };
+        // if all good
+        // Async Waterfall
+        async.waterfall([
+        // validate_user_login
         function (callback) {
-			using_blingblaw(callback, validate_user_login, payLoad, addUserResult)
-        },  // update_userDetails
+            using_blingblaw(callback, validate_user_login, payLoad, loginUserResult)
+        }, // update_userDetails
         function (res, callback) {
-			using_blingblaw(callback, update_userDetails, payLoad, addUserResult)
-		}
-    ], function (err, Results) {
-		console.log("Results: " + JSON.stringify(Results));
-		console.log("err: " + JSON.stringify(err));
-        res.send({ pageMesage: addUserResult });
-    });
-	
+            using_blingblaw(callback, update_userDetails, payLoad, loginUserResult)
+        }], function (err, Results) {
+            console.log("Results: " + JSON.stringify(Results));
+            console.log("err: " + JSON.stringify(err));
+            res.send({ pageMesage: loginUserResult });
+        });
+    }
 }
-module.exports = userLogin;
+module.exports = loginUser;
 
 
 

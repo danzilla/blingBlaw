@@ -1,4 +1,4 @@
-// REST - Router - Category
+// accountType - Router
 /* 
    Database - blingblaw
    └───Schema - users
