@@ -69,7 +69,7 @@ const add_newFannyPack_to_fannypacks_table = {
 const view_ALL_fannyPackz = {
   title: "view_ALL_fannyPackz",
   sql: function (userData) {
-    return `SELECT * FROM ${database_labels.schema_name}.${database_labels.table_users_fannyPack}';`;
+    return `SELECT * FROM ${database_labels.schema_name}.${database_labels.table_users_fannyPack};`;
   }
 }
 // view_user_fannyPackz - Require - userData

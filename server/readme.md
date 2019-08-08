@@ -40,10 +40,17 @@ database_Name - blingblaw_assets
 | /                         | ALL       |    none    |   none     |
 | /firstrun                 | GET       |    none    |   Drop and Create Database     |
 | /user/add                 | POST      |    Yes     |   Add User and Add FannyPack   |
+| /user/view                | POST      |    Yes     |   View A User  |
+| /user/view/all            | POST      |    Yes     |   View All User   |
 | /fannypack/add            | POST      |    Yes     |   Add FannyPack   |
+| /fannypack/view           | POST      |    Yes     |   View FannyPack   |
+| /fannypack/view/all       | POST      |    Yes     |   View All FannyPack   |
 | /account/category/add     | POST      |    Yes     |   Add accountCategory   |
+| /account/category/view    | POST      |    Yes     |   View accountCategory   |
 | /account/type/add         | POST      |    Yes     |   Add accountType   |
+| /account/type/view        | POST      |    Yes     |   View accountType   |
 | /account/transaction/add  | POST      |    Yes     |   Add accountTransaction   |
+| /account/transaction/view | POST      |    Yes     |   View accountTransaction   |
 
 # :bomb: Deploy Server 
 - Install app dependecies using npm or another package manger

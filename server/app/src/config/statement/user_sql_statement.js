@@ -114,8 +114,21 @@ const update_userDetails = {
   }
 }
 //
-// View 
-// validate_user_login - Require - userData
+// View
+// view_user - Require - userData
+const view_user = {
+  title: "view_user",
+  sql: function (userData) {
+    return `SELECT 
+      user_serial, user_name, user_full_name, user_email, 
+      user_created, user_modify, user_lastlogged, user_auth_token
+      FROM ${database_labels.schema_name}.${database_labels.table_users_auth} userAuth
+      LEFT JOIN ${database_labels.schema_name}.${database_labels.table_users_details} userDetail 
+      ON userAuth.user_serial = userDetail.user_auth_serial
+      WHERE userAuth.user_serial='${userData.user_serial} AND LIMIT 1';`;
+  }
+}
+// view_all_user - Require - userData
 const view_all_user = {
   title: "view_all_user",
   sql: function (userData) {
@@ -136,6 +149,7 @@ const statements = {
   add_user_to_userDetails: add_user_to_userDetails,
   validate_user_login: validate_user_login,
   update_userDetails: update_userDetails,
-  view_all_user: view_all_user
+  view_all_user: view_all_user,
+  view_user: view_user
 }
 module.exports = statements;

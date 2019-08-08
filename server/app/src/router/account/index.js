@@ -14,17 +14,37 @@
 
 const express = require('express');
 const router = express.Router();
-
+//
+// Accounts
+//
+// create accountTransaction_table
+const createAccount = require('./accountTransaction/createAccount');
+router.route('/add').post(createAccount);
+// view viewAllAccounts
+const viewAllAccounts = require('./accountTransaction/viewAllAccounts');
+router.route('/view').post(viewAllAccounts);
+// view userTransactionTable
+const viewAllTransaction = require('./accountTransaction/viewAllTransaction');
+router.route('/transaction/view').post(viewAllTransaction);
+//
+// AccountCategory
+//
 // add to AccountCategory
 const addAccountCategory = require('./accountCateogry/addAccountCategory');
 router.route('/category/add').post(addAccountCategory);
-
-// add to AccountCategory
+// view viewAccountCategory
+const viewAccountCategory = require('./accountCateogry/viewAccountCategory');
+router.route('/category/view').post(viewAccountCategory);
+//
+// AccountType
+//
+// add to AccountType
 const addAccountType = require('./accountType/addAccountType');
 router.route('/type/add').post(addAccountType);
+// view viewAccountType
+const viewAccountType = require('./accountType/viewAccountType');
+router.route('/type/view').post(viewAccountType);
 
-// create accountTransaction_table
-const addAccountTransaction = require('./accounTransaction/addAccountTransaction');
-router.route('/transaction/add').post(addAccountTransaction);
+
 
 module.exports = router;
