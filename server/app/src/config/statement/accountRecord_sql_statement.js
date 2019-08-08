@@ -1,4 +1,4 @@
-/*  Account Record Table
+/*  accountRecord
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -22,7 +22,9 @@ fanny_serialFanny.accountRecord
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
 // Magic
-// Account Record
+//
+// Table
+// create_accountRecords_table - Require - userData
 const create_accountRecords_table = {
   title: "create_accountRecords_table",
   sql: function (userData) {
@@ -37,8 +39,9 @@ const create_accountRecords_table = {
           );`;
   }
 }
+//
 // Add
-// Require - account_type_id | account_serial | account_lastmodify | account_owner_serial
+// add_newAccount_to_accountRecord - Require - userData
 const add_newAccount_to_accountRecord = {
     title: "add_newAccount_to_accountRecord",
     sql: function (userData) {
@@ -47,9 +50,19 @@ const add_newAccount_to_accountRecord = {
         VALUES ('${userData.account_type_id}', '${userData.account_serial}', '${userData.account_lastmodify}', '${userData.account_owner_serial}');`;
   }
 }
+//
+// View 
+// view_ALL_accountRecord - Require - userData
+const view_ALL_accountRecord = {
+  title: "view_ALL_accountRecord",
+  sql: function (userData) {
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_record}';`;
+  }
+}
 // Export 
 const statements = {
   create_accountRecords_table: create_accountRecords_table,
-  add_newAccount_to_accountRecord: add_newAccount_to_accountRecord
+  add_newAccount_to_accountRecord: add_newAccount_to_accountRecord,
+  view_ALL_accountRecord: view_ALL_accountRecord
 }
 module.exports = statements;

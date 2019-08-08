@@ -1,5 +1,4 @@
-/*  - Account - Transaction
-  
+/* accountTransaction
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -29,6 +28,8 @@ fanny_serialFanny.accountTransaction
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
 // Magic
+//
+// Table
 // create_accountTransaction_table
 const create_accountTransaction_table = {
   title: "create_accountTransaction_table",
@@ -50,10 +51,10 @@ const create_accountTransaction_table = {
         );`;
   }
 }
-
+// 
 // Add
-// Require - ***
-const add_newAccountTransaction_to_accounTransaction = {
+// add_newAccountTransaction_to_accounTransaction - Require - userData
+const add_newAccountTransaction_to_accountTransaction = {
     title: "add_newAccountCategory_to_accountCategory",
     sql: function (userData) {
       return `INSERT INTO fannypack_${userData.fannyPack_serial}.account_${userData.account_serial}
@@ -64,9 +65,19 @@ const add_newAccountTransaction_to_accounTransaction = {
         '${userData.transaction_Updated}', '${userData.transaction_UpdateUser}');`;
   }
 }
-
+//
+// View 
+// view_ALL_accountTransaction - Require - userData
+const view_ALL_accountTransaction = {
+  title: "view_ALL_accountTransaction",
+  sql: function (userData) {
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.account_${userData.account_serial}';`;
+  }
+}
 // Export 
 const statements = {
-  create_accountTransaction_table: create_accountTransaction_table
+  create_accountTransaction_table: create_accountTransaction_table,
+  add_newAccountTransaction_to_accountTransaction: add_newAccountTransaction_to_accountTransaction,
+  view_ALL_accountTransaction: view_ALL_accountTransaction
 }
 module.exports = statements;
