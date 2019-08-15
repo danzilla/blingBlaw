@@ -15,30 +15,28 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 //
 // GraphQL 
 // Data driven - #Eeeeee
 
+// Note: 
+// - Database - blingblawDB
+// - retryOnInitFail - Retry-till - blingblawDB initialize
 const { postgraphile } = require("postgraphile");
 // app_db_connection
 const app_config = require("./src/config/app.config");
 // postgres://user:pass@host:5432/dbname
-const app_db_connection = `postgres://${app_config.blingblaw.options.user}:${app_config.blingblaw.options.password}@${app_config.blingblaw.options.host}:${app_config.blingblaw.options.port}/${app_config.blingblaw.options.database}`;
+const app_db_connection = `postgres://${app_config.blingblaw.options.user}:${app_config.blingblaw.options.password}@${app_config.blingblaw.options.host}:${app_config.blingblaw.options.port}/${app_config.database_connection.blingblawDB}`;
 const app_postgraphile_setting = {
   watchPg: true,
   graphiql: true,
-  enhanceGraphiql: true
+  enhanceGraphiql: true,
+  graphqlRoute: "/graphql",
+  graphiqlRoute: "/graphiql",
+  retryOnInitFail: true
 }
-
-console.log("asdsadda" + JSON.stringify(app_db_connection));
-
 app.use(postgraphile(app_db_connection, "public", app_postgraphile_setting));
-console.log(process.env.npm_package_name  + '- Running a GraphQL API server at localhost:5000/graphql');
 // End of GraphQL
-
-
 
 //
 // REST

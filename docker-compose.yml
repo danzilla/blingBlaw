@@ -1,34 +1,24 @@
-# PostgreSQL + PGAdmin + Node(React) + Node(Express)
-
 # Docker-compose
+# PostgreSQL + PGAdmin + Node(React) + Node(Express)
 version: '3'
+# Volumes
+volumes:
+  database_data:
+    driver: local
 # Services
 services:
   # PostgreSQL - postgres_db
   postgres_db:
-    build:
-      context: ./
-      dockerfile: ./server/postgresql.Dockerfile
+    image: postgres:latest
+    restart: always
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-  # API - server
-  server:
-    build: ./server
-    command: npm run start
-    ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-    links:
-      - postgres_db
-  # UI - client
-  client:
-    build: ./client
-    command: npm run start
-    ports:
-      - ${CLIENT_PORT}:${CLIENT_PORT}
-    expose: 
-      - ${CLIENT_PORT}
-    links:
-      - server
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - database_data:/var/lib/postgresql/data
   # PGAdmin
   pgadmin:
     image: dpage/pgadmin4
@@ -39,3 +29,27 @@ services:
       - "${PGADMIN_PORT}:80"
     links:
       - postgres_db
+  # API - server
+  server:
+    image: node:latest
+    volumes:
+      - ./server:/usr/src/app/blingBlaw/server
+    working_dir: /usr/src/app/blingBlaw/server
+    command: npm install
+    command: npm run start
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    links:
+      - postgres_db
+  # UI - client
+  client:
+    image: node:latest
+    volumes:
+      - ./client:/usr/src/app/blingBlaw/client
+    working_dir: /usr/src/app/blingBlaw/client
+    command: npm install
+    command: npm run start
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    links:
+      - server
