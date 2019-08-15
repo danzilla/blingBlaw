@@ -1,4 +1,4 @@
-/*  Account category Table
+/*  accountCategory Table
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -22,7 +22,9 @@ fanny_serialFanny.category - Table
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
 // Magic
-// Table_category
+//
+// Table
+// create_accountCategory_table
 const create_accountCategory_table = {
   title: "create_category_Table",
   sql: function (userData) {
@@ -37,9 +39,9 @@ const create_accountCategory_table = {
           );`;
   }
 }
-
+//
 // Add
-// Require - category_name | category_parent | category_created | category_lastmodify
+// add_newAccountCategory_to_accountCategory - Require - userData
 const add_newAccountCategory_to_accountCategory = {
     title: "add_newAccountCategory_to_accountCategory",
     sql: function (userData) {
@@ -48,9 +50,19 @@ const add_newAccountCategory_to_accountCategory = {
         ('${userData.category_id}', '${userData.category_name}', '${userData.category_parent}', '${userData.category_created}', '${userData.category_lastmodify}');`;
   }
 }
+//
+// View 
+// view_ALL_accountCategory - Require - userData
+const view_ALL_accountCategory = {
+  title: "view_ALL_accountCategory",
+  sql: function (userData) {
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}';`;
+  }
+}
 // Export 
 const statements = {
   create_accountCategory_table: create_accountCategory_table,
-  add_newAccountCategory_to_accountCategory: add_newAccountCategory_to_accountCategory
+  add_newAccountCategory_to_accountCategory: add_newAccountCategory_to_accountCategory,
+  view_ALL_accountCategory: view_ALL_accountCategory
 }
 module.exports = statements;

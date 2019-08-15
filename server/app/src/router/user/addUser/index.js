@@ -1,4 +1,4 @@
-// REST - Router - UserAdd
+// UserAdd - Router
 /* 
    Database - blingblaw
    └───Schema - users
@@ -34,11 +34,8 @@ const { using_blingblaw } = require('../../../config/util/process_sql_mutation')
 
 const { add_user_to_userAuth, 
 		add_user_to_userDetails } = require('../../../config/statement/user_sql_statement');
-
 const { create_schema_user_fannyPack, 
 		add_newFannyPack_to_fannypacks_table } = require('../../../config/statement/fannyPack_sql_statement');
-
-const { create_accountTransaction_table } = require('../../../config/statement/account_sql_statement');
 const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
 const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
 const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
@@ -52,28 +49,6 @@ const addUser = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	// Collect Results
-	const addUserResult = [];
-	// Payload bzz
-	const payLoad = {
-		user_serial: uuidv5(req.body.userName, uuidv1()),
-		user_name: req.body.userName,
-		user_pwd_salt: Token.generate(),
-		user_pwd_hash: req.body.password,
-		user_auth_token: Token.generate(),
-		user_full_name: "",
-		user_email: "",
-		user_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		user_modify: "",
-		user_lastLogged: "",
-		get user_auth_serial(){ return this.user_serial },
-		fannyPack_serial: Token.generate(),
-		fannyPack_name: req.body.fannyPack,
-		fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		get fannyPack_owner_serial(){ return this.user_serial }
-	}
 	// Get FannyPack name
 	if (!req.body.fannyPack || !req.body.userName  || !req.body.password) {
 		// pageMessage
@@ -81,7 +56,30 @@ const addUser = function (req, res, next) {
 		pageMessage.result = "Inintial information are require";
 		pageMessage.message = "All inputs are required";
 		res.send({ pageMesage: pageMessage });
-	} else if(req.body.fannyPack && req.body.userName && req.body.password){
+	} else if(req.body.fannyPack && req.body.userName && req.body.password) {
+		// if all good
+		// Collect Results
+		const addUserResult = [];
+		// Payload bzz
+		const payLoad = {
+			user_serial: uuidv5(req.body.userName, uuidv1()),
+			user_name: req.body.userName,
+			user_pwd_salt: Token.generate(),
+			user_pwd_hash: req.body.password,
+			user_auth_token: Token.generate(),
+			user_full_name: "",
+			user_email: "",
+			user_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			user_modify: "",
+			user_lastLogged: "",
+			get user_auth_serial(){ return this.user_serial },
+			fannyPack_serial: Token.generate(),
+			fannyPack_name: req.body.fannyPack,
+			fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			get fannyPack_owner_serial(){ return this.user_serial }
+		};
 		// Async Waterfall
 		async.waterfall([
 		// add_user_to_userAuth

@@ -1,4 +1,4 @@
-// REST - Router - FannyPack
+// Router - FannyPack
 /* 
    Database - blingblaw
    └───Schema - users
@@ -48,17 +48,6 @@ const addFanny = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	// Collect Results
-	const addFannyPackResult = [];
-	// Payload bzz
-	const payLoad = {
-		fannyPack_serial: Token.generate(),
-		fannyPack_name: req.body.fannyPack,
-		fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_owner_serial: req.body.userSerial
-	};
 	// Get FannyPack name
 	if(!req.body.fannyPack || !req.body.userSerial) {
 		// pageMessage
@@ -66,26 +55,37 @@ const addFanny = function (req, res, next) {
 		pageMessage.result = "Fanny Name require";
 		pageMessage.message = "FannyPack name require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack && req.body.userSerial) { // If alll good
+	} else if (req.body.fannyPack && req.body.userSerial) {
+		// If alll good
+		// Collect Results
+		const addFannyPackResult = [];
+		// Payload bzz
+		const payLoad = {
+			fannyPack_serial: Token.generate(),
+			fannyPack_name: req.body.fannyPack,
+			fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_owner_serial: req.body.userSerial
+		};
 		// Async Waterfall
 		async.waterfall([
-				// create_schema_user_fannyPack
-			function (callback) {
-				using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addFannyPackResult)
-			}, // add_newFannyPack_to_fannypacks_table
-			function (res, callback) {
-				using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addFannyPackResult)
-			}, // create_accountCategory_table
-			function (res, callback) {
-				using_blingblaw(callback, create_accountCategory_table, payLoad, addFannyPackResult)
-			}, // create_accounType_table
-			function (res, callback) {
-				using_blingblaw(callback, create_accounType_table, payLoad, addFannyPackResult)
-			}, // create_accountRecords_table
-			function (res, callback) {
-				using_blingblaw(callback, create_accountRecords_table, payLoad, addFannyPackResult)
-			}
-		], function (err, Results) {
+			// create_schema_user_fannyPack
+		function (callback) {
+			using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addFannyPackResult)
+		}, // add_newFannyPack_to_fannypacks_table
+		function (res, callback) {
+			using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addFannyPackResult)
+		}, // create_accountCategory_table
+		function (res, callback) {
+			using_blingblaw(callback, create_accountCategory_table, payLoad, addFannyPackResult)
+		}, // create_accounType_table
+		function (res, callback) {
+			using_blingblaw(callback, create_accounType_table, payLoad, addFannyPackResult)
+		}, // create_accountRecords_table
+		function (res, callback) {
+			using_blingblaw(callback, create_accountRecords_table, payLoad, addFannyPackResult)
+		}], function (err, Results) {
 			console.log("Results: " + JSON.stringify(Results));
 			console.log("err: " + JSON.stringify(err));
 			res.send({ pageMesage: addFannyPackResult });

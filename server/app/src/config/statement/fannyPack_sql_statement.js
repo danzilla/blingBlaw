@@ -1,5 +1,4 @@
 /* Fannypack
-
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -25,8 +24,10 @@ fannyPack
 */
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
-
 // Magic
+//
+// Create Table
+// Table fannypack
 const create_Table_fannyPackz = {
   title: "create_Table_fannyPackz",
   sql: `CREATE TABLE IF NOT EXISTS 
@@ -40,6 +41,8 @@ const create_Table_fannyPackz = {
           fannyPack_owner_serial VARCHAR(36) NOT NULL
       );`
 }
+//
+// Create Schema
 // Require - user_serial = userData.fannyPackSerial
 const create_schema_user_fannyPack = {
   title: "create_schema_user_fannyPack",
@@ -48,6 +51,8 @@ const create_schema_user_fannyPack = {
               AUTHORIZATION ${database_connection.user};`;
   }
 }
+//
+// Add
 // Require - user_serial = userData.fannyPackSerial
 const add_newFannyPack_to_fannypacks_table = {
     title: "add_newFannyPack_to_fannypacks_table",
@@ -57,13 +62,30 @@ const add_newFannyPack_to_fannypacks_table = {
           VALUES
           ('${userData.fannyPack_serial}', '${userData.fannyPack_name}', '${userData.fannyPack_created}', '${userData.fannyPack_lastUpdated}', '${userData.fannyPack_owner_serial}');`;
   }
-}  
-
-
+}
+//
+// View 
+// view_ALL_fannyPackz - Require - userData
+const view_ALL_fannyPackz = {
+  title: "view_ALL_fannyPackz",
+  sql: function (userData) {
+    return `SELECT * FROM ${database_labels.schema_name}.${database_labels.table_users_fannyPack};`;
+  }
+}
+// view_user_fannyPackz - Require - userData
+const view_user_fannyPackz = {
+  title: "view_user_fannyPackz",
+  sql: function (userData) {
+    return `SELECT * FROM ${database_labels.schema_name}.${database_labels.table_users_fannyPack}
+      WHERE fannyPack_owner_serial='${userData.user_serial}';`;
+  }
+}
 // Export 
 const statements = {
   create_Table_fannyPackz: create_Table_fannyPackz,
   create_schema_user_fannyPack: create_schema_user_fannyPack,
-  add_newFannyPack_to_fannypacks_table: add_newFannyPack_to_fannypacks_table
+  add_newFannyPack_to_fannypacks_table: add_newFannyPack_to_fannypacks_table,
+  view_user_fannyPackz:view_user_fannyPackz,
+  view_ALL_fannyPackz:view_ALL_fannyPackz
 }
 module.exports = statements;

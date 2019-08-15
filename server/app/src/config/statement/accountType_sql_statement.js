@@ -1,4 +1,4 @@
-/*  Account Type
+/*  accountType
    Database - blingblaw
    └───Schema - users
     | │ Table - user_auth
@@ -21,7 +21,9 @@ fanny_serialFanny.category - Table
 // Import app config labels
 const {database_labels, database_connection} = require('../app.config');
 // Magic
-// Table_account_type
+//
+// Table
+// create_accounType_table - Require - userData
 const create_accounType_table = {
   title: "create_Table_UserAuth",
   sql: function (userData) {
@@ -35,7 +37,7 @@ const create_accounType_table = {
         );`;
   }
 }
-
+//
 // Add
 // Require - account_type_name | account_type_created | account_type_lastmodify
 const add_newAccountType_to_accountType = {
@@ -46,10 +48,19 @@ const add_newAccountType_to_accountType = {
         VALUES ('${userData.account_type_name}', '${userData.account_type_created}', '${userData.account_type_lastmodify}');`;
   }
 }
-
+//
+// View 
+// view_ALL_accountType - Require - userData
+const view_ALL_accountType = {
+  title: "view_ALL_accountType",
+  sql: function (userData) {
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}';`;
+  }
+}
 // Export 
 const statements = {
   create_accounType_table: create_accounType_table,
-  add_newAccountType_to_accountType: add_newAccountType_to_accountType
+  add_newAccountType_to_accountType: add_newAccountType_to_accountType,
+  view_ALL_accountType: view_ALL_accountType
 }
 module.exports = statements;

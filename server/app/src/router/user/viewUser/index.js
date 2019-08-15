@@ -1,4 +1,4 @@
-// Authentication - Router 
+// viewUser - Router 
 /* 
    Database - blingblaw
    └───Schema - users
@@ -11,8 +11,7 @@
     │ │ Table - account_record
     │ │ Table - account_account_serial
      
-	validate_user_login
-	update_userDetails
+	viewUser
 */
 // Register user | Keep it minimal
 const async = require('async');
@@ -27,53 +26,44 @@ const moment = require('moment'); // Time
 
 const { using_blingblaw } = require('../../../config/util/process_sql_mutation');
 
-const { validate_user_login, 
-		update_userDetails } = require('../../../config/statement/user_sql_statement');
+const { view_user } = require('../../../config/statement/user_sql_statement');
 
-// loginUser
-const loginUser = function (req, res, next) {
-    // loginUser
+// viewUser
+const viewUser = function (req, res, next) {
+    // viewUser
 	let pageMessage = { 
-		title:"loginUser", 
+		title:"viewUser", 
 		message: "", 
 		checked: "", 
 		result: "" 
 	};
-    // Get Login requirement
-	if(!req.body.userName || !req.body.password || !req.body.userSerial) {
+	if(!req.body.userSerial) {
 		// pageMessage
 		pageMessage.checked = "errr";
-		pageMessage.result = "Credentials are require";
-		pageMessage.message = "User inputs are require";
+		pageMessage.result = "Valid user require";
+		pageMessage.message = "Valid user require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.userName && req.body.password && req.body.userSerial) {
+	} else if (req.body.userSerial) {
         // Collect Results
-        const loginUserResult = [];
+        const viewUserResult = [];
         // Payload bzz
         const payLoad = {
-            userName: req.body.userName,
-            userPassword: req.body.password,
-            user_auth_serial: req.body.userSerial,
-            user_auth_token: Token.generate(),
-            user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+            user_serial: req.body.userSerial
         };
         // if all good
         // Async Waterfall
         async.waterfall([
-        // validate_user_login
+        // viewUser
         function (callback) {
-            using_blingblaw(callback, validate_user_login, payLoad, loginUserResult)
-        }, // update_userDetails
-        function (res, callback) {
-            using_blingblaw(callback, update_userDetails, payLoad, loginUserResult)
+            using_blingblaw(callback, view_user, payLoad, viewUserResult)
         }], function (err, Results) {
             console.log("Results: " + JSON.stringify(Results));
             console.log("err: " + JSON.stringify(err));
-            res.send({ pageMesage: loginUserResult });
+            res.send({ pageMesage: viewUserResult });
         });
     }
 }
-module.exports = loginUser;
+module.exports = viewUser;
 
 
 

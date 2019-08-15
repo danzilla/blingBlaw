@@ -1,4 +1,4 @@
-// REST - Router - Category
+// accountCategory - Router
 /* 
    Database - blingblaw
    └───Schema - users
@@ -36,17 +36,6 @@ const addAccountCategory = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	// Collect Results
-	const addAccountCategoryResult = [];
-	// Payload bzz
-	const payLoad = {
-		category_id: Token.generate(),
-		category_name: req.body.categoryName,
-		category_parent: req.body.categoryParent,
-		category_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		category_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_serial: req.body.userSerial
-	};
 	// Get categoryName name
 	if (!req.body.userSerial || !req.body.categoryName || !req.body.categoryParent) {
 		// pageMessage
@@ -54,14 +43,25 @@ const addAccountCategory = function (req, res, next) {
 		pageMessage.result = "Inputs are require";
 		pageMessage.message = "Inputs are require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.userSerial && req.body.categoryName && req.body.categoryParent) { // If alll good
+	} else if (req.body.userSerial && req.body.categoryName && req.body.categoryParent) { 
+		// If alll good
+		// Collect Results
+		const addAccountCategoryResult = [];
+		// Payload bzz
+		const payLoad = {
+			category_id: Token.generate(),
+			category_name: req.body.categoryName,
+			category_parent: req.body.categoryParent,
+			category_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			category_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_serial: req.body.userSerial
+		};
 		// Async Waterfall
 		async.waterfall([
-				// add_newAccountCategory_to_accountCategory
-			function (callback) {
-				using_blingblaw(callback, add_newAccountCategory_to_accountCategory, payLoad, addAccountCategoryResult)
-			}
-		], function (err, Results) {
+		// add_newAccountCategory_to_accountCategory
+		function (callback) {
+			using_blingblaw(callback, add_newAccountCategory_to_accountCategory, payLoad, addAccountCategoryResult)
+		}], function (err, Results) {
 			console.log("Results: " + JSON.stringify(Results));
 			console.log("err: " + JSON.stringify(err));
 			res.send({ pageMesage: addAccountCategoryResult });

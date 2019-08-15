@@ -50,8 +50,10 @@ function onListening() {
   let msg0 = "App: " + process.env.npm_package_name + " v" + process.env.npm_package_version;
   let msg1 = "Author: " + process.env.npm_package_author_name;
   let msg2 = "Git: " + process.env.npm_package_homepage;
-  let msg3 = "Server running on http://localhost:" + port;
-  console.log("\n\n" + msg0 + "\n" + msg1 + "\n" + msg2 + "\n" + msg3 + "\n\n");
+  let msg3 = "Server running at http://localhost:" + port;
+  let msg4 = "GraphiQL API server running at http://localhost:" + port + "/graphiql";
+  let msg5 = "GraphQL API server running at http://localhost:" + port + "/graphql";
+  console.log("\n\n" + msg0 + "\n" + msg1 + "\n" + msg2 + "\n" + msg3 + "\n" + msg4 + "\n" + msg5 + "\n\n");
 }
 
 // Listen on provided port, on all network interfaces.

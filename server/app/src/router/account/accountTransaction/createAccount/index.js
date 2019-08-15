@@ -1,4 +1,4 @@
-// REST - Router - Account
+// accountTransaction - Router
 /* 
    Database - blingblaw
    └───Schema - users
@@ -40,17 +40,6 @@ const addAccountTransaction = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	// Collect Results
-	const addAccountTransactionResult = [];
-	// Payload bzz
-	const payLoad = {
-		account_type_id: req.body.accountType,
-		account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		account_serial: Token.generate(),
-		account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		account_owner_serial: req.body.userSerial,
-		fannyPack_serial: req.body.fannyPack
-	};
 	// Get FannyPack name
 	if(!req.body.fannyPack || !req.body.userSerial) {
 		// pageMessage
@@ -58,17 +47,28 @@ const addAccountTransaction = function (req, res, next) {
 		pageMessage.result = "Inputs are require";
 		pageMessage.message = "Inputs are require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack && req.body.userSerial) { // If alll good
+	} else if (req.body.fannyPack && req.body.userSerial) { 
+		// If alll good
+		// Collect Results
+		const addAccountTransactionResult = [];
+		// Payload bzz
+		const payLoad = {
+			account_type_id: req.body.accountType,
+			account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			account_serial: Token.generate(),
+			account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			account_owner_serial: req.body.userSerial,
+			fannyPack_serial: req.body.fannyPack
+		};
 		// Async Waterfall
 		async.waterfall([
-				// create_schema_user_fannyPack
-			function (callback) {
-				using_blingblaw(callback, create_accountTransaction_table, payLoad, addAccountTransactionResult)
-			}, // add_newFannyPack_to_fannypacks_table
-			function (res, callback) {
-				using_blingblaw(callback, add_newAccount_to_accountRecord, payLoad, addAccountTransactionResult)
-			}
-		], function (err, Results) {
+		// create_schema_user_fannyPack
+		function (callback) {
+			using_blingblaw(callback, create_accountTransaction_table, payLoad, addAccountTransactionResult)
+		}, // add_newFannyPack_to_fannypacks_table
+		function (res, callback) {
+			using_blingblaw(callback, add_newAccount_to_accountRecord, payLoad, addAccountTransactionResult)
+		}], function (err, Results) {
 			console.log("Results: " + JSON.stringify(Results));
 			console.log("err: " + JSON.stringify(err));
 			res.send({ pageMesage: addAccountTransactionResult });

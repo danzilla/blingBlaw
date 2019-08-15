@@ -1,19 +1,20 @@
 {
   "name": "blingblaw",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "author": "Danzilla",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danzilla/blingBlaw.git"
   },
   "scripts": {
-    "start-server": "cd ./server && npm start",
-    "start-client": "cd ./client && npm start",
-    "start-prod-docker": "docker-compose up --build",
-    "start-dev-docker": "cd ./_devops/docker/ && docker-compose up --build",
     "install-server": "cd ./server && npm install",
     "install-client": "cd ./client && npm install",
     "postinstall": "npm run install-server && npm run install-client",
+    "start-prod-docker": "docker-compose rm -f && docker-compose up --force-recreate",
+    "start-dev-docker": "docker-compose up -d pgadmin && docker-compose up postgres_db",
+    "docker-clean": "docker-compose rm -f && docker-compose build --no-cache",
+    "start-server": "cd ./server && npm start",
+    "start-client": "cd ./client && npm start",
     "start-prod": "concurrently --kill-others \"npm run start-prod-docker\"",
     "start-dev": "concurrently --kill-others \"npm run start-server\" \"npm run start-client\" \"npm run start-dev-docker\""
   },
