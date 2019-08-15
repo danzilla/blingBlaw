@@ -7,7 +7,10 @@ Node.js API-server
 - [ ] REST - Login and Set Session
 - [x] REST - Add | firtRun, user, fannyPack, account
 - [x] GraphQL - Integration 
-- [ ] GraphQL - PostGraphile Integration
+- [x] GraphQL - PostGraphile Integration
+- [x] REST - View | firtRun, user, fannyPack, account
+- [ ] REST - Update | firtRun, user, fannyPack, account
+- [ ] REST - Delete | firtRun, user, fannyPack, account
 
 # Database - Design
  - Revised

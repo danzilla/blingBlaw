@@ -35,8 +35,7 @@ services:
     volumes:
       - ./server:/usr/src/app/blingBlaw/server
     working_dir: /usr/src/app/blingBlaw/server
-    command: npm install
-    command: npm run start
+    command: bash -c "npm install && npm run start"
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     links:
@@ -47,8 +46,7 @@ services:
     volumes:
       - ./client:/usr/src/app/blingBlaw/client
     working_dir: /usr/src/app/blingBlaw/client
-    command: npm install
-    command: npm run start
+    command: bash -c "npm install && npm run start"
     ports:
       - ${CLIENT_PORT}:${CLIENT_PORT}
     links:

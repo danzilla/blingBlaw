@@ -23,9 +23,9 @@
 # App Requirement
 - PostgreSQL (Containerized)
 	- <s>Download and Install PostgreSQL</s>
-- NPM and nodeJs
-	- Download and Install nodeJs v8+
-- Docker and Docker-compose
+- NPM and nodeJs (Containerized)
+	- <s>Download and Install nodeJs v8+</s>
+- Docker and Docker-compose (<span style="color:hotpink">*Required*</span>)
 	- Download and Install Docker and Docker-compose
 	- https://docs.docker.com/install/
 	- https://docs.docker.com/compose/install/
@@ -34,34 +34,13 @@
 - Once, you are done with the above requirements
 - Use **git** to clone the repo
 	- > `git clone https://github.com/danzilla/blingBlaw.git`
-- Change app-database-host
-	```
-	// File: server/app/src/config/app.db.js
-	//
-	// If Production - SET (PROD) 
-	//	- db_config.database_host_dev_prod.prod
-	// If Local and Development - SET (DEV) 
-	//	- db_config.database_host_dev_prod.dev
-	// Default-setting (DEV)
-	// Dev environment for docker_compose and npm
-	   const db_Host = db_config.database_host_dev_prod.dev;
-	```
 
-## :whale: Deploy using Docker (Prod-Master-Deploy)
+##  :whale: Deploy using Docker-compose :whale2:
 - Change directory to blingBlaw
 	- > `cd ./blingBlaw`
 - **Run** the app
+	- > `npm run docker-clean`
 	- > `npm run start-prod`
-- Containerized services for
-	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
-
-## :whale2: Deploy using Docker (Dev-Master-Deploy)
-- Change directory to ./blingBlaw
-	- > `cd ./blingBlaw`
-- Install app **dependecies** using npm or another package manger
-	- > `npm install`
-- **Launch** the app
 	- > `npm run start-dev`
 - Containerized services for
-	- > PostgreSQL + PGAdmin
-
+	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
