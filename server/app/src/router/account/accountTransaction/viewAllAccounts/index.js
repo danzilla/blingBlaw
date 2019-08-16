@@ -15,14 +15,6 @@
 */
 // viewAllAccounts | Keep it minimal
 const async = require('async');
-// Generate - unique_id 
-// https://www.npmjs.com/package/uuid
-// https://www.npmjs.com/package/uuid-token-generator
-const uuidv5 = require('uuid/v5'); //string + salt
-const uuidv1 = require('uuid/v1'); //Time_based - saltTime
-const TokenGenerator = require('uuid-token-generator');
-const Token = new TokenGenerator(); // New Token
-const moment = require('moment'); // Time
 
 const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
@@ -32,23 +24,23 @@ const { view_ALL_accountRecord } = require('../../../../config/statement/account
 const viewAllAccounts = function (req, res, next) {
     // viewAllAccounts
 	let pageMessage = { 
-		title:"view_ALL_accountCategory", 
+		title:"view_ALL_account", 
 		message: "", 
 		checked: "", 
 		result: "" 
 	};
-	if(!req.body.fannyPack_serial) {
+	if(!req.body.fannyPack) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Valid user and fannyPack require";
 		pageMessage.message = "Valid user and fannyPack require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack_serial) {
+	} else if (req.body.fannyPack) {
         // Collect Results
         const viewAllAccountsResult = [];
         // Payload bzz
         const payLoad = {
-            fannyPack_serial: req.body.fannyPack_serial
+            fannyPack_serial: req.body.fannyPack
         };
         // if all good
         // Async Waterfall
@@ -57,9 +49,18 @@ const viewAllAccounts = function (req, res, next) {
         function (callback) {
             using_blingblaw(callback, view_ALL_accountRecord, payLoad, viewAllAccountsResult)
         }], function (err, Results) {
-            console.log("Results: " + JSON.stringify(Results));
-            console.log("err: " + JSON.stringify(err));
-            res.send({ pageMesage: viewAllAccountsResult });
+            if (Results) {
+                // pageMessage
+                pageMessage.checked = Results.checked;
+                pageMessage.message = Results.message;
+                pageMessage.result = Results.result.rows;
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error viewing the info";
+                pageMessage.result = err;
+            }
+            res.send({ pageMessage: pageMessage });
         });
     }
 }

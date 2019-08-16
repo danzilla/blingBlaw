@@ -15,14 +15,6 @@
 */
 // viewAccountType | Keep it minimal
 const async = require('async');
-// Generate - unique_id 
-// https://www.npmjs.com/package/uuid
-// https://www.npmjs.com/package/uuid-token-generator
-const uuidv5 = require('uuid/v5'); //string + salt
-const uuidv1 = require('uuid/v1'); //Time_based - saltTime
-const TokenGenerator = require('uuid-token-generator');
-const Token = new TokenGenerator(); // New Token
-const moment = require('moment'); // Time
 
 const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
@@ -57,8 +49,17 @@ const viewAccountType = function (req, res, next) {
         function (callback) {
             using_blingblaw(callback, view_ALL_accountCategory, payLoad, viewAccountTypeResult)
         }], function (err, Results) {
-            console.log("Results: " + JSON.stringify(Results));
-            console.log("err: " + JSON.stringify(err));
+            if (Results) {
+                // pageMessage
+                pageMessage.checked = Results.checked;
+                pageMessage.message = Results.message;
+                pageMessage.result = Results.result.rows;
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error Viewing the info";
+                pageMessage.result = err;
+            }
             res.send({ pageMesage: viewAccountTypeResult });
         });
     }

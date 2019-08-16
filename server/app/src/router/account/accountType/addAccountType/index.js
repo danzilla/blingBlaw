@@ -43,7 +43,7 @@ const addAccountType = function (req, res, next) {
 		account_type_name: req.body.accountTypeName,
 		account_type_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 		account_type_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_serial: req.body.userSerial
+		fannyPack_serial: req.body.fannyPack
 	};
 	// Get accountTypeName
 	if (!req.body.userSerial || !req.body.accountTypeName) {
@@ -60,9 +60,25 @@ const addAccountType = function (req, res, next) {
 				using_blingblaw(callback, add_newAccountType_to_accountType, payLoad, addAccountTypeResult)
 			}
 		], function (err, Results) {
-			console.log("Results: " + JSON.stringify(Results));
-			console.log("err: " + JSON.stringify(err));
-			res.send({ pageMesage: addAccountTypeResult });
+            if (Results) {
+				if (Results.checked === "23505"){
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = "Account Type alredy exists";
+					pageMessage.result = Results.result;
+				} else {
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = Results.message;
+					pageMessage.result = Results.result;
+				}
+            } if (err) {
+				// pageMessage
+				pageMessage.checked = err.code;
+				pageMessage.message = "Error Adding the info";
+				pageMessage.result = err;
+            }
+			res.send({ pageMessage: pageMessage });
 		});
 	}
 }

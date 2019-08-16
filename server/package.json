@@ -8,7 +8,6 @@
   },
   "server-port": "5000",
   "scripts": {
-    "test": "node ./bin/www",
     "start": "nodemon ./bin/www --ignore client"
   },
   "dependencies": {

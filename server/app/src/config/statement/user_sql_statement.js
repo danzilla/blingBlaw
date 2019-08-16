@@ -125,7 +125,7 @@ const view_user = {
       FROM ${database_labels.schema_name}.${database_labels.table_users_auth} userAuth
       LEFT JOIN ${database_labels.schema_name}.${database_labels.table_users_details} userDetail 
       ON userAuth.user_serial = userDetail.user_auth_serial
-      WHERE userAuth.user_serial='${userData.user_serial} AND LIMIT 1';`;
+      WHERE userAuth.user_serial='${userData.user_serial}' LIMIT 1;`;
   }
 }
 // view_all_user - Require - userData
@@ -137,8 +137,7 @@ const view_all_user = {
       user_created, user_modify, user_lastlogged, user_auth_token
       FROM ${database_labels.schema_name}.${database_labels.table_users_auth} userAuth
       LEFT JOIN ${database_labels.schema_name}.${database_labels.table_users_details} userDetail 
-      ON userAuth.user_serial = userDetail.user_auth_serial
-      WHERE userAuth.user_serial='${userData.user_serial}';`;
+      ON userAuth.user_serial = userDetail.user_auth_serial;`;
   }
 }
 // Export 

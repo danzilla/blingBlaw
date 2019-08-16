@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { log } from 'util';
 // Register Form
 class RegisterForm extends Component {
     // states
@@ -42,6 +41,14 @@ class RegisterForm extends Component {
                 fannyPack: this.state.register.fannyPack
             })
             .then((response) => {
+
+                console.log(JSON.stringify(response.data));
+                
+
+
+
+
+
                 // Err check
                 if (response.data.addUserResult.add_user_to_userAuth.checked == "checked" || 
                     response.data.addUserResult.add_user_to_userAuth.checked == "23505" ){

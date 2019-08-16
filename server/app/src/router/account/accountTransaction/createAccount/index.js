@@ -69,8 +69,24 @@ const addAccountTransaction = function (req, res, next) {
 		function (res, callback) {
 			using_blingblaw(callback, add_newAccount_to_accountRecord, payLoad, addAccountTransactionResult)
 		}], function (err, Results) {
-			console.log("Results: " + JSON.stringify(Results));
-			console.log("err: " + JSON.stringify(err));
+			if (Results) {
+				if (Results.checked === "23505"){
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = "Account alredy exists";
+					pageMessage.result = Results.result;
+				} else {
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = Results.message;
+					pageMessage.result = Results.result;
+				}
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error adding the info";
+                pageMessage.result = err;
+            }
 			res.send({ pageMesage: addAccountTransactionResult });
 		});
 	}

@@ -54,7 +54,7 @@ const addAccountCategory = function (req, res, next) {
 			category_parent: req.body.categoryParent,
 			category_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 			category_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-			fannyPack_serial: req.body.userSerial
+			fannyPack_serial: req.body.fannyPack
 		};
 		// Async Waterfall
 		async.waterfall([
@@ -62,8 +62,24 @@ const addAccountCategory = function (req, res, next) {
 		function (callback) {
 			using_blingblaw(callback, add_newAccountCategory_to_accountCategory, payLoad, addAccountCategoryResult)
 		}], function (err, Results) {
-			console.log("Results: " + JSON.stringify(Results));
-			console.log("err: " + JSON.stringify(err));
+			if (Results) {
+				if (Results.checked === "23505"){
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = "Category alredy exists";
+					pageMessage.result = Results.result;
+				} else {
+					// pageMessage
+					pageMessage.checked = Results.checked;
+					pageMessage.message = Results.message;
+					pageMessage.result = Results.result;
+				}
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error Adding the info";
+                pageMessage.result = err;
+            }
 			res.send({ pageMesage: addAccountCategoryResult });
 		});
 	}

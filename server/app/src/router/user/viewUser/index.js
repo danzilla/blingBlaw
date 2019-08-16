@@ -57,9 +57,18 @@ const viewUser = function (req, res, next) {
         function (callback) {
             using_blingblaw(callback, view_user, payLoad, viewUserResult)
         }], function (err, Results) {
-            console.log("Results: " + JSON.stringify(Results));
-            console.log("err: " + JSON.stringify(err));
-            res.send({ pageMesage: viewUserResult });
+            if (Results) {
+                // pageMessage
+                pageMessage.checked = Results.checked;
+                pageMessage.message = Results.message;
+                pageMessage.result = Results.result.rows[0];
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error getting the info";
+                pageMessage.result = err;
+            }
+            res.send({ pageMesage: pageMessage });
         });
     }
 }

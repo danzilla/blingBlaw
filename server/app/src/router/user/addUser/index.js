@@ -87,26 +87,73 @@ const addUser = function (req, res, next) {
 			using_blingblaw(callback, add_user_to_userAuth, payLoad, addUserResult)
 		},  // add_user_to_userDetails
 		function (res, callback) {
-			using_blingblaw(callback, add_user_to_userDetails, payLoad, addUserResult)
+			if(res.checked === "checked") {
+				using_blingblaw(callback, add_user_to_userDetails, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}, // create_schema_user_fannyPack
 		function (res, callback) {
-			using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addUserResult)
+			if(res.checked === "checked"){
+				using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}, // add_newFannyPack_to_fannypacks_table
 		function (res, callback) {
-			using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addUserResult)
+			if(res.checked === "checked"){
+				using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}, // create_accountCategory_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accountCategory_table, payLoad, addUserResult)
+			if(res.checked === "checked"){
+				using_blingblaw(callback, create_accountCategory_table, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}, // create_accounType_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accounType_table, payLoad, addUserResult)
+			if(res.checked === "checked"){
+				using_blingblaw(callback, create_accounType_table, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}, // create_accountRecords_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accountRecords_table, payLoad, addUserResult)
+			if(res.checked === "checked"){
+				using_blingblaw(callback, create_accountRecords_table, payLoad, addUserResult)
+			} else {
+				callback(null, res);
+			}
 		}], function (err, Results) {
-			console.log("Results: " + JSON.stringify(Results));
-			console.log("err: " + JSON.stringify(err));
-			res.send({ pageMesage: addUserResult });
+			if( addUserResult[0].checked === "checked" && 
+				addUserResult[1].checked === "checked" && 
+				addUserResult[2].checked === "checked" && 
+				addUserResult[3].checked === "checked" && 
+				addUserResult[4].checked === "checked" && 
+				addUserResult[5].checked === "checked" && 
+				addUserResult[6].checked === "checked" ){
+					pageMessage.message = "User been added! " + payLoad.user_name;
+					pageMessage.checked = addUserResult[0].checked;
+					pageMessage.result = "#BlingBlaw";
+			} else if (addUserResult[0].checked === "23505") {
+				pageMessage.checked = "23505";
+				pageMessage.message = "User already exits";
+				pageMessage.result = "#Reset user pwd - todo..";
+			} else if (Results) {
+                // pageMessage
+                pageMessage.checked = Results.checked;
+                pageMessage.message = Results.message;
+                pageMessage.result = "Something not right...";
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Something wrong #bloop #bloop";
+                pageMessage.result = err;
+            }
+            res.send({ pageMesage: pageMessage });
 		});
 	}
 }

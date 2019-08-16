@@ -71,7 +71,7 @@ const add_newAccountTransaction_to_accountTransaction = {
 const view_ALL_accountTransaction = {
   title: "view_ALL_accountTransaction",
   sql: function (userData) {
-    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.account_${userData.account_serial}';`;
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.account_${userData.account_serial};`;
   }
 }
 // Export 
