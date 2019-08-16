@@ -1,10 +1,25 @@
 # BlingBlaw - client :lips: :lipstick: :gift_heart:
 
 # To-Do
-- [ ] UI - Which Library? 
-- [ ] Layout - Draw
-- [ ] Create Action List 
-- [ ] Redux Integration 
+- [x] CSS Library - Ant Design - https://ant.design/docs/react/getting-started
+- [ ] App Layout - Draw
+- [ ] Folder structure - New
+- [ ] Redux - Integration
+
+### Client-folder Structure
+```
+│   
+└───client
+|   └───public
+|   |   └───styles
+|   |   └───index.html
+|   └───src
+|   |   └───config
+|   |   |   └───util
+|   |   └───features
+|   |   |   └───containers
+|   |   └───app.js
+```
 
 # :tropical_drink: Deploy Client 
 - Install app dependecies using npm or another package manger

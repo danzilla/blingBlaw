@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // - retryOnInitFail - Retry-till - blingblawDB initialize
 const { postgraphile } = require("postgraphile");
 // app_db_connection
-const app_config = require("./src/config/app.config");
+const app_config = require("./config/app.config");
 // postgres://user:pass@host:5432/dbname
 const app_db_connection = `postgres://${app_config.blingblaw.options.user}:${app_config.blingblaw.options.password}@${app_config.blingblaw.options.host}:${app_config.blingblaw.options.port}/${app_config.database_connection.blingblawDB}`;
 const app_postgraphile_setting = {
@@ -42,16 +42,16 @@ app.use(postgraphile(app_db_connection, "public", app_postgraphile_setting));
 // REST
 //
 // FirstRun
-const firstrun = require('./src/router/firstrun');
+const firstrun = require('./router/firstrun');
 app.use('/firstrun', firstrun);
 // User
-const user = require('./src/router/user');
+const user = require('./router/user');
 app.use('/user', user);
 // FannyPack
-const fannyPack = require('./src/router/fannyPack');
+const fannyPack = require('./router/fannyPack');
 app.use('/fannypack', fannyPack);
 // Account
-const account = require('./src/router/account');
+const account = require('./router/account');
 app.use('/account', account);
 // End of REST Router
 // Anything else 
