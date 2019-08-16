@@ -14,17 +14,16 @@ Node.js API-server
 
 ### Server-folder Structure
 ```
-│   
-└───server
-|   └───bin
-|   └───src
-|   |   └───config
-|   |   |   └───statement
-|   |   |   └───util
-|   |   |   └───app.config.js
-|   |   └───graphql - GrapgQL
-|   |   └───router  - REST
-|   |   └───app.js
+server
+├── app
+│   ├── config
+│   |   ├── statement
+│   |   ├── util
+│   |   └── app.config.js
+|   ├── graphql
+|   ├── router
+│   └── app.js
+└── bin
 ```
 
 # Database - Design
