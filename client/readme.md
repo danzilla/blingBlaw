@@ -8,17 +8,16 @@
 
 ### Client-folder Structure
 ```
-│   
-└───client
-|   └───public
-|   |   └───styles
-|   |   └───index.html
-|   └───src
-|   |   └───config
-|   |   |   └───util
-|   |   └───features
-|   |   |   └───containers
-|   |   └───app.js
+client
+├── public
+│   ├── style
+│   └── index.html
+└── src
+│   ├── config
+│   |   └── utils
+│   ├── features
+│   |   └── containers
+│   └── app.js
 ```
 
 # :tropical_drink: Deploy Client 
