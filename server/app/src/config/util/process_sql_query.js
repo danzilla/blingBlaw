@@ -8,10 +8,22 @@ function process_sql_blingblaw(callback, sql_statement, Results) {
     // Using default Database "blingblaw"
     blingblaw.connect(function(err, client, release){
         if(err) {
-            pageMessage.title = sql_statement.title;
-            pageMessage.checked = err.code;
-            pageMessage.result = err.stack;
-            pageMessage.message = "Error connecting to client";
+            if (err.code == "3D000"){
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "Database not initialize";
+            } else if (err.code == "42P01"){
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "No Tables exists or Messy database";
+            } else {
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "Error connecting to client"; 
+            }
             Results.push(pageMessage);
             release();
             callback(null, pageMessage);
@@ -45,10 +57,22 @@ function process_sql_postgresDefault(callback, sql_statement, Results) {
     // Using default Database "public"
     postgresDefault.connect(function(err, client, release){
         if(err) {
-            pageMessage.title = sql_statement.title;
-            pageMessage.checked = err.code;
-            pageMessage.result = err.stack;
-            pageMessage.message = "Error connecting to client";
+            if (err.code == "3D000"){
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "Database not initialize";
+            } else if (err.code == "42P01"){
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "No Tables exists or Messy database";
+            } else {
+                pageMessage.title = sql_statement.title;
+                pageMessage.checked = err.code;
+                pageMessage.result = err.stack;
+                pageMessage.message = "Error connecting to client"; 
+            }
             Results.push(pageMessage);
             release();
             callback(null, pageMessage);

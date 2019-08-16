@@ -19,11 +19,6 @@
 */
 // Register FannyPack | Keep it minimal
 const async = require('async');
-// Generate - unique_id 
-// https://www.npmjs.com/package/uuid
-// https://www.npmjs.com/package/uuid-token-generator
-const uuidv5 = require('uuid/v5'); //string + salt
-const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
@@ -75,20 +70,54 @@ const addFanny = function (req, res, next) {
 			using_blingblaw(callback, create_schema_user_fannyPack, payLoad, addFannyPackResult)
 		}, // add_newFannyPack_to_fannypacks_table
 		function (res, callback) {
-			using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addFannyPackResult)
+			if (res.checked === "checked"){
+				using_blingblaw(callback, add_newFannyPack_to_fannypacks_table, payLoad, addFannyPackResult)
+			} else {
+				callback(null, res)
+			}
 		}, // create_accountCategory_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accountCategory_table, payLoad, addFannyPackResult)
+			if (res.checked === "checked"){
+				using_blingblaw(callback, create_accountCategory_table, payLoad, addFannyPackResult)
+			} else {
+				callback(null, res)
+			}
 		}, // create_accounType_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accounType_table, payLoad, addFannyPackResult)
+			if (res.checked === "checked"){
+				using_blingblaw(callback, create_accounType_table, payLoad, addFannyPackResult)
+			} else {
+				callback(null, res)
+			}
 		}, // create_accountRecords_table
 		function (res, callback) {
-			using_blingblaw(callback, create_accountRecords_table, payLoad, addFannyPackResult)
+			if (res.checked === "checked"){
+				using_blingblaw(callback, create_accountRecords_table, payLoad, addFannyPackResult)
+			} else {
+				callback(null, res)
+			}
 		}], function (err, Results) {
-			console.log("Results: " + JSON.stringify(Results));
-			console.log("err: " + JSON.stringify(err));
-			res.send({ pageMesage: addFannyPackResult });
+			if (addFannyPackResult[0].checked === "checked" &&
+				addFannyPackResult[1].checked === "checked" &&
+				addFannyPackResult[2].checked === "checked" &&
+				addFannyPackResult[3].checked === "checked" &&
+				addFannyPackResult[4].checked === "checked") {
+				// pageMessage
+				pageMessage.checked = addFannyPackResult[0].checked;
+				pageMessage.message = "FannyPack added!";
+				pageMessage.result = addFannyPackResult;
+			} else if (Results) {
+                // pageMessage
+                pageMessage.checked = Results.checked;
+                pageMessage.message = Results.message;
+                pageMessage.result = Results;
+            } else if (err) {
+                // pageMessage
+                pageMessage.checked = err.code;
+                pageMessage.message = "Error getting the info";
+                pageMessage.result = err;
+            }
+			res.send({ pageMesage: pageMessage });
 		});
 	}
 }

@@ -44,6 +44,9 @@ class LoginForm extends Component {
         userPassword: this.state.login.password
       })
       .then((response) => {
+
+        console.log(JSON.stringify(response.data));
+        
         // Err check
         if (response.data.loginValidationResults.validate_user_auth.checked == "checked"){
           // Set localstorage with {sessionData}
@@ -51,6 +54,8 @@ class LoginForm extends Component {
           // Send pageMessage and Redirect to /dashboard
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
           this.props.history.push('/dashboard');
+
+
         } else if (response.data.loginValidationResults.validate_user_auth.checked == "3D000") {
           // Go to - inital page - Set to isInitalConfig == True
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
@@ -62,6 +67,8 @@ class LoginForm extends Component {
           this.props.updateAlertMessage({ pageMessage: response.data.pageMessage.message });
           this.setState({ pageMessage: response.data.pageMessage.message });
         }
+
+
       })
       .catch((error) => { // get and set props - Login state
         this.setState({ pageMessage: JSON.stringify(error)});
