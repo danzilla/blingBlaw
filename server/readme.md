@@ -12,6 +12,21 @@ Node.js API-server
 - [ ] REST - Update | firtRun, user, fannyPack, account
 - [ ] REST - Delete | firtRun, user, fannyPack, account
 
+### Server-folder Structure
+```
+│   
+└───server
+|   └───bin
+|   └───src
+|   |   └───config
+|   |   |   └───statement
+|   |   |   └───util
+|   |   |   └───app.config.js
+|   |   └───graphql - GrapgQL
+|   |   └───router  - REST
+|   |   └───app.js
+```
+
 # Database - Design
  - Revised
     - <s>May 26, 2019</s>
