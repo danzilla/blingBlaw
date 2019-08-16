@@ -1,6 +1,8 @@
 # BlingBlaw - client :lips: :lipstick: :gift_heart:
 
 # To-Do
+- [ ] UI - Which Library? 
+- [ ] Layout - Draw
 - [ ] Create Action List 
 - [ ] Redux Integration 
 

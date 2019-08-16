@@ -40,7 +40,7 @@
 	- > `cd ./blingBlaw`
 - **Run** the app
 	- > `npm run docker-clean`
-	- > `npm run start-prod`
-	- > `npm run start-dev`
+	- > Prod-deploy `npm run start-prod`
+	- > Dev-deploy `npm run start-dev`
 - Containerized services for
 	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
