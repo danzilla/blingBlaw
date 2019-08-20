@@ -5,8 +5,8 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 // serviceWorker
 import * as serviceWorker from './config/serviceWorker';
 // Routers
-import Login from './feature/authentication';
-import Dashboard from './feature/dashboard';
+import Login from './features/authentication';
+import Dashboard from './features/dashboard';
 // zzz
 const routing = (
     <Router>

@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 // Global-Style Materialize
 import Materialize from '../../util/Materialize';
 // Navigation and Messages
-import Navigation from '../../component/Navigation';
-import MessageAlert from '../../component/MessageAlert';
+import Navigation from '../../components/Navigation';
+import MessageAlert from '../../components/MessageAlert';
 // Contents 
-import FannyPack from '../../pages/fannyPack_page';
-import User from '../../pages/users_page';
+import FannyPack from '../../containers/dashboard/fannyPack_page';
+import User from '../../containers/dashboard/users_page';
 // Dashboard
 class Dashboard extends Component {
   // constructor
