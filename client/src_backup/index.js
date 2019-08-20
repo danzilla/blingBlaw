@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 // serviceWorker
-import * as serviceWorker from './config/serviceWorker';
+import * as serviceWorker from './util/serviceWorker';
 // Routers
 import Login from './feature/authentication';
 import Dashboard from './feature/dashboard';
