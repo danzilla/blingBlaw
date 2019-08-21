@@ -1,7 +1,4 @@
 html, body, #root {
-  width: 100%;
-  height: 100%;
-  overflow:hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -49,7 +46,7 @@ html, body, #root {
 
 /* height */
 .h-100 {
-  height: 100% !important;
+  height: 100vh !important;
 }
 .h-98 {
   height: 98% !important;

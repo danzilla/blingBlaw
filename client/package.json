@@ -1,13 +1,13 @@
 {
   "name": "client",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "antd": "^3.22.0",
     "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "csv": "^5.1.1",
     "csvtojson": "^2.0.8",
-    "materialize-css": "^1.0.0",
     "papaparse": "^4.6.3",
     "react": "^16.8.5",
     "react-chartjs-2": "^2.7.6",

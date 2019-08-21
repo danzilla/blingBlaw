@@ -1,20 +1,23 @@
 # BlingBlaw -  A minimalist budget app :sparkling_heart: :sparkles: :tada:
 - **Engine**		 : Node.js v8+
 - **Database**	 	 : PostgreSQL
-- **Server**	 	 : Node.js - Express -> GraphQL -> PostGraphile
+- **Server**	 	 : Node.js - Express -> REST -> GraphQL (PostGraphile)
 - **Client**	 	 : Node.js - React -> Redux -> Apollo client
-- **API-Endpoint**	 : REST (Migrating to GraphQL)
+- **API-Endpoint**	 : REST (Migrating to GraphQL) | Hybrid approach (REST+GraphQL)
 
-# To-Do | Edited: Aug 7th, 2019
+# To-Do | Edited: Aug 20th, 2019
 - [ ] Client - Remove Local States and Redux
-	- [ ] Rebuild Client | No more States | Use React Hooks | New UI Library and Same layout (Minimal)
-	- [ ] Redux Implement
-	- [ ] Apollo Client Implement
+	- [x] Folder structure - New
+	- [x] New UI Library and Same app-layout (Minimalism) - Ant Design
+	- [ ] Rebuild Client | No more States | Use React Hooks 
+	- [ ] Draw map of React state-flow through App
+	- [ ] Implement - Redux
+	- [ ] Implement - Apollo Client
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
 	- [ ] REST for Authentication and ActiveToken
-	- [ ] Graphql and postgresSQL - SQL
-	- [ ] PostGraphile Implement
+	- [x] Graphql and postgresSQL - SQL
+	- [ ] Implement - PostGraphile and Custom Mutation and Resolves
 - [ ] DevOps
 	- [ ] Draw map of client
 	- [ ] Draw map of server
@@ -25,7 +28,7 @@
 	- <s>Download and Install PostgreSQL</s>
 - NPM and nodeJs (Containerized)
 	- <s>Download and Install nodeJs v8+</s>
-- Docker and Docker-compose (<span style="color:hotpink">*Required*</span>)
+- Docker and Docker-compose (***Required***)
 	- Download and Install Docker and Docker-compose
 	- https://docs.docker.com/install/
 	- https://docs.docker.com/compose/install/
@@ -35,12 +38,20 @@
 - Use **git** to clone the repo
 	- > `git clone https://github.com/danzilla/blingBlaw.git`
 
-##  :whale: Deploy using Docker-compose :whale2:
-- Change directory to blingBlaw
-	- > `cd ./blingBlaw`
-- **Run** the app
-	- > `npm run docker-clean`
-	- > Prod-deploy `npm run start-prod`
-	- > Dev-deploy `npm run start-dev`
+## :whale: Deploy using Docker-compose
 - Containerized services for
 	- > Node (React) + Node (Express) + PostgreSQL + PGAdmin
+- Change directory to blingBlaw
+	- > `cd ./blingBlaw`
+- **Initiate** the app
+	- > **Clean-docker** `docker-compose rm -f && docker-compose build --no-cache`
+	- > **Prod-deploy** `docker-compose up --force-recreate`
+	- > **Dev-deploy** `docker-compose up -d pgadmin && docker-compose up postgres_db server client`
+
+## :nut_and_bolt: Deploy using **NPM** (*require* - npm and nodejs)
+- Change directory to blingBlaw
+	- > `cd ./blingBlaw`
+- **Launch** the app
+	- > Clean-docker `npm run docker-clean`
+	- > Prod-deploy `npm run start-prod`
+	- > Dev-deploy `npm run start-dev`

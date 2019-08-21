@@ -1,23 +1,25 @@
 # BlingBlaw - client :lips: :lipstick: :gift_heart:
 
 # To-Do
-- [x] CSS Library - Ant Design - https://ant.design/docs/react/getting-started
+- [x] UI Library - Ant Design - https://ant.design/docs/react/getting-started
 - [ ] App Layout - Draw
-- [ ] Folder structure - New
+- [x] Folder structure - New
 - [ ] Redux - Integration
 
 ### Client-folder Structure
 ```
 client
 ├── public
-│   ├── style
+│   ├── stylesheets
 │   └── index.html
 └── src
+│   ├── components
 │   ├── config
 │   |   └── utils
+│   ├── containers
 │   ├── features
-│   |   └── containers
-│   └── app.js
+│   └── index.js
+└── src_backup
 ```
 
 # :tropical_drink: Deploy Client 
