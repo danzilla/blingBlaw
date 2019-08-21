@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { emojify } from 'react-emojione';
 // Register Form
-import RegisterForm from './registerForm'
+// import RegisterForm from './registerForm'
 // Register
 class Register extends Component {
   // states
@@ -25,11 +25,12 @@ class Register extends Component {
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
                     <h5 className="card-title black-text">Register {emojify(':heart:')}</h5>
-                    <RegisterForm
+                    
+              {/* <RegisterForm
                       updateAlertMessage={this.props.updateAlertMessage}
                       activeLoginPage={this.props.activeLoginPage}
                       activeRegisterPage={this.props.activeRegisterPage}
-                      activFirstRunPage={this.props.activFirstRunPage} />
+                      activFirstRunPage={this.props.activFirstRunPage} /> */}
                   </div>
                 </div>
               </div>

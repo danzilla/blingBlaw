@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // CheckList
-import FirstRunForm from './firstRunForm';
+// import FirstRunForm from './firstRunForm';
 // FirstRun
 class FirstRun extends Component {
   // states
@@ -20,12 +20,12 @@ class FirstRun extends Component {
           <div className="container">
 
             <div className="center-align">
-              {/* FirstRun config */}
+              {/* 
               <FirstRunForm 
                 updateAlertMessage={this.props.updateAlertMessage}
                 activeLoginPage={this.props.activeLoginPage}
                 activeRegisterPage={this.props.activeRegisterPage}
-                activFirstRunPage={this.props.activFirstRunPage} />
+                activFirstRunPage={this.props.activFirstRunPage} /> */}
             </div>
 
           </div>

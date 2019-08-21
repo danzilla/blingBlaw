@@ -4,7 +4,7 @@ import { emojify } from 'react-emojione';
 // To-do
 // Session and Auto login/redirect
 // Session Client
-import LoginForm from './loginForm';
+// import LoginForm from './loginForm';
 // Login
 class Login extends Component {
   // states
@@ -28,11 +28,13 @@ class Login extends Component {
                 <div className="card card-1 z-depth-4">
                   <div className="card-content">
                     <h5 className="card-title black-text">Sign In <span>{emojify(':rocket:')}</span></h5>
+                    
+              {/* 
                     <LoginForm 
                       updateAlertMessage={this.props.updateAlertMessage}
                       activeLoginPage={this.props.activeLoginPage}
                       activeRegisterPage={this.props.activeRegisterPage}
-                      activFirstRunPage={this.props.activFirstRunPage} />
+                      activFirstRunPage={this.props.activFirstRunPage} /> */}
                   </div>
                 </div>
               </div>

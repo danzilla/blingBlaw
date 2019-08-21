@@ -5,9 +5,9 @@ import Materialize from '../../config/utils/Materialize';
 // Messages
 import MessageAlert from '../../components/MessageAlert';
 // Contents 
-import LoginPage from '../../containers/login_page';
-import RegisterPage from '../../containers/register_page';
-import FirstRunPage from '../../containers/firstRun_page';
+import LoginPage from '../../containers/authentication/login_page';
+import RegisterPage from '../../containers/authentication/register_page';
+import FirstRunPage from '../../containers/authentication/firstRun_page';
 // Dashboard
 class Dashboard extends Component {
   // constructor

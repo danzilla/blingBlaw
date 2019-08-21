@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // Global-Style Materialize
-import Materialize from '../../util/Materialize';
+import Materialize from '../../config/utils/Materialize';
 import M from "materialize-css";
 // Content
 class Content extends Component {
