@@ -1,124 +1,61 @@
-// Authentication Page
 import React, { Component } from 'react';
-// Global-Style Materialize
-import Materialize from '../../config/utils/Materialize';
-// Messages
-import MessageAlert from '../../components/MessageAlert';
-// Contents 
-import LoginPage from '../../containers/authentication/login_page';
-import RegisterPage from '../../containers/authentication/register_page';
-import FirstRunPage from '../../containers/authentication/firstRun_page';
-// Dashboard
-class Dashboard extends Component {
-  // constructor
-  constructor(props) { 
-    super(props);
-    // Page-Display Setting
-    const pageDisplay = {
-      isLogin: true,
-      isRegister: false,
-      isFirstrun: false
-    };
-    const alertMessage = { pageMessage: "" };
-    this.state = { pageDisplay: pageDisplay, alertMessage: alertMessage };
+import {withRouter} from 'react-router-dom';
+import { emojify } from 'react-emojione';
+import { Input, Card, Row, Col, Form, Icon, Button } from 'antd';
+
+// Login
+class Login extends Component {
+  // states
+  constructor(props) {
+    super(props)
+    this.state = { 
+      pageName: "BlingBlaw"
+   }
   }
-  // Alert Message 
-  // updateAlertMessage
-  updateAlertMessage = (msg) => {
-    this.setState({
-      alertMessage: msg
-    })
-  }
-  //
-  // Pages
-  // - Login | Register | FirstRun
-  // - 3 Depth - Props -> nav > navBar
-  // 
-  // activeLoginPage
-  activeLoginPage = () => {
-    this.setState({
-      pageDisplay: { ...this.state.pageDisplay, 
-        isLogin: true, isRegister: false, isFirstrun: false
+
+  // onSubmit
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
       }
-    })
-  }
-  // activeRegisterPage
-  activeRegisterPage = () => {
-    this.setState({
-      pageDisplay: { ...this.state.pageDisplay, 
-        isLogin: false, isRegister: true, isFirstrun: false
-      }
-    })
-  }
-  // activFirstRunPage
-  activFirstRunPage = () => {
-    this.setState({
-      pageDisplay: { ...this.state.pageDisplay, 
-        isLogin: false, isRegister: false, isFirstrun: true
-      }
-    })
-  }
-  //
-  // blaze contents
+    });
+  };
+
+  // Login
   render() {
-    // Which content to show
-    let showPage, pageName;
-    if (this.state.pageDisplay.isLogin === true) {
-      // Login page
-      pageName = "Login page";
-      showPage = <LoginPage
-        pageName={pageName}
-        activeLoginPage={this.activeLoginPage}
-        activeRegisterPage={this.activeRegisterPage}
-        activFirstRunPage={this.activFirstRunPage}
-        updateAlertMessage={this.updateAlertMessage} />;
-    } else if (this.state.pageDisplay.isRegister === true) {
-      // Register page
-      pageName = "Register page";
-      showPage = <RegisterPage
-        pageName={pageName}
-        activeLoginPage={this.activeLoginPage}
-        activeRegisterPage={this.activeRegisterPage}
-        activFirstRunPage={this.activFirstRunPage}
-        updateAlertMessage={this.updateAlertMessage} />;
-    } else if (this.state.pageDisplay.isFirstrun === true) {
-      // First-run page
-      pageName = "First-run page";
-      showPage = <FirstRunPage
-        pageName={pageName}
-        activeLoginPage={this.activeLoginPage}
-        activeRegisterPage={this.activeRegisterPage}
-        activFirstRunPage={this.activFirstRunPage}
-        updateAlertMessage={this.updateAlertMessage} />;
-    } else {
-      // Login page
-      pageName = "Login page";
-      showPage = <LoginPage
-        pageName={pageName}
-        activeLoginPage={this.activeLoginPage}
-        activeRegisterPage={this.activeRegisterPage}
-        activFirstRunPage={this.activFirstRunPage}
-        updateAlertMessage={this.updateAlertMessage} />;
-    }
-    // #brrrrrom
     return (
-      <div className="h-100 w-100">
-        {/* Alert Message */}
-        <MessageAlert 
-          alertMessage={this.state.alertMessage}
-          pageDisplay={this.state.pageDisplay} />
+      <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
+        <Col span={6}>
+          <Card title={this.state.pageName} className="card-1">
+            <Form onSubmit={this.handleSubmit} className="login-form">
+              <Form.Item>
+                <Input
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  type="text" placeholder="Username" />
+              </Form.Item>
+              <Form.Item>
+                <Input
+                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,1,.25)' }} />}
+                  type="password" placeholder="Password" />
+              </Form.Item>
 
-        {/* Page content */}
-        {showPage}
-
-        {/* Init Materializecss */}
-        <Materialize />
-      </div>
+              <Form.Item>
+                <Row type="flex" justify="center">
+                  <Button type="primary" htmlType="submit" className="login-form-button">
+                    Log in
+                  </Button> 
+                  <Button type="link">
+                    Register
+                  </Button>
+                </Row>
+              </Form.Item>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
     );
   }
 }
-// Bling
-export default Dashboard;
-
-
-
+export default withRouter(Login);

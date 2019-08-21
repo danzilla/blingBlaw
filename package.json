@@ -10,5 +10,6 @@
     "docker-clean": "docker-compose rm -f && docker-compose build --no-cache",
     "start-prod": "docker-compose rm -f && docker-compose build --no-cache && docker-compose up --force-recreate",
     "start-dev": "docker-compose up -d pgadmin && docker-compose up postgres_db server client"
-  }
+  },
+  "dependencies": {}
 }
