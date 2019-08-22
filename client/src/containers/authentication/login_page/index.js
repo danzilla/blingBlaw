@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {withRouter} from 'react-router-dom';
-import { Input, Row, Form, Icon, Button, message } from 'antd';
+import { emojify } from 'react-emojione';
+import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 // axios-post 
 import axios from 'axios';
 // LoginForm
@@ -27,11 +28,18 @@ function LoginForm(props){
                 userPassword: loginInfo.userPassword
             })
             .then((data) => {
-                if(data.data.pageMessage.checked === "checked"){
-                    message.success(data.data.pageMessage.message, 1.5);
-                    localStorage.setItem('blingBlaw', data.data.pageMessage.result);
+                if (data.data.pageMessage.checked === "3D000"){
+                    message.error(data.data.pageMessage.message, 2.5);
+                    props.activeFirstRun();
+                } else if(data.data.pageMessage.checked === "ECONNREFUSED"){
+                    message.error(data.data.pageMessage.message, 2.5);
+                    props.activeFirstRun();
+                } else if(data.data.pageMessage.checked === "checked"){
+                    // If all good - setLocalStorage
+                    localStorage.setItem('blingblaw', data.data.pageMessage.result);
+                    message.success(data.data.pageMessage.message, 2.5);
                 } else {
-                    message.warning(data.data.pageMessage.message, 1.5);
+                    message.warning(data.data.pageMessage.message, 2.5);
                 }
             })
             .catch((err) => {
@@ -39,43 +47,51 @@ function LoginForm(props){
             });
         }
     };
+    // displayContent
+    let displayContent;
+    displayContent = <Form onSubmit={handleSubmit}>
+                <Form.Item> 
+                    <Input
+                        name="userName" 
+                        value={loginInfo.userName} type="text" placeholder="Username"
+                        size="large"
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        onChange={handleChange} required />
+                </Form.Item>
+                <Form.Item>
+                    <Input.Password 
+                        placeholder="Password"
+                        name="userPassword" 
+                        value={loginInfo.userPassword} 
+                        type="password"
+                        size="large"
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,1,.25)' }} />}
+                        onChange={handleChange} required />
+                </Form.Item>
+                <Form.Item>
+                    <Row type="flex" justify="center">
+                        <Button
+                            type="primary" 
+                            htmlType="submit" 
+                            className="login-form-button">
+                            Log in
+                        </Button> 
+                        <Button
+                            onClick={props.activeRegister}
+                            type="link">
+                            Register
+                        </Button>
+                    </Row>
+                </Form.Item>
+            </Form>;
     // LoginForm
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Item> 
-                <Input
-                    name="userName" 
-                    value={loginInfo.userName} type="text" placeholder="Username"
-                    size="large"
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    onChange={handleChange} required />
-            </Form.Item>
-            <Form.Item>
-                <Input.Password 
-                    placeholder="Password"
-                    name="userPassword" 
-                    value={loginInfo.userPassword} 
-                    type="password"
-                    size="large"
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,1,.25)' }} />}
-                    onChange={handleChange} required />
-            </Form.Item>
-            <Form.Item>
-                <Row type="flex" justify="center">
-                    <Button
-                        type="primary" 
-                        htmlType="submit" 
-                        className="login-form-button">
-                        Log in
-                    </Button> 
-                    <Button
-                        onClick={props.activeRegister}
-                        type="link">
-                        Register
-                    </Button>
-                </Row>
-            </Form.Item>
-        </Form>
+        <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
+            <Col xs={20} sm={15} md={10} lg={5} className="card-2 p-2">
+                <h1>Sign-in {emojify(":rocket:")}</h1>
+                {displayContent}
+            </Col>
+        </Row>
     );
 }
 export default withRouter(LoginForm);

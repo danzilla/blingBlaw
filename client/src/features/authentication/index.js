@@ -1,21 +1,17 @@
 // Authentication Page
 import React, { useState } from 'react';
 import {withRouter} from 'react-router-dom';
-import { Row, Col} from 'antd';
-import { emojify } from 'react-emojione';
-
 // Contents 
 import LoginPage from '../../containers/authentication/login_page';
 import RegisterForm from '../../containers/authentication/register_page';
 import FirstRunPage from '../../containers/authentication/firstRun_page';
-
 // Authentication
 function Authentication(props) {
   // React-hookz - authDisplay
   const [authDisplay, setAuthDisplay] = useState({
-    isLogin: false,
+    isLogin: true,
     isRegister: false,
-    isFirstRun: true
+    isFirstRun: false
   });
   // Display triggers
   const activeLogin = () => {
@@ -30,33 +26,21 @@ function Authentication(props) {
   };
   const activeFirstRun = () => {
     setAuthDisplay({
-      ...authDisplay, isLogin: true, isRegister: false, isFirstRun:true 
+      ...authDisplay, isLogin: false, isRegister: false, isFirstRun:true 
     });
   };
   // Shuffle through which page to display
-  let pageName, displayPage;
+  let displayPage;
   if(authDisplay.isLogin === true){
-    pageName = "Sign-in ";
-    displayPage = <LoginPage activeRegister={activeRegister} />
+    displayPage = <LoginPage activeRegister={activeRegister} activeFirstRun={activeFirstRun} />
   } else if(authDisplay.isRegister === true){
-    pageName = "Register ";
-    displayPage = <RegisterForm activeLogin={activeLogin} />
+    displayPage = <RegisterForm activeLogin={activeLogin} activeFirstRun={activeFirstRun} />
   } else if(authDisplay.isFirstRun === true){
-    pageName = "First-run ";
-    displayPage = <FirstRunPage activeRegister={activeRegister} />
+    displayPage = <FirstRunPage activeRegister={activeRegister} activeLogin={activeLogin}  />
   } else {
-    pageName = "Login ";
-    displayPage = <LoginPage activeRegister={activeRegister} />
+    displayPage = <LoginPage activeRegister={activeRegister} activeFirstRun={activeFirstRun} />
   }
   // Authentication view
-  return (
-    <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
-      <Col xs={20} sm={15} md={10} lg={5} className="card-2 p-2">
-        {displayPage}
-      </Col>
-    </Row>
-  );
+  return (displayPage);
 }
 export default withRouter(Authentication);
-
-
