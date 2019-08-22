@@ -40,7 +40,7 @@ const loginUser = function (req, res, next) {
         pageMessage.checked = "errr";
         pageMessage.message = "User inputs are require";
 		pageMessage.result = "Credentials are require";
-		res.send({ pageMesage: pageMessage });
+		res.send({ pageMessage: pageMessage });
 	} else if (req.body.userName && req.body.userPassword) {
         // Collect Results
         const loginUserResult = [];
@@ -72,10 +72,10 @@ const loginUser = function (req, res, next) {
             // For now
             if (loginUserResult[0].result.rowCount === 0){
                 pageMessage.message = "Incorrect credentials";
-                pageMessage.checked = "checked";
+                pageMessage.checked = "nada";
                 pageMessage.result = "#bloop";
             } else if (loginUserResult[0].result.rowCount === 1) {
-                pageMessage.message = "Logged in, " + loginUserResult[0].result.rows[0].userName;
+                pageMessage.message = "Logged in, " + loginUserResult[0].result.rows[0].user_name;
                 pageMessage.checked = loginUserResult[0].checked;
                 pageMessage.result = loginUserResult[0].result.rows[0];
             } else if (Results) {
@@ -89,7 +89,9 @@ const loginUser = function (req, res, next) {
                 pageMessage.message = "Something wrong #bloop #bloop";
                 pageMessage.result = err;
             }
-            res.send({ pageMesage: pageMessage });
+            console.log(JSON.stringify(pageMessage));
+            
+            res.send({ pageMessage: pageMessage });
         });
     }
 }

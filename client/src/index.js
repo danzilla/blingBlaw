@@ -13,8 +13,8 @@ import Login from './features/authentication';
 const routing = (
     <Router>
         <Switch>
-            <Route path="/login" component={Login} />
-            <Redirect from='*' to='/login' />
+            <Route path="/" component={Login} />
+            <Redirect from='*' to='/' />
         </Switch>
     </Router>
 );

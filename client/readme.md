@@ -6,6 +6,9 @@
 - [x] Folder structure - New
 - [ ] Redux - Integration
 
+- React-Hooks
+    - > https://reactjs.org/docs/hooks-reference.html
+
 ### Client-folder Structure
 ```
 client

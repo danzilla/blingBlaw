@@ -33,6 +33,13 @@ const { create_Table_UserAuth,
 const { create_Table_fannyPackz } = require('../../../config/statement/fannyPack_sql_statement');
 // initiate Database build Brrrr
 const initialDatabase = function (req, res, next) {
+	// pageMessage
+	let pageMessage = { 
+		title:"Intial Database setup", 
+		checked: "", 
+		message: "", 
+		result: "" 
+	};
 	// Collect Recults
 	const FirstRunResults = [];
 	// Async Waterfall
@@ -60,11 +67,18 @@ const initialDatabase = function (req, res, next) {
 			using_blingblaw(callback, create_Table_fannyPackz, FirstRunResults)
 		}
     ], function (err, Results) {
-
-		console.log("Results: " + JSON.stringify(Results));
-		console.log("err: " + JSON.stringify(err));
-		
-        res.send({ pageMesage: FirstRunResults });
+		if (Results) {
+			// pageMessage
+			pageMessage.checked = Results.checked;
+			pageMessage.message = Results.message;
+			pageMessage.result = FirstRunResults;
+		} else if (err) {
+			// pageMessage
+			pageMessage.checked = err.code;
+			pageMessage.message = "Something wrong #bloop #bloop";
+			pageMessage.result = FirstRunResults;
+		}
+        res.send({ pageMessage: pageMessage });
     });
 }
 module.exports = initialDatabase;
