@@ -50,13 +50,13 @@ const addUser = function (req, res, next) {
 		result: "" 
 	};
 	// Get FannyPack name
-	if (!req.body.fannyPack || !req.body.userName  || !req.body.password) {
+	if (!req.body.userFannyPack || !req.body.userName  || !req.body.userPassword) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Inintial information are require";
 		pageMessage.message = "All inputs are required";
-		res.send({ pageMesage: pageMessage });
-	} else if(req.body.fannyPack && req.body.userName && req.body.password) {
+		res.send({ pageMessage: pageMessage });
+	} else if(req.body.userFannyPack && req.body.userName && req.body.userPassword) {
 		// if all good
 		// Collect Results
 		const addUserResult = [];
@@ -65,7 +65,7 @@ const addUser = function (req, res, next) {
 			user_serial: uuidv5(req.body.userName, uuidv1()),
 			user_name: req.body.userName,
 			user_pwd_salt: Token.generate(),
-			user_pwd_hash: req.body.password,
+			user_pwd_hash: req.body.userPassword,
 			user_auth_token: Token.generate(),
 			user_full_name: "",
 			user_email: "",
@@ -74,7 +74,7 @@ const addUser = function (req, res, next) {
 			user_lastLogged: "",
 			get user_auth_serial(){ return this.user_serial },
 			fannyPack_serial: Token.generate(),
-			fannyPack_name: req.body.fannyPack,
+			fannyPack_name: req.body.userFannyPack,
 			fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 			fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 			fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
@@ -153,7 +153,7 @@ const addUser = function (req, res, next) {
                 pageMessage.message = "Something wrong #bloop #bloop";
                 pageMessage.result = err;
             }
-            res.send({ pageMesage: pageMessage });
+            res.send({ pageMessage: pageMessage });
 		});
 	}
 }

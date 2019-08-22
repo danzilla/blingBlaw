@@ -1,61 +1,62 @@
-import React, { Component } from 'react';
+// Authentication Page
+import React, { useState } from 'react';
 import {withRouter} from 'react-router-dom';
+import { Row, Col} from 'antd';
 import { emojify } from 'react-emojione';
-import { Input, Card, Row, Col, Form, Icon, Button } from 'antd';
 
-// Login
-class Login extends Component {
-  // states
-  constructor(props) {
-    super(props)
-    this.state = { 
-      pageName: "BlingBlaw"
-   }
-  }
+// Contents 
+import LoginPage from '../../containers/authentication/login_page';
+import RegisterForm from '../../containers/authentication/register_page';
+import FirstRunPage from '../../containers/authentication/firstRun_page';
 
-  // onSubmit
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
+// Authentication
+function Authentication(props) {
+  // React-hookz - authDisplay
+  const [authDisplay, setAuthDisplay] = useState({
+    isLogin: false,
+    isRegister: false,
+    isFirstRun: true
+  });
+  // Display triggers
+  const activeLogin = () => {
+    setAuthDisplay({
+      ...authDisplay, isLogin: true, isRegister: false, isFirstRun:false 
     });
   };
-
-  // Login
-  render() {
-    return (
-      <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
-        <Col span={6}>
-          <Card title={this.state.pageName} className="card-1">
-            <Form onSubmit={this.handleSubmit} className="login-form">
-              <Form.Item>
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="text" placeholder="Username" />
-              </Form.Item>
-              <Form.Item>
-                <Input
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,1,.25)' }} />}
-                  type="password" placeholder="Password" />
-              </Form.Item>
-
-              <Form.Item>
-                <Row type="flex" justify="center">
-                  <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
-                  </Button> 
-                  <Button type="link">
-                    Register
-                  </Button>
-                </Row>
-              </Form.Item>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
-    );
+  const activeRegister = () => {
+    setAuthDisplay({
+      ...authDisplay, isLogin: false, isRegister: true, isFirstRun:false 
+    });
+  };
+  const activeFirstRun = () => {
+    setAuthDisplay({
+      ...authDisplay, isLogin: true, isRegister: false, isFirstRun:true 
+    });
+  };
+  // Shuffle through which page to display
+  let pageName, displayPage;
+  if(authDisplay.isLogin === true){
+    pageName = "Sign-in ";
+    displayPage = <LoginPage activeRegister={activeRegister} />
+  } else if(authDisplay.isRegister === true){
+    pageName = "Register ";
+    displayPage = <RegisterForm activeLogin={activeLogin} />
+  } else if(authDisplay.isFirstRun === true){
+    pageName = "First-run ";
+    displayPage = <FirstRunPage activeRegister={activeRegister} />
+  } else {
+    pageName = "Login ";
+    displayPage = <LoginPage activeRegister={activeRegister} />
   }
+  // Authentication view
+  return (
+    <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
+      <Col xs={20} sm={15} md={10} lg={5} className="card-2 p-2">
+        {displayPage}
+      </Col>
+    </Row>
+  );
 }
-export default withRouter(Login);
+export default withRouter(Authentication);
+
+
