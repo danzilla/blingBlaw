@@ -9,11 +9,13 @@ import 'antd/dist/antd.css';
 import * as serviceWorker from './config/serviceWorker';
 // Routers
 import Login from './features/authentication';
+import Dashboard from './features/dashboard';
 // zzz
 const routing = (
     <Router>
         <Switch>
-            <Route path="/" component={Login} />
+            <Route path="/" exact component={Login} />
+            <Route path="/dashboard" exact component={Dashboard} />
             <Redirect from='*' to='/' />
         </Switch>
     </Router>
