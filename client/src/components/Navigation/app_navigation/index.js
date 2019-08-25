@@ -12,23 +12,18 @@ function AppNavigation(props){
   const handleClick = (e) => {
   // setNavCurrentPosition(e.key);
   };
-  // App user session Nav
-
   // - User - Contains FannyPacks
   // - FannyPacks - Contains Account, Account Types and category
   // - Account - Contains Account Statement information
   const style1 = {
     backgroundColor: 'rgba(233, 30, 99,0.8)'
   }
-
   const style2 = {
     height: '150px',
     fontSize: '50em'
   }
-
   const { Option } = Select;
   const InputGroup = Input.Group;
-
   const menuFannyPack = (
     <Menu>
       <Menu.Item> <a> FannyPackz 1</a></Menu.Item>
@@ -44,16 +39,12 @@ function AppNavigation(props){
     </Menu>
   );
   return (
-    <Row type="flex" justify="center" align="middle">
-      <Col>
-        <Breadcrumb separator={<Icon type="right" />}>
-          <Breadcrumb.Item>BlingBlaw</Breadcrumb.Item>
-          <Breadcrumb.Item overlay={menuFannyPack}><Icon type="home" /> FannyPackz</Breadcrumb.Item>
-          <Breadcrumb.Item overlay={menuAccount}><Icon type="home" /> Account</Breadcrumb.Item>
-          <Breadcrumb.Item href=""><Icon type="user" /> Overview</Breadcrumb.Item>
-        </Breadcrumb>
-      </Col>
-    </Row>
+    <Breadcrumb separator={<Icon type="right" />}>
+      <Breadcrumb.Item>BlingBlaw</Breadcrumb.Item>
+      <Breadcrumb.Item overlay={menuFannyPack}><Icon type="home" /> View all fannyPackz</Breadcrumb.Item>
+      <Breadcrumb.Item overlay={menuAccount}><Icon type="home" /> Account</Breadcrumb.Item>
+      <Breadcrumb.Item href=""><Icon type="user" /> Overview</Breadcrumb.Item>
+    </Breadcrumb>
   );
 }
 export default withRouter(AppNavigation);

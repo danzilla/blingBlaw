@@ -38,14 +38,17 @@ function AppNavigation(props){
     }
   };
   return (
-    <Row type="flex" justify="end" align="middle">
-      <Col>
-        <Dropdown overlay={menu}>
-          <a> 
-            {emojify(':rocket:', emojifyOptions)} 
-            <Icon type="caret-down" />
-          </a>
-        </Dropdown>
+    <Row type="flex" justify="center" align="middle">
+      {/* App Settings Menu */ }
+      <Col xs={24} sm={24} md={24} lg={24}>
+        <Row type="flex" justify="end" align="middle">
+          <Dropdown overlay={menu}>
+            <a> 
+              {emojify(':rocket:', emojifyOptions)} 
+              <Icon type="caret-down" />
+            </a>
+          </Dropdown>
+        </Row>
       </Col>
     </Row>
   );

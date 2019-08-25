@@ -35,18 +35,16 @@ function LoginForm(props){
                     message.error(data.data.pageMessage.message, 2.5);
                     props.activeFirstRun();
                 } else if(data.data.pageMessage.checked === "checked"){
-
                     // If all good - setLocalStorage
                     let userInfo = JSON.stringify(data.data.pageMessage.result);
-                    // localStorage.setItem('blingblaw', userInfo);
+                    // localStorage.setItem('sessionID', userInfo);
                     // Why not session too
                     // Check Box? or Default?
-                    sessionStorage.setItem('blingblaw', userInfo);
+                    sessionStorage.setItem('sessionID', data.data.pageMessage.result.user_serial);
+                    sessionStorage.setItem('sessionInfo', userInfo);
                     // blingBlaw
                     message.success(data.data.pageMessage.message, 2.5);
                     props.history.push("/dashboard");
-                
-                    
                 } else {
                     message.warning(data.data.pageMessage.message, 2.5);
                 }

@@ -3,13 +3,16 @@ import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import { Row, Col, message, Menu, Icon } from 'antd';
 // Componts
-import AppNav from '../../components/Navigation/app_nav';
-import AppSessionNav from '../../components/Navigation/app_session_nav';
+import AppNavigation from '../../components/Navigation/app_navigation';
+import UserSettingNavigation from '../../components/Navigation/user_setting_navigation';
 // Contents 
 import UserPage from '../../containers/dashboard/user_page';
 import FannyPackPage from '../../containers/dashboard/fannyPack_page';
 import AccountPage from '../../containers/dashboard/account_page';
 import { emojify } from 'react-emojione/lib/react-emojione';
+
+import axios from 'axios';
+
 // Dashboard
 function Dashboard(props) {
   // Dashboard - Global_State
@@ -18,6 +21,14 @@ function Dashboard(props) {
   // React-hookz
   const [userSessionInfo, setUserSessionInfo] = useState([]);
   const [userSessionHistory, setUserSessionHistory] = useState([]);
+
+
+  const [userFannyPacks, setUserFannyPacks] = useState([{
+    activeFannyPack: "", userFannyPacks: []
+  }])
+  const [userAccounts, setUserAccounts] = useState([{
+    activeAccount: "", userAccounts: []
+  }])
   // Dashboard - Display contents
   //
   // React-hookz - dashboardDisplay
@@ -66,7 +77,7 @@ function Dashboard(props) {
                     activeTrigger={activeTrigger} 
                     userSessionInfo={userSessionInfo} />
   } else if (dashboardDisplay.isFannyPackPage === true) {
-    displayPage = <FannyPackPage 
+    displayPage = <FannyPackPage
                     activeTrigger={activeTrigger} 
                     userSessionInfo={userSessionInfo} />
   } else if (dashboardDisplay.isAccountPage === true) {
@@ -74,12 +85,46 @@ function Dashboard(props) {
                     activeTrigger={activeTrigger} 
                     userSessionInfo={userSessionInfo} />
   }
-  // Return Display
-  // Effect() => Check if localstorage is Fat and good
+
+  // Fetch only FannyPack
+
+  // Fetch other seperatley or onRefresh
+
+  // - Fetch - users fannypacks
+  const fetch_userFannyPack = (userData) => {
+    // axios_fetch_post
+    axios.post("http://localhost:5000/fannypack/view", {
+      userSerial: userData
+    })
+    .then((data) => {
+      console.log(JSON.stringify(data.data.pageMessage.result));
+      setUserFannyPacks({
+        ...userFannyPacks, activeFannyPack: data.data.pageMessage.result[0].fannypack_serial, userFannyPacks:data.data.pageMessage.result 
+      });
+    })
+    .catch((err) => {
+      console.log(JSON.stringify(err));
+    });
+  }
+  // - Fetch - users Accounts
+  const fetch_userAccounts = (userData) => {
+    // axios_fetch_post
+    axios.post("http://localhost:5000/account/view", {
+      fannyPack: userData
+    })
+    .then((data) => {
+      console.log(JSON.stringify(data));
+    })
+    .catch((err) => {
+      console.log(JSON.stringify(err));
+    });
+  }
+
+  // useEffect() => Check if localstorage is Fat and good
   useEffect(() => {
-    // let localInfo = JSON.parse(localStorage.getItem('blingblaw'));
-    let sessInfo = JSON.parse(sessionStorage.getItem('blingblaw'));
-    console.log(JSON.stringify(sessInfo));
+    // let localInfo = JSON.parse(localStorage.getItem('sessionID'));
+    let sessInfo = sessionStorage.getItem('sessionID');
+    console.log("sessInfo: " + sessInfo);
     if (!sessInfo) {
       // Bad entry
       message.error("Unauthorized visit! Required valid authentication", 2.5);
@@ -87,29 +132,44 @@ function Dashboard(props) {
       props.history.push("/");
     }
   });
-   // emojifyOptions
-  const emojifyOptions = {
-    style: {
-        height: 80,
-    }
-  };
+  // useEffect() - with array for RUN-ONCE
+  useEffect(() => {
+    let sessionID = sessionStorage.getItem('sessionID');
+    let sessionInfo = sessionStorage.getItem('sessionInfo');
+    console.log("Session: " + sessionInfo);
+    // setState 
+    setUserSessionInfo(sessionInfo)
+    // Refresh userFannyPacks list
+    fetch_userFannyPack(sessionID);
+    fetch_userAccounts("8uLxrCZWqbS48MoQYdg9AF");
+  }, []);
   // Dashboard view
   return (
     <Row type="flex" justify="center" align="middle">
       {/* Navigation Bar */}
-      <Col xs={20} sm={20} md={15} lg={15} className="p-1">
-        <AppNav />
-      </Col>
-      {/* Session Progress */}
-      <Col xs={20} sm={20} md={15} lg={15} className="card-2 p-2 my-1">
-        <AppSessionNav />
+      <Col xs={20} sm={20} md={15} lg={15} className="p-2">
+        <Row type="flex" justify="center" align="middle">
+          {/* Breadcrumb */ }
+          <Col xs={16} sm={16} md={16} lg={16}>
+            <Row type="flex" justify="start" align="middle">
+              <AppNavigation userFannyPacks={userFannyPacks} />
+            </Row>
+          </Col>
+          {/* App Settings Menu */ }
+          <Col xs={8} sm={8} md={8} lg  ={8}>
+            <Row type="flex" justify="end" align="middle">
+              <UserSettingNavigation />
+            </Row>
+          </Col>
+        </Row>
       </Col>
       {/* Display Page */}
       <Col xs={20} sm={20} md={15} lg={15} className="card-2 p-1">
         {displayPage}
       </Col>
       {/* Blank Space */}
-      <Col xs={24} sm={24} md={24} lg={24} className="p-1"></Col>
+      <Col xs={24} sm={24} md={24} lg={24} className="p-1">
+      </Col>
     </Row>
   );
 }
