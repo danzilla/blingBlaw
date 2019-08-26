@@ -20,20 +20,17 @@ function Dashboard(props) {
   // - Redux  and Thunk
   // React-hookz
   const [userSessionInfo, setUserSessionInfo] = useState([]);
-  const [userSessionHistory, setUserSessionHistory] = useState([]);
-
-
-  const [userFannyPacks, setUserFannyPacks] = useState([{
-    activeFannyPack: "", userFannyPacks: []
-  }])
-  const [userAccounts, setUserAccounts] = useState([{
-    activeAccount: "", userAccounts: []
-  }])
+  const [userFannyPacks, setUserFannyPacks] = useState({
+    activeFannyPack: "", userFannyPacks: ""
+  });
+  const [userSession, setUserSession] = useState([{
+    activeAccount: "", activeFannyPack: "", activeAccount: ""
+  }]);
   // Dashboard - Display contents
   //
   // React-hookz - dashboardDisplay
   const [dashboardDisplay, setDashboardDisplay] = useState({
-    isBlankPage: true, isUserPage: true, isFannyPackPage: false, isAccountPage: false
+    isBlankPage: false, isUserPage: true, isFannyPackPage: false, isAccountPage: false
   });
   // Display triggers - activeBlankContent
   const activeBlankContent = () => {
@@ -85,32 +82,27 @@ function Dashboard(props) {
                     activeTrigger={activeTrigger} 
                     userSessionInfo={userSessionInfo} />
   }
-
-  // Fetch only FannyPack
-
-  // Fetch other seperatley or onRefresh
-
   // - Fetch - users fannypacks
   const fetch_userFannyPack = (userData) => {
     // axios_fetch_post
-    axios.post("http://localhost:5000/fannypack/view", {
+      axios.post("http://localhost:5000/fannypack/view", {
       userSerial: userData
-    })
-    .then((data) => {
-      console.log(JSON.stringify(data.data.pageMessage.result));
-      setUserFannyPacks({
-        ...userFannyPacks, activeFannyPack: data.data.pageMessage.result[0].fannypack_serial, userFannyPacks:data.data.pageMessage.result 
+      })
+      .then((data) => {
+        // Fetch and setState for FannyPacks
+        setUserFannyPacks({
+          ...userFannyPacks, activeFannyPack: data.data.pageMessage.result[0].fannypack_serial, userFannyPacks:data.data.pageMessage.result 
+        })
+      })
+      .catch((err) => {
+        console.log(JSON.stringify(err));
       });
-    })
-    .catch((err) => {
-      console.log(JSON.stringify(err));
-    });
-  }
+    };
   // - Fetch - users Accounts
   const fetch_userAccounts = (userData) => {
     // axios_fetch_post
     axios.post("http://localhost:5000/account/view", {
-      fannyPack: userData
+    fannyPack: userData
     })
     .then((data) => {
       console.log(JSON.stringify(data));
@@ -118,13 +110,11 @@ function Dashboard(props) {
     .catch((err) => {
       console.log(JSON.stringify(err));
     });
-  }
-
+  };
   // useEffect() => Check if localstorage is Fat and good
   useEffect(() => {
     // let localInfo = JSON.parse(localStorage.getItem('sessionID'));
     let sessInfo = sessionStorage.getItem('sessionID');
-    console.log("sessInfo: " + sessInfo);
     if (!sessInfo) {
       // Bad entry
       message.error("Unauthorized visit! Required valid authentication", 2.5);
@@ -136,12 +126,11 @@ function Dashboard(props) {
   useEffect(() => {
     let sessionID = sessionStorage.getItem('sessionID');
     let sessionInfo = sessionStorage.getItem('sessionInfo');
-    console.log("Session: " + sessionInfo);
     // setState 
     setUserSessionInfo(sessionInfo)
     // Refresh userFannyPacks list
     fetch_userFannyPack(sessionID);
-    fetch_userAccounts("8uLxrCZWqbS48MoQYdg9AF");
+    // fetch_userAccounts("8uLxrCZWqbS48MoQYdg9AF");
   }, []);
   // Dashboard view
   return (
@@ -168,8 +157,7 @@ function Dashboard(props) {
         {displayPage}
       </Col>
       {/* Blank Space */}
-      <Col xs={24} sm={24} md={24} lg={24} className="p-1">
-      </Col>
+      <Col xs={24} sm={24} md={24} lg={24} className="p-1"></Col>
     </Row>
   );
 }
