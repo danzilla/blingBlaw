@@ -1,5 +1,16 @@
 # BlingBlaw - client :lips: :lipstick: :gift_heart:
 
+### React
+- Design in React 
+- Two Depth using props
+```
+- App-Dashboard
+- Main-States
+    - Components
+    - Props
+        - Sub-componets 
+        - Props
+```
 # To-Do
 - [x] UI Library - Ant Design - https://ant.design/docs/react/getting-started
 - [ ] App Layout - Draw
