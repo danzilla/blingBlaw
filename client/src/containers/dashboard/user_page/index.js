@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import { emojify } from 'react-emojione';
-import { Alert, Col, Row, Button } from 'antd';
-// axios-post 
-import axios from 'axios';
+import { Alert, Row } from 'antd';
 // UserContent
 function UserContent(props){
     // React-hookz - userAddInfo
