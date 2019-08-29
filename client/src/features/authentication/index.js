@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import {withRouter} from 'react-router-dom';
 // Contents 
-import LoginPage from '../../containers/authentication/login_page';
-import RegisterForm from '../../containers/authentication/register_page';
-import FirstRunPage from '../../containers/authentication/firstRun_page';
+import LoginPage from '../../react/containers/authentication/login_page';
+import RegisterForm from '../../react/containers/authentication/register_page';
+import FirstRunPage from '../../react/containers/authentication/firstRun_page';
 // Authentication
 function Authentication(props) {
   // React-hookz - authDisplay

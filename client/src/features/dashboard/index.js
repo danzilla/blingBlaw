@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import { Row, Col, message } from 'antd';
 // Contents
-import UserPage from '../../containers/dashboard/user_page';
+import UserPage from '../../react/containers/dashboard/user_page';
 // axios fire
 import axios from 'axios';
 // Dashboard
