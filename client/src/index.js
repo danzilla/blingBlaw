@@ -1,26 +1,13 @@
-// React
+// React - UI BlingBlaw
+// NOTE: Implment Redux - State_mangement
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-// Apply Ant-Design in Global
-// NOTE: Hope-style apply from Global-Child_componets
-import 'antd/dist/antd.css';
 // serviceWorker
 import * as serviceWorker from './config/serviceWorker';
-// Routers
-import Login from './features/authentication';
-import Dashboard from './features/dashboard';
-// zzz
-const routing = (
-    <Router>
-        <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Redirect from='*' to='/' />
-        </Switch>
-    </Router>
-);
-ReactDOM.render(routing, document.getElementById('root'));
+// Features Container
+import Features from './features';
+// Render to public - Redux-- need to be implmented
+ReactDOM.render(<Features />, document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
