@@ -9,7 +9,7 @@ import Authentication from './authentication';
 import Dashboard from './dashboard';
 // Features
 function Features(props) {
-  // Features view
+  // Return
   return (
     <Router>
         <Switch>
