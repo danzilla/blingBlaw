@@ -4,7 +4,7 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 // Apply Ant-Design in Global
 // NOTE: Hope-style apply from Global-Child_componets
 import 'antd/dist/antd.css';
-// Routers
+// React-Routers
 import Authentication from './authentication';
 import Dashboard from './dashboard';
 // Features
