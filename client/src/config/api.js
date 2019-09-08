@@ -1,3 +1,5 @@
+// Import Axios
+import {axios_post} from './utils/axios_mutation';
 // BlingBlaw - API - REST
 const fetch_api_url = "http://localhost:5000";
 // Build Database
@@ -21,3 +23,7 @@ const get_account_type = fetch_api_url + "/account/type/view";
 const add_transaction = fetch_api_url + "/account/transaction/add";
 const get_transaction = fetch_api_url + "/account/transaction/view";
 
+export function hi(hello){
+    console.log("Hi: " + JSON.stringify(hello));
+    return hello;
+}

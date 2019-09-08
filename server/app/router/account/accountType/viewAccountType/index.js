@@ -18,36 +18,36 @@ const async = require('async');
 
 const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
-const { view_ALL_accountCategory } = require('../../../../config/statement/accountCategory_statement');
+const { view_ALL_accountType } = require('../../../../config/statement/accountType_sql_statement');
 
 // viewAccountType
 const viewAccountType = function (req, res, next) {
     // viewAccountType
 	let pageMessage = { 
-		title:"view_ALL_accountCategory", 
+		title:"view_ALL_accountType", 
 		message: "", 
 		checked: "", 
 		result: "" 
 	};
-	if(!req.body.fannyPack_serial) {
+	if(!req.body.fannyPack) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Valid user and fannyPack require";
 		pageMessage.message = "Valid user and fannyPack require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack_serial) {
+	} else if (req.body.fannyPack) {
         // Collect Results
         const viewAccountTypeResult = [];
         // Payload bzz
         const payLoad = {
-            fannyPack_serial: req.body.fannyPack_serial
+            fannyPack_serial: req.body.fannyPack
         };
         // if all good
         // Async Waterfall
         async.waterfall([
         // viewAccountType
         function (callback) {
-            using_blingblaw(callback, view_ALL_accountCategory, payLoad, viewAccountTypeResult)
+            using_blingblaw(callback, view_ALL_accountType, payLoad, viewAccountTypeResult)
         }], function (err, Results) {
             if (Results) {
                 // pageMessage
@@ -60,7 +60,7 @@ const viewAccountType = function (req, res, next) {
                 pageMessage.message = "Error Viewing the info";
                 pageMessage.result = err;
             }
-            res.send({ pageMesage: viewAccountTypeResult });
+            res.send({ pageMesage: pageMessage });
         });
     }
 }

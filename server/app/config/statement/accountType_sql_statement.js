@@ -54,7 +54,7 @@ const add_newAccountType_to_accountType = {
 const view_ALL_accountType = {
   title: "view_ALL_accountType",
   sql: function (userData) {
-    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}';`;
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type};`;
   }
 }
 // Export 

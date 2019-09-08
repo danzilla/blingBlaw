@@ -1,4 +1,4 @@
-// FannyPack Page
+// FannyPack Container
 import React, { useEffect, useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
@@ -41,10 +41,48 @@ function FannyPack(props) {
   // emojify
   let emojifyOptions = { style: { height: '50' } };
   let emojiList = [
-    ":pancakes:", ":tea:", ":pizza:", ":peach:", ":ice_cream:", ":rosette:", ":chicken:", ":teddy_bear:", ":heartpulse:",
+    ":pancakes:", ":tea:", ":pizza:", ":peach:", ":ice_cream:", ":rosette:", ":chicken:", ":heartpulse:",
     ":fireworks:", ":gem:", ":cherry_blossom:", ":pig:", ":handbag:", ":kiss:", ":chicken:",  ":sparkling_heart:",
-    ":unicorn:", ":gorilla:", ":avocado:", ":kiwi:", ":strawberry:", ":t_rex:", ":tropical_fish:", ":pirate_flag:"
-  ]; let randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+    ":unicorn:", ":gorilla:", ":avocado:", ":kiwi:", ":strawberry:", ":t_rex:", ":tropical_fish:"
+  ]; 
+  let randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+  // Menus Dropdowns
+  const AppSetting = <Dropdown overlay={
+                        <Menu>
+                          <Menu.Item> <a href="#"> Users </a> </Menu.Item>
+                          <Menu.Item> <a onClick={() => sessionStorage.clear()}> Logout </a> </Menu.Item>
+                        </Menu>}>
+                        <a className="ant-dropdown-link" href="#">
+                          {emojify(':rocket:', emojifyOptions)} <Icon type="caret-down" />
+                        </a>
+                      </Dropdown>
+  const AddNewFanny = <Dropdown overlay={
+                        <Menu>
+                          <Menu.Item key="1" onClick={ShowFannyAddModal}> Add New Fannypack </Menu.Item>
+                          <Menu.Divider />
+                          {props.fannyPackz.map((value, key) => (
+                            <Menu.Item key={key} onClick={() => props.changeActiveFannyPack(value)}> 
+                              <Tooltip title={JSON.stringify(value)} placement="right" > 
+                                <a>{value.fannypack_name} - {value.fannypack_serial}</a>
+                              </Tooltip>
+                            </Menu.Item>
+                          ))}
+                        </Menu>}>
+                        <Row type="flex" justify="start" align="middle">
+                          <Col>
+                            <Title level={2} style={{ display: 'inline'}}>
+                              {emojify(randomEmoji, emojifyOptions)}
+                            </Title>
+                          </Col>
+                          <Col>
+                            <Title level={2} style={{ display: 'inline'}}>
+                              <h6 style={{ display: 'inline', fontStyle: 'italic'}}> fannyPack </h6>
+                              {props.activeFannyPack.fannypack_name}
+                              <Icon type="caret-down" />
+                            </Title>
+                          </Col>
+                        </Row>
+                      </Dropdown>
   // FannyPack - Header
   return (
     <Row type="flex" justify="center" align="middle" className="card-2 p-1 my-1" style={navHeader}>
@@ -64,45 +102,13 @@ function FannyPack(props) {
           </Row>
       </Modal>
       <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-        <Dropdown overlay={
-          <Menu>
-            <Menu.Item key="1" onClick={ShowFannyAddModal}> Add New Fannypack </Menu.Item>
-            <Menu.Divider />
-            {props.fannyPackz.map((value, key) => (
-              <Menu.Item key={key} onClick={() => props.changeActiveFannyPack(value.fannypack_serial, value.fannypack_name)}> 
-                <Tooltip title={JSON.stringify(value)} placement="right" > 
-                  <a>{value.fannypack_name} - {value.fannypack_serial}</a>
-                </Tooltip>
-              </Menu.Item>
-            ))}
-          </Menu>}>
-          <Row type="flex" justify="start" align="middle">
-            <Col>
-              <Title level={2} style={{ display: 'inline'}}>
-                {emojify(randomEmoji, emojifyOptions)}
-              </Title>
-            </Col>
-            <Col>
-              <Title level={2} style={{ display: 'inline'}}>
-                <h6 style={{ display: 'inline', fontStyle: 'italic'}}> fannyPack </h6>
-                {props.activeFannyPack.fannyPackName}
-                <Icon type="caret-down" />
-              </Title>
-            </Col>
-          </Row>
-        </Dropdown>
+        <Row type="flex" justify="start" align="middle">
+          {AddNewFanny}
+        </Row>
       </Col>
       <Col xs={24} sm={24} md={10} lg={10} xl={10}>
         <Row type="flex" justify="end" align="middle">
-          <Dropdown overlay={
-            <Menu>
-              <Menu.Item> <a href="#"> Users </a> </Menu.Item>
-              <Menu.Item> <a onClick={() => sessionStorage.clear()}> Logout </a> </Menu.Item>
-            </Menu>}>
-            <a className="ant-dropdown-link" href="#">
-              {emojify(':rocket:', emojifyOptions)} <Icon type="caret-down" />
-            </a>
-          </Dropdown>
+          {AppSetting}
         </Row>
       </Col>
     </Row>

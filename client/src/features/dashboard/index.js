@@ -17,7 +17,7 @@ function Dashboard(props) {
   // React-hookz
   const [fannyPackz, setFannyPackz] = useState([]);
   const [activeFannyPack, setActiveFannyPack] = useState({
-    fannyPackName: "FannyPack Loadding...", fannyPackID: "FannyPack empty..."
+    fannypack_serial:"FannyPack_Loading", fannypack_name: "FannyPack Loading..."
   });
   // - Fetch - users fannypacks
   const fetch_userFannyPack = (userData) => {
@@ -29,9 +29,9 @@ function Dashboard(props) {
     .catch((err) => { message.error(JSON.stringify(err), 3); });
   };
   // Change FannyPack - callback
-  const changeActiveFannyPack = (fannyPackID, fannyPackName) => {
-    setActiveFannyPack({...activeFannyPack, fannyPackName: fannyPackName, fannyPackID: fannyPackID});
-    message.info("FannyPack changed to " + fannyPackName, 2);
+  const changeActiveFannyPack = (activeFanny) => {
+    setActiveFannyPack(activeFanny);
+    message.info("FannyPack changed to " + activeFanny.fannypack_name, 2.5);
   };
   // useEffect() => Check if localstorage is Fat and good
   let sessInfo, sessionID;
@@ -54,30 +54,28 @@ function Dashboard(props) {
       userSerial: sessionID
     })
     .then((data) => { 
-      let lastItem = data.data.pageMessage.result.pop();
       setFannyPackz(data.data.pageMessage.result);
-      setActiveFannyPack({...activeFannyPack, fannyPackName: lastItem.fannypack_name, fannyPackID:  lastItem.fannypack_serial});
+      setActiveFannyPack(data.data.pageMessage.result.pop());
     })
     .catch((err) => { 
-      // Bad entry
-      message.error("Fetched faild :(", 1.5);
-      message.error(err.message, 4.5);
+      message.error("Fetched faild :(", 2.5);
+      message.error(err.message, 2.5);
       props.history.push("/");
     });
   }, []);
-  // Dashboard view
+
   let mainLayout = { overflow: 'hidden', height: '100vh', backgroundColor: "#ffffff" };
-  return (
-    <Layout className="p-2" style={mainLayout}>
-      <FannyPackContainer 
-        activeFannyPack={activeFannyPack}
-        changeActiveFannyPack={changeActiveFannyPack} 
-        fannyPackz={fannyPackz}
-        refreshFannyPackz={fetch_userFannyPack}/>
-      <AccountContainer 
-        activeFannyPack={activeFannyPack}
-        fannyPackz={fannyPackz} />
-    </Layout>
-  );
+  const DashboardView = <Layout className="p-2" style={mainLayout}>
+                          <FannyPackContainer 
+                            activeFannyPack={activeFannyPack}
+                            changeActiveFannyPack={changeActiveFannyPack} 
+                            fannyPackz={fannyPackz}
+                            refreshFannyPackz={fetch_userFannyPack}/>
+                          <AccountContainer 
+                            activeFannyPack={activeFannyPack}
+                            fannyPackz={fannyPackz} />
+                        </Layout>;
+  // Dashboard view
+  return (DashboardView);
 }
 export default withRouter(Dashboard);

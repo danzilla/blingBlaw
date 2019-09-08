@@ -29,18 +29,18 @@ const viewAccountCategory = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	if(!req.body.fannyPack_serial) {
+	if(!req.body.fannyPack) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Valid user and fannyPack require";
 		pageMessage.message = "Valid user and fannyPack require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack_serial) {
+	} else if (req.body.fannyPack) {
         // Collect Results
         const viewAccountCategoryResult = [];
         // Payload bzz
         const payLoad = {
-            fannyPack_serial: req.body.fannyPack_serial
+            fannyPack_serial: req.body.fannyPack
         };
         // if all good
         // Async Waterfall
@@ -60,7 +60,7 @@ const viewAccountCategory = function (req, res, next) {
                 pageMessage.message = "Error viewing the info";
                 pageMessage.result = err;
             }
-            res.send({ pageMesage: viewAccountCategoryResult });
+            res.send({ pageMesage: pageMessage });
         });
     }
 }

@@ -56,7 +56,7 @@ const add_newAccountCategory_to_accountCategory = {
 const view_ALL_accountCategory = {
   title: "view_ALL_accountCategory",
   sql: function (userData) {
-    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}';`;
+    return `SELECT * FROM fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category};`;
   }
 }
 // Export 
