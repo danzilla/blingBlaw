@@ -41,13 +41,13 @@ const addAccountTransaction = function (req, res, next) {
 		result: "" 
 	};
 	// Get FannyPack name
-	if(!req.body.fannyPack || !req.body.userSerial) {
+	if(!req.body.accountName || !req.body.fannyPack || !req.body.userSerial || !req.body.accountType) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Inputs are require";
 		pageMessage.message = "Inputs are require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack && req.body.userSerial) { 
+	} else if (req.body.fannyPack && req.body.userSerial && req.body.accountType) { 
 		// If alll good
 		// Collect Results
 		const addAccountTransactionResult = [];
@@ -55,6 +55,7 @@ const addAccountTransaction = function (req, res, next) {
 		const payLoad = {
 			account_type_id: req.body.accountType,
 			account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			account_name: req.body.accountName,
 			account_serial: Token.generate(),
 			account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 			account_owner_serial: req.body.userSerial,

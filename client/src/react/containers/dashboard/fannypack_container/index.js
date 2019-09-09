@@ -9,35 +9,20 @@ const { Title, Text } = Typography;
 // FannyPack Container
 function FannyPack(props) {
   // FannyPack State
-  const [newFannyPack, setNewFannyPack] = useState({
-    fannyAddModalVisable: false, newFannyPackName: ""
-  });
-  const ShowFannyAddModal = () => {
-    setNewFannyPack({...newFannyPack, fannyAddModalVisable: true});
-  };
-  const HideFannyAddModal = () => {
-    setNewFannyPack({...newFannyPack, fannyAddModalVisable: false});
-  };
+  const [newFannyPack, setNewFannyPack] = useState({ fannyAddModalVisable: false, newFannyPackName: "", fannyPack: "" });
+  const ShowFannyAddModal = (state) => { setNewFannyPack({...newFannyPack, fannyAddModalVisable: state});};
   const CreateNewFanny = () => {
-    // getSess
-    let sessInfo = sessionStorage.getItem('sessionID');
     // axios_fetch_post
     axios.post("http://localhost:5000/fannypack/add", {
-      userSerial: sessInfo, fannyPack: newFannyPack.newFannyPackName
+      userSerial: newFannyPack.fannyPack.fannypack_owner_serial, 
+      fannyPack: newFannyPack.newFannyPackName 
     })
-    .then((data) => {
-      message.success(data.data.pageMesage.message);
-      props.refreshFannyPackz(sessInfo);
-    })
-    .catch((err) => {
-      message.info(JSON.stringify(err));
-    });
+    .then((data) => { message.success(data.data.pageMesage.message); props.Refresh_FannyPack(); })
+    .catch((err) => { message.info(JSON.stringify(err));});
     // Clear field and close form
     setNewFannyPack({...newFannyPack, newFannyPackName: "", fannyAddModalVisable: false});
   };
   // Sparkles
-  // NavHeader CSS 
-  let navHeader =  {overflow: 'hidden', backgroundColor: "#ffffff", zIndex:'1'};
   // emojify
   let emojifyOptions = { style: { height: '50' } };
   let emojiList = [
@@ -50,7 +35,7 @@ function FannyPack(props) {
   const AppSetting = <Dropdown overlay={
                         <Menu>
                           <Menu.Item> <a href="#"> Users </a> </Menu.Item>
-                          <Menu.Item> <a onClick={() => sessionStorage.clear()}> Logout </a> </Menu.Item>
+                          <Menu.Item> <a onClick={() => {sessionStorage.clear(); props.history.push("/"); }}> Logout </a> </Menu.Item>
                         </Menu>}>
                         <a className="ant-dropdown-link" href="#">
                           {emojify(':rocket:', emojifyOptions)} <Icon type="caret-down" />
@@ -58,7 +43,7 @@ function FannyPack(props) {
                       </Dropdown>
   const AddNewFanny = <Dropdown overlay={
                         <Menu>
-                          <Menu.Item key="1" onClick={ShowFannyAddModal}> Add New Fannypack </Menu.Item>
+                          <Menu.Item key="1" onClick={() => ShowFannyAddModal(true)}> Add New Fannypack </Menu.Item>
                           <Menu.Divider />
                           {props.fannyPackz.map((value, key) => (
                             <Menu.Item key={key} onClick={() => props.changeActiveFannyPack(value)}> 
@@ -83,20 +68,24 @@ function FannyPack(props) {
                           </Col>
                         </Row>
                       </Dropdown>
-  // FannyPack - Header
+  // Use Effect and pass => props with []
+  useEffect(() => {
+    // Refresh FannyPack
+    setNewFannyPack({...newFannyPack, fannyPack: props.activeFannyPack });
+  }, [props.activeFannyPack.fannypack_serial]);
+  // FannyPack - View
   return (
-    <Row type="flex" justify="center" align="middle" className="card-2 p-1 my-1" style={navHeader}>
+    <Row type="flex" justify="center" align="middle" className="card-2 p-1 my-1" style={{overflow: 'hidden', backgroundColor: "#ffffff", zIndex:'1'}}>
       {/* Add newFannyPack Modal */}
       <Modal centered visible={newFannyPack.fannyAddModalVisable}
         onOk={CreateNewFanny}
-        onCancel={HideFannyAddModal}
+        onCancel={() => ShowFannyAddModal(false)}
         okText="Create"
-        okButtonProps={{ disabled: false }}
         cancelText="Cancel">
           <Title>Create FannyPack {emojify(randomEmoji, emojifyOptions)}</Title>
           <Row type="flex" justify="center" align="middle" className="p-1">
             <Input value={newFannyPack.newFannyPackName} 
-              onChange={e => setNewFannyPack({...newFannyPack, newFannyPackName: e.target.value})}
+              onChange={event => setNewFannyPack({...newFannyPack, newFannyPackName: event.target.value})}
               placeholder="New FannyPack" size="large" type="text"
               prefix={<Icon type="wallet" theme="twoTone" />} allowClear />
           </Row>

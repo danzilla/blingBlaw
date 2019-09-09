@@ -6,6 +6,16 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.wordBreak-anywhere { 
+  overflow-wrap: anywhere; 
+}
+.wordBreak-word {
+  overflow-wrap: break-word;
+}
+.wordBreak-all {
+  word-break: break-all;
+}
+
 .code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
