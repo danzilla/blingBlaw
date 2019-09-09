@@ -2,22 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import { emojify } from 'react-emojione';
-
-import { Layout, Row, Col } from 'antd';
-import { Alert, message, Tabs, Menu, Dropdown, Icon, Form } from 'antd';
-import { Typography, Button, Input, Select } from 'antd';
-import { List, Avatar, Skeleton, Card } from 'antd';
-
+import { Layout, Row, Col, Typography, message, Tabs, Icon } from 'antd';
+// Container
 import AccountRecords from './account_records';
-
-const ButtonGroup = Button.Group;
-const InputGroup = Input.Group;
-const { Option } = Select;
-const { Header, Content, Footer, Sider } = Layout;
-const { Title } = Typography;
+import AccountTypes from './account_types';
+import AccountCategory from './account_category';
+const { Content } = Layout;
 const { TabPane } = Tabs;
-const { Text, Paragraph } = Typography;
+const { Text} = Typography;
 // Account Container
 function Account (props) {
   // Account State
@@ -32,11 +24,11 @@ function Account (props) {
       axios.post("http://localhost:5000/account/type/view", { fannyPack: props.activeFannyPack.fannypack_serial }),
       axios.post("http://localhost:5000/account/category/view", { fannyPack: props.activeFannyPack.fannypack_serial })
     ])
-    .then(axios.spread((fannyAccounts, fannyCategory, fannyType) => {
+    .then(axios.spread((fannyAccounts, fannyType, fannyCategory) => {
       // GET fetch_data and setState
       setFannyAccountz(fannyAccounts.data.pageMessage.result);
-      setFannyCategory(fannyCategory.data);
-      setFannyAccountType(fannyType.data);
+      setFannyAccountType(fannyType.data.pageMesage.result);
+      setFannyCategory(fannyCategory.data.pageMesage.result);
       message.info("Accounts fatched!", 1.5);
     }))
     .catch((err) => { message.info(JSON.stringify(err), 2.5); });
@@ -62,16 +54,26 @@ function Account (props) {
           <Row className="overflowY" style={{ height: '69vh' }} type="flex" justify="center" align="middle">
             <Col span={24} className="p-1">
               
-              <Row gutter={16} type="flex" justify="center" align="middle">
+              <Row>
                 <Content>
                   <Col span={8}>
-                    <AccountRecords Refresh_FannyPack_Account={Refresh_FannyPack_Account} activeFannyPack={props.activeFannyPack} fannyAccountz={fannyAccountz} />
+                    <AccountRecords 
+                      Refresh_FannyPack_Account={Refresh_FannyPack_Account} 
+                      activeFannyPack={props.activeFannyPack}
+                      fannyAccountType={fannyAccountType}
+                      fannyAccountz={fannyAccountz} />
                   </Col>
                   <Col span={8}>
-                    <AccountRecords activeFannyPack={props.activeFannyPack} fannyAccountz={fannyAccountz} />
+                    <AccountTypes 
+                      Refresh_FannyPack_Account={Refresh_FannyPack_Account} 
+                      activeFannyPack={props.activeFannyPack} 
+                      fannyAccountType={fannyAccountType} />
                   </Col>
                   <Col span={8}>
-                    <AccountRecords activeFannyPack={props.activeFannyPack} fannyAccountz={fannyAccountz} />
+                    <AccountCategory 
+                      Refresh_FannyPack_Account={Refresh_FannyPack_Account} 
+                      activeFannyPack={props.activeFannyPack} 
+                      fannyAccountCategory={fannyAccountCategory} />
                   </Col>
                 </Content>
               </Row>

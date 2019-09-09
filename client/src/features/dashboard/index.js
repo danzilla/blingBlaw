@@ -11,12 +11,9 @@ function Dashboard(props) {
   // Dashboard - Global_State
   // Should replace with State_Management (Redux or Mobex)
   // - Redux  and Thunk
-  // GET Session
-  let sessionID = "FannyPack_Loading";
-  if(sessionStorage.getItem('sessionID')){ sessionID = sessionStorage.getItem('sessionID'); }
   // FannyPack State
   const [fannyPackz, setFannyPackz] = useState([]);
-  const [activeFannyPack, setActiveFannyPack] = useState({ fannypack_serial: sessionID, fannypack_name: "FannyPack Loading..." });
+  const [activeFannyPack, setActiveFannyPack] = useState({ fannypack_serial: "FannyPack_Loading", fannypack_name: "FannyPack Loading..." });
   const changeActiveFannyPack = (FannyPack) => { setActiveFannyPack(FannyPack); message.info("FannyPack changed to " + FannyPack.fannypack_name, 2.5); };
   // Refresh_FannyPack
   const Refresh_FannyPack = () => {
@@ -34,6 +31,9 @@ function Dashboard(props) {
     });
   };
   // useEffect() - with array for RUN-ONCE
+  // GET Session
+  let sessionID = "Session_Loading";
+  if(sessionStorage.getItem('sessionID')){ sessionID = sessionStorage.getItem('sessionID'); }
   useEffect(() => { Refresh_FannyPack(); }, [sessionID]);
   // Dashboard view
   const DashboardView = <Layout className="p-2" style={{ overflow: 'hidden', height: '100vh', backgroundColor: "#ffffff" }}>

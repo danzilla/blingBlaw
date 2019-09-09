@@ -37,13 +37,13 @@ const addAccountCategory = function (req, res, next) {
 		result: "" 
 	};
 	// Get categoryName name
-	if (!req.body.userSerial || !req.body.categoryName || !req.body.categoryParent) {
+	if (!req.body.fannyPack || !req.body.categoryName || !req.body.categoryParent) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Inputs are require";
 		pageMessage.message = "Inputs are require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.userSerial && req.body.categoryName && req.body.categoryParent) { 
+	} else if (req.body.fannyPack && req.body.categoryName && req.body.categoryParent) { 
 		// If alll good
 		// Collect Results
 		const addAccountCategoryResult = [];

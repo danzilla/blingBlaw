@@ -36,23 +36,23 @@ const addAccountType = function (req, res, next) {
 		checked: "", 
 		result: "" 
 	};
-	// Collect Results
-	const addAccountTypeResult = [];
-	// Payload bzz
-	const payLoad = {
-		account_type_name: req.body.accountTypeName,
-		account_type_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		account_type_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-		fannyPack_serial: req.body.fannyPack
-	};
 	// Get accountTypeName
-	if (!req.body.userSerial || !req.body.accountTypeName) {
+	if (!req.body.fannyPack || !req.body.accountTypeName) {
 		// pageMessage
 		pageMessage.checked = "errr";
 		pageMessage.result = "Inputs are require";
 		pageMessage.message = "Inputs are require";
 		res.send({ pageMesage: pageMessage });
-	} else if (req.body.userSerial && req.body.accountTypeName) { // If alll good
+	} else if (req.body.fannyPack && req.body.accountTypeName) { 
+		// Collect Results
+		const addAccountTypeResult = [];
+		// Payload bzz
+		const payLoad = {
+			account_type_name: req.body.accountTypeName,
+			account_type_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			account_type_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+			fannyPack_serial: req.body.fannyPack
+		};
 		// Async Waterfall
 		async.waterfall([
 				// add_newAccountType_to_accountType
