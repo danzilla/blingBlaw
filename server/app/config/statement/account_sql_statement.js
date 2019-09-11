@@ -53,8 +53,8 @@ const create_accountTransaction_table = {
 }
 // 
 // Add
-// add_newAccountTransaction_to_accounTransaction - Require - userData
-const add_newAccountTransaction_to_accountTransaction = {
+// add_newTransaction_to_accountTransaction_table - Require - userData
+const add_newTransaction_to_accountTransaction_table = {
     title: "add_newAccountCategory_to_accountCategory",
     sql: function (userData) {
       return `INSERT INTO fannypack_${userData.fannyPack_serial}.account_${userData.account_serial}
@@ -77,7 +77,7 @@ const view_ALL_accountTransaction = {
 // Export 
 const statements = {
   create_accountTransaction_table: create_accountTransaction_table,
-  add_newAccountTransaction_to_accountTransaction: add_newAccountTransaction_to_accountTransaction,
+  add_newTransaction_to_accountTransaction_table: add_newTransaction_to_accountTransaction_table,
   view_ALL_accountTransaction: view_ALL_accountTransaction
 }
 module.exports = statements;

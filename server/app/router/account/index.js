@@ -23,6 +23,9 @@ router.route('/add').post(createAccount);
 // view viewAllAccounts
 const viewAllAccounts = require('./accountTransaction/viewAllAccounts');
 router.route('/view').post(viewAllAccounts);
+// Add userTransactionTable
+const addTransaction = require('./accountTransaction/addTransaction');
+router.route('/transaction/add').post(addTransaction);
 // view userTransactionTable
 const viewAllTransaction = require('./accountTransaction/viewAllTransaction');
 router.route('/transaction/view').post(viewAllTransaction);

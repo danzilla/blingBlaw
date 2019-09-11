@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import { Layout, Row, Col, Typography, message, Tabs, Icon } from 'antd';
+import {  Table, Divider, Tag, Calendar, Layout, Row, Col, Typography, message, Tabs, Icon } from 'antd';
 // Container
 import AccountRecords from './account_records';
 import AccountTypes from './account_types';
 import AccountCategory from './account_category';
+import AccountTransaction from './account_transactions';
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Text} = Typography;
@@ -85,9 +86,27 @@ function Account (props) {
         {(Array.isArray(fannyAccountz)) && 
           (fannyAccountz.map(account => 
             <TabPane tab={<span> <Icon type="android" /> {account.account_name} </span>} key={account.account_serial}>
+             
               <Row className="overflowY" style={{ height: '69vh' }} type="flex" justify="center" align="middle">
-                {JSON.stringify(account)}
+                
+                <Col span={16}>
+                  <AccountTransaction
+                    fannyAccountCategory={fannyAccountCategory}
+                    account={account}
+                    activeFannyPack={props.activeFannyPack} />
+                </Col>
+
+                <Col span={8}>
+                  <Row>
+                    <AccountCategory 
+                      Refresh_FannyPack_Account={Refresh_FannyPack_Account} 
+                      activeFannyPack={props.activeFannyPack} 
+                      fannyAccountCategory={fannyAccountCategory} />
+                  </Row>
+                </Col>
+                
               </Row>
+
             </TabPane>
           ))}
       </Tabs>

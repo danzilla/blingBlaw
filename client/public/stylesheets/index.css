@@ -29,9 +29,11 @@ html, body, #root {
 .capitalize {
   text-transform: capitalize;
 }
-.upload input{
-  width: 100% !important;
-  display:none;
+.upload {
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 .overflowY {
   overflow-y: auto;
@@ -232,4 +234,30 @@ html, body, #root {
 }
 .line-h-400 {
   line-height: 400% !important;
+}
+
+
+
+.resetButton {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
 }
