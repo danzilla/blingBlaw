@@ -27,7 +27,7 @@ const moment = require('moment'); // Time
 
 const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
-const { create_accountTransaction_table } = require('../../../../config/statement/account_sql_statement');
+const { create_accountTransaction_table } = require('../../../../config/statement/accountTransaction_sql_statement');
 const { add_newAccount_to_accountRecord } = require('../../../../config/statement/accountRecord_sql_statement');
 
 // addAccountTransaction

@@ -28,7 +28,7 @@ const { using_blingblaw } = require('../../../config/util/process_sql_mutation')
 const { create_schema_user_fannyPack, 
 		add_newFannyPack_to_fannypacks_table } = require('../../../config/statement/fannyPack_sql_statement');
 
-const { create_accountTransaction_table } = require('../../../config/statement/account_sql_statement');
+const { create_accountTransaction_table } = require('../../../config/statement/accountTransaction_sql_statement');
 const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
 const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
 const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');

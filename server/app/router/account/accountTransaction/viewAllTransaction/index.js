@@ -18,7 +18,7 @@ const async = require('async');
 
 const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
 
-const { view_ALL_accountTransaction } = require('../../../../config/statement/account_sql_statement');
+const { view_ALL_accountTransaction } = require('../../../../config/statement/accountTransaction_sql_statement');
 
 // viewAllTransaction
 const viewAllTransaction = function (req, res, next) {
