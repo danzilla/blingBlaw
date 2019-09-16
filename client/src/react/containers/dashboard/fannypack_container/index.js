@@ -4,8 +4,8 @@ import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { emojify } from 'react-emojione';
 // Ant.Design
-import { Row, Col, Typography, Input, Modal, message, Menu, Dropdown, Icon, Tooltip } from 'antd';
-const { Title, Text } = Typography;
+import { Row, Col, Typography, Input, Modal, message, Menu, Dropdown, Icon, Tooltip, Button } from 'antd';
+const { Title } = Typography;
 // FannyPack Container
 function FannyPack(props) {
   // FannyPack State
@@ -34,12 +34,12 @@ function FannyPack(props) {
   // Menus Dropdowns
   const AppSetting = <Dropdown overlay={
                         <Menu>
-                          <Menu.Item> <a href="#"> Users </a> </Menu.Item>
-                          <Menu.Item> <a onClick={() => {sessionStorage.clear(); props.history.push("/"); }}> Logout </a> </Menu.Item>
+                          <Menu.Item> <Button type="link"> Users </Button> </Menu.Item>
+                          <Menu.Item> <Button type="link" onClick={() => {sessionStorage.clear(); props.history.push("/"); }}> Logout </Button> </Menu.Item>
                         </Menu>}>
-                        <a className="ant-dropdown-link" href="#">
+                        <Button type="link" className="ant-dropdown-link">
                           {emojify(':rocket:', emojifyOptions)} <Icon type="caret-down" />
-                        </a>
+                        </Button>
                       </Dropdown>
   const AddNewFanny = <Dropdown overlay={
                         <Menu>
@@ -48,7 +48,7 @@ function FannyPack(props) {
                           {props.fannyPackz.map((value, key) => (
                             <Menu.Item key={key} onClick={() => props.changeActiveFannyPack(value)}> 
                               <Tooltip title={JSON.stringify(value)} placement="right" > 
-                                <a>{value.fannypack_name} - {value.fannypack_serial}</a>
+                                <Button type="link">{value.fannypack_name} - {value.fannypack_serial}</Button>
                               </Tooltip>
                             </Menu.Item>
                           ))}
@@ -62,8 +62,7 @@ function FannyPack(props) {
                           <Col>
                             <Title level={2} style={{ display: 'inline'}}>
                               <h6 style={{ display: 'inline', fontStyle: 'italic'}}> fannyPack </h6>
-                              {props.activeFannyPack.fannypack_name}
-                              <Icon type="caret-down" />
+                              {props.activeFannyPack.fannypack_name} <Icon type="caret-down" />
                             </Title>
                           </Col>
                         </Row>

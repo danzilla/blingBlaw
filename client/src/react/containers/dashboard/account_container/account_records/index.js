@@ -48,9 +48,9 @@ function AccountRecords(props){
                             dataSource={props.fannyAccountz}
                             renderItem={item => (
                             <List.Item 
-                                actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}>
+                                actions={[<Button type="link" key="list-loadmore-edit">edit</Button>, <Button type="link" key="list-loadmore-more">more</Button>]}>
                                 <Skeleton avatar title={false} loading={isLoading} active>
-                                    <List.Item.Meta title={<a href="#">{item.account_name} - {item.account_type_id} - {item.account_lastmodify}</a>} />
+                                    <List.Item.Meta title={<Button type="link">{item.account_name} - {item.account_type_id} - {item.account_lastmodify}</Button>} />
                                 </Skeleton>
                             </List.Item>
                             )}

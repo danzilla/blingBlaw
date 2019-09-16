@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import {  Table, Divider, Tag, Calendar, Layout, Row, Col, Typography, message, Tabs, Icon } from 'antd';
+import {  Layout, Row, Col, Typography, message, Tabs, Icon } from 'antd';
 // Container
 import AccountRecords from './account_records';
 import AccountTypes from './account_types';

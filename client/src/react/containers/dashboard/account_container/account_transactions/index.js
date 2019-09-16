@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { emojify } from 'react-emojione';
-import { notification, Popover, Popconfirm, Upload, Table, Divider, Tag, Layout, Row, Col, List, Skeleton, Card, message, Modal, Icon, Typography, Button, Input, Select  } from 'antd';
+import { notification, Popover,Table, Row, Col, Card, message, Modal, Icon, Typography, Button, Input, Select  } from 'antd';
 
 import Papa from './papaCSVReader';
 
 const { TextArea } = Input;
 const ButtonGroup = Button.Group;
-const InputGroup = Input.Group;
 const { Option } = Select;
 const { Title } = Typography;
-const { Text } = Typography;
 // AccountTransactions
 function AccountTransactions(props){
   /* 
@@ -131,8 +129,6 @@ function AccountTransactions(props){
     .catch((err) => { 
       message.info(JSON.stringify(err), 2.5); 
     });
-    // Bling
-    let transactionsBlings = JSON.stringify(reviewTransactions);
     // Clear field and close form
     setAccountTransactionModal(false);
     setCSVreviewData(null);
