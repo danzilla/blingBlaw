@@ -8,6 +8,10 @@ import AccountRecords from './account_records';
 import AccountTypes from './account_types';
 import AccountCategory from './account_category';
 import AccountTransaction from './account_transactions';
+
+// SampleDate 
+import SampleData from '../../../components/sampleData';
+
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Text} = Typography;
@@ -43,6 +47,10 @@ function Account (props) {
   // Account  view
   return (
     <Content className="p-2 card-3" style={{ overflow: 'auto', backgroundColor: "#ffffff", zIndex:'1000' }}>
+      
+
+      <SampleData />
+      
       <Tabs size="large" defaultActiveKey="1">
         {/* Overview Tab */}
         <TabPane tab={

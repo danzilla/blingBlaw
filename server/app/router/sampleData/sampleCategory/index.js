@@ -24,9 +24,11 @@ const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
 
-const { using_blingblaw } = require('../../../../config/util/process_sql_mutation');
+const { accountCategory } = require('../../../config/app.sampleData');
+
+const { using_blingblaw } = require('../../../config/util/process_sql_mutation');
 // addAccountCategory
-const { add_newAccountCategory_to_accountCategory } = require('../../../../config/statement/accountCategory_statement');
+const { add_newAccountCategory_to_accountCategory } = require('../../../config/statement/accountCategory_statement');
 // Require
 const addAccountCategory = function (req, res, next) {
 	// addAccountCategory
@@ -37,33 +39,52 @@ const addAccountCategory = function (req, res, next) {
 		result: "" 
 	};
 	// Get categoryName name
-	if (!req.body.fannyPack || !req.body.categoryName || !req.body.categoryParent) {
+	if (!req.body.fannyPack) {
 		// pageMessage
 		pageMessage.checked = "errr";
-		pageMessage.result = "Inputs are require";
-		pageMessage.message = "Inputs are require";
-		res.send({ pageMesage: pageMessage });
-	} else if (req.body.fannyPack && req.body.categoryName && req.body.categoryParent) { 
+		pageMessage.result = "fannyPack are require";
+		pageMessage.message = "Valid fannyPack require";
+		res.send({ pageMessage: pageMessage });
+	} else if (req.body.fannyPack) { 
 		// If alll good
 		// Collect Results
 		const addAccountCategoryResult = [];
-		// Payload bzz
-		let payLoad = {
-			extraPayLoad: [],
-			fannyPack_serial: req.body.fannyPack
-		}
-		payLoad.extraPayLoad.push([
-			Token.generate(),
-			req.body.categoryName,
-			req.body.categoryParent,
-			moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-			moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-			req.body.fannyPack
-		]);
 		// Async Waterfall
 		async.waterfall([
 		// add_newAccountCategory_to_accountCategory
 		function (callback) {
+			// Sample category PayLoad
+			const categoryPayLoad = [];
+			accountCategory.map((rootCat, i) => {
+				let parentSerial = Token.generate();
+				let payLoad = [
+					parentSerial,
+					rootCat.parent,
+					"rootCategory",
+					moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+					moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+					req.body.fannyPack
+				]; categoryPayLoad.push(payLoad)
+				if(rootCat.child){
+					rootCat.child.map((childCat, z) => {
+						let childSerial = Token.generate();
+						let payLoad = [
+							childSerial,
+							childCat,
+							parentSerial,
+							moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+							moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+							req.body.fannyPack
+						]; categoryPayLoad.push(payLoad)
+					});
+				}
+			});
+			let payLoad = {
+				isExtra: true,
+				extraPayLoad: categoryPayLoad,
+				fannyPack_serial: req.body.fannyPack
+			}
+			console.log("categoryPayLoad: " + JSON.stringify(categoryPayLoad));
 			using_blingblaw(callback, add_newAccountCategory_to_accountCategory, payLoad, addAccountCategoryResult)
 		}], function (err, Results) {
 			if (Results) {
@@ -84,7 +105,7 @@ const addAccountCategory = function (req, res, next) {
                 pageMessage.message = "Error Adding the info";
                 pageMessage.result = err;
             }
-			res.send({ pageMesage: addAccountCategoryResult });
+			res.send({ pageMessage: addAccountCategoryResult });
 		});
 	}
 }

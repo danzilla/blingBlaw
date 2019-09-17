@@ -45,9 +45,7 @@ const create_accountCategory_table = {
 const add_newAccountCategory_to_accountCategory = {
     title: "add_newAccountCategory_to_accountCategory",
     sql: function (userData) {
-      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}
-        (category_id, category_name, category_parent, category_created, category_lastmodify) VALUES
-        ('${userData.category_id}', '${userData.category_name}', '${userData.category_parent}', '${userData.category_created}', '${userData.category_lastmodify}');`;
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category} (category_id, category_name, category_parent, category_created, category_lastmodify) VALUES ('$1', '$2', '$3', '$4', '$5') RETURNING *;`;
   }
 }
 //
