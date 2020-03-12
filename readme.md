@@ -6,6 +6,8 @@
 - **API-Endpoint**	 : REST (Migrating to GraphQL) | Hybrid approach (REST+GraphQL)
 
 # To-Do | Edited: Aug 20th, 2019
+- [ ]Long time... Jump back in. Check before change
+
 - [ ] Client - Remove Local States and Redux
 	- [x] Folder structure - New
 	- [x] New UI Library and Same app-layout (Minimalism) - Ant Design
