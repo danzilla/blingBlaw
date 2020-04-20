@@ -62,6 +62,7 @@ database_Name - blingblaw_assets
 | /fannypack/add            | POST      |    Yes     |   Add FannyPack   |
 | /fannypack/view           | POST      |    Yes     |   View FannyPack   |
 | /fannypack/view/all       | POST      |    Yes     |   View All FannyPack   |
+| /account/add              | POST      |    Yes     |   Add account   |
 | /account/category/add     | POST      |    Yes     |   Add accountCategory   |
 | /account/category/view    | POST      |    Yes     |   View accountCategory   |
 | /account/type/add         | POST      |    Yes     |   Add accountType   |

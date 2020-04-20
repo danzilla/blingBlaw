@@ -47,6 +47,8 @@ services:
       - ./client:/usr/src/app/blingBlaw/client
     working_dir: /usr/src/app/blingBlaw/client
     command: bash -c "npm install && npm run start"
+    tty: true
+    stdin_open: true
     ports:
       - ${CLIENT_PORT}:${CLIENT_PORT}
     links:

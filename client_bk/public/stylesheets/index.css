@@ -6,7 +6,6 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .wordBreak-anywhere { 
   overflow-wrap: anywhere; 
 }

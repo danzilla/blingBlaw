@@ -5,8 +5,10 @@
 - **Client**	 	 : Node.js - React -> Redux -> Apollo client
 - **API-Endpoint**	 : REST (Migrating to GraphQL) | Hybrid approach (REST+GraphQL)
 
-# To-Do | Edited: Aug 20th, 2019
-- [ ]Long time... Jump back in. Check before change
+# To-Do
+- [x] Long time... Jump back in. Check before change | Edited April 12, 2020
+- [x] Updates packages - Client and Server | Ant.D 4.0 
+- [ ] 
 
 - [ ] Client - Remove Local States and Redux
 	- [x] Folder structure - New
