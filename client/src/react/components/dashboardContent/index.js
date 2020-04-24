@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
-import { Row, Col, Layout, Menu, Icon, Input } from 'antd';
+import { connect } from "react-redux";
+import { Button, Row, Col, Layout, Menu, Icon, Input } from 'antd';
 import DashboardNavigation from '../navigation/contentNavigation';
 
 const { Header, Sider, Content, Footer } = Layout;
+
 function DashboardContent(props) {
   return (
     <Content className="card-1 p-2">
       <DashboardNavigation />
-      
-      <h4>user</h4>
-      <p>{JSON.stringify(props.user)}</p>
-      <h4>userInfo</h4>
-      <p>{JSON.stringify(props.userInfo)}</p>
-      <h4>fannyPackz</h4>
-      <p>{JSON.stringify(props.fannyPackz)}</p>
-      <h4>fannyAccountz</h4>
-      <p>{JSON.stringify(props.fannyAccountz)}</p>
+
+      <h4>sessionReducers</h4>
+      <p>{JSON.stringify(props.data.sessionReducers)}</p>
+      <h4>fetchReducers</h4>
+      <p>{JSON.stringify(props.data.fetchReducers)}</p>
+      <h4>accountDataReducers</h4>
+      <p>{JSON.stringify(props.data.accountDataReducers)}</p>
+      <h4>props</h4>
+      <p>{JSON.stringify(props)}</p>
 
     </Content>
   );
 };
-export default DashboardContent;
+const mapStateToProps = state => {
+  return { data: state };
+};
+export default connect(mapStateToProps)(DashboardContent);

@@ -62,14 +62,10 @@ function AccountType(props) {
 
   return (
     <>
-      <Button type="primary" onClick={() => setModalVisible(true)} block> Account Types </Button>
+      <Button type="link" onClick={() => setModalVisible(true)} block> Account Types </Button>
       <Modal title={<Title level={3}>Account Types</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
-
-          {props.name}
-          {props.message}
-          {JSON.stringify(props)}
 
           <Row justify="center">
             <Form layout="inline">

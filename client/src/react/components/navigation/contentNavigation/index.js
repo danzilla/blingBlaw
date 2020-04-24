@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { connect } from "react-redux";
 import { Row, Col } from 'antd';
 import { Divider, Avatar, Badge, Dropdown, Select, Layout, Menu, Icon, Input, message, Button } from 'antd';
 import { Modal, PageHeader, Tag, Typography } from 'antd';
 import { DownOutlined, UserOutlined, BookOutlined, FileAddOutlined, MoreOutlined, PlusOutlined, EllipsisOutlined, CaretDownOutlined, ReloadOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { emojify } from 'react-emojione';
 
+import { FETCH_ACCOUNT_DATA, FETCH_FANNY_DATA } from '../../../../redux/actions/accountDataAction';
+
 import AccountCategory from '../../AccountCategory';
 import AccountType from '../../AccountType';
 
-function ContentNavigation() {
+function ContentNavigation(props) {
   const [FannyPackZ, setFannyPackz] = useState("Current_Fanny");
   const [FannyAccountZ, setFannyAccountZ] = useState("Overview");
   const [FannyAccountDetail, setFannyAccountDetail] = useState("Overview");
@@ -59,6 +62,16 @@ function ContentNavigation() {
   return (
     <>
       {FannyPackZ} {FannyAccountZ} {FannyAccountDetail}
+
+      <Button type="danger" 
+        onClick={() => props.dispatch(FETCH_FANNY_DATA(sessionStorage.getItem('sessionID'))) }> 
+        Get Fanny
+      </Button>
+      <Button type="danger" 
+        onClick={() => props.dispatch(FETCH_ACCOUNT_DATA(sessionStorage.getItem('sessionID'), "Gcw19VfkTTKHBY5L1A6goZ")) }> 
+        Get Account
+      </Button>
+
       <Row align="middle" justify="start" className="card-3 m-1">
         <Avatar
           style={{ backgroundColor: "#FFF" }}
@@ -71,4 +84,8 @@ function ContentNavigation() {
     </>
   );
 };
-export default ContentNavigation;
+const mapStateToProps = state => {
+  return { data: state };
+};
+export default connect(mapStateToProps)(ContentNavigation);
+

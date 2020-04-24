@@ -57,7 +57,7 @@ function AccountCategory() {
 
   return (
     <>
-      <Button type="primary" onClick={() => setModalVisible(true)} block> Labels and Tags </Button>
+      <Button type="link" onClick={() => setModalVisible(true)} block> Labels and Tags </Button>
       <Modal title={<Title level={3}>Labels, Tags and Categories</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
