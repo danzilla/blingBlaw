@@ -40,14 +40,15 @@ const viewAccountCategory = require('./accountCateogry/viewAccountCategory');
 router.route('/category/view').post(viewAccountCategory);
 //
 // AccountType
-//
+const { 
+    CreateTable_AccountType, 
+    View_AccountType, 
+    Add_AccountType
+} = require('./accountType');
+
 // add to AccountType
-const addAccountType = require('./accountType/addAccountType');
-router.route('/type/add').post(addAccountType);
+router.route('/type/add').post(Add_AccountType);
 // view viewAccountType
-const viewAccountType = require('./accountType/viewAccountType');
-router.route('/type/view').post(viewAccountType);
-
-
+router.route('/type/view').post(View_AccountType);
 
 module.exports = router;
