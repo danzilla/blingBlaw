@@ -41,7 +41,7 @@ const database_host_dev_prod = {
     dev: "0.0.0.0",
     prod: "postgres_db"
 }
-const db_Host = database_host_dev_prod.prod;
+const db_Host = database_host_dev_prod.dev;
 // Pg connection for | BlingBlaw and public database
 // Databases settings and configurations
 const database = {

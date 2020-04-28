@@ -21,7 +21,7 @@ function RegisterForm(props){
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!userAddInfo.userName || !userAddInfo.userPassword || !userAddInfo.userFannyPack ){
-             message.warning("User name and Password are required");
+             message.warning("Username and Password are required");
         } else {
         // axios_fetch_post
         axios.post("http://localhost:5000/user/add", {
@@ -81,6 +81,7 @@ function RegisterForm(props){
                     <Form.Item>
                         <Row type="flex" justify="center">
                             <Button
+                                onClick={handleSubmit}
                                 type="primary" 
                                 htmlType="submit" 
                                 className="login-form-button">

@@ -40,21 +40,11 @@ app.use(postgraphile(app_db_connection, "public", app_postgraphile_setting));
 
 //
 // REST
-//
-// FirstRun
-const firstrun = require('./router/firstrun');
-app.use('/firstrun', firstrun);
-// User
-const user = require('./router/user');
-app.use('/user', user);
-// FannyPack
-const fannyPack = require('./router/fannyPack');
-app.use('/fannypack', fannyPack);
-// Account
-const account = require('./router/account');
-app.use('/account', account);
-// End of REST Router
+const api = require('./api')
+app.use('/api', api);
 // Anything else 
 app.all('*', function(req, res){ res.send('#bling', 404); });
+// End of REST
+
 // Export Blazzze
 module.exports = app;

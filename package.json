@@ -7,9 +7,11 @@
     "url": "git+https://github.com/danzilla/blingBlaw.git"
   },
   "scripts": {
+    "dev-install": "cd server && npm install && cd client && npm install",
+    "dev-start": "cd ./server && npm start && cd ../client && npm start",
     "docker-clean": "docker-compose rm -f && docker-compose build --no-cache",
-    "start-prod": "docker-compose rm -f && docker-compose build --no-cache && docker-compose up --force-recreate",
-    "start-dev": "docker-compose up -d pgadmin && docker-compose up postgres_db server client"
+    "start": "docker-compose up -d pgadmin && docker-compose up postgres_db server client",
+    "start-db": "docker-compose up -d pgadmin && docker-compose up postgres_db"
   },
   "dependencies": {}
 }

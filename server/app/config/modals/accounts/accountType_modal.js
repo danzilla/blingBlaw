@@ -1,5 +1,5 @@
 'strict'
-const { blingblaw, postgresDefault, database_labels } = require('../app.config');
+const { blingblaw, postgresDefault, database_labels } = require('../../app.config');
 // Account_Type Actions
 
 const CREATE_TABLE_ACCOUNT_TYPE = function (fannyID) {

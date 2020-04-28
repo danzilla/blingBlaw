@@ -9,11 +9,6 @@ export async function fetch_login(user) {
         .then((data) => { return data.data })
         .catch((err) => { return err; })
 }
-export async function fetch_register(user) {
-    return await axios.post("http://localhost:5000/user/add", { userSerial: user })
-        .then((data) => { return data.data })
-        .catch((err) => { return err; })
-}
 export async function fetch_initalRun(user) {
     return await axios.post("http://localhost:5000/firstrun", { userSerial: user })
         .then((data) => { return data.data })
