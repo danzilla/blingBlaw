@@ -1,20 +1,34 @@
 'strict'
 // User - Router
 // User | Keep it minimal
-const moment = require('moment');
+const uuidv5 = require('uuid/v5'); //string + salt
+const uuidv1 = require('uuid/v1'); //Time_based - saltTime
+const TokenGenerator = require('uuid-token-generator');
+const Token = new TokenGenerator(); // New Token
+const moment = require('moment'); // Time
+const async = require('async');
+
+const { blingblaw, postgresDefault, database_labels } = require('../../../config/app.config');
+
+const { add_user_to_userAuth, add_user_to_userDetails, validate_user_login, update_userDetails } = require('../../../config/statement/user_sql_statement');
+const { create_schema_user_fannyPack, add_newFannyPack_to_fannypacks_table } = require('../../../config/statement/fannyPack_sql_statement');
+const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
+const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
+const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
+
 const {
     ADD_NEW_USER_to_TABLE_USER_AUTH,
-    ADD_NEW_USER_to_TABLE_USER_DETAILS, 
-    VIEW_USER, 
+    ADD_NEW_USER_to_TABLE_USER_DETAILS,
+    VIEW_USER,
     VIEW_ALL_USERS,
     VALIDATE_USER_LOGIN,
-    UPDATE_USER_LOGIN } = require('../../config/modals/user/user_modal');
-const { 
+    UPDATE_USER_LOGIN } = require('../../../config/modals/user/user_modal');
+const {
     CREATE_SCHEMA_USER_FANNYPACK,
-    ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK } = require('../../config/modals/fannyPack/fannyPack_modal');
-const { CREATE_TABLE_CATEGORY } = require('../../config/modals/accounts/accountCategory_modal');
-const { CREATE_TABLE_ACCOUNT_TYPE } = require('../../config/modals/accounts/accountType_modal');
-const { CREATE_TABLE_RECORD } = require('../../config/modals/accounts/accountRecords_modal');
+    ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK } = require('../../../config/modals/fannyPack/fannyPack_modal');
+const { CREATE_TABLE_CATEGORY } = require('../../../config/modals/accounts/accountCategory_modal');
+const { CREATE_TABLE_ACCOUNT_TYPE } = require('../../../config/modals/accounts/accountType_modal');
+const { CREATE_TABLE_RECORD } = require('../../../config/modals/accounts/accountRecords_modal');
 
 // Response
 const RESPONSE = {
@@ -24,6 +38,115 @@ const RESPONSE = {
     data: null
 }
 
+// Query Actions
+bling_actionz = function (statement) {
+    const bling = new Promise(function (resolve, reject) {
+        blingblaw.connect(function (error, client, release) {
+            if (error) { resolve(error); }
+            else if (client) {
+                client.query(statement)
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); })
+            }
+        });
+    }); return bling;
+};
+// Create User
+/* 
+	add_user_to_userAuth
+	add_user_to_userDetails
+	create_schema_user_fannyPack
+	create_table_account_category
+	create_table_account_records
+	create_table_account_types
+	add_newFannyPack_to_fannypacks_table
+*/
+const Add_user = function (req, res, next) {
+    let User_Response = Object.create(RESPONSE);
+    User_Response.Title = "Add User";
+    // Require User and Pwd
+    if (!req.body.user || !req.body.password || !req.body.fannyPack) {
+        User_Response.message = `User Details required`;
+        User_Response.status = false;
+        User_Response.data = "User Info required";
+        res.send({ response: User_Response });
+    } else {
+        // PayLoads Math.random().toString(36).substring(7)
+        let user = req.body.user;
+        let pwd = req.body.password;
+        const user_ID = uuidv5(user, uuidv1());
+        const dateTime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+        const fannyPack = req.body.fannyPack;
+        const fannyPack_ID = Token.generate();
+        const payLoad = {
+            user_serial: user_ID,
+            user_name: user,
+            user_pwd_salt: Token.generate(),
+            user_pwd_hash: pwd,
+            user_auth_token: Token.generate(),
+            user_full_name: "",
+            user_email: "",
+            user_created: dateTime,
+            user_modify: dateTime,
+            user_lastLogged: dateTime,
+            get user_auth_serial() { return this.user_serial },
+            fannyPack_serial: fannyPack_ID,
+            fannyPack_name: fannyPack,
+            fannyPack_created: dateTime,
+            fannyPack_lastmodify: dateTime,
+            fannyPack_lastUpdated: dateTime,
+            get fannyPack_owner_serial() { return this.user_serial }
+        };
+        bling_actionz(add_user_to_userAuth.sql(payLoad))
+            .catch((error) => {
+                if (error.code == "23505") {
+                    User_Response.message = `Duplicate entry exits`;
+                } else {
+                    User_Response.message = `Error: Somethingelse`;
+                }
+                User_Response.status = false;
+                User_Response.data = error;
+                res.send(User_Response);
+            })
+            .then(function (result_userAuth) {
+                let collect_results = new Array();
+                if (result_userAuth.rowCount == 1) {
+                    collect_results.push(result_userAuth);
+                    bling_actionz(add_newFannyPack_to_fannypacks_table.sql(payLoad))
+                        .catch((error) => {
+                            if (error.code == "23505") {
+                                User_Response.message = `Duplicate Fanny exits`;
+                            } else {
+                                User_Response.message = `Error: Somethingelse`;
+                            }
+                            User_Response.status = false;
+                            User_Response.data = error;
+                            res.send(User_Response);
+                        })
+                        .then(function (result_Fanny) {
+                            collect_results.push(result_Fanny);
+                            async function Fire() {
+                                try {
+                                    await bling_actionz(create_schema_user_fannyPack.sql(payLoad)).then(res => { collect_results.push(res) });
+                                    await bling_actionz(add_user_to_userDetails.sql(payLoad)).then(res => { collect_results.push(res) });
+                                    await bling_actionz(create_accountCategory_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                                    await bling_actionz(create_accountRecords_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                                    await bling_actionz(create_accounType_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                                    User_Response.message = `User added!`;
+                                    User_Response.status = true;
+                                    User_Response.data = collect_results;
+                                } catch (error) {
+                                    User_Response.message = `Error: Somethingelse`;
+                                    User_Response.status = false;
+                                    User_Response.data = error;
+                                } finally { res.send(User_Response); console.log(User_Response.message); }
+                            } Fire();
+                        });
+                } else { console.log("Something wrong: " + JSON.stringify(result_userAuth)); }
+            });
+    }
+}
 // Login
 // validate_user_login (usr, pwd)
 // update_userDetails (userTime)
@@ -31,36 +154,49 @@ const Login = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
     User_Response.Title = "Login";
     // Require User and Pwd
-	if(req.body.user || req.body.password) {
+    if (!req.body.user || !req.body.password) {
         User_Response.message = `User and password are required`;
         User_Response.status = false;
         User_Response.data = "Credentials required";
         res.send({ response: User_Response });
-	} else {
-        let Final_results = [];
-        async function FIRE() {
-            // PayLoads
-            let user = req.body.user;
-            let password = req.body.password;
-            try {
-                let data_login = await VALIDATE_USER_LOGIN(user, password);
-                let data_updateUser =  await UPDATE_USER_LOGIN(user, password);
-                console.log("data_login: " + JSON.stringify(data_updateUser));
-
-
-                User_Response.message = `Fetched with ${data_login.rowCount} rows`;
-                User_Response.status = true;
-                User_Response.data = Final_results;
-            } catch (error) {
-                console.log("EEE: " + JSON.stringify(error));
-                User_Response.message = `Error fetching`;
+    } else {
+        let payLoad = {
+            userName: req.body.user,
+            userPassword: req.body.password,
+            user_auth_serial: "",
+            user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        }
+        let collect_results = new Array();
+        bling_actionz(validate_user_login.sql(payLoad))
+            .catch((error) => {
+                User_Response.message = `Error: user not found`;
                 User_Response.status = false;
                 User_Response.data = error;
-            } finally {
-                
-            }
-        } FIRE();
-        res.send({ response: Final_results });
+                res.send({ response: User_Response });
+            })
+            .then(function (login_result) {
+                if (login_result.rowCount == 1) {
+                    collect_results.push(login_result);
+                    async function Fire() {
+                        try {
+                            payLoad.user_auth_serial = login_result.rows[0].user_serial;
+                            await bling_actionz(update_userDetails.sql(payLoad)).then(res => { collect_results.push(res) });
+                            User_Response.message = `Logged in Success!`;
+                            User_Response.status = true;
+                            User_Response.data = collect_results;
+                        } catch (error) {
+                            User_Response.message = `Error: Somethingelse`;
+                            User_Response.status = false;
+                            User_Response.data = error;
+                        } finally { res.send(User_Response); console.log(User_Response.message); }
+                    } Fire();
+                } else {
+                    User_Response.message = `Error: Something weird`;
+                    User_Response.status = false;
+                    Result_Auth.push(User_Response);
+                    res.send({ response: User_Response });
+                }
+            });
     }
 }
 
@@ -69,12 +205,12 @@ const View_a_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
     User_Response.Title = "View a User";
     // Require User
-	if(!req.body.user) {
+    if (!req.body.user) {
         User_Response.message = `User required`;
         User_Response.status = false;
         User_Response.data = "Valid user required";
         res.send({ response: User_Response });
-	} else {
+    } else {
         async function FIRE() {
             // PayLoads
             let user = req.body.user;
@@ -99,12 +235,12 @@ const View_all_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
     User_Response.Title = "View All User";
     // Require User
-	if(!req.body.user) {
+    if (!req.body.user) {
         User_Response.message = `User required`;
         User_Response.status = false;
         User_Response.data = "Valid user required";
         res.send({ response: User_Response });
-	} else {
+    } else {
         async function FIRE() {
             // PayLoads
             let user = req.body.user;
@@ -123,72 +259,6 @@ const View_all_user = function (req, res, next) {
         } FIRE();
     }
 }
-
-// Create User
-/* 
-	add_user_to_userAuth
-	add_user_to_userDetails
-	create_schema_user_fannyPack
-	create_table_account_category
-	create_table_account_records
-	create_table_account_types
-	add_newFannyPack_to_fannypacks_table
-*/
-const Add_user = function (req, res, next) {
-    let User_Response = Object.create(RESPONSE);
-    User_Response.Title = "Add User";
-    // Require User and Pwd
-	if(!req.body.user || !req.body.password || req.body.fannyPack) {
-        User_Response.message = `User Details required`;
-        User_Response.status = false;
-        User_Response.data = "User Info required";
-        res.send({ response: User_Response });
-	} else {
-        async function FIRE() {
-            // PayLoads
-            const payLoad = {
-                user_serial: uuidv5(req.body.user, uuidv1()),
-                user_name: req.body.user,
-                user_pwd_salt: Token.generate(),
-                user_pwd_hash: req.body.password,
-                user_auth_token: Token.generate(),
-                user_full_name: "",
-                user_email: "",
-                user_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                user_modify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                get user_auth_serial(){ return this.user_serial },
-                fannyPack_serial: Token.generate(),
-                fannyPack_name: req.body.fannyPack,
-                fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                get fannyPack_owner_serial(){ return this.user_serial }
-            };
-            try {
-                let Final_results = [];
-                let add_user_to_userAuth = await ADD_NEW_USER_to_TABLE_USER_AUTH(payLoad);
-                let add_user_to_userDetails = await ADD_NEW_USER_to_TABLE_USER_DETAILS(payLoad);
-                let create_schema_user_fannyPack = await CREATE_SCHEMA_USER_FANNYPACK(payLoad.fannyPack_serial);
-                let create_table_account_category = await CREATE_TABLE_CATEGORY(payLoad.fannyPack_serial);
-                let create_table_account_records = await CREATE_TABLE_RECORD(payLoad.fannyPack_serial);
-                let create_table_account_types = await CREATE_TABLE_ACCOUNT_TYPE(payLoad.fannyPack_serial);
-                let add_newFannyPack_to_fannypacks_table = await ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK(payLoad);
-
-                User_Response.message = `Fetched with ${data_add_userTableAuth.rowCount} rows`;
-                User_Response.status = true;
-                User_Response.data = Final_results;
-            } catch (errr) {
-                User_Response.message = `Error fetching`;
-                User_Response.status = false;
-                User_Response.data = errr;
-            } finally {
-                res.send({ response: User_Response });
-            }
-        } FIRE();
-    }
-}
-
 // Export
 module.exports = {
     Login: Login,

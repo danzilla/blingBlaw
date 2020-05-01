@@ -4,29 +4,23 @@ const { blingblaw, postgresDefault, database_labels } = require('../../app.confi
 
 const CREATE_TABLE_RECORD = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
-        let statement = `fannypack_${fannyID}.${database_labels.table_fannyPack_record}
+        let statement = `CREATE TABLE IF NOT EXISTS fannypack_${fannyID}.${database_labels.table_fannyPack_record}
             (
-            accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-            account_type_id VARCHAR(36) NOT NULL,
-            account_name VARCHAR(36) NOT NULL,
-            account_serial VARCHAR(36) NOT NULL,
-            account_lastmodify TIMESTAMP,
-            account_owner_serial VARCHAR(36) NOT NULL
+                accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+                account_type_id VARCHAR(36) NOT NULL,
+                account_name VARCHAR(36) NOT NULL,
+                account_serial VARCHAR(36) NOT NULL,
+                account_lastmodify TIMESTAMP,
+                account_owner_serial VARCHAR(36) NOT NULL
             );`;
         blingblaw.connect(function (error, client, release) {
             if (error) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { console.log(JSON.stringify(error)); reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });

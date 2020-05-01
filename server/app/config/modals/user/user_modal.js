@@ -4,9 +4,7 @@ const { blingblaw, postgresDefault, database_labels } = require('../../app.confi
 
 const CREATE_TABLE_USER_AUTH = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
-        let statement = `CREATE TABLE IF NOT EXISTS
-            ${database_labels.schema_name}.${database_labels.table_users_auth}
+        let statement = `CREATE TABLE IF NOT EXISTS ${database_labels.schema_name}.${database_labels.table_users_auth}
             (
                 user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
                 user_serial VARCHAR(36) UNIQUE NOT NULL,
@@ -16,23 +14,16 @@ const CREATE_TABLE_USER_AUTH = function (fannyID) {
                 user_auth_token VARCHAR(36)
             );`;
         blingblaw.connect(function (error, client, release) {
-            if (error) {
-                reject(error);
-            } else if (client) {
+            if (error) { reject(error); } 
+            else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
 };
-
 const CREATE_TABLE_USER_DETAILS = function (fannyID) {
     return new Promise((resolve, reject) => {
         // Statement
@@ -48,18 +39,12 @@ const CREATE_TABLE_USER_DETAILS = function (fannyID) {
                 user_auth_serial VARCHAR(36) UNIQUE NOT NULL
             );`
         blingblaw.connect(function (error, client, release) {
-            if (error) {
-                reject(error);
-            } else if (client) {
+            if (error) { reject(error); } 
+            else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -77,19 +62,13 @@ const ADD_NEW_USER_to_TABLE_USER_AUTH = function (userData) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
 };
-
 const ADD_NEW_USER_to_TABLE_USER_DETAILS = function (userData) {
     return new Promise((resolve, reject) => {
         // Statement
@@ -100,14 +79,9 @@ const ADD_NEW_USER_to_TABLE_USER_DETAILS = function (userData) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -127,14 +101,9 @@ const VIEW_USER = function (userID) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -154,14 +123,9 @@ const VIEW_ALL_USERS = function (userID) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -182,14 +146,9 @@ const VALIDATE_USER_LOGIN = function (userName, userPassword) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -206,14 +165,9 @@ const UPDATE_USER_LOGIN = function (userID, lastLoggedIn) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -223,8 +177,8 @@ const USER = {
     CREATE_TABLE_USER_AUTH: CREATE_TABLE_USER_AUTH,
     CREATE_TABLE_USER_DETAILS: CREATE_TABLE_USER_DETAILS,
     ADD_NEW_USER_to_TABLE_USER_AUTH: ADD_NEW_USER_to_TABLE_USER_AUTH,
-    ADD_NEW_USER_to_TABLE_USER_DETAILS: ADD_NEW_USER_to_TABLE_USER_DETAILS, 
-    VIEW_USER: VIEW_USER, 
+    ADD_NEW_USER_to_TABLE_USER_DETAILS: ADD_NEW_USER_to_TABLE_USER_DETAILS,
+    VIEW_USER: VIEW_USER,
     VIEW_ALL_USERS: VIEW_ALL_USERS,
     VALIDATE_USER_LOGIN: VALIDATE_USER_LOGIN,
     UPDATE_USER_LOGIN: UPDATE_USER_LOGIN

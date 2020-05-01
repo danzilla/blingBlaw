@@ -4,7 +4,6 @@ const { blingblaw, postgresDefault, database_labels } = require('../../app.confi
 
 const CREATE_TABLE_FANNYPACK = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
         let statement = `CREATE TABLE IF NOT EXISTS ${database_labels.schema_name}.${database_labels.table_users_fannyPack}
             (
                 fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
@@ -19,14 +18,9 @@ const CREATE_TABLE_FANNYPACK = function (fannyID) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                .then(data => { resolve(data); })
+                .catch(error => { reject(error); })
+                .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -34,46 +28,32 @@ const CREATE_TABLE_FANNYPACK = function (fannyID) {
 
 const CREATE_SCHEMA_USER_FANNYPACK = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
-        let statement = `CREATE SCHEMA IF NOT EXISTS fannyPack_${fannyID} 
-              AUTHORIZATION ${blingblaw.user};`;
+        let statement = `CREATE SCHEMA IF NOT EXISTS fannyPack_${fannyID} AUTHORIZATION ${blingblaw.options.user};`;
         blingblaw.connect(function (error, client, release) {
             if (error) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                .then(data => { resolve(data); })
+                .catch(error => { resolve(error); })
+                .finally(() => { release(); client.end(); })
             }
         });
     });
 };
-
-const ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK = function (fannyID, accountTypeName, accounTypeCreated, accounTypeLastModify) {
+const ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK = function (userData) {
     return new Promise((resolve, reject) => {
-        // Statement
         let statement = `INSERT INTO ${database_labels.schema_name}.${database_labels.table_users_fannyPack} 
           (fannyPack_serial, fannyPack_name, fannyPack_created, fannyPack_lastUpdated, fannyPack_owner_serial) 
-          VALUES ('${fannyID}', '${fannyPackName}', '${fannyPackCreated}', '${fannyPackLastUpdated}', '${fannyPackOwnerSerial}');`;
-        blingblaw.connect(function (error, client, release) {
+          VALUES ('${userData.fannyPack_serial}', '${userData.fannyPack_name}', '${userData.fannyPack_created}', '${userData.fannyPack_lastUpdated}', '${userData.fannyPack_owner_serial}');`;
+          blingblaw.connect(function (error, client, release) {
             if (error) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { resolve(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -89,14 +69,9 @@ const VIEW_USER_FANNYPACK = function (userId) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
@@ -111,14 +86,9 @@ const VIEW_ALL_FANNYPACK = function (fannyID) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                .then(data => { resolve(data); })
+                .catch(error => { reject(error); })
+                .finally(() => { release(); client.end(); })
             }
         });
     });

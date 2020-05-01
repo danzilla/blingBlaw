@@ -1,7 +1,7 @@
 'strict'
 // Intial_RUN - Router
 // Intiate_db | Keep it minimal
-const { INTIAL_RUN } = require('../../../config/modals/intialRun/intialRun_modal');
+const { Intial_Run } = require('../../../config/modals/intialRun/app_intialRun_modal');
  // Response
 const RESPONSE = {
     Title: null,
@@ -14,8 +14,8 @@ const IntialRun = function (req, res, next) {
     FirstRun_Response.Title = "First run and Intial DB setups";
     async function FIRE() {
         try {
-            const First_RUN = await INTIAL_RUN();
-            FirstRun_Response.message = `Fetched with ${First_RUN} rows`;
+            const First_RUN = await Intial_Run();
+            FirstRun_Response.message = `Fetched good! `;
             FirstRun_Response.status = true;
             FirstRun_Response.data = First_RUN;
         } catch (errr) {

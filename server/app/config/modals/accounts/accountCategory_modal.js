@@ -4,9 +4,7 @@ const { blingblaw, postgresDefault, database_labels } = require('../../app.confi
 
 const CREATE_TABLE_CATEGORY = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
-        let statement = `CREATE TABLE IF NOT EXISTS
-            fannypack_${fannyID}.${database_labels.table_fannyPack_category}
+        let statement = `CREATE TABLE IF NOT EXISTS fannypack_${fannyID}.${database_labels.table_fannyPack_category}
             (
                 category_id VARCHAR(254) UNIQUE NOT NULL,
                 category_name VARCHAR(254) UNIQUE NOT NULL,
@@ -19,14 +17,9 @@ const CREATE_TABLE_CATEGORY = function (fannyID) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { console.log(JSON.stringify(error)); reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });

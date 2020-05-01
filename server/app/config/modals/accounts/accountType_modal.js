@@ -4,28 +4,21 @@ const { blingblaw, postgresDefault, database_labels } = require('../../app.confi
 
 const CREATE_TABLE_ACCOUNT_TYPE = function (fannyID) {
     return new Promise((resolve, reject) => {
-        // Statement
-        let statement = `CREATE TABLE IF NOT EXISTS 
-        fannypack_${fannyID}.${database_labels.table_fannyPack_type}
-        (
-            account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-            account_type_name VARCHAR(254) UNIQUE NOT NULL,
-            account_type_created TIMESTAMP,
-            account_type_lastmodify TIMESTAMP
-        );`;
+        let statement = `CREATE TABLE IF NOT EXISTS fannypack_${fannyID}.${database_labels.table_fannyPack_type}
+            (
+                account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+                account_type_name VARCHAR(254) UNIQUE NOT NULL,
+                account_type_created TIMESTAMP,
+                account_type_lastmodify TIMESTAMP
+            );`
         blingblaw.connect(function (error, client, release) {
             if (error) {
                 reject(error);
             } else if (client) {
                 client.query(statement)
-                    .then(data => {
-                        resolve(data);
-                    }).catch(error => {
-                        release();
-                        reject(error);
-                    }).finally(() => {
-                        client.end();
-                    })
+                    .then(data => { resolve(data); })
+                    .catch(error => { console.log(JSON.stringify(error)); reject(error); })
+                    .finally(() => { release(); client.end(); })
             }
         });
     });
