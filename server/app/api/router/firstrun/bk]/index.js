@@ -15,7 +15,7 @@ const IntialRun = function (req, res, next) {
     async function FIRE() {
         try {
             const First_RUN = await Intial_Run();
-            FirstRun_Response.message = `Fetched good! `;
+            FirstRun_Response.message = `Fetched good!  `;
             FirstRun_Response.status = true;
             FirstRun_Response.data = First_RUN;
         } catch (errr) {

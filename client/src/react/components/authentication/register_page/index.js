@@ -24,22 +24,22 @@ function RegisterForm(props){
              message.warning("Username and Password are required");
         } else {
         // axios_fetch_post
-        axios.post("http://localhost:5000/user/add", {
-                userName: userAddInfo.userName,
-                userPassword: userAddInfo.userPassword,
-                userFannyPack: userAddInfo.userFannyPack
+        axios.post("http://localhost:5000/api/user/add", {
+                user: userAddInfo.userName,
+                password: userAddInfo.userPassword,
+                fannyPack: userAddInfo.userFannyPack
             })
             .then((data) => {
-                if (data.data.pageMessage.checked === "3D000"){
-                    message.error(data.data.pageMessage.message, 2.5);
+                if (data.data.data.code === "3D000"){
+                    message.error(data.data.message, 2.5);
                     props.activeFirstRun();
-                } else if (data.data.pageMessage.checked === "ECONNREFUSED"){
-                    message.error(data.data.pageMessage.message, 2.5);
+                } else if (data.data.data.code === "ECONNREFUSED"){
+                    message.error(data.data.message, 2.5);
                     props.activeFirstRun();
-                } else if (data.data.pageMessage.checked === "checked"){
-                    message.success(data.data.pageMessage.message, 2.5);
+                } else if (data.data.status === true){
+                    message.success(data.data.message, 2.5);
                 } else {
-                    message.warning(data.data.pageMessage.message, 2.5);
+                    message.warning(data.data.message, 2.5);
                 }
             })
             .catch((err) => {

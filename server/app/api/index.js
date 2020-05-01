@@ -1,20 +1,20 @@
 // firstrun - Router
-const { Add_user, Login } =  require('./router/user/user');
+const { Add_user, Login, View_a_user, View_all_user } =  require('./router/user/user');
+const {Install} = require('./router/firstrun/Install')
 
 const express = require('express');
 const router = express.Router();
 
-const Create_DB = require('./router/firstrun/')
-router.route('/install').get(Create_DB);
+router.route('/install').get(Install);
 
-router.route('/user/add').get(Add_user);
-router.route('/user/login').get(Login);
+router.route('/user/add').post(Add_user);
+router.route('/user/login').post(Login);
+router.route('/user/view').get(View_a_user);
+router.route('/user/view/all').get(View_all_user);
 
 // User
 // Add
 // View
 // ViewAll
-
-
 
 module.exports = router;

@@ -10,25 +10,11 @@ const async = require('async');
 
 const { blingblaw, postgresDefault, database_labels } = require('../../../config/app.config');
 
-const { add_user_to_userAuth, add_user_to_userDetails, validate_user_login, update_userDetails } = require('../../../config/statement/user_sql_statement');
+const { add_user_to_userAuth, add_user_to_userDetails, view_user, view_all_user, validate_user_login, update_userDetails } = require('../../../config/statement/user_sql_statement');
 const { create_schema_user_fannyPack, add_newFannyPack_to_fannypacks_table } = require('../../../config/statement/fannyPack_sql_statement');
 const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
 const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
 const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
-
-const {
-    ADD_NEW_USER_to_TABLE_USER_AUTH,
-    ADD_NEW_USER_to_TABLE_USER_DETAILS,
-    VIEW_USER,
-    VIEW_ALL_USERS,
-    VALIDATE_USER_LOGIN,
-    UPDATE_USER_LOGIN } = require('../../../config/modals/user/user_modal');
-const {
-    CREATE_SCHEMA_USER_FANNYPACK,
-    ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK } = require('../../../config/modals/fannyPack/fannyPack_modal');
-const { CREATE_TABLE_CATEGORY } = require('../../../config/modals/accounts/accountCategory_modal');
-const { CREATE_TABLE_ACCOUNT_TYPE } = require('../../../config/modals/accounts/accountType_modal');
-const { CREATE_TABLE_RECORD } = require('../../../config/modals/accounts/accountRecords_modal');
 
 // Response
 const RESPONSE = {
@@ -37,7 +23,6 @@ const RESPONSE = {
     message: null,
     data: null
 }
-
 // Query Actions
 bling_actionz = function (statement) {
     const bling = new Promise(function (resolve, reject) {
@@ -70,7 +55,7 @@ const Add_user = function (req, res, next) {
         User_Response.message = `User Details required`;
         User_Response.status = false;
         User_Response.data = "User Info required";
-        res.send({ response: User_Response });
+        res.send(User_Response);
     } else {
         // PayLoads Math.random().toString(36).substring(7)
         let user = req.body.user;
@@ -111,7 +96,7 @@ const Add_user = function (req, res, next) {
             })
             .then(function (result_userAuth) {
                 let collect_results = new Array();
-                if (result_userAuth.rowCount == 1) {
+                if (result_userAuth.rowCount && result_userAuth.rowCount == 1) {
                     collect_results.push(result_userAuth);
                     bling_actionz(add_newFannyPack_to_fannypacks_table.sql(payLoad))
                         .catch((error) => {
@@ -143,7 +128,7 @@ const Add_user = function (req, res, next) {
                                 } finally { res.send(User_Response); console.log(User_Response.message); }
                             } Fire();
                         });
-                } else { console.log("Something wrong: " + JSON.stringify(result_userAuth)); }
+                } else { console.log("Something wrong: " + JSON.stringify(result_userAuth)); console.log("RES: " + JSON.stringify(result_userAuth)); }
             });
     }
 }
@@ -158,7 +143,7 @@ const Login = function (req, res, next) {
         User_Response.message = `User and password are required`;
         User_Response.status = false;
         User_Response.data = "Credentials required";
-        res.send({ response: User_Response });
+        res.send(User_Response);
     } else {
         let payLoad = {
             userName: req.body.user,
@@ -172,7 +157,7 @@ const Login = function (req, res, next) {
                 User_Response.message = `Error: user not found`;
                 User_Response.status = false;
                 User_Response.data = error;
-                res.send({ response: User_Response });
+                res.send(User_Response);
             })
             .then(function (login_result) {
                 if (login_result.rowCount == 1) {
@@ -185,16 +170,16 @@ const Login = function (req, res, next) {
                             User_Response.status = true;
                             User_Response.data = collect_results;
                         } catch (error) {
-                            User_Response.message = `Error: Somethingelse`;
+                            User_Response.message = `Updating user failed`;
                             User_Response.status = false;
                             User_Response.data = error;
-                        } finally { res.send(User_Response); console.log(User_Response.message); }
+                        } finally { res.send(User_Response); }
                     } Fire();
-                } else {
-                    User_Response.message = `Error: Something weird`;
+                } else if (login_result.rowCount == 0) {
+                    User_Response.message = `User not found`;
                     User_Response.status = false;
-                    Result_Auth.push(User_Response);
-                    res.send({ response: User_Response });
+                    User_Response.data = login_result;
+                    res.send(User_Response);
                 }
             });
     }
@@ -203,58 +188,65 @@ const Login = function (req, res, next) {
 // View User
 const View_a_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
-    User_Response.Title = "View a User";
+    User_Response.Title = "User info - view user";
     // Require User
     if (!req.body.user) {
         User_Response.message = `User required`;
         User_Response.status = false;
         User_Response.data = "Valid user required";
-        res.send({ response: User_Response });
+        res.send(User_Response);
     } else {
         async function FIRE() {
             // PayLoads
-            let user = req.body.user;
+            let collect_results = new Array();
+            let payLoad = {
+                user_serial: "qwer"
+            }
             try {
-                let data = await VIEW_USER(user);
-                User_Response.message = `Fetched with ${data.rowCount} rows`;
+                await bling_actionz(view_user.sql(payLoad)).then(res => { collect_results.push(res) });
+                User_Response.message = `Good`;
                 User_Response.status = true;
-                User_Response.data = data;
-            } catch (errr) {
+                User_Response.data = collect_results;
+                console.log(User_Response);
+            } catch (error) {
                 User_Response.message = `Error fetching`;
                 User_Response.status = false;
-                User_Response.data = errr;
+                User_Response.data = error;
+                console.log(User_Response);
             } finally {
-                res.send({ response: User_Response });
+                res.send(User_Response);
             }
         } FIRE();
     }
 }
-
-// View All User
+// View User
 const View_all_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
-    User_Response.Title = "View All User";
+    User_Response.Title = "View all users";
     // Require User
     if (!req.body.user) {
         User_Response.message = `User required`;
         User_Response.status = false;
         User_Response.data = "Valid user required";
-        res.send({ response: User_Response });
+        res.send(User_Response);
     } else {
         async function FIRE() {
             // PayLoads
-            let user = req.body.user;
+            let collect_results = new Array();
+            let payload = {
+                user_serial: req.body.user
+            }
             try {
-                let data = await VIEW_ALL_USERS(user);
-                User_Response.message = `Fetched with ${data.rowCount} rows`;
+                await bling_actionz(view_all_user.sql(payLoad)).then(res => { collect_results.push(res) });
+                User_Response.message = `Good`;
                 User_Response.status = true;
-                User_Response.data = data;
+                User_Response.data = collect_results;
             } catch (errr) {
                 User_Response.message = `Error fetching`;
                 User_Response.status = false;
                 User_Response.data = errr;
             } finally {
-                res.send({ response: User_Response });
+                res.send(User_Response);
             }
         } FIRE();
     }

@@ -23,31 +23,24 @@ function LoginForm(props) {
             message.warning("User name and Password are required");
         } else {
             // axios_fetch_post
-            axios.post("http://localhost:5000/user/login", {
-                userName: loginInfo.userName,
-                userPassword: loginInfo.userPassword
+            axios.post("http://localhost:5000/api/user/login", {
+                user: loginInfo.userName,
+                password: loginInfo.userPassword
             })
             .then((data) => {
-
-                console.log("User: " + data.data.pageMessage.result.user_serial);
-                
-                if (data.data.pageMessage.checked === "checked") {
+                if (data.data.status == true) {
+                    console.log("User: " + data.data.data[0].rows[0].user_name);
                     // If all good - setLocalStorage
                     // let userInfo = JSON.stringify(data.data.pageMessage.result);
                     // localStorage.setItem('sessionID', userInfo);
                     // Why not session too
                     // Check Box? or Default?
-                    sessionStorage.setItem('sessionID', data.data.pageMessage.result.user_serial);
-                    // blingBlaw
-                    message.success(data.data.pageMessage.message, 2.5);
-                    props.history.push("/dashboard");
-                } else {
-                    message.warning(data.data.pageMessage.message, 2.5);
-                }
+                    sessionStorage.setItem('sessionID', data.data.data[0].rows[0].user_serial);
+                    message.success(data.data.message, 2.5);
+                    // props.history.push("/dashboard");
+                } else { message.warning(data.data.message, 2.5); }
             })
-            .catch((err) => {
-                message.error(err.message);
-            });
+            .catch((err) => { message.error(err.message); });
         }
     };
 

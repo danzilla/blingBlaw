@@ -32,6 +32,10 @@ const drop_app_Database = {
     title: "drop_app_Database",
     sql: `DROP DATABASE ${database_labels.db_name};`
 }
+const is_app_Database = {
+    title: "Is_app_Database",
+    sql: `SELECT 1 from pg_database WHERE datname='${database_labels.db_name}';`
+}
 const create_app_Database = {
     title: "create_app_Database",
     sql: `CREATE DATABASE ${database_labels.db_name};`
@@ -41,11 +45,11 @@ const create_app_Schema = {
     sql: `CREATE SCHEMA IF NOT EXISTS ${database_labels.schema_name}  
         AUTHORIZATION ${database_connection.user};`
 }
-
 // Export 
 const statements = {
     kill_connection: kill_connection,
     drop_app_Database: drop_app_Database,
+    is_app_Database: is_app_Database,
     create_app_Database: create_app_Database,
     create_app_Schema: create_app_Schema
 }
