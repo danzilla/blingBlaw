@@ -2,7 +2,7 @@
 // Transaction - Router
 // Transaction | Keep it minimal
 const moment = require('moment');
-const { ADD_NEW_TRANSACTION_to_TABLE_TRANSACTION, VIEW_ALL_TRANSACTIONS } = require('../../../config/modals/accounts/accountTransaction_modal');
+const { add_newTransaction_to_accountTransaction_table, view_ALL_accountTransaction } = require('../../../../config/statement/accountTransaction_sql_statement');
 // Response
 const RESPONSE = {
     Title: "Transaction",
@@ -10,7 +10,6 @@ const RESPONSE = {
     message: null,
     data: null
 }
-
 // Add Transaction
 const Add_Transactions = function (req, res, next) {
     let Transaction_Response = Object.create(RESPONSE);
@@ -25,11 +24,21 @@ const Add_Transactions = function (req, res, next) {
         async function FIRE() {
             try {
                 // PayLoads
-                let fannyID = req.body.fannyID;
-                let accountID = req.body.accountID;
-                let transactions = req.body.transactions;
-                
-                let data = await ADD_NEW_TRANSACTION_to_TABLE_TRANSACTION(fannyID, accountID, transactions);
+                /* 
+                    [
+                        Token.generate(),
+                        result.transaction_Date,
+                        result.transaction_Desc,
+                        result.transaction_Deposits,
+                        result.transaction_Withdrawls,
+                        result.transaction_Balance,
+                        `{${result.transaction_Category}}`,
+                        result.transaction_Comments,
+                        `{${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}}`,
+                        req.body.userSerial
+                    ]
+                */
+                await bling_actionz(add_newTransaction_to_accountTransaction_table.sql(payLoad)).then(res => { collect_results.push(res) });
                 Transaction_Response.message = `Fetched with ${data.rowCount} rows`;
                 Transaction_Response.status = true;
                 Transaction_Response.data = data;
@@ -43,7 +52,6 @@ const Add_Transactions = function (req, res, next) {
         } FIRE();
     }
 }
-
 // View Transaction
 const View_Transactions = function (req, res, next) {
     let Transaction_Response = Object.create(RESPONSE);
@@ -58,9 +66,11 @@ const View_Transactions = function (req, res, next) {
         async function FIRE() {
             try {
                 // PayLoads
-                let fannyID = req.body.fannyID;
-                let accountID = req.body.accountID;
-                let data = await VIEW_ALL_TRANSACTIONS(fannyID, accountID);
+                let payLoad = {
+                    fannyPack_serial: req.body.fannyID,
+                    account_serial: req.body.accountID
+                }
+                await bling_actionz(view_ALL_accountTransaction.sql(payLoad)).then(res => { collect_results.push(res) });
                 Transaction_Response.message = `Fetched with ${data.rowCount} rows`;
                 Transaction_Response.status = true;
                 Transaction_Response.data = data;
@@ -74,7 +84,6 @@ const View_Transactions = function (req, res, next) {
         } FIRE();
     }
 }
-
 // Export
 module.exports = { 
     Add_Transactions: Add_Transactions,

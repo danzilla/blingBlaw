@@ -66,22 +66,22 @@ const database = {
         idleTimeoutMillis: 30000
     }
 }
-    // PostGres connection
-    const { Pool } = require('pg');
-    // App - blingBlaw
-    // init - DB connection
-    const blingblaw = new Pool(database.blingblaw)
-    blingblaw.on('error', (err, client) => {
-        console.error("Unexpected error on idle client", err)
-        process.exit(-1)
-    });
-    // Default - postgres - public
-    // init - DB connection
-    const postgresDefault = new Pool(database.default_postgres_db)
-    postgresDefault.on('error', (err, client) => {
-        console.error("Unexpected error on idle client", err)
-        process.exit(-1)
-    });
+// PostGres connection
+const { Pool } = require('pg');
+// App - blingBlaw
+// init - DB connection
+const blingblaw = new Pool(database.blingblaw)
+blingblaw.on('error', (err, client) => {
+    console.error("Unexpected error on idle client", err)
+    process.exit(-1)
+});
+// Default - postgres - public
+// init - DB connection
+const postgresDefault = new Pool(database.default_postgres_db)
+postgresDefault.on('error', (err, client) => {
+    console.error("Unexpected error on idle client", err)
+    process.exit(-1)
+});
 // Export
 const app_config = {
     database_labels: database_labels,

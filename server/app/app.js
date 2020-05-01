@@ -14,11 +14,8 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 //
 // GraphQL 
-// Data driven - #Eeeeee
-
 // Note: 
 // - Database - blingblawDB
 // - retryOnInitFail - Retry-till - blingblawDB initialize
@@ -37,14 +34,11 @@ const app_postgraphile_setting = {
 }
 app.use(postgraphile(app_db_connection, "public", app_postgraphile_setting));
 // End of GraphQL
-
 //
 // REST
 const api = require('./api')
 app.use('/api', api);
-// Anything else 
 app.all('*', function(req, res){ res.send('#bling', 404); });
 // End of REST
-
-// Export Blazzze
+// Blazzze
 module.exports = app;

@@ -6,7 +6,6 @@ const uuidv1 = require('uuid/v1'); //Time_based - saltTime
 const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
 const moment = require('moment'); // Time
-const async = require('async');
 
 const { blingblaw, postgresDefault, database_labels } = require('../../../config/app.config');
 
@@ -148,7 +147,6 @@ const Login = function (req, res, next) {
         let payLoad = {
             userName: req.body.user,
             userPassword: req.body.password,
-            user_auth_serial: "",
             user_lastLogged: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
         }
         let collect_results = new Array();
@@ -184,7 +182,6 @@ const Login = function (req, res, next) {
             });
     }
 }
-
 // View User
 const View_a_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
@@ -217,7 +214,7 @@ const View_a_user = function (req, res, next) {
         } FIRE();
     }
 }
-// View User
+// View All User
 const View_all_user = function (req, res, next) {
     let User_Response = Object.create(RESPONSE);
     User_Response.Title = "View all users";

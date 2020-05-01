@@ -1,109 +1,97 @@
 'strict'
-// Category - Router
-// Category | Keep it minimal
+// AccountCategory - Router
+// AccountCategory | Keep it minimal
 const moment = require('moment');
-const { 
-    VIEW_ALL_ACCOUNT_TYPE, 
-    ADD_NEW_ACCOUNT_TYPE_to_TABLE_ACCOUNT_TYPE,
-    CREATE_TABLE_ACCOUNT_TYPE
-} = require('../../../config/modals/Category_modal');
+const TokenGenerator = require('uuid-token-generator');
+const Token = new TokenGenerator(); // New Token
+const { add_newAccountCategory_to_accountCategory, view_ALL_accountCategory } = require('../../../../config/statement/accountType_sql_statement');
 // Response
 const RESPONSE = {
-    Title: "Category, Labels, Tags",
+    Title: "Account Category",
     status: null,
     message: null,
     data: null
 }
-// View Table Category
-const View_Category = function (req, res, next) {
-    let Category_Response = Object.create(RESPONSE);
-    Category_Response.Title = "View Categories and Labels";
+// Query Actions
+bling_actionz = function (statement) {
+    const bling = new Promise(function (resolve, reject) {
+        blingblaw.connect(function (error, client, release) {
+            if (error) { resolve(error); }
+            else if (client) {
+                client.query(statement)
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); })
+            }
+        });
+    }); return bling;
+};
+// Add AccountCategory
+const Add_AccountCategory = function (req, res, next) {
+    let AccountCategory_Response = Object.create(RESPONSE);
+    let collect_results = new Array();
+    AccountCategory_Response.Title = "Add Category, Labels, Tags";
     // Require fannyID
-	if(!req.body.fannyID) {
-        Category_Response.message = `FannyPack required`;
-        Category_Response.status = false;
-        Category_Response.data = "FannyPack required";
-        res.send({ response: Category_Response });
+	if(!req.body.fannyID || !req.body.accountTypeName) {
+        AccountCategory_Response.message = `FannyPack and Account type labels are required`;
+        AccountCategory_Response.status = false;
+        AccountCategory_Response.data = "FannyPack required";
+        res.send(AccountCategory_Response);
 	} else {
         async function FIRE() {
             // PayLoads
-            let fannyID = req.body.fannyID;
-            try {
-                let data = await CREATE_TABLE_ACCOUNT_TYPE(fannyID);
-                Category_Response.message = `Fetched with ${data.rowCount} rows`;
-                Category_Response.status = true;
-                Category_Response.data = data;
-            } catch (errr) {
-                Category_Response.message = `Error fetching`;
-                Category_Response.status = false;
-                Category_Response.data = errr;
-            } finally {
-                res.send({ response: Category_Response });
+            // category_id, category_name, category_parent, category_created, category_lastmodify
+            let payLoad = {
+                fannyPack_serial: req.body.fannyID,
+                category_id: Token.generate(),
+                category_name: req.body.catName,
+                category_parent: req.body.catParent,
+                category_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+                category_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
             }
+            try {
+                await bling_actionz(add_newAccountCategory_to_accountCategory.sql(payLoad)).then(res => { collect_results.push(res) });
+                AccountCategory_Response.message = `Inserted!`;
+                AccountCategory_Response.status = true;
+                AccountCategory_Response.data = data;
+            } catch (errr) {
+                AccountCategory_Response.message = `Error adding Account type`;
+                AccountCategory_Response.status = false;
+                AccountCategory_Response.data = errr;
+            } finally { res.send(AccountCategory_Response); }
         } FIRE();
     }
 }
-// Add Category to table
-const Add_Category = function (req, res, next) {
-    let Category_Response = Object.create(RESPONSE);
-    Category_Response.Title = "Add a Category and Label";
+// View AccountCategory
+const View_AccountCategory = function (req, res, next) {
+    let AccountCategory_Response = Object.create(RESPONSE);
+    let collect_results = new Array();
+    AccountCategory_Response.Title = "Category, Labels, Tags view";
     // Require fannyID
-	if(!req.body.fannyID) {
-        Category_Response.message = `FannyPack required`;
-        Category_Response.status = false;
-        Category_Response.data = "FannyPack required";
-        res.send({ response: Category_Response });
+	if(req.body.fannyID) {
+        AccountCategory_Response.message = `FannyPack required`;
+        AccountCategory_Response.status = false;
+        AccountCategory_Response.data = "FannyPack required";
+        res.send(AccountCategory_Response);
 	} else {
         async function FIRE() {
-            // PayLoads
-            let fannyID = req.body.fannyID;
             try {
-                let data = await CREATE_TABLE_ACCOUNT_TYPE(fannyID);
-                Category_Response.message = `Fetched with ${data.rowCount} rows`;
-                Category_Response.status = true;
-                Category_Response.data = data;
+                let payLoad = { fannyPack_serial: req.body.fannyID }
+                await bling_actionz(view_ALL_accountCategory.sql(payLoad)).then(res => { collect_results.push(res) });
+                AccountCategory_Response.message = `Inserted!`;
+                AccountCategory_Response.status = true;
+                AccountCategory_Response.data = data;
             } catch (errr) {
-                Category_Response.message = `Error fetching`;
-                Category_Response.status = false;
-                Category_Response.data = errr;
-            } finally {
-                res.send({ response: Category_Response });
-            }
+                AccountCategory_Response.message = `Error fetching`;
+                AccountCategory_Response.status = false;
+                AccountCategory_Response.data = errr;
+            } finally { res.send(AccountCategory_Response); }
         } FIRE();
     }
-}
-// Create Table Category
-const CreateTable_Category = function (req, res, next) {
-    let Category_Response = Object.create(RESPONSE);
-    Category_Response.Title = "Create Table Category";
-    // Require fannyID
-	if(!req.body.fannyID) {
-        Category_Response.message = `FannyPack required`;
-        Category_Response.status = false;
-        Category_Response.data = "FannyPack required";
-        res.send({ response: Category_Response });
-	} else {
-        async function FIRE() {
-            // PayLoads
-            let fannyID = req.body.fannyID;
-            try {
-                let data = await CREATE_TABLE_ACCOUNT_TYPE(fannyID);
-                Category_Response.message = `Fetched with ${data.rowCount} rows`;
-                Category_Response.status = true;
-                Category_Response.data = data;
-            } catch (errr) {
-                Category_Response.message = `Error fetching`;
-                Category_Response.status = false;
-                Category_Response.data = errr;
-            } finally {
-                res.send({ response: Category_Response });
-            }
-        } FIRE();
-    }
-}
-// Export
-module.exports = { 
-    CreateTable_Category: CreateTable_Category
+}// Export
+module.exports = {
+    Add_AccountCategory: Add_AccountCategory,
+    View_AccountCategory: View_AccountCategory
 };
 
 
