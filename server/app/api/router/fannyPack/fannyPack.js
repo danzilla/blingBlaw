@@ -1,129 +1,164 @@
 'strict'
-// User - Router
-// User | Keep it minimal
-const moment = require('moment');
-const { 
-    CREATE_SCHEMA_USER_FANNYPACK,
-    ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK,
-    VIEW_USER_FANNYPACK,
-    VIEW_ALL_FANNYPACK } = require('../../config/modals/fannyPack/fannyPack_modal');
-const { CREATE_TABLE_CATEGORY } = require('../../config/modals/accounts/accountCategory_modal');
-const { CREATE_TABLE_ACCOUNT_TYPE } = require('../../config/modals/accounts/accountType_modal');
-const { CREATE_TABLE_RECORD } = require('../../config/modals/accounts/accountRecords_modal');
+// FannyPack - Router
+// FannyPack | Keep it minimal
+const TokenGenerator = require('uuid-token-generator');
+const Token = new TokenGenerator(); // New Token
+const moment = require('moment'); // Time
 
-// Response`
+const { blingblaw, postgresDefault, database_labels } = require('../../../config/app.config');
+
+const { create_schema_user_fannyPack, add_newFannyPack_to_fannypacks_table, view_user_fannyPackz, view_ALL_fannyPackz } = require('../../../config/statement/fannyPack_sql_statement');
+const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
+const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
+const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
+
+// Response
 const RESPONSE = {
     Title: "FannyPack",
     status: null,
     message: null,
     data: null
 }
-
-const Add_FannyPack = function (req, res, next) {
-    let FannyPack_Response = Object.create(RESPONSE);
-    FannyPack_Response.Title = "Add FannyPack";
-    // Require User and Pwd
-	if(!req.body.user || !req.body.password || req.body.fannyPack) {
-        FannyPack_Response.message = `User Details required`;
-        FannyPack_Response.status = false;
-        FannyPack_Response.data = "User Info required";
-        res.send({ response: FannyPack_Response });
-	} else {
+// Query Actions
+bling_actionz = function (statement) {
+    const bling = new Promise(function (resolve, reject) {
+        blingblaw.connect(function (error, client, release) {
+            if (error) { resolve(error); }
+            else if (client) {
+                client.query(statement)
+                    .then(data => { resolve(data); })
+                    .catch(error => { reject(error); })
+                    .finally(() => { release(); })
+            }
+        });
+    }); return bling;
+};
+// Create FannyPack
+/* 
+	create_schema_user_fannyPack
+	create_table_account_category
+	create_table_account_records
+	create_table_account_types
+	add_newFannyPack_to_fannypacks_table
+*/
+const Add_Fanny = function (req, res, next) {
+    let Fanny_Response = Object.create(RESPONSE);
+    Fanny_Response.Title = "Add FannyPack";
+    // Require FannyPack and User
+    if (!req.body.user || !req.body.fannyPack) {
+        Fanny_Response.message = `FannyPack Details required`;
+        Fanny_Response.status = false;
+        Fanny_Response.data = "FannyPack Info required";
+        res.send(Fanny_Response);
+    } else {
+        // PayLoads Math.random().toString(36).substring(7)
+        const user_ID = req.body.user;
+        const fannyPack = req.body.fannyPack;
+        const fannyPack_ID = Token.generate();
+        const dateTime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+        const payLoad = {
+            user_serial: user_ID,
+            get user_auth_serial() { return this.user_serial },
+            fannyPack_serial: fannyPack_ID,
+            fannyPack_name: fannyPack,
+            fannyPack_created: dateTime,
+            fannyPack_lastmodify: dateTime,
+            fannyPack_lastUpdated: dateTime,
+            get fannyPack_owner_serial() { return this.user_serial }
+        };
+        let collect_results = new Array();
+        bling_actionz(add_newFannyPack_to_fannypacks_table.sql(payLoad))
+            .catch((error) => {
+                if (error.code == "23505") {
+                    Fanny_Response.message = `Duplicate Fanny exits`;
+                } else { Fanny_Response.message = `Error: Somethingelse`; }
+                Fanny_Response.status = false;
+                Fanny_Response.data = error;
+                res.send(Fanny_Response);
+            })
+            .then(function (result_Fanny) {
+                collect_results.push(result_Fanny);
+                async function Fire() {
+                    try {
+                        await bling_actionz(create_schema_user_fannyPack.sql(payLoad)).then(res => { collect_results.push(res) });
+                        await bling_actionz(create_accountCategory_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                        await bling_actionz(create_accountRecords_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                        await bling_actionz(create_accounType_table.sql(payLoad)).then(res => { collect_results.push(res) });
+                        Fanny_Response.message = `FannyPack added!`;
+                        Fanny_Response.status = true;
+                        Fanny_Response.data = collect_results;
+                    } catch (error) {
+                        Fanny_Response.message = `Error: Somethingelse`;
+                        Fanny_Response.status = false;
+                        Fanny_Response.data = error;
+                    } finally { res.send(Fanny_Response); console.log(Fanny_Response.message); }
+                } Fire();
+            });
+    }
+}
+// View FannyPack
+const View_user_fanny = function (req, res, next) {
+    let Fanny_Response = Object.create(RESPONSE);
+    Fanny_Response.Title = "FannyPack info - view fanny";
+    // Require FannyPack
+    if (!req.body.user) {
+        Fanny_Response.message = `FannyPack required`;
+        Fanny_Response.status = false;
+        Fanny_Response.data = "Valid fanny required";
+        res.send(Fanny_Response);
+    } else {
         async function FIRE() {
             // PayLoads
-            const payLoad = {
-                fannyPack_serial: Token.generate(),
-                fannyPack_name: req.body.fannyPack,
-                fannyPack_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                fannyPack_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                fannyPack_lastUpdated: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                fannyPack_owner_serial: req.body.sessionID
-            };
+            let collect_results = new Array();
+            let payLoad = { user_serial: req.body.user }
             try {
-                let Final_results = [];
-                let create_schema_user_fannyPack = await CREATE_SCHEMA_USER_FANNYPACK(payLoad.fannyPack_serial);
-                let create_table_account_category = await CREATE_TABLE_CATEGORY(payLoad.fannyPack_serial);
-                let create_table_account_records = await CREATE_TABLE_RECORD(payLoad.fannyPack_serial);
-                let create_table_account_types = await CREATE_TABLE_ACCOUNT_TYPE(payLoad.fannyPack_serial);
-                let add_newFannyPack_to_fannypacks_table = await ADD_NEW_FANNYPACK_to_TABLE_FANNYPACK(payLoad);
-
-                FannyPack_Response.message = `Fetched with ${data_add_userTableAuth.rowCount} rows`;
-                FannyPack_Response.status = true;
-                FannyPack_Response.data = Final_results;
-            } catch (errr) {
-                FannyPack_Response.message = `Error fetching`;
-                FannyPack_Response.status = false;
-                FannyPack_Response.data = errr;
+                await bling_actionz(view_user_fannyPackz.sql(payLoad)).then(res => { collect_results.push(res) });
+                Fanny_Response.message = `Good`;
+                Fanny_Response.status = true;
+                Fanny_Response.data = collect_results;
+            } catch (error) {
+                Fanny_Response.message = `Error fetching`;
+                Fanny_Response.status = false;
+                Fanny_Response.data = error;
             } finally {
-                res.send({ response: FannyPack_Response });
+                res.send(Fanny_Response);
             }
         } FIRE();
     }
 }
-
-// View User FannyPack
-const View_user_fannyPack = function (req, res, next) {
-    let FannyPack_Response = Object.create(RESPONSE);
-    FannyPack_Response.Title = "View a User";
-    // Require User
-	if(!req.body.user) {
-        FannyPack_Response.message = `User required`;
-        FannyPack_Response.status = false;
-        FannyPack_Response.data = "Valid user required";
-        res.send({ response: FannyPack_Response });
-	} else {
+// View FannyPack
+const View_all_user_fanny = function (req, res, next) {
+    let Fanny_Response = Object.create(RESPONSE);
+    Fanny_Response.Title = "FannyPack info - view fanny";
+    // Require FannyPack
+    if (!req.body.user) {
+        Fanny_Response.message = `User required`;
+        Fanny_Response.status = false;
+        Fanny_Response.data = "Valid user required";
+        res.send(Fanny_Response);
+    } else {
         async function FIRE() {
             // PayLoads
-            let sessionID = req.body.user;
+            let collect_results = new Array();
+            let payLoad = { user_serial: req.body.user }
             try {
-                let data = await VIEW_USER_FANNYPACK(sessionID);
-                FannyPack_Response.message = `Fetched with ${data.rowCount} rows`;
-                FannyPack_Response.status = true;
-                FannyPack_Response.data = data;
-            } catch (errr) {
-                FannyPack_Response.message = `Error fetching`;
-                FannyPack_Response.status = false;
-                FannyPack_Response.data = errr;
+                await bling_actionz(view_ALL_fannyPackz.sql(payLoad)).then(res => { collect_results.push(res) });
+                Fanny_Response.message = `Good`;
+                Fanny_Response.status = true;
+                Fanny_Response.data = collect_results;
+            } catch (error) {
+                Fanny_Response.message = `Error fetching`;
+                Fanny_Response.status = false;
+                Fanny_Response.data = error;
             } finally {
-                res.send({ response: FannyPack_Response });
+                res.send(Fanny_Response);
             }
         } FIRE();
     }
 }
-
-// View All FannyPack
-const View_all_fannyPack = function (req, res, next) {
-    let FannyPack_Response = Object.create(RESPONSE);
-    FannyPack_Response.Title = "View All FannyPack";
-    // Require User
-	if(!req.body.user) {
-        FannyPack_Response.message = `User required`;
-        FannyPack_Response.status = false;
-        FannyPack_Response.data = "Valid user required";
-        res.send({ response: FannyPack_Response });
-	} else {
-        async function FIRE() {
-            // PayLoads
-            let sessionID = req.body.user;
-            try {
-                let data = await VIEW_ALL_FANNYPACK(sessionID);
-                FannyPack_Response.message = `Fetched with ${data.rowCount} rows`;
-                FannyPack_Response.status = true;
-                FannyPack_Response.data = data;
-            } catch (errr) {
-                FannyPack_Response.message = `Error fetching`;
-                FannyPack_Response.status = false;
-                FannyPack_Response.data = errr;
-            } finally {
-                res.send({ response: FannyPack_Response });
-            }
-        } FIRE();
-    }
-}
-
 // Export
 module.exports = {
-    Add_FannyPack: Add_FannyPack,
-    View_user_fannyPack: View_user_fannyPack,
-    View_all_fannyPack: View_all_fannyPack
+    Add_Fanny: Add_Fanny,
+    View_user_fanny: View_user_fanny,
+    View_all_user_fanny: View_all_user_fanny
 };

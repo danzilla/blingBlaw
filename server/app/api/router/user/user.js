@@ -199,9 +199,7 @@ const View_a_user = function (req, res, next) {
         async function FIRE() {
             // PayLoads
             let collect_results = new Array();
-            let payLoad = {
-                user_serial: "qwer"
-            }
+            let payLoad = { user_serial: req.body.user }
             try {
                 await bling_actionz(view_user.sql(payLoad)).then(res => { collect_results.push(res) });
                 User_Response.message = `Good`;
@@ -233,9 +231,7 @@ const View_all_user = function (req, res, next) {
         async function FIRE() {
             // PayLoads
             let collect_results = new Array();
-            let payload = {
-                user_serial: req.body.user
-            }
+            let payLoad = { user_serial: req.body.user }
             try {
                 await bling_actionz(view_all_user.sql(payLoad)).then(res => { collect_results.push(res) });
                 User_Response.message = `Good`;

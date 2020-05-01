@@ -34,9 +34,8 @@ const create_Table_fannyPackz = {
       ${database_labels.schema_name}.${database_labels.table_users_fannyPack}
       (
           fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
-          fannyPack_name VARCHAR(254),
+          fannyPack_name VARCHAR(254) NOT NULL,
           fannyPack_created TIMESTAMP,
-          fannyPack_lastmodify TIMESTAMP,
           fannyPack_lastUpdated TIMESTAMP,
           fannyPack_owner_serial VARCHAR(36) NOT NULL
       );`
