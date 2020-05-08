@@ -31,7 +31,8 @@ const create_accountCategory_table = {
       return `CREATE TABLE IF NOT EXISTS
         fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category}
           (
-            category_id VARCHAR(254) UNIQUE NOT NULL,
+            category_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            category_serial VARCHAR(36) UNIQUE NOT NULL,
             category_name VARCHAR(254) UNIQUE NOT NULL,
             category_parent VARCHAR(36) NOT NULL,
             category_created TIMESTAMP,
@@ -39,16 +40,14 @@ const create_accountCategory_table = {
           );`;
   }
 }
-//
 // Add
 // add_newAccountCategory_to_accountCategory - Require - userData
 const add_newAccountCategory_to_accountCategory = {
     title: "add_newAccountCategory_to_accountCategory",
     sql: function (userData) {
-      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category} (category_id, category_name, category_parent, category_created, category_lastmodify) VALUES ('$1', '$2', '$3', '$4', '$5') RETURNING *;`;
+      return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_category} (category_serial, category_name, category_parent, category_created, category_lastmodify) VALUES ('$1', '$2', '$3', '$4', '$5') RETURNING *;`;
   }
 }
-//
 // View 
 // view_ALL_accountCategory - Require - userData
 const view_ALL_accountCategory = {

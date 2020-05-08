@@ -2,8 +2,10 @@
 // AccountRecord - Router
 // AccountRecord | Keep it minimal
 const moment = require('moment');
-const { add_newAccount_to_accountRecord, view_ALL_accountRecord } = require('../../../../config/statement/accountType_sql_statement');
+const { add_newAccount_to_accountRecord, view_ALL_accountRecord } = require('../../../../config/statement/accountRecord_sql_statement');
 const { create_accountTransaction_table } = require('../../../../config/statement/accountTransaction_sql_statement');
+const { blingblaw, postgresDefault, database_labels } = require('../../../../config/app.config');
+
 // Response
 const RESPONSE = {
     Title: "Account Types",
@@ -31,7 +33,7 @@ const Add_AccountRecord = function (req, res, next) {
     let collect_results = new Array();
     AccountRecord_Response.Title = "Add Account Record";
     // Require fannyID
-	if(!req.body.fannyID || !req.body.accountTypeName) {
+	if(!req.body.fannyID || !req.body.userID || !req.body.accountName || !req.body.accountType) {
         AccountRecord_Response.message = `Account records`;
         AccountRecord_Response.status = false;
         AccountRecord_Response.data = "FannyPack required";
@@ -41,12 +43,12 @@ const Add_AccountRecord = function (req, res, next) {
             // PayLoads
             let payLoad = {
                 fannyPack_serial: req.body.fannyID,
-                account_type_id: req.body.accountTypeID,
-                account_serial: req.body.accountID,
+                account_type_id: req.body.accountType,
+                account_owner_serial: req.body.userID,
                 account_name: req.body.accountName,
+                account_serial: Token.generate(),
                 account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-                account_owner_serial: req.body.userID
+                account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
             }
             let collect_results = new Array();
             // missing creat account transtion table
@@ -72,7 +74,7 @@ const View_AccountRecord = function (req, res, next) {
     let collect_results = new Array();
     AccountRecord_Response.Title = "Account Record view";
     // Require fannyID
-	if(req.body.fannyID) {
+	if(!req.body.fannyID) {
         AccountRecord_Response.message = `FannyPack required`;
         AccountRecord_Response.status = false;
         AccountRecord_Response.data = "FannyPack required";
@@ -80,9 +82,9 @@ const View_AccountRecord = function (req, res, next) {
 	} else {
         async function FIRE() {
             try {
-                let payLoad = { user_serial: req.body.user }
+                let payLoad = { fannyPack_serial: req.body.fannyID }
                 await bling_actionz(view_ALL_accountRecord.sql(payLoad)).then(res => { collect_results.push(res) });
-                AccountRecord_Response.message = `Inserted!`;
+                AccountRecord_Response.message = `Good View!`;
                 AccountRecord_Response.status = true;
                 AccountRecord_Response.data = collect_results;
             } catch (errr) {
@@ -94,7 +96,8 @@ const View_AccountRecord = function (req, res, next) {
             }
         } FIRE();
     }
-}// Export
+}
+// Export
 module.exports = {
     Add_AccountRecord: Add_AccountRecord,
     View_AccountRecord: View_AccountRecord

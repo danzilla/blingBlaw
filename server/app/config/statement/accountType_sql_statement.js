@@ -31,6 +31,7 @@ const create_accounType_table = {
         fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}
         (
           account_type_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+          account_type_serial VARCHAR(36) UNIQUE NOT NULL,
           account_type_name VARCHAR(254) UNIQUE NOT NULL,
           account_type_created TIMESTAMP,
           account_type_lastmodify TIMESTAMP
@@ -44,8 +45,8 @@ const add_newAccountType_to_accountType = {
     title: "add_newAccountType_to_accountType",
     sql: function (userData) {
       return `INSERT INTO fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_type}
-        (account_type_name, account_type_created, account_type_lastmodify)
-        VALUES ('${userData.account_type_name}', '${userData.account_type_created}', '${userData.account_type_lastmodify}');`;
+        (account_type_serial, account_type_name, account_type_created, account_type_lastmodify)
+        VALUES ('${userData.account_type_serial}', '${userData.account_type_name}', '${userData.account_type_created}', '${userData.account_type_lastmodify}');`;
   }
 }
 //

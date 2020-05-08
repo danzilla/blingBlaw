@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { emojify } from 'react-emojione';
 import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 // axios-post 
@@ -27,20 +27,20 @@ function LoginForm(props) {
                 user: loginInfo.userName,
                 password: loginInfo.userPassword
             })
-            .then((data) => {
-                if (data.data.status == true) {
-                    console.log("User: " + data.data.data[0].rows[0].user_name);
-                    // If all good - setLocalStorage
-                    // let userInfo = JSON.stringify(data.data.pageMessage.result);
-                    // localStorage.setItem('sessionID', userInfo);
-                    // Why not session too
-                    // Check Box? or Default?
-                    sessionStorage.setItem('sessionID', data.data.data[0].rows[0].user_serial);
-                    message.success(data.data.message, 2.5);
-                    // props.history.push("/dashboard");
-                } else { message.warning(data.data.message, 2.5); }
-            })
-            .catch((err) => { message.error(err.message); });
+                .then((data) => {
+                    if (data.data.status == true) {
+                        console.log("User: " + data.data.data[0].rows[0].user_name);
+                        // If all good - setLocalStorage
+                        // let userInfo = JSON.stringify(data.data.pageMessage.result);
+                        // localStorage.setItem('sessionID', userInfo);
+                        // Why not session too
+                        // Check Box? or Default?
+                        sessionStorage.setItem('sessionID', data.data.data[0].rows[0].user_serial);
+                        message.success(data.data.message, 2.5);
+                        // props.history.push("/dashboard");
+                    } else { message.warning(data.data.message, 2.5); }
+                })
+                .catch((err) => { message.error(err.message); });
         }
     };
 

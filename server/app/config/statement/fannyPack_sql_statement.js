@@ -30,9 +30,9 @@ const {database_labels, database_connection} = require('../app.config');
 // Table fannypack
 const create_Table_fannyPackz = {
   title: "create_Table_fannyPackz",
-  sql: `CREATE TABLE IF NOT EXISTS 
-      ${database_labels.schema_name}.${database_labels.table_users_fannyPack}
+  sql: `CREATE TABLE IF NOT EXISTS ${database_labels.schema_name}.${database_labels.table_users_fannyPack}
       (
+          fannyPack_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
           fannyPack_serial VARCHAR(36) UNIQUE NOT NULL,
           fannyPack_name VARCHAR(254) NOT NULL,
           fannyPack_created TIMESTAMP,
@@ -46,8 +46,7 @@ const create_Table_fannyPackz = {
 const create_schema_user_fannyPack = {
   title: "create_schema_user_fannyPack",
   sql: function (userData) {
-      return `CREATE SCHEMA IF NOT EXISTS fannyPack_${userData.fannyPack_serial} 
-              AUTHORIZATION ${database_connection.user};`;
+      return `CREATE SCHEMA IF NOT EXISTS fannyPack_${userData.fannyPack_serial} AUTHORIZATION ${database_connection.user};`;
   }
 }
 //

@@ -4,7 +4,9 @@
 const moment = require('moment');
 const TokenGenerator = require('uuid-token-generator');
 const Token = new TokenGenerator(); // New Token
-const { add_newAccountCategory_to_accountCategory, view_ALL_accountCategory } = require('../../../../config/statement/accountType_sql_statement');
+const { add_newAccountCategory_to_accountCategory, view_ALL_accountCategory } = require('../../../../config/statement/accountCategory_statement');
+const { blingblaw, postgresDefault, database_labels } = require('../../../../config/app.config');
+
 // Response
 const RESPONSE = {
     Title: "Account Category",
@@ -43,7 +45,7 @@ const Add_AccountCategory = function (req, res, next) {
             // category_id, category_name, category_parent, category_created, category_lastmodify
             let payLoad = {
                 fannyPack_serial: req.body.fannyID,
-                category_id: Token.generate(),
+                category_serial: Token.generate(),
                 category_name: req.body.catName,
                 category_parent: req.body.catParent,
                 category_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
@@ -68,7 +70,7 @@ const View_AccountCategory = function (req, res, next) {
     let collect_results = new Array();
     AccountCategory_Response.Title = "Category, Labels, Tags view";
     // Require fannyID
-	if(req.body.fannyID) {
+	if(!req.body.fannyID) {
         AccountCategory_Response.message = `FannyPack required`;
         AccountCategory_Response.status = false;
         AccountCategory_Response.data = "FannyPack required";
@@ -78,9 +80,9 @@ const View_AccountCategory = function (req, res, next) {
             try {
                 let payLoad = { fannyPack_serial: req.body.fannyID }
                 await bling_actionz(view_ALL_accountCategory.sql(payLoad)).then(res => { collect_results.push(res) });
-                AccountCategory_Response.message = `Inserted!`;
+                AccountCategory_Response.message = `Good view!`;
                 AccountCategory_Response.status = true;
-                AccountCategory_Response.data = data;
+                AccountCategory_Response.data = collect_results;
             } catch (errr) {
                 AccountCategory_Response.message = `Error fetching`;
                 AccountCategory_Response.status = false;

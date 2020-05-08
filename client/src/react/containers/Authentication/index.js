@@ -1,9 +1,9 @@
 'use strict';
 import React from "react";
 // React components
-import Login from '../../components/authentication/login_page';
-import Register from '../../components/authentication/register_page';
-import FirstRun from '../../components/authentication/firstRun_page';
+import Login from '../../components/Authentication/login_page';
+import Register from '../../components/Authentication/register_page';
+import FirstRun from '../../components/Authentication/firstRun_page';
 // Authentication
 function Authentication() {
   return (

@@ -3,6 +3,8 @@
 // Transaction | Keep it minimal
 const moment = require('moment');
 const { add_newTransaction_to_accountTransaction_table, view_ALL_accountTransaction } = require('../../../../config/statement/accountTransaction_sql_statement');
+const { blingblaw, postgresDefault, database_labels } = require('../../../../config/app.config');
+
 // Response
 const RESPONSE = {
     Title: "Transaction",

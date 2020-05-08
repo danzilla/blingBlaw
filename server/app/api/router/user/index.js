@@ -14,7 +14,6 @@ const { create_schema_user_fannyPack, add_newFannyPack_to_fannypacks_table } = r
 const { create_accountCategory_table } = require('../../../config/statement/accountCategory_statement');
 const { create_accountRecords_table } = require('../../../config/statement/accountRecord_sql_statement');
 const { create_accounType_table } = require('../../../config/statement/accountType_sql_statement');
-
 // Response
 const RESPONSE = {
     Title: "User",
@@ -202,15 +201,11 @@ const View_a_user = function (req, res, next) {
                 User_Response.message = `Good`;
                 User_Response.status = true;
                 User_Response.data = collect_results;
-                console.log(User_Response);
             } catch (error) {
                 User_Response.message = `Error fetching`;
                 User_Response.status = false;
                 User_Response.data = error;
-                console.log(User_Response);
-            } finally {
-                res.send(User_Response);
-            }
+            } finally { res.send(User_Response);}
         } FIRE();
     }
 }

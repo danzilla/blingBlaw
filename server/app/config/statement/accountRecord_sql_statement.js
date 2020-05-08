@@ -32,9 +32,9 @@ const create_accountRecords_table = {
         fannypack_${userData.fannyPack_serial}.${database_labels.table_fannyPack_record}
           (
             accounts_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+            account_serial VARCHAR(36) UNIQUE NOT NULL,
             account_type_id VARCHAR(36) NOT NULL,
-            account_name VARCHAR(36) NOT NULL,
-            account_serial VARCHAR(36) NOT NULL,
+            account_name VARCHAR(36) UNIQUE NOT NULL,
             account_created TIMESTAMP,
             account_lastmodify TIMESTAMP,
             account_owner_serial VARCHAR(36) NOT NULL

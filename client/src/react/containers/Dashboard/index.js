@@ -1,39 +1,43 @@
 'use strict';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
-import axios from 'axios';
-import { Row, Col, Layout, message, Button } from 'antd';
+import { Skeleton, Row, Col, Layout, message } from 'antd';
+// Actions
+import { ACTION_REFRESH, ACTION_SET_ACTIVE_USER } from '../../../redux/actions/sessionAction';
 // React components
-import SideNavigation from "../../components/navigation/sideNavigation";
-import DashboardContent from "../../components/dashboardContent";
+import SideNavigation from "../../components/Navigation/sideNavigation";
+import Content from "../../components/Content";
 // Dashboard
+//  Navigation
+//  Content
+//  Footer
 function Dashboard(props) {
-  // Requiirement 
-  // - User Info from Session
-  // - FannyPack View and Pass it to Child
-  // - Dashboard fetch and view all FannyPack 
-  // useEffect()
+  // Dashboard
+  // - Loading
+  // - Fetch_Fanny with userID
   let sessionID;
   useEffect(() => {
-    sessionID = sessionStorage.getItem('sessionID');
-    if (!sessionID) {
-      // Bad entry
-      message.error("Unauthorized visit! Required valid authentication", 2.5);
-      message.warning("Session is empty", 2.5);
-      // props.history.push("/");
-    } else { message.warning("Session: " + sessionID, 2.5); }
+    sessionID = sessionStorage.getItem('sessionID')
+    if (!sessionID) { // Bad entry
+      message.error("Unauthorized visit! Required valid authentication", 2.5)
+      props.history.push("/")
+    } else { // Dispatch Refresh to get FannyList
+      props.dispatch(ACTION_REFRESH(sessionID))
+      props.dispatch(ACTION_SET_ACTIVE_USER(sessionID))
+      message.success("Session active!: " + sessionID, 1.5)
+    } // Good entry - rework #yee
   }, [sessionID]);
-  
-  // 
   return (
     <Row justify="center" align="middle">
       <Col span={20} className="m-2">
-
         <Layout style={{ backgroundColor: '#FFF' }}>
-          <SideNavigation />
-          <DashboardContent />
+          {/* <SideNavigation /> */}
+          <Skeleton 
+            active loading={!props.data.sessionReducers.user_fannyPack.status}
+            paragraph={{ rows: 10 }}>
+            <Content />
+          </Skeleton>
         </Layout>
-
       </Col>
     </Row>
   );
