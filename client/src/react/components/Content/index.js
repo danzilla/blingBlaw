@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Layout } from 'antd';
 
 import DashboardNavigation from '../Navigation/contentNavigation';
 
+import { Input, Layout } from 'antd';
+const { TextArea } = Input;
 const { Content } = Layout;
 
-function DashboardContent(props) {
+const DashboardContent = (props) => {
   return (
     <Content className="card-1 p-2">
+      <h1>props.data.sessionReducers</h1>
+      <TextArea
+          value={JSON.stringify(props.data.sessionReducers.user_fannyPack)}
+          autoSize={{ minRows: 2, maxRows: 3 }}
+        />
       <DashboardNavigation />
-      <h1>props</h1>
-      <p>{JSON.stringify(props)}</p>
     </Content>
   );
 };

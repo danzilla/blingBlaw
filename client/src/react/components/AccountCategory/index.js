@@ -8,8 +8,7 @@ const { Search } = Input;
 const { Option } = Select;
 const { Text, Title } = Typography;
 
-function AccountCategory() {
-
+const AccountCategory = (props) => {
   const [ModalVisible, setModalVisible] = useState(false);
   const dataSource = [
     {

@@ -13,7 +13,7 @@ const moment = require('moment');
 const { Search } = Input;
 const { Text, Title } = Typography;
 // Account Types
-function AccountType(props) {
+const AccountType = (props) => {
   // add account_type
   const add_account_type = (accountTypeName) => {
     if (!props.data.sessionReducers.active_fannyPack) {

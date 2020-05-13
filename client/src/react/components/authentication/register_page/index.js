@@ -5,7 +5,7 @@ import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 // axios-post 
 import axios from 'axios';
 // RegisterForm
-function RegisterForm(props) {
+const RegisterForm = (props) => {
     // React-hookz - userAddInfo
     const [userAddInfo, setUserAddInfo] = useState({
         userName: "",

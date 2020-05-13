@@ -18,7 +18,6 @@ const fetched_user_fannyPacks = (post) => { return { type: "FETCHED_USER_FANNYPA
 const fetched_user_accounts = (post) => { return { type: "FETCHED_USER_ACCOUNTS", data: post }; };
 const fetched_user_category = (post) => { return { type: "FETCHED_USER_ACCOUNTS_CATEGORY", data: post }; };
 const fetched_user_types = (post) => { return { type: "FETCHED_USER_ACCOUNTS_TYPES", data: post }; };
-
 // Start 
 // - Start with UserID
 //    - get userInfo - set_Fetch
@@ -32,7 +31,6 @@ const fetched_user_types = (post) => { return { type: "FETCHED_USER_ACCOUNTS_TYP
 //    - get userFannyAccount - set_Fetch
 //    - get userFannyAccount - set_Fetched
 //    - if err - set_error
-
 //  Active Sessions
 export const ACTION_SET_ACTIVE_USER = (userID) => {
   return function (dispatch, getState) { dispatch(active_session(userID)) };
@@ -43,7 +41,6 @@ export const ACTION_SET_ACTIVE_FANNY = (fannyID) => {
 export const ACTION_SET_ACTIVE_ACCOUNT = (accountID) => {
   return function (dispatch, getState) { dispatch(active_account(accountID)) };
 };
-
 //  ACTIONS_REFRESH
 // 1. With UserID get FannyID
 // 2. With FannyID get Account Lists
@@ -64,6 +61,8 @@ const getFannny = (dispatch, userID) => {
     } finally {
       dispatch(fetched_user(user_result))
       dispatch(fetched_user_fannyPacks(fanny_result))
+      dispatch(active_session(user_result.data[0].rows[0]))
+      dispatch(active_fannyPack(fanny_result.data[0].rows[0]))
     }
   } Fire();
 }
@@ -83,7 +82,6 @@ const getAccount = (dispatch, userID, fannyID) => {
     }
   } Fire();
 }
-
 // Refresh
 export const ACTION_REFRESH = (userID, fannyID, accountID) => {
   return function (dispatch, getState) {
@@ -96,7 +94,7 @@ export const ACTION_REFRESH = (userID, fannyID, accountID) => {
     } else if (userID) {
       console.log("Got userID - Getting FannyPacks " + JSON.stringify(userID));
       getFannny(dispatch, userID);
-    } else { 
+    } else {
       dispatch(receive_error("Error while Refresh()"))
     }
     dispatch(fetched_post());

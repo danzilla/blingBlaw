@@ -2,6 +2,8 @@
 // AccountRecord - Router
 // AccountRecord | Keep it minimal
 const moment = require('moment');
+const TokenGenerator = require('uuid-token-generator');
+const Token = new TokenGenerator(); // New Token
 const { add_newAccount_to_accountRecord, view_ALL_accountRecord } = require('../../../../config/statement/accountRecord_sql_statement');
 const { create_accountTransaction_table } = require('../../../../config/statement/accountTransaction_sql_statement');
 const { blingblaw, postgresDefault, database_labels } = require('../../../../config/app.config');
@@ -33,7 +35,7 @@ const Add_AccountRecord = function (req, res, next) {
     let collect_results = new Array();
     AccountRecord_Response.Title = "Add Account Record";
     // Require fannyID
-	if(!req.body.fannyID || !req.body.userID || !req.body.accountName || !req.body.accountType) {
+	if(!req.body.fannyID || !req.body.sessionID || !req.body.accountName || !req.body.accountType) {
         AccountRecord_Response.message = `Account records`;
         AccountRecord_Response.status = false;
         AccountRecord_Response.data = "FannyPack required";
@@ -44,14 +46,13 @@ const Add_AccountRecord = function (req, res, next) {
             let payLoad = {
                 fannyPack_serial: req.body.fannyID,
                 account_type_id: req.body.accountType,
-                account_owner_serial: req.body.userID,
+                account_owner_serial: req.body.sessionID,
                 account_name: req.body.accountName,
                 account_serial: Token.generate(),
                 account_lastmodify: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
                 account_created: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
             }
             let collect_results = new Array();
-            // missing creat account transtion table
             try {
                 await bling_actionz(add_newAccount_to_accountRecord.sql(payLoad)).then(res => { collect_results.push(res) });
                 await bling_actionz(create_accountTransaction_table.sql(payLoad)).then(res => { collect_results.push(res) });

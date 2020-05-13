@@ -6,7 +6,7 @@ import Authentication from './containers/Authentication';
 import Dashboard from './containers/Dashboard';
 import Test from './containers/_test';
 // Features
-function Features(props) {
+const Features = (props) => {
   return (
     <Router>
         <Switch>

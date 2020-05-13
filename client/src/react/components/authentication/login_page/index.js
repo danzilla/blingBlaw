@@ -5,7 +5,7 @@ import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 // axios-post 
 import axios from 'axios';
 // LoginForm
-function LoginForm(props) {
+const LoginForm = (props) => {
     // React-hookz - loginInfo
     const [loginInfo, setLoginInfo] = useState({
         userName: "",

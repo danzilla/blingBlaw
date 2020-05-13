@@ -5,7 +5,7 @@ import { Button, message, Row, Col } from 'antd';
 // axios-post 
 import axios from 'axios';
 // FirstRunForm
-function FirstRunForm(props) {
+const FirstRunForm = (props) => {
     const [is_db_good, setIsDB] = useState(false);
     const [fetchLoading, setFetchLocading] = useState(false);
     // onSubmit

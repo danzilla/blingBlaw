@@ -55,8 +55,8 @@ export async function fetch_fanny_account_info(fannyID) {
         .then(axios.spread((fannyAccounts, fannyType, fannyCategory) => { return { fannyAccounts, fannyType, fannyCategory }; }))
         .catch((err) => { return err; })
 }
-export async function fetch_account_add(fannyID, accountTypeName) {
-    return await axios.post(`${API}/account/add`, { fannyID: fannyID, accountTypeName: accountTypeName })
+export async function fetch_account_add(sessionID, fannyID, accountName, accountType) {
+    return await axios.post(`${API}/account/add`, { sessionID: sessionID, fannyID: fannyID, accountName: accountName, accountType: accountType })
         .then((data) => { return data.data; })
         .catch((err) => { return err; })
 }

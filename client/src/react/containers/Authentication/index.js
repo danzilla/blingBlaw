@@ -5,7 +5,7 @@ import Login from '../../components/Authentication/login_page';
 import Register from '../../components/Authentication/register_page';
 import FirstRun from '../../components/Authentication/firstRun_page';
 // Authentication
-function Authentication() {
+const Authentication = () => {
   return (
     <div className="user-info">
       <Login />
