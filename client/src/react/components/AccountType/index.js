@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Row } from 'antd';
-import { Form, Input, message, Button, Table, Modal, Typography } from 'antd';
+import { Form, Row, Input, message, Button, Table, Modal, Typography } from 'antd';
+import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
 import { fetch_account_type_add } from '../../../api/index';
 import {
   ACTION_REFRESH,
@@ -58,7 +58,7 @@ const AccountType = (props) => {
   }];
   return (
     <>
-      <Button type="link" onClick={() => setModalVisible(true)}> Account Types </Button>
+      <Button type="link" onClick={() => setModalVisible(true)}> <PlusOutlined /> Account Types </Button>
       <Modal title={<Title level={3}>Account Types</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>

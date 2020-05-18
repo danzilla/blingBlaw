@@ -59,7 +59,7 @@ const AccountFannyView = (props) => {
             <Search
               placeholder="New FannyPack"
               enterButton="add"
-              onSearch={value => add_FannyPack(value)}
+              onSearch={value => { add_FannyPack(value); value = null; }}
             />
           </Form.Item>
         </Form>
