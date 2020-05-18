@@ -57,8 +57,8 @@
 	- > `cd ./blingBlaw`
 - **Launch** the app
 	- > Install-Packages `npm install`
-	- > Client-deploy `npm run start client`
-	- > Server-deploy `npm run start server`
+	- > Client-deploy `npm run client`
+	- > Server-deploy `npm run server`
 	- > Database-deploy `npm run db`
 	- > Clean-docker `docker-compose rm -f && docker-compose build --no-cache`
 
