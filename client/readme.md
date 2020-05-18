@@ -4,8 +4,7 @@
 - [x] UI Library - Ant Design - https://ant.design/docs/react/getting-started
 - [ ] App Layout - Draw
 - [x] Folder structure - New
-- [ ] Redux - Integration
-
+- [x] Redux - Integration
 - React-Hooks
     - > https://reactjs.org/docs/hooks-reference.html
 

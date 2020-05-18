@@ -4,7 +4,7 @@ Node.js API-server
 - REST and GraphQL
 
 # To-Do
-- [ ] REST - Login and Set Session
+- [X] REST - Login and Set Session
 - [x] REST - Add | firtRun, user, fannyPack, account
 - [x] GraphQL - Integration 
 - [x] GraphQL - PostGraphile Integration

@@ -1,6 +1,7 @@
 {
   "name": "server-graphql-express",
-  "version": "2.5.0",
+  "version": "3.0.0",
+  "author": "Danzilla",
   "repository": {
     "type": "git",
     "url": "https://github.com/danzilla/blingBlaw"

@@ -8,14 +8,12 @@
 # To-Do
 - [x] Long time... Jump back in. Check before change | Edited April 12, 2020
 - [x] Updates packages - Client and Server | Ant.D 4.0 
-- [ ] 
-
 - [ ] Client - Remove Local States and Redux
 	- [x] Folder structure - New
 	- [x] New UI Library and Same app-layout (Minimalism) - Ant Design
-	- [ ] Rebuild Client | No more States | Use React Hooks 
+	- [x] Rebuild Client | No more States | Use React Hooks 
 	- [ ] Draw map of React state-flow through App
-	- [ ] Implement - Redux
+	- [x] Implement - Redux
 	- [ ] Implement - Apollo Client
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
@@ -51,11 +49,16 @@
 	- > **Clean-docker** `docker-compose rm -f && docker-compose build --no-cache`
 	- > **Prod-deploy** `docker-compose up --force-recreate`
 	- > **Dev-deploy** `docker-compose up -d pgadmin && docker-compose up postgres_db server client`
+	- > Issue with docker-compose stack - Server and Client are not connecting in dev-mode***
+	- > npm audit broke things
 
 ## :nut_and_bolt: Deploy using **NPM** (*require* - npm and nodejs)
 - Change directory to blingBlaw
 	- > `cd ./blingBlaw`
 - **Launch** the app
-	- > Clean-docker `npm run docker-clean`
-	- > Prod-deploy `npm run start-prod`
-	- > Dev-deploy `npm run start-dev`
+	- > Install-Packages `npm install`
+	- > Client-deploy `npm run start client`
+	- > Server-deploy `npm run start server`
+	- > Database-deploy `npm run db`
+	- > Clean-docker `docker-compose rm -f && docker-compose build --no-cache`
+

@@ -1,6 +1,23 @@
 {
   "name": "client",
-  "version": "3.1.0",
+  "version": "3.0.0",
+  "author": "Danzilla",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danzilla/blingBlaw"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.8"
+  },
   "dependencies": {
     "antd": "^4.1.2",
     "axios": "^0.19.2",
@@ -17,24 +34,13 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "redux-thunk": "^2.3.0",
+    "yargs-parser": "^18.1.2"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "redux-devtools-extension": "^2.13.8"
-  }
+  ]
 }
