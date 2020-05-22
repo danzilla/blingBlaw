@@ -15,6 +15,7 @@ const { Text, Title } = Typography;
 // Account Types
 const AccountType = (props) => {
   // add account_type
+  const [accountTypeName, setAccountTypeName] = useState(null)
   const add_account_type = (accountTypeName) => {
     if (!props.data.sessionReducers.active_fannyPack) {
       message.error("FannyPack required", 2.5)
@@ -22,17 +23,19 @@ const AccountType = (props) => {
       let activeSession = props.data.sessionReducers.active_session
       let activeFanny = props.data.sessionReducers.active_fannyPack.fannypack_serial
       fetch_account_type_add(activeFanny, accountTypeName)
-        .then((data) => { 
+        .then((data) => {
           props.dispatch(ACTION_REFRESH(activeSession, activeFanny))
           message.success(data.message, 2.5)
+          setAccountTypeName(null)
         })
         .catch((error) => { message.error(error.message, 2.5) })
     }
   };
   const [ModalVisible, setModalVisible] = useState(false)
+  // React on user_account_type
   // View FannyPacks
   let dataSource = new Array();
-  Object.keys(props.data.sessionReducers.user_account_type).length > 0 &&
+  props.data.sessionReducers.user_account_type &&
     props.data.sessionReducers.user_account_type.data[0].rows.map((accountType) => (
       dataSource.push({
         key: accountType.account_type_id,
@@ -40,7 +43,7 @@ const AccountType = (props) => {
         created: moment(accountType.account_type_created).format('MM/DD/YYYY h:mm a'),
         modified: moment(accountType.account_type_lastmodify).format('MM/DD/YYYY h:mm a')
       })
-    ))
+    ));
   let Columns = [{
     title: 'Labels',
     dataIndex: 'labels',
@@ -58,18 +61,24 @@ const AccountType = (props) => {
   }];
   return (
     <>
-      <Button type="link" onClick={() => setModalVisible(true)}> <PlusOutlined /> Account Types </Button>
+      <Button type="link" onClick={() => setModalVisible(true)}><PlusOutlined />Account Types </Button>
       <Modal title={<Title level={3}>Account Types</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
         <Row justify="center">
           <Form layout="inline">
             <Form.Item>
-              <Search
-                placeholder="Which Type of an Account"
-                enterButton="add"
-                onSearch={value => add_account_type(value)}
-              />
+              <Input
+                value={accountTypeName}
+                onChange={(e) => setAccountTypeName(e.target.value)}
+                style={{ width: '60%' }}
+                size={"large"}
+                placeholder={"Ex: Saving or vacation or House saving"} />
+              <Button
+                style={{ width: '30%' }}
+                size={"large"}
+                type="primary" danger onClick={() => add_account_type(accountTypeName)}> <PlusOutlined />
+              </Button>
             </Form.Item>
           </Form>
         </Row>

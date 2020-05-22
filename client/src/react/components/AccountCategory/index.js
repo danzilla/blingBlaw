@@ -56,7 +56,7 @@ const AccountCategory = (props) => {
 
   return (
     <>
-      <Button type="link" onClick={() => setModalVisible(true)} block> Labels and Tags </Button>
+      <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>Labels and Tags </Button>
       <Modal title={<Title level={3}>Labels, Tags and Categories</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>

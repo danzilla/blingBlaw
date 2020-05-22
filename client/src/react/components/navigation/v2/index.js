@@ -6,6 +6,7 @@ import { Input, Col, Divider, Layout, Row, Select, InputNumber, DatePicker, Auto
 
 import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
 
+import AccountLogo from '../../AccountLogo';
 import Account from '../../Account';
 import AccountType from '../../AccountType';
 import AccountFanny from '../../AccountFanny';
@@ -24,12 +25,12 @@ const DashboardContent = (props) => {
   return (
     <Row align="middle" justify="start" className="card-3 m-1 p-1">
       <Input.Group compact size="large">
+        <AccountLogo />
         {/* FannyPacks */}
         <AccountFanny />
         <Account />
-
         {/* AccountAdds */}
-        {!props.data.sessionReducers.user_account_transaction.status ?
+        {!props.data.sessionReducers.user_account_transaction ?
           (<Select defaultValue="view_acc_trans" onChange={(value) => setAccount(value)} style={{ width: 200 }} size="large">
             <Option value="view_acc_trans"><a><PlusOutlined /> View {} transactions</a></Option>
             <Option value="acc_labels"><a><PlusOutlined /> Tags, Labels and Category</a></Option>

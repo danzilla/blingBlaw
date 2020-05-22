@@ -12,12 +12,12 @@ const sessionState = {
   active_session: null,
   active_fannyPack: null,
   active_account: null,
-  session_user: {},
-  user_fannyPack: {},
-  user_accounts: {},
-  user_account_type: {},
-  user_account_category: {},
-  user_account_transaction: {},
+  user: null,
+  user_fannyPack: null,
+  user_accounts: null,
+  user_account_type: null,
+  user_account_category: null,
+  user_account_transaction: null,
   isFetching: false,
   isError: false
 };
@@ -36,7 +36,7 @@ const sessionReducers = (state = sessionState, action) => {
     case "RECEIVE_ERROR":
       return Object.assign({}, state, { error: action.data, isError: false });
     case "FETCHED_USER":
-      return Object.assign({}, state, { session_user: action.data, isError: false });
+      return Object.assign({}, state, { user: action.data, isError: false });
     case "FETCHED_USER_FANNYPACKS":
       return Object.assign({}, state, { user_fannyPack: action.data, isError: false });
     case "FETCHED_USER_ACCOUNTS":

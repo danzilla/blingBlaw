@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { emojify } from 'react-emojione';
 import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
@@ -6,6 +6,15 @@ import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 import axios from 'axios';
 // LoginForm
 const LoginForm = (props) => {
+    // UseEffects
+    let session;
+    useEffect(() => {
+        session = sessionStorage.getItem('session');
+        if (session) { 
+            message.success("Welcome back!");
+            props.history.push("/dashboard");
+        }
+    }, [session]);
     // React-hookz - loginInfo
     const [loginInfo, setLoginInfo] = useState({
         userName: "",
@@ -35,18 +44,16 @@ const LoginForm = (props) => {
                         // localStorage.setItem('sessionID', userInfo);
                         // Why not session too
                         // Check Box? or Default?
-                        sessionStorage.setItem('sessionID', data.data.data[0].rows[0].user_serial);
+                        sessionStorage.setItem('session', JSON.stringify(data.data.data[0].rows[0]));
                         message.success(data.data.message, 2.5);
-                        // props.history.push("/dashboard");
+                        props.history.push("/dashboard");
                     } else { message.warning(data.data.message, 2.5); }
                 })
                 .catch((err) => { message.error(err.message); });
         }
     };
-
     // displayContent
-    let displayContent;
-    displayContent = <Form onSubmit={handleSubmit}>
+    let displayContent = <Form onSubmit={handleSubmit}>
         <Form.Item>
             <Input
                 name="userName"

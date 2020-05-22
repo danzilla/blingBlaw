@@ -10,7 +10,7 @@ const { blingblaw, postgresDefault, database_labels } = require('../../../../con
 
 // Response
 const RESPONSE = {
-    Title: "Account Types",
+    Title: "Account Record",
     status: null,
     message: null,
     data: null
@@ -36,7 +36,7 @@ const Add_AccountRecord = function (req, res, next) {
     AccountRecord_Response.Title = "Add Account Record";
     // Require fannyID
 	if(!req.body.fannyID || !req.body.sessionID || !req.body.accountName || !req.body.accountType) {
-        AccountRecord_Response.message = `Account records`;
+        AccountRecord_Response.message = `Account name and type required`;
         AccountRecord_Response.status = false;
         AccountRecord_Response.data = "FannyPack required";
         res.send(AccountRecord_Response);
@@ -56,11 +56,11 @@ const Add_AccountRecord = function (req, res, next) {
             try {
                 await bling_actionz(add_newAccount_to_accountRecord.sql(payLoad)).then(res => { collect_results.push(res) });
                 await bling_actionz(create_accountTransaction_table.sql(payLoad)).then(res => { collect_results.push(res) });
-                AccountRecord_Response.message = `Inserted!`;
+                AccountRecord_Response.message = `Account Inserted!`;
                 AccountRecord_Response.status = true;
                 AccountRecord_Response.data = collect_results;
             } catch (errr) {
-                AccountRecord_Response.message = `Error adding Account type`;
+                AccountRecord_Response.message = `Error adding Account`;
                 AccountRecord_Response.status = false;
                 AccountRecord_Response.data = errr;
             } finally {

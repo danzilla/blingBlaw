@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Row, Col } from 'antd';
-import { Form, Input, message, Button, Menu, Dropdown } from 'antd';
-import { Table, Modal, Typography } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
+import { Form, Input, message, Button, Menu, Dropdown, Table, Modal, Typography, Row, Col } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { fetch_fannyPack_add } from '../../../api/index';
-import {ACTION_REFRESH } from '../../../redux/actions/sessionAction';
+import { ACTION_REFRESH } from '../../../redux/actions/sessionAction';
 const moment = require('moment');
-const { Search } = Input;
 const { Title } = Typography;
 // FannyTab
 const AccountFannyView = (props) => {
+  // Modal
+  const [ModalVisible, setModalVisible] = useState(false);
+  const [fannyName, setFannyName] = useState(null);
   // Add FannyPack
-  let sessionID = sessionStorage.getItem('sessionID');
-  const add_FannyPack = (fannyPack) => {
-    fetch_fannyPack_add(sessionID, fannyPack)
+  let session;
+  const add_FannyPack = (fannyName) => {
+    session = JSON.parse(sessionStorage.getItem('session'))
+    fetch_fannyPack_add(session.user_serial, fannyName)
       .then((data) => {
-        props.dispatch(ACTION_REFRESH(sessionID))
+        props.dispatch(ACTION_REFRESH(session.user_serial))
         message.success(data.message, 2.5)
+        setFannyName(null)
       })
-      .catch((error) => { message.error(error.message, 2.5) })
+      .catch((error) => { message.error(error.message, 2.5); setFannyName(null); })
   };
   // View FannyPacks
   let dataSource = new Array();
@@ -47,34 +49,37 @@ const AccountFannyView = (props) => {
     dataIndex: 'modified',
     key: 'modified',
   }];
-  // Modal
-  const [ModalVisible, setModalVisible] = useState(false);
-  const FannyModal =
-    (<Modal title={<Title level={3}>FannyPackz</Title>}
-      onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}
-      centered visible={ModalVisible} footer={null}>
-      <Row justify="center">
-        <Form layout="inline">
-          <Form.Item>
-            <Search
-              placeholder="New FannyPack"
-              enterButton="add"
-              onSearch={value => { add_FannyPack(value); value = null; }}
-            />
-          </Form.Item>
-        </Form>
-      </Row>
-      <Table 
-        className="m-1" dataSource={dataSource} columns={fannyColumns}
-        pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
-    </Modal>)
-  // Fire
   return (
     <>
-      <Button icon={<PoweroffOutlined />} type="link" onClick={() => setModalVisible(true)}>
-        Add new FannyPack
-      </Button>
-      {FannyModal}
+      <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>FannyPackz</Button>
+      <Modal
+        title={<Title level={3}>FannyPackz</Title>}
+        onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}
+        centered visible={ModalVisible} footer={null}>
+        <Row justify="center">
+          <Form layout="inline">
+            <Form.Item>
+              <Input.Group compact>
+                <Input
+                  style={{ width: '70%' }}
+                  onChange={(e) => setFannyName(e.target.value)}
+                  size={"large"}
+                  value={fannyName}
+                  placeholder={"FannyPack Name"}
+                />
+                <Button
+                  size={"large"}
+                  style={{ width: '30%' }}
+                  type="primary" danger onClick={() => add_FannyPack(fannyName)}> <PlusOutlined />
+                </Button>
+              </Input.Group>
+            </Form.Item>
+          </Form>
+        </Row>
+        <Table
+          className="m-1" dataSource={dataSource} columns={fannyColumns}
+          pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
+      </Modal>
     </>
   );
 };

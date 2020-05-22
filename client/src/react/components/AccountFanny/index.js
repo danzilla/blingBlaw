@@ -4,6 +4,7 @@ import { Skeleton, Avatar, Dropdown, Menu, Button, message } from 'antd';
 import { Input, Col, Divider, Layout, Row, Select, InputNumber, DatePicker, AutoComplete, Cascader } from 'antd';
 import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
 import AccountFannyView from './view';
+import AccountCategory from '../AccountCategory';
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
@@ -19,27 +20,38 @@ const AccountFanny = (props) => {
   const changeFannyPack = (fanny) => {
     fanny = JSON.parse(fanny)
     // Switch Fanny and Refresh to Get AccountInfo
-    props.dispatch(ACTION_REFRESH(fanny.fannypack_owner_serial, fanny.fannypack_serial))
     props.dispatch(ACTION_SET_ACTIVE_FANNY(fanny))
-    message.success("FannyPacked changed! " + fanny.fannypack_name, 2)
+    props.dispatch(ACTION_REFRESH(fanny.fannypack_owner_serial, fanny.fannypack_serial))
   }
+  // React on Active_Fanny
+  useEffect(() => {
+    if (props.data.sessionReducers.active_fannyPack) {
+      props.dispatch(ACTION_REFRESH(
+        props.data.sessionReducers.active_fannyPack.fannypack_owner_serial,
+        props.data.sessionReducers.active_fannyPack.fannypack_serial))
+      message.success("FannyPack refreshed!" + props.data.sessionReducers.active_fannyPack.fannypack_name, 2)
+    }
+  }, [props.data.sessionReducers.active_fannyPack]);
   // Fire
-  return (props.data.sessionReducers.active_fannyPack ?
+  return (
+    props.data.sessionReducers.active_fannyPack ?
     (<Select
       onChange={changeFannyPack}
       defaultValue={props.data.sessionReducers.active_fannyPack.fannypack_name}
-      size="large" style={{ width: 200 }}
+      size="large" style={{ width: 150 }}
       dropdownRender={menu => (
         <div>
           {menu}
           <Divider style={{ margin: '4px 0' }} />
           <AccountFannyView />
+          <AccountCategory />
         </div>
       )}>
       {props.data.sessionReducers.user_fannyPack.data[0].rows.map((fanny, index) => (
         <Option key={index} value={JSON.stringify(fanny)}> {fanny.fannypack_name} </Option>
       ))}
-    </Select>) : "Error aquiring FannyPackz"
+    </Select>)
+    : "Error aquiring FannyPackz"
   );
 };
 // Export - Redux
