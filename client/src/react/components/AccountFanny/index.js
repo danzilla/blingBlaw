@@ -5,6 +5,7 @@ import { Input, Col, Divider, Layout, Row, Select, InputNumber, DatePicker, Auto
 import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
 import AccountFannyView from './view';
 import AccountCategory from '../AccountCategory';
+import { emojify } from 'react-emojione';
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
@@ -16,6 +17,9 @@ const { Content } = Layout;
 const { Option } = Select;
 // FannyTab
 const AccountFanny = (props) => {
+  let emojiList = ["😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾"];
+  let emojifyOptions = { style: { height: '45' } }
+  let randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)]
   // Change FannyPack
   const changeFannyPack = (fanny) => {
     fanny = JSON.parse(fanny)
@@ -26,10 +30,12 @@ const AccountFanny = (props) => {
   // React on Active_Fanny
   useEffect(() => {
     if (props.data.sessionReducers.active_fannyPack) {
-      props.dispatch(ACTION_REFRESH(
+        props.dispatch(ACTION_REFRESH(
         props.data.sessionReducers.active_fannyPack.fannypack_owner_serial,
         props.data.sessionReducers.active_fannyPack.fannypack_serial))
-      message.success("FannyPack refreshed!" + props.data.sessionReducers.active_fannyPack.fannypack_name, 2)
+        message.success("FannyPack refreshed!" + props.data.sessionReducers.active_fannyPack.fannypack_name, 2)
+    } else if (!props.data.sessionReducers.active_fannyPack) {
+      randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)]
     }
   }, [props.data.sessionReducers.active_fannyPack]);
   // Fire
@@ -51,7 +57,11 @@ const AccountFanny = (props) => {
         <Option key={index} value={JSON.stringify(fanny)}> {fanny.fannypack_name} </Option>
       ))}
     </Select>)
-    : "Error aquiring FannyPackz"
+    :  <Avatar
+        className="mx-1"
+        style={{ backgroundColor: "#FFF" }}
+        size={50} shape="square"
+        icon={emojify(randomEmoji, emojifyOptions)} /> // error getting FannyPacks loading
   );
 };
 // Export - Redux

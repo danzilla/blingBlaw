@@ -11,11 +11,12 @@ const AccountLogo = (props) => {
   let emojiList = [
     ":pancakes:", ":tea:", ":pizza:", ":peach:", ":ice_cream:", ":rosette:", ":chicken:", ":heartpulse:",
     ":fireworks:", ":gem:", ":cherry_blossom:", ":pig:", ":handbag:", ":kiss:", ":chicken:", ":sparkling_heart:",
-    ":unicorn:", ":gorilla:", ":avocado:", ":kiwi:", ":strawberry:", ":t_rex:", ":tropical_fish:"
+    ":unicorn:", ":gorilla:", ":avocado:", ":kiwi:", ":strawberry:", ":t_rex:", ":tropical_fish:", "💥", "💦", "🎍"
   ]
   let randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)]
   return (
     <Avatar
+      className="mx-1"
       style={{ backgroundColor: "#FFF" }}
       size={50} shape="square"
       icon={emojify(randomEmoji, emojifyOptions)} />

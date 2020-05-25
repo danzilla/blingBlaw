@@ -20,11 +20,11 @@ const AccountType = (props) => {
     if (!props.data.sessionReducers.active_fannyPack) {
       message.error("FannyPack required", 2.5)
     } else if (props.data.sessionReducers.active_fannyPack.fannypack_serial) {
-      let activeSession = props.data.sessionReducers.active_session
-      let activeFanny = props.data.sessionReducers.active_fannyPack.fannypack_serial
-      fetch_account_type_add(activeFanny, accountTypeName)
+      fetch_account_type_add(props.data.sessionReducers.active_fannyPack.fannypack_serial, accountTypeName)
         .then((data) => {
-          props.dispatch(ACTION_REFRESH(activeSession, activeFanny))
+          props.dispatch(ACTION_REFRESH(
+            props.data.sessionReducers.active_session, 
+            props.data.sessionReducers.active_fannyPack.fannypack_serial))
           message.success(data.message, 2.5)
           setAccountTypeName(null)
         })

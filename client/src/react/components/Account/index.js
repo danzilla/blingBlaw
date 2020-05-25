@@ -6,6 +6,7 @@ import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icon
 
 import AccoutsType from "../AccountType"
 import AccountsView from "./view";
+import { emojify } from 'react-emojione';
 
 import {
   ACTION_REFRESH,
@@ -18,9 +19,13 @@ const { Content } = Layout;
 const { Option } = Select;
 // Account Tab
 const Account = (props) => {
-  // Change FannyPack
+  let emojiList = ["😗", "🙄", "😚", "🤪", "😜", "😝", "😛", "😋", "😉", "🤣"];
+  let emojifyOptions = { style: { height: '45' } }
+  let randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)]
+  // Change Account
   const changeAccount = (account) => {
     if(account == "view_acc"){
+      props.dispatch(ACTION_SET_ACTIVE_ACCOUNT(null))
       message.success( "FannyPack " + props.data.sessionReducers.active_fannyPack.fannypack_name + " overview", 2)
     } else {
       account = JSON.parse(account)
@@ -53,7 +58,11 @@ const Account = (props) => {
       ))}
       <Option value="view_acc"><Button type="link"><CreditCardOutlined />View {props.data.sessionReducers.active_fannyPack.fannypack_name} accounts</Button></Option>
     </Select>)
-    : "Error aquiring FannyPack and Accountz"
+    : <Avatar
+        className="mx-1"
+        style={{ backgroundColor: "#FFF" }}
+        size={50} shape="square"
+        icon={emojify(randomEmoji, emojifyOptions)} /> // "Error aquiring FannyPack and Accountz"
   );
 };
 // Export - Redux

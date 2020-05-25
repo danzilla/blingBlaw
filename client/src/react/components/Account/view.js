@@ -5,7 +5,8 @@ import { Form, Input, message, Button, Menu, Dropdown } from 'antd';
 import { Table, Modal, Typography } from 'antd';
 import { PoweroffOutlined, PlusOutlined } from '@ant-design/icons';
 import { fetch_account_add } from '../../../api/index';
-import { Select } from 'antd';
+import { Select, Divider } from 'antd';
+import AccoutsType from "../AccountType"
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
@@ -86,7 +87,14 @@ const AccountsView = (props) => {
                   style={{ width: '35%' }}
                   size={"large"}
                   defaultValue="pickMe"
-                  onChange={(value) => setAccountType(value)}>
+                  onChange={(value) => setAccountType(value)}
+                  dropdownRender={menu => (
+                    <div>
+                      {menu}
+                      <Divider style={{ margin: '4px 0' }} />
+                      <AccoutsType />
+                    </div>
+                  )}>
                   <Option key="00" value="pickMe">Account Type</Option>
                   {Object.keys(props.data.sessionReducers.user_account_type).length > 0 &&
                     props.data.sessionReducers.user_account_type.data[0].rows.map((accountType) => (
