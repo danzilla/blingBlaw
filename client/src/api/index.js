@@ -13,8 +13,6 @@ export async function fetch_initalRun(user) {
 }
 // User
 export async function fetch_user_info(user) {
-    console.log("User: " + JSON.stringify(user));
-
     return await axios.post(`${API}/user/view`, { user: user })
         .then((data) => { return data.data })
         .catch((err) => { return err; })
@@ -40,11 +38,7 @@ export async function fetch_fannyPack_view_all(user) {
         .then((data) => { return data.data; })
         .catch((err) => { return err; })
 }
-export async function fetch_fannyPack_add(user, fannyPack) {
-    return await axios.post(`${API}/fannypack/add`, { user: user, fannyPack: fannyPack })
-        .then((data) => { return data.data; })
-        .catch((err) => { return err; })
-}
+
 // Accounts 
 export async function fetch_fanny_account_info(fannyID) {
     return await axios.all([
@@ -53,6 +47,14 @@ export async function fetch_fanny_account_info(fannyID) {
         axios.post(`${API}/account/category/view`, { fannyID: fannyID })
     ])
         .then(axios.spread((fannyAccounts, fannyType, fannyCategory) => { return { fannyAccounts, fannyType, fannyCategory }; }))
+        .catch((err) => { return err; })
+}
+
+
+// Add
+export async function fetch_fannyPack_add(user, fannyPack) {
+    return await axios.post(`${API}/fannypack/add`, { user: user, fannyPack: fannyPack })
+        .then((data) => { return data.data; })
         .catch((err) => { return err; })
 }
 export async function fetch_account_add(sessionID, fannyID, accountName, accountType) {

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { Form, Row, Input, message, Button, Table, Modal, Typography } from 'antd';
-import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
-import { fetch_account_type_add } from '../../../api/index';
+import { PlusOutlined } from '@ant-design/icons';
+import { fetch_account_type_add } from '../../../../api/index';
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
   ACTION_SET_ACTIVE_FANNY,
   ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../redux/actions/sessionAction';
+} from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
 const { Search } = Input;
 const { Text, Title } = Typography;

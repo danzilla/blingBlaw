@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'antd';
-import { Form, Divider, Avatar, Badge, Dropdown, Select, Layout, Menu, Icon, Input, message, Button } from 'antd';
-import { Table, Modal, PageHeader, Tag, Typography } from 'antd';
-import { LockOutlined, SettingOutlined, DownOutlined, UserOutlined, BookOutlined, FileAddOutlined, MoreOutlined, PlusOutlined, EllipsisOutlined, CaretDownOutlined, ReloadOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { Row, Table, Modal, Form, Select, Typography, Button, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -41,8 +39,6 @@ const AccountCategory = (props) => {
       key: 'address',
     },
   ];
-
-  const [form] = Form.useForm();
   const [, forceUpdate] = useState();
 
   // To disable submit button at the beginning.

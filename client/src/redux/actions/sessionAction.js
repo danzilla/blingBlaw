@@ -19,6 +19,8 @@ const fetched_user_accounts = (post) => { return { type: "FETCHED_USER_ACCOUNTS"
 const fetched_user_account_types = (post) => { return { type: "FETCHED_USER_ACCOUNTS_TYPES", data: post }; };
 const fetched_user_account_category = (post) => { return { type: "FETCHED_USER_ACCOUNTS_CATEGORY", data: post }; };
 const fetched_user_account_transaction = (post) => { return { type: "FETCHED_USER_ACCOUNTS_TRANSACTION", data: post }; };
+// Logout
+export const LOG_OUT = () => { return { type: "LOG_OUT" }; };
 // Start 
 // - Start with UserID
 //    - get userInfo - set_Fetch
@@ -32,7 +34,7 @@ const fetched_user_account_transaction = (post) => { return { type: "FETCHED_USE
 //    - get userFannyAccount - set_Fetch
 //    - get userFannyAccount - set_Fetched
 //    - if err - set_error
-
+//
 //  ACTIONS_REFRESH
 // 1. With UserID get FannyID
 // 2. With FannyID get Account Lists
@@ -98,7 +100,6 @@ export const ACTION_REFRESH = (userID, fannyID, accountID) => {
           dispatch(fetched_post())
         }
       } Fire()
-    
     } else { // If the Refresh(EMPTY)
       console.log("Error Refreshing")
       dispatch(receive_error("Error while Refresh()"))
@@ -106,7 +107,6 @@ export const ACTION_REFRESH = (userID, fannyID, accountID) => {
     }
   }
 }
-
 //
 // THE APP 
 //

@@ -1,6 +1,6 @@
 'use strict';
 import React from "react";
-// React components
+// Load module
 import Login from '../../components/Authentication/login_page';
 import Register from '../../components/Authentication/register_page';
 import FirstRun from '../../components/Authentication/firstRun_page';

@@ -12,7 +12,6 @@
     "install": "npm run dev-server-install & npm run dev-client-install",
     "server": "cd ./server && npm start",
     "client": "cd ./client && npm start",
-    "start": "npm run server & npm run client",
     "db": "docker-compose up -d pgadmin && docker-compose up postgres_db",
     "docker-start": "docker-compose up -d pgadmin && docker-compose up postgres_db server client",
     "docker-clean": "docker-compose rm -f && docker-compose build --no-cache"

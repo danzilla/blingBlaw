@@ -47,6 +47,20 @@ const sessionReducers = (state = sessionState, action) => {
       return Object.assign({}, state, { user_account_category: action.data, isError: false });
     case "FETCHED_USER_ACCOUNTS_TRANSACTION":
       return Object.assign({}, state, { user_account_transaction: action.data, isError: false });
+    case "LOG_OUT":
+      return Object.assign({}, state, {
+        active_session: null,
+        active_fannyPack: null,
+        active_account: null,
+        user: null,
+        user_fannyPack: null,
+        user_accounts: null,
+        user_account_type: null,
+        user_account_category: null,
+        user_account_transaction: null,
+        isFetching: false,
+        isError: false
+      });
     default:
       return state;
   };

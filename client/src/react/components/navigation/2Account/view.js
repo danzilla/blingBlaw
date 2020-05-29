@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Row, Col } from 'antd';
-import { Form, Input, message, Button, Menu, Dropdown } from 'antd';
-import { Table, Modal, Typography } from 'antd';
-import { PoweroffOutlined, PlusOutlined } from '@ant-design/icons';
-import { fetch_account_add } from '../../../api/index';
-import { Select, Divider } from 'antd';
-import AccoutsType from "../AccountType"
+import { Form, Input, message, Button, Table, Modal, Typography, Row, Select, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { fetch_account_add } from '../../../../api/index';
+import AccoutsType from "../4AccountType";
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
   ACTION_SET_ACTIVE_FANNY,
   ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../redux/actions/sessionAction';
+} from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
-const { Search } = Input;
 const { Title } = Typography;
 const { Option } = Select;
 // Account Tab
@@ -40,7 +36,7 @@ const AccountsView = (props) => {
   };
   // View FannyPacks
   let dataSource = new Array();
-  Object.keys(props.data.sessionReducers.user_accounts).length > 0 &&
+  props.data.sessionReducers.user_accounts &&
     props.data.sessionReducers.user_accounts.data[0].rows.map((accounts) => (
       dataSource.push({
         key: accounts.account_serial,
@@ -74,9 +70,9 @@ const AccountsView = (props) => {
   // Fire
   return (
     <>
-      <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>Accounts </Button>
+      <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>Add Accounts</Button>
       <Modal
-        title={<Title level={3}>FannyPackz</Title>}
+        title={<Title level={3}>Accounts</Title>}
         centered visible={ModalVisible} footer={null}
         onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
         <Row justify="center">
@@ -96,7 +92,7 @@ const AccountsView = (props) => {
                     </div>
                   )}>
                   <Option key="00" value="pickMe">Account Type</Option>
-                  {Object.keys(props.data.sessionReducers.user_account_type).length > 0 &&
+                  {props.data.sessionReducers.user_account_type &&
                     props.data.sessionReducers.user_account_type.data[0].rows.map((accountType) => (
                       <Option key={accountType.account_type_id} value={accountType.account_type_serial}>{accountType.account_type_name}</Option>
                     ))

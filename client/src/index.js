@@ -13,7 +13,6 @@ ReactDOM.render(<Provider store={store}> <App /> </Provider>, document.getElemen
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
 // Notes
 // Redux and Thunk _ notes
 /*

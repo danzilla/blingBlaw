@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Form, Input, message, Button, Menu, Dropdown, Table, Modal, Typography, Row, Col } from 'antd';
+import { Form, Input, message, Button, Table, Modal, Typography, Row } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { fetch_fannyPack_add } from '../../../api/index';
-import { ACTION_REFRESH } from '../../../redux/actions/sessionAction';
+import { fetch_fannyPack_add } from '../../../../api/index';
+import { ACTION_REFRESH } from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
 const { Title } = Typography;
 // FannyTab

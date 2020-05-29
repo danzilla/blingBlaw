@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Skeleton, Avatar, Dropdown, Menu, Button, message } from 'antd';
-import { Input, Col, Divider, Layout, Row, Select, InputNumber, DatePicker, AutoComplete, Cascader } from 'antd';
-import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
-import AccountFannyView from './view';
-import AccountCategory from '../AccountCategory';
+import { Divider, Select, Avatar, message } from 'antd';
 import { emojify } from 'react-emojione';
+import AccountCategory from '../3Category';
+import AccountFannyView from './view';
 import {
   ACTION_REFRESH,
-  ACTION_SET_ACTIVE_USER,
-  ACTION_SET_ACTIVE_FANNY,
-  ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../redux/actions/sessionAction';
-const { TextArea } = Input;
-const { Content } = Layout;
+  ACTION_SET_ACTIVE_FANNY
+} from '../../../../redux/actions/sessionAction';
 const { Option } = Select;
 // FannyTab
 const AccountFanny = (props) => {

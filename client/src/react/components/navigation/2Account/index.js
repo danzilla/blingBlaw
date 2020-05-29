@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Skeleton, Avatar, Dropdown, Menu, Button, message } from 'antd';
-import { Input, Col, Divider, Layout, Row, Select, InputNumber, DatePicker, AutoComplete, Cascader } from 'antd';
-import { PlusOutlined, CreditCardOutlined, DownOutlined } from '@ant-design/icons';
-
-import AccoutsType from "../AccountType"
-import AccountsView from "./view";
+import { Avatar, Divider, message, Button, Select } from 'antd';
+import { CreditCardOutlined } from '@ant-design/icons';
 import { emojify } from 'react-emojione';
-
+import AccoutsType from "../4AccountType"
+import AccountsView from "./view";
 import {
   ACTION_REFRESH,
   ACTION_SET_ACTIVE_USER,
   ACTION_SET_ACTIVE_FANNY,
   ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../redux/actions/sessionAction';
-const { TextArea } = Input;
-const { Content } = Layout;
+} from '../../../../redux/actions/sessionAction';
 const { Option } = Select;
 // Account Tab
 const Account = (props) => {
