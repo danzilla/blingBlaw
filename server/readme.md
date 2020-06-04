@@ -16,26 +16,30 @@ Node.js API-server
 ```
 server
 ├── app
-│   ├── config
-│   |   ├── statement
-│   |   ├── util
-│   |   └── app.config.js
+│   ├── api
+│   |  ├── router
+│   |  └── index.js
+|   ├── config
+│   |  ├── statement
+│   |  └── app.config.js
+│   |  └── AppDBFunction.md
 |   ├── graphql
-|   ├── router
 │   └── app.js
 └── bin
-```
 
+```
 # Database - Design
  - Revised
     - <s>May 26, 2019</s>
     - <s>June 27, 2019</s>
     - <s>July 02, 2019</s>
     - July 26, 2019
-
 ```
 database_Name - blingblaw_assets
-│
+- User - Contains FannyPacks
+- FannyPacks - Contains Account, Account Types and category
+- Account - Contains Account Statement information
+────────────────────────────────────────────────────────────
 └───Schema - users_assets
 |   │   Table - user_auth - user_id
 |   │   Table - user_details - user_id
@@ -45,10 +49,6 @@ database_Name - blingblaw_assets
 │   │   Table - account_type - account_type_id
 │   │   Table - account_record - account_id
 │   │   Table - account_One - account_id
-|   |
-- User - Contains FannyPacks
-- FannyPacks - Contains Account, Account Types and category
-- Account - Contains Account Statement information
 ```
 
 # :fireworks: End-points

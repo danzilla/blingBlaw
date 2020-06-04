@@ -13,7 +13,7 @@
 	- [x] New UI Library and Same app-layout (Minimalism) - Ant Design
 	- [x] Rebuild Client | No more States | Use React Hooks 
 	- [ ] Draw map of React state-flow through App
-	- [x] Implement - Redux
+	- [x] Implement - Redux-Thunk
 	- [ ] Implement - Apollo Client
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
@@ -34,6 +34,7 @@
 	- Download and Install Docker and Docker-compose
 	- https://docs.docker.com/install/
 	- https://docs.docker.com/compose/install/
+- Database and pgAdmin are Containerized*
 
 # Deploy 
 - Once, you are done with the above requirements

@@ -1,27 +1,33 @@
 # BlingBlaw - client :lips: :lipstick: :gift_heart:
 
 # To-Do
-- [x] UI Library - Ant Design - https://ant.design/docs/react/getting-started
+- [x] UI Library - Ant Design 
+    -> https://ant.design/docs/react/getting-started
 - [ ] App Layout - Draw
-- [x] Folder structure - New
-- [x] Redux - Integration
-- React-Hooks
+- [x] Folder structure
+- [x] Redux-Thunk
+- [x] React-Hooks
     - > https://reactjs.org/docs/hooks-reference.html
 
 ### Client-folder Structure
 ```
-client
-├── public
-│   ├── stylesheets
-│   └── index.html
-└── src
-│   ├── components
-│   ├── config
-│   |   └── utils
-│   ├── containers
-│   ├── features
-│   └── index.js
-└── src_backup
+  client
+  ├── public
+  │   ├── stylesheets
+  │   └── index.html
+  └── src
+  │   ├── api
+  │   ├── react
+  │   |   └── componets
+  │   |   └── containers
+  │   |   └── app.js
+  │   ├── redux
+  │   |   └── actions
+  │   |   └── reducers
+  │   |   └── combineReducers.js
+  │   |   └── store.js
+  │   └── index.js
+  |   └── serviceWorker.js
 ```
 
 # :tropical_drink: Deploy Client 
