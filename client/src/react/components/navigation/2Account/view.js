@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from "react-redux";
-import { Form, Input, message, Button, Table, Modal, Typography, Row, Select, Divider } from 'antd';
+import { Col, Form, Input, message, Button, Table, Modal, Typography, Row, Select, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { fetch_account_add } from '../../../../api/index';
 import AccoutsType from "../4AccountType";
-import {
-  ACTION_REFRESH,
-  ACTION_SET_ACTIVE_USER,
-  ACTION_SET_ACTIVE_FANNY,
-  ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../../redux/actions/sessionAction';
+import { fetch_account_add } from '../../../../api/index';
+import { ACTION_REFRESH } from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
 const { Title } = Typography;
 const { Option } = Select;
-// Account Tab
+// Account
 const AccountsView = (props) => {
   // Add Account
+  const [ModalVisible, setModalVisible] = useState(false);
   const [accountType, setAccountType] = useState(null)
   const [accountName, setAccountName] = useState(null)
   const add_Account = (accountName) => {
@@ -34,7 +30,7 @@ const AccountsView = (props) => {
         message.error(error.message, 2.5)
       })
   };
-  // View FannyPacks
+  // View Accounts
   let dataSource = new Array();
   props.data.sessionReducers.user_accounts &&
     props.data.sessionReducers.user_accounts.data[0].rows.map((accounts) => (
@@ -45,7 +41,7 @@ const AccountsView = (props) => {
         modified: moment(accounts.account_lastmodify).format('MM/DD/YYYY h:mm a')
       })
     ))
-  let fannyColumns = [{
+  let accountColumns = [{
     title: 'Account label',
     dataIndex: 'label',
     key: 'label',
@@ -65,31 +61,27 @@ const AccountsView = (props) => {
     dataIndex: 'modified',
     key: 'modified',
   }];
-  // Modal
-  const [ModalVisible, setModalVisible] = useState(false);
   // Fire
   return (
     <>
       <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>Add Accounts</Button>
-      <Modal
-        title={<Title level={3}>Accounts</Title>}
-        centered visible={ModalVisible} footer={null}
-        onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
+      <Modal centered 
+        title={<Title level={3}>Accountz</Title>}
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+        visible={ModalVisible}>
         <Row justify="center">
           <Form layout="inline">
             <Form.Item>
               <Input.Group compact>
-                <Select
-                  style={{ width: '35%' }}
-                  size={"large"}
-                  defaultValue="pickMe"
-                  onChange={(value) => setAccountType(value)}
+                <Select style={{ width: '35%' }} defaultValue="pickMe" onChange={(value) => setAccountType(value)}
                   dropdownRender={menu => (
-                    <div>
+                    <>
                       {menu}
                       <Divider style={{ margin: '4px 0' }} />
                       <AccoutsType />
-                    </div>
+                    </>
                   )}>
                   <Option key="00" value="pickMe">Account Type</Option>
                   {props.data.sessionReducers.user_account_type &&
@@ -98,24 +90,18 @@ const AccountsView = (props) => {
                     ))
                   }
                 </Select>
-                <Input
-                  value={accountName}
-                  onChange={(e) => setAccountName(e.target.value)}
-                  style={{ width: '40%' }}
-                  size={"large"}
-                  placeholder={"Account Name"} />
-                <Button
-                  style={{ width: '15%' }}
-                  size={"large"}
-                  type="primary" danger onClick={() => add_Account(accountName)}> <PlusOutlined />
-                </Button>
+                <Input style={{ width: '40%' }} value={accountName} onChange={(e) => setAccountName(e.target.value)} placeholder={"Account Name"} />
+                <Button style={{ width: '15%' }} type="primary"onClick={() => add_Account(accountName)} danger> <PlusOutlined /> </Button>
               </Input.Group>
             </Form.Item>
           </Form>
         </Row>
-        <Table
-          pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }}
-          className="m-1" dataSource={dataSource} columns={fannyColumns} />
+        <Row>
+          <Col span={24} className="py-1" style={{ overflow: 'auto' }}>
+            <Table scroll={{ y: 240 }} dataSource={dataSource} columns={accountColumns}
+              pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
+          </Col>
+        </Row>
       </Modal>
     </>
   );

@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { Form, Row, Input, message, Button, Table, Modal, Typography } from 'antd';
+import { Form, Row, Col, Input, message, Button, Table, Modal, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { fetch_account_type_add } from '../../../../api/index';
-import {
-  ACTION_REFRESH,
-  ACTION_SET_ACTIVE_USER,
-  ACTION_SET_ACTIVE_FANNY,
-  ACTION_SET_ACTIVE_ACCOUNT
-} from '../../../../redux/actions/sessionAction';
+import { ACTION_REFRESH } from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
-const { Search } = Input;
-const { Text, Title } = Typography;
+const { Title } = Typography;
 // Account Types
 const AccountType = (props) => {
   // add account_type
@@ -33,7 +27,7 @@ const AccountType = (props) => {
   };
   const [ModalVisible, setModalVisible] = useState(false)
   // React on user_account_type
-  // View FannyPacks
+  // View account type
   let dataSource = new Array();
   props.data.sessionReducers.user_account_type &&
     props.data.sessionReducers.user_account_type.data[0].rows.map((accountType) => (
@@ -44,7 +38,7 @@ const AccountType = (props) => {
         modified: moment(accountType.account_type_lastmodify).format('MM/DD/YYYY h:mm a')
       })
     ));
-  let Columns = [{
+  let accountTypeColumns = [{
     title: 'Labels',
     dataIndex: 'labels',
     key: 'labels',
@@ -62,29 +56,25 @@ const AccountType = (props) => {
   return (
     <>
       <Button type="link" onClick={() => setModalVisible(true)}><PlusOutlined />Account Types </Button>
-      <Modal title={<Title level={3}>Account Types</Title>}
-        centered visible={ModalVisible} footer={null}
-        onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}>
+      <Modal centered
+        title={<Title level={3}>Account Types</Title>}
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+        visible={ModalVisible}>
         <Row justify="center">
           <Form layout="inline">
             <Form.Item>
-              <Input
-                value={accountTypeName}
-                onChange={(e) => setAccountTypeName(e.target.value)}
-                style={{ width: '60%' }}
-                size={"large"}
-                placeholder={"Ex: Saving or vacation or House saving"} />
-              <Button
-                style={{ width: '30%' }}
-                size={"large"}
-                type="primary" danger onClick={() => add_account_type(accountTypeName)}> <PlusOutlined />
-              </Button>
+              <Input value={accountTypeName} onChange={(e) => setAccountTypeName(e.target.value)} style={{ width: '80%' }} placeholder={"Saving or vacation or House saving"} />
+              <Button style={{ width: '20%' }} type="primary" danger onClick={() => add_account_type(accountTypeName)}> <PlusOutlined /></Button>
             </Form.Item>
           </Form>
         </Row>
-        <Table
-          pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }}
-          className="m-1" dataSource={dataSource} columns={Columns} />
+        <Row>
+          <Col span={24} className="py-1" style={{ overflow: 'auto' }}>
+            <Table scroll={{ y: 240 }} dataSource={dataSource} columns={accountTypeColumns} pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
+          </Col>
+        </Row>
       </Modal>
     </>
   );

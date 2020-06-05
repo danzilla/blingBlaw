@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from "react-redux";
-import { Form, Input, message, Button, Table, Modal, Typography, Row } from 'antd';
+import { Form, Input, message, Button, Table, Modal, Typography, Row, Col, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { fetch_fannyPack_add } from '../../../../api/index';
 import { ACTION_REFRESH } from '../../../../redux/actions/sessionAction';
 const moment = require('moment');
 const { Title } = Typography;
-// FannyTab
+// FannyPack View
 const AccountFannyView = (props) => {
   // Modal
   const [ModalVisible, setModalVisible] = useState(false);
@@ -49,13 +49,16 @@ const AccountFannyView = (props) => {
     dataIndex: 'modified',
     key: 'modified',
   }];
+  // Fire
   return (
     <>
       <Button icon={<PlusOutlined />} type="link" onClick={() => setModalVisible(true)}>FannyPackz</Button>
-      <Modal
+      <Modal centered 
         title={<Title level={3}>FannyPackz</Title>}
-        onOk={() => setModalVisible(false)} onCancel={() => setModalVisible(false)}
-        centered visible={ModalVisible} footer={null}>
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+        visible={ModalVisible}>
         <Row justify="center">
           <Form layout="inline">
             <Form.Item>
@@ -63,12 +66,10 @@ const AccountFannyView = (props) => {
                 <Input
                   style={{ width: '70%' }}
                   onChange={(e) => setFannyName(e.target.value)}
-                  size={"large"}
                   value={fannyName}
                   placeholder={"FannyPack Name"}
                 />
                 <Button
-                  size={"large"}
                   style={{ width: '30%' }}
                   type="primary" danger onClick={() => add_FannyPack(fannyName)}> <PlusOutlined />
                 </Button>
@@ -76,9 +77,12 @@ const AccountFannyView = (props) => {
             </Form.Item>
           </Form>
         </Row>
-        <Table
-          className="m-1" dataSource={dataSource} columns={fannyColumns}
-          pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
+        <Row>
+          <Col span={24} className="py-1" style={{ overflow: 'auto' }}>
+            <Table scroll={{ y: 240 }} dataSource={dataSource} columns={fannyColumns}
+              pagination={{ defaultPageSize: 3, showSizeChanger: true, pageSizeOptions: ['3', '5', '10'] }} />
+          </Col>
+        </Row>
       </Modal>
     </>
   );
