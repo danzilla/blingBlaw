@@ -1,15 +1,20 @@
 'use strict';
 import React, { useEffect } from 'react';
 import { connect } from "react-redux";
+import { Row, Col, Layout, message } from 'antd';
 // Load module
 import { ACTION_REFRESH, ACTION_SET_ACTIVE_SESSION } from '../../../redux/actions/sessionAction';
+
+// Components
 import DashboardNavigation from "../../components/Navigation";
 import DashboardContent from "../../components/Content";
+
 // Ant Design
-import { Row, Col, Layout, message } from 'antd';
 const { Content } = Layout;
+
 // Dashboard
 const Dashboard = (props) => {
+  
   // React on Active_User
   let session;
   useEffect(() => {
@@ -25,6 +30,7 @@ const Dashboard = (props) => {
       message.success("Session active!: " + session.user_name, 2.5)
     }
   }, [session]);
+
   // #Blaze
   return (
     <Row justify="center" align="middle">

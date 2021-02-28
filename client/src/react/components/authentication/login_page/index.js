@@ -16,10 +16,7 @@ const LoginForm = (props) => {
         }
     }, [session]);
     // React-hookz - loginInfo
-    const [loginInfo, setLoginInfo] = useState({
-        userName: "",
-        userPassword: ""
-    });
+    const [loginInfo, setLoginInfo] = useState({ userName: "", userPassword: "" });
     // onChange - get and set state for Login form
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +24,7 @@ const LoginForm = (props) => {
     };
     // onSubmit
     const handleSubmit = (e) => {
+        // axios_fetch_post
         e.preventDefault();
         if (!loginInfo.userName || !loginInfo.userPassword) {
             message.warning("User name and Password are required");
@@ -36,7 +34,7 @@ const LoginForm = (props) => {
                 user: loginInfo.userName,
                 password: loginInfo.userPassword
             })
-                .then((data) => {
+                .then((data) => {    
                     if (data.data.status == true) {
                         console.log("User: " + data.data.data[0].rows[0].user_name);
                         // If all good - setLocalStorage
@@ -47,9 +45,17 @@ const LoginForm = (props) => {
                         sessionStorage.setItem('session', JSON.stringify(data.data.data[0].rows[0]));
                         message.success(data.data.message, 2.5);
                         props.history.push("/dashboard");
-                    } else { message.warning(data.data.message, 2.5); }
+                    } else if (data.data.data.code == "3D000") {
+                        props.activeDB()
+                        message.warning(data.data.message, 2.5); 
+                    } else { 
+                        message.warning(data.data.message, 2.5); 
+                    }
                 })
-                .catch((err) => { message.error(err.message); });
+                .catch((err) => {
+                    console.log(JSON.stringify(err));
+                    message.error(err.message); 
+                });
         }
     };
     // displayContent
@@ -80,18 +86,19 @@ const LoginForm = (props) => {
                     htmlType="submit"
                     className="login-form-button">
                     Log in
-                        </Button>
+                </Button>
                 <Button
+                    onClick={props.activeRegister}
                     type="link">
                     Register
-                        </Button>
+                </Button>
             </Row>
         </Form.Item>
     </Form>;
     // LoginForm
     return (
         <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
-            <Col xs={20} sm={15} md={10} lg={5} className="card-2 p-2">
+            <Col xs={20} sm={15} md={8} lg={8} className="card-2 p-2">
                 <h1>Sign-in {emojify(":rocket:")}</h1>
                 {displayContent}
             </Col>

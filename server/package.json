@@ -1,43 +1,23 @@
 {
-  "name": "server-graphql-express",
-  "version": "3.0.0",
+  "name": "blingblaw-server",
   "author": "Danzilla",
+  "version": "2.0.0",
+  "scripts": {
+    "start": "nodemon ./api/app.js --ignore client"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/danzilla/blingBlaw"
-  },
-  "server-port": "5000",
-  "scripts": {
-    "start": "nodemon ./bin/www --ignore client"
+    "url": "git+https://github.com/danzilla/blingBlaw.git"
   },
   "dependencies": {
-    "async": "^2.6.2",
-    "cookie-parser": "~1.4.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "csvjson": "^5.1.0",
-    "debug": "~2.6.9",
-    "dotenv": "^8.0.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-flash": "0.0.2",
-    "express-graphql": "^0.9.0",
-    "express-pg-session": "^1.1.0",
-    "express-session": "^1.15.6",
-    "fs": "0.0.1-security",
-    "graphql": "^14.4.2",
-    "group-array": "^0.3.4",
-    "http-errors": "~1.6.2",
-    "lodash": "^4.17.14",
-    "middleware": "^1.0.0",
-    "moment": "^2.24.0",
-    "morgan": "^1.9.1",
-    "multer": "^1.4.1",
-    "node-fetch": "^2.3.0",
-    "nodemon": "^1.18.4",
-    "pg": "^7.8.1",
-    "pg-pool": "^2.0.6",
-    "postgraphile": "^4.4.1",
-    "uuid": "^3.3.2",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
+    "pg": "^8.5.1",
+    "pg-pool": "^3.2.2",
+    "uuid": "^8.3.2",
     "uuid-token-generator": "^1.0.0"
   }
 }

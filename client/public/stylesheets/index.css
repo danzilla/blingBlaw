@@ -1,10 +1,37 @@
 html, body, #root {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Delius', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.font-1 {
+  font-family: 'Tangerine', cursive;
+}
+.font-2 {
+  font-family: 'Akaya Telivigala', cursive;
+  font-family: 'Architects Daughter', cursive;
+  font-family: 'Merienda', cursive;
+}
+.bodyNiceWhite {
+  background-color: #d5fefd;
+  background-image: linear-gradient(315deg, #d5fefd 0%, #fffcff 74%);
+}
+.bodyNiceBlack1 {
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+}
+.bodyNiceBlack2 {
+  background-color: #2d3436;
+  background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+}
+.bodyNiceBlack3 {
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+}
+.bodyNiceBlack4 {
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+}
+
 
 
 .wordBreak-anywhere { 
@@ -142,7 +169,6 @@ html, body, #root {
   width: 25% !important;
 }
 
-
 .m-0 {
   margin: 0 !important;
 }
@@ -206,6 +232,10 @@ html, body, #root {
   margin-top: 2em !important;
   margin-bottom: 2em !important;
 }
+.my-3 {
+  margin-top: 3em !important;
+  margin-bottom: 3em !important;
+}
 .py-1 {
   padding-top: 1em !important;
   padding-bottom: 1em !important;
@@ -223,7 +253,6 @@ html, body, #root {
   padding-bottom: 4em !important;
 }
 
-
 .line-h-100 {
   line-height: 100% !important;
 }
@@ -236,8 +265,6 @@ html, body, #root {
 .line-h-400 {
   line-height: 400% !important;
 }
-
-
 
 .resetButton {
   border: none;

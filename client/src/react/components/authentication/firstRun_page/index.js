@@ -8,6 +8,7 @@ import axios from 'axios';
 const FirstRunForm = (props) => {
     const [is_db_good, setIsDB] = useState(false);
     const [fetchLoading, setFetchLocading] = useState(false);
+    const [resData, setResData] = useState({});
     // onSubmit
     const handleSubmit = (e) => {
         setFetchLocading(true);
@@ -15,13 +16,22 @@ const FirstRunForm = (props) => {
         // axios_fetch_post
         axios.get("http://localhost:5000/api/install")
             .then((data) => {
-                if(data.data.status == true){
-                    message.success(data.data.message);
-                    setIsDB(true);
-                } else {
+                if (data.data.code = "42P04") {
                     message.warning(data.data.message);
                     setFetchLocading(false);
                     setIsDB(true);
+                    setResData(data.data);
+                }
+                else if(data.data.status == true){
+                    message.success(data.data.message);
+                    setFetchLocading(false);
+                    setIsDB(true);
+                    setResData(data.data);
+                } else {
+                    message.error("Something else wrong...");
+                    setFetchLocading(false);
+                    setIsDB(false);
+                    setResData(data.data);
                 }
             })
             .catch((err) => {
@@ -49,7 +59,13 @@ const FirstRunForm = (props) => {
                 style={{ fontSize: '40px', height: "100%" }}
                 type="link"
                 loading={fetchLoading}>
-                Database and structure initialised! {emojify(":kiss:")}
+                Database and structure initialised!  {emojify(":kiss:")}
+            </Button>
+            <Button
+                onClick={props.activeRegister}
+                style={{ fontSize: '25px', height: "100%" }}
+                type="danger"> 
+                Register an Account
             </Button>
         </Row>
     }

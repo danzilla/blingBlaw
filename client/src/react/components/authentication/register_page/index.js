@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 import { emojify } from 'react-emojione';
 import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
-// axios-post 
-import axios from 'axios';
 // RegisterForm
 const RegisterForm = (props) => {
     // React-hookz - userAddInfo
@@ -86,19 +85,19 @@ const RegisterForm = (props) => {
                     htmlType="submit"
                     className="login-form-button">
                     Register
-                            </Button>
+                </Button>
                 <Button
                     onClick={props.activeLogin}
                     type="link">
                     Sign-in
-                            </Button>
+                </Button>
             </Row>
         </Form.Item>
     </Form>;
     // RegisterForm
     return (
         <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
-            <Col xs={20} sm={15} md={10} lg={5} className="card-2 p-2">
+            <Col xs={20} sm={15} md={10} lg={10} className="card-2 p-2">
                 <h1>Register {emojify(":hamster:")}</h1>
                 {displayContent}
             </Col>

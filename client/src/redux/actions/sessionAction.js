@@ -3,7 +3,7 @@ import {
   fetch_user_info,
   fetch_fannyPack_info,
   fetch_fanny_account_info
-} from "../../api";
+} from "../api";
 // Error management
 const fetch_post = () => { return { type: "FETCH", data: "Loading...'" }; };
 const fetched_post = () => { return { type: "FETCHED", data: "Done with task!'" }; };

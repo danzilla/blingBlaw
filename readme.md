@@ -1,12 +1,12 @@
 # BlingBlaw -  A minimalist budget app :sparkling_heart: :sparkles: :tada:
 - **Engine**		 : Node.js v8+
 - **Database**	 	 : PostgreSQL
-- **Server**	 	 : Node.js - Express -> REST -> GraphQL (PostGraphile)
-- **Client**	 	 : Node.js - React -> Redux -> Apollo client
-- **API-Endpoint**	 : REST (Migrating to GraphQL) | Hybrid approach (REST+GraphQL)
+- **Server**	 	 : Node.js - Express -> REST
+- **Client**	 	 : Node.js - React -> Redux
+- **API-Endpoint**	 : REST API
 
 # To-Do
-- [x] Long time... Jump back in. Check before change | Edited April 12, 2020
+- [x] Long time... Jump back in. Check before change | Edited Febuary 28th, 2021
 - [x] Updates packages - Client and Server | Ant.D 4.0 
 - [ ] Client - Remove Local States and Redux
 	- [x] Folder structure - New
@@ -14,12 +14,9 @@
 	- [x] Rebuild Client | No more States | Use React Hooks 
 	- [ ] Draw map of React state-flow through App
 	- [x] Implement - Redux-Thunk
-	- [ ] Implement - Apollo Client
 - [ ] Server - Remove REST and Implment GraphQL
 	- [x] Rebuild Server | New folder structure
-	- [ ] REST for Authentication and ActiveToken
-	- [x] Graphql and postgresSQL - SQL
-	- [ ] Implement - PostGraphile and Custom Mutation and Resolves
+	- [ ] REST API
 - [ ] DevOps
 	- [ ] Draw map of client
 	- [ ] Draw map of server
@@ -50,8 +47,6 @@
 	- > **Clean-docker** `docker-compose rm -f && docker-compose build --no-cache`
 	- > **Prod-deploy** `docker-compose up --force-recreate`
 	- > **Dev-deploy** `docker-compose up -d pgadmin && docker-compose up postgres_db server client`
-	- > Issue with docker-compose stack - Server and Client are not connecting in dev-mode***
-	- > npm audit broke things
 
 ## :nut_and_bolt: Deploy using **NPM** (*require* - npm and nodejs)
 - Change directory to blingBlaw
