@@ -9,7 +9,7 @@ const Features = (props) => {
   return (
     <Router>
         <Switch>
-          <Route path="/" component={Authentication} />
+          <Route path="/" exact component={Authentication} />
           <Route path="/dashboard" exact component={Test} />
           <Route path="/test" exact component={Test} />
           <Redirect from='*' to='/' />
