@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Row, Col, Layout, message } from 'antd';
 // Load module
 import { ACTION_REFRESH, ACTION_SET_ACTIVE_SESSION } from '../../../redux/actions/sessionAction';
-
 // Components
 import DashboardNavigation from "../../components/Navigation";
 import DashboardContent from "../../components/Content";
@@ -30,6 +29,8 @@ const Dashboard = (props) => {
       message.success("Session active!: " + session.user_name, 2.5)
     }
   }, [session]);
+
+
 
   // #Blaze
   return (

@@ -6,6 +6,7 @@ import { Input, Col, Row, Form, Icon, Button, message } from 'antd';
 import axios from 'axios';
 // LoginForm
 const LoginForm = (props) => {
+    
     // UseEffects
     let session;
     useEffect(() => {
@@ -15,6 +16,7 @@ const LoginForm = (props) => {
             props.history.push("/dashboard");
         }
     }, [session]);
+
     // React-hookz - loginInfo
     const [loginInfo, setLoginInfo] = useState({ userName: "", userPassword: "" });
     // onChange - get and set state for Login form
@@ -22,6 +24,7 @@ const LoginForm = (props) => {
         const { name, value } = e.target;
         setLoginInfo({ ...loginInfo, [name]: value });
     };
+
     // onSubmit
     const handleSubmit = (e) => {
         // axios_fetch_post
@@ -31,8 +34,7 @@ const LoginForm = (props) => {
         } else {
             // axios_fetch_post
             axios.post("http://localhost:5000/api/user/login", {
-                user: loginInfo.userName,
-                password: loginInfo.userPassword
+                user: loginInfo.userName, password: loginInfo.userPassword
             })
                 .then((data) => {    
                     if (data.data.status == true) {
@@ -58,6 +60,7 @@ const LoginForm = (props) => {
                 });
         }
     };
+
     // displayContent
     let displayContent = <Form onSubmit={handleSubmit}>
         <Form.Item>
@@ -95,6 +98,7 @@ const LoginForm = (props) => {
             </Row>
         </Form.Item>
     </Form>;
+
     // LoginForm
     return (
         <Row style={{ height: '100vh' }} type="flex" justify="center" align="middle">
